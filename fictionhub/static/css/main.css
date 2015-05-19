@@ -1,0 +1,575 @@
+@import url('http://fonts.googleapis.com/css?family=Titillium+Web:400');
+@import url('http://fonts.googleapis.com/css?family=Titillium+Web:200');
+@import url('http://fonts.googleapis.com/css?family=Lato');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700');
+
+/* For code */
+@import url('http://fonts.googleapis.com/css?family=Crimson+Text');
+@import url('http://fonts.googleapis.com/css?family=Kameron');
+@import url('http://fonts.googleapis.com/css?family=Lato:200,300,400');
+@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+* {
+    font-family: "Titillium Web";
+    font-family: 'Open Sans', sans-serif;
+	color: #3d454b;
+}
+
+html {
+    font-size: 19px;
+}
+
+.row {
+    max-width: 64em;
+}
+
+a {
+	color: #f76300;
+}
+
+p {
+    margin-top: 19px!important;
+}
+
+h1, h2, h3, h4 {
+    /* font-family: Lato; */
+    font-weight: normal;
+    color: #3d454b;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 26px;
+}
+
+h4 {
+    font-size: 22px;
+    color: #666;
+    margin-top:10px;
+}
+
+#page li {
+    margin-top: 10px;
+}
+
+li p {
+    margin: 0px;
+}
+
+/* Header */
+#orange-line {
+	background-color: #f66303;
+	height:4px;
+	width:100%;
+}
+
+
+header {
+	height: 130;
+	padding: 40px;
+	padding-bottom: 20px;	
+}
+
+#mainMenu {
+	margin-top: 10px;
+	/* font-family: "Titillium Web"; */
+	font-size: 16px;
+	text-transform: uppercase;
+	color: black;
+	text-align: right;
+}
+
+#mainMenu a {
+    color: black;
+}
+
+#mainMenu ul li{
+	list-style-type:none;
+	display: inline-block;
+}
+
+.selected a {
+	color: #f76300;
+}
+
+#mainMenu ul {
+	margin: 0;
+	padding: 0;
+	float: left;
+	margin-right: 10px;
+}
+
+#mainMenu ul li{
+	list-style-type:none;
+	display: inline-block;
+}
+
+
+/* Page */
+#page {
+    background-color: #f6f3ea;
+    /* padding-top: 20px; */
+}
+
+article {
+    margin-top: 20px;
+	margin-bottom: 80px;
+}
+
+#readmore {
+    float:right;
+    font-style: italic;
+}
+
+/* Article */
+
+/* Footer */
+footer {
+    height: 40px;
+}
+
+footer, footer li, footer p {
+    background-color: #333a42;
+    color: #babfc2;
+}
+
+footer a {
+	color: #babfc2;
+}
+
+footer h4 {
+	color: #babfc2;
+	text-transform: uppercase;
+	font-size: medium;
+	font-weight: normal;
+}
+
+/* Elements */
+.button {
+	background-color: #f76301;
+	border: 0;
+	border-radius: 5px;
+	box-shadow: 0 5px #d05301;
+}
+
+.button:hover {
+	background-color: #f76301;
+	box-shadow: 0 4px #d05301;
+	 position:relative;
+    top:1px;
+}
+
+.button.small {
+	background-color: #f76300;
+	box-shadow: none;
+	/* font-family: Lato; */
+	font-size: 16px;
+	font-weight: normal;
+	color: #fff;
+
+}
+
+.button.small:hover {
+	background-color: #f76300;
+	box-shadow: none;
+	/* font-family: Lato; */
+	font-size: 16px;
+	font-weight: normal;
+	color: #fff;
+	top:0px;
+
+}
+
+/* Hide IPython in/out */
+div.prompt:empty {
+    display: none;
+}
+
+div.input_prompt {
+    display: none;
+}
+
+div.output_prompt {
+    color: #8B0000;
+    display: none;
+}
+
+
+/* Syntax highlighting change font */
+.highlight span {
+    font-family: "Source Code Pro";
+    font-family: "Inconsolata";
+}
+
+/* Fix the list changes */
+
+ul, ol {
+    margin-left: 18px!important;
+}
+
+
+/* Subscribe */
+.post-footer-signup {
+    border: 1px solid white;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    margin-bottom: 1.25em;
+    padding: 13px;
+    background: rgba(240, 249, 255, 0.32);
+    background: #f2f2f2;
+    height: 70px
+    margin-top: 40px;
+}
+
+.post-footer-signup {
+    margin-top: 40px;
+    height: 70px;
+}
+
+.post-footer-signup p {
+    float: left;
+    margin-top: 4px!important;
+}
+
+.post-footer-signup .mc-field-group {
+    margin-top: -20px;
+}
+
+.post-footer-signup #mce-EMAIL {
+    width:200px;
+    height:40px;
+    border: 0px;
+    padding: 10px;
+    margin: 0 0 0 20px;
+    float:right;
+    box-shadow: none;
+}
+
+.post-footer-signup #subscribeButton {
+	/* width: 200; */
+    height: 40px;
+    float:right;
+	/* margin: 0 0 0 0; */
+	/* cursor: pointer; */
+	/* font-size: 16; */
+
+	/* padding: 0; */
+	/* border-radius: 0; */
+}
+
+#rss-icon {
+    float:right;
+    margin: 0 0 0 10px;
+}
+
+#rss-icon i {
+    color: #666;
+}
+
+.large {
+    font-size: 40px;
+}
+
+/* Comments */
+.comments {
+    margin: 20px;
+}
+
+.isso-postbox {
+    margin: 0!important;
+}
+
+#isso-root {
+    /* margin:20px; */
+}
+
+
+/* Tables */
+
+table td, table th {
+    border-right: 1px solid #DDD;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+
+thead th {
+    border: 0;
+    border-bottom: 1px solid #DDD;
+}
+
+
+.wrapper {
+  width: 100%;
+  /* whatever width you want */
+  display: inline-block;
+  position: relative;
+}
+.wrapper:after {
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+}
+.bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  /* fill parent */
+  background-color: deepskyblue;
+    background: url("/theme/img/bg.png") no-repeat center;
+    background-size: 100% 100%;
+    padding: 64px;
+    min-width: 450px;
+}
+
+.bg-no-frame {
+    background: url("/theme/img/bg-no-frame.png") no-repeat center;
+    padding: 20px;
+}
+
+.bg-no-frame .MathJax span {
+    color: lightsteelblue;
+}
+
+/* Tweaks after OM */
+
+
+h1 {
+    font-size: 36px;
+    /* text-align: center; */
+    /* color: black; */
+    font-weight: bold;
+    /*  */
+    margin-bottom: 0
+}
+
+h2 {
+    font-size: 30px; /* 32px; */
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 26px;
+}
+
+h4 {
+    font-size: 21px; /* 22px; */
+    color: #666;
+    margin-top:10px;
+}
+
+#page li {
+    margin-top: 10px;
+}
+
+li p {
+    margin: 0px;
+}
+
+
+/* Tweaks after the Comedy article */
+
+/* p, li { */
+/*   color: black; */
+/* } */
+
+em {
+  color: #3D454B;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+h3 {
+    font-size: 26px;
+    margin: 10px 0 2px 0;
+}
+	
+h4 {
+    color: black;
+    margin-top: 10px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+p {
+margin-top: 0!important;
+margin-bottom: 19px !important;
+}
+
+blockquote, blockquote p {
+    line-height: 1.6;
+    color: #6F6F6F;
+    font-weight: normal;
+}
+
+blockquote strong {
+    color: #6F6F6F;
+	}
+
+/* article a img { */
+/* width: 100%; */
+/* } */
+
+
+/* Other tweaks */
+
+/* Align mathjax to the left optionally */
+/* <div class="mathjax-align-left"> */
+.mathjax-align-left .MathJax_Display {
+  text-align: left !important;
+}
+
+
+
+
+
+/* Logo */
+.logo {
+    font-family: "Titillium Web";
+    color: #3d454b;
+    font-size: 36px;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.logo img {
+  width: 50px;
+  margin-top: -4px;
+  margin-left: -4px;
+  margin-right: -4px;  
+}
+
+hr {
+    margin-top: 0;
+}
+
+
+
+
+/* Votes */
+
+.vote-column {
+    width: 40px;
+    float: left;
+    margin-left: -52px;    
+}
+
+.vote {
+    width: 40px;
+
+    background: #edeceb;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 0 rgba(83,69,64,0.3),0 1px 1px 0 rgba(0,0,0,0.2);
+    float: left;
+    margin: 0 11px 0 0;
+    position: relative;
+    text-align: center;
+
+}
+
+.fi-arrow-up, .fi-arrow-down {
+    display: block;
+    transform:scale(1.8,1);
+    float:left;
+    width: 100%;
+    text-align: center;
+}
+
+.score {
+    width: 100%;
+    text-align: center;
+}
+
+.post-comments {
+    width: 40px;
+    font-size: 30px;
+    text-align: center;    
+}
+
+.fi-comment {
+  font-size: 42px;    
+}
+
+.number-of-comments {
+    font-size: 18px;
+    color: white;
+
+    display: block;
+    margin-top: -45px;
+    margin-bottom: 10px;    
+}
+
+
+article header {
+    float: left;
+    padding: 0;
+    width: 100%;
+}
+
+.post-header {
+    float:left;
+}
+
+.post-tagline {
+    float:left;
+}
+
+
+/* Subnav */
+
+.subnav {
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(0,0,0,0.02);
+}
+
+.subnav a {
+    color: #bbbbbb;
+    height: 43px;
+    line-height: 46px;
+    margin-bottom: -1px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 20px;
+}
+
+
+/* Sidebar */
+
+.username {
+    float: left;
+    margin: 10px;
+}
+.usermail {
+    float: left;
+    margin: 10px;    
+}
+
+.userkarma {
+    float: left;
+    margin: 10px;    
+}

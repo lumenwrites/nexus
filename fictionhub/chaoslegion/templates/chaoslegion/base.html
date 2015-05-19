@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  {% block head %}
+  <meta charset="utf-8" />
+
+  <title>
+    {% block title %}
+    fictionhub
+    {% endblock title %}
+  </title>
+
+  {% endblock %}
+
+
+  <!-- Import css and scripts  -->
+  <link rel="stylesheet" href="{% static "/static/foundation/css/foundation.css" %}" />
+  <link rel="stylesheet" href="{% static "/static/foundation/css/foundation-icons/foundation-icons.css" %}" />
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{% static "/static/css/main.css" %}" />    
+
+
+  <!-- jQuery -->
+  <script src="{% static "/static/js/vendor/jquery.js" %}" type="text/javascript"></script>
+
+</head>
+
+<body>
+<div id="orange-line"></div>
+  <header>
+      <div class="row" >
+        <div class="large-8 columns" >
+          <a href="/" class="logo">
+	    <!-- <img src="{% static "/static/img/element-icon-fire.png" %}"/> -->
+	    fiction<span class="bold">hub</span>
+	  </a>
+
+        </div>
+        <div class="large-4 columns" id="mainMenu">
+
+	  <ul>
+	    <a href="#"> Home </a>
+	  </ul>
+
+	  <ul>
+	    <a href="#"> Other </a>
+	  </ul>
+
+	  <ul>
+	    <a href="#"> About </a>
+	  </ul>
+	  
+	</div>
+      </div>
+  </header>
+
+  {% block content %}
+  {% endblock %}
+
+  <footer>
+  </footer>
+</body>
+</html>
