@@ -111,3 +111,6 @@ STATICFILES_DIRS = (
 
 
 AUTH_USER_MODEL = 'chaoslegion.User'
+
+# Auth
+LOGIN_URL = '/login/'

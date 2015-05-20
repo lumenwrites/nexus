@@ -1,4 +1,6 @@
 {% extends "chaoslegion/base.html" %}
+{% load staticfiles %}
+
 {% block content %}
     
 <div id="page"  class="postPage">
@@ -9,18 +11,57 @@
       <a> Hot </a>
       <a> New </a>
       <a> Top </a>
+
+      <!-- All by default, while few users. Later add subscriptions.
+      <a>|</a>
+      <a> Subscribed </a>
+      <a> All </a>
+      <!-- <a> Search </a> TODO: intersection of multiple hubs. -->
+      
     </div>
-    <div class="large-3 columns">
-      <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div>
-      <div class="fi-mail usermail"></div>      
-      <div class="userkarma">129</div>
-    </div>
+    <!-- <div class="large-3 columns"> -->
+    <!--   <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div> -->
+    <!--   <\!-- <div class="fi-mail usermail"></div> -\-> -->
+    <!--   <div class="userkarma">129</div> -->
+    <!--   <div class="followers">28</div>       -->
+    <!--   <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
+    <!-- </div> -->
   </div>
 </div>
 
   <div class="row">
     <div class="large-12 columns">
 
+      {% for post in posts %}
+      <article>
+	<!-- Vote -->
+	<div class="vote-column">
+	  <div class="vote">
+	    <div class="fi-arrow-up"></div>
+	    <div class="score"> {{post.score}} </div>
+	    <div class="fi-arrow-down"></div>	    
+	  </div>
+	<!-- Comments -->
+	  <div class="post-comments">
+	    <span class="fi-comment">
+	      <span class="number-of-comments"> 183 </span>
+	    </span>			      
+	  </div>
+	</div>	    	  
+	<!-- Post Header -->
+	<header class="post-header">
+	  <a href="{{ post.get_absolute_url }}">
+	    <h1> {{post.title}} </h1>
+	  </a>
+	    <span class="post-tagline">submitted 14 days ago by {{post.author}}</span>
+	    <hr />
+	</header>
+	<!-- Post Body -->
+	{{post.body}}      	
+	<div>
+      </article>
+      {% endfor %}
+      
       <article>
 	<!-- Vote -->
 	<div class="vote-column">

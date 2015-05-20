@@ -78,6 +78,7 @@ header {
 	padding-bottom: 20px;	
 }
 
+/* Main menu */
 #mainMenu {
 	margin-top: 10px;
 	/* font-family: "Titillium Web"; */
@@ -112,6 +113,12 @@ header {
 	display: inline-block;
 }
 
+.avatar-icon {
+    width: 40px;
+    border-radius: 8px;
+    margin-top: -4px;
+    /* border: 4px solid rgb(246, 99, 3)   */
+}
 
 /* Page */
 #page {
@@ -121,7 +128,7 @@ header {
 
 article {
     margin-top: 20px;
-	margin-bottom: 80px;
+/* margin-bottom: 80px; */
 }
 
 #readmore {
@@ -266,6 +273,26 @@ ul, ol {
 	/* padding: 0; */
 	/* border-radius: 0; */
 }
+
+
+.post-footer-signup .subscribe-button {
+    padding: 10px 20px !important;
+}
+
+.post-footer-signup .author {
+    float: right;
+}
+
+
+.post-footer-signup .followers {
+    background: white;
+    float:right;
+
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0;    
+}
+
 
 #rss-icon {
     float:right;
@@ -577,3 +604,16 @@ article header {
     float: left;
     margin: 10px;    
 }
+
+.followers {
+    float: left;
+    margin: 10px;    
+}
+
+.logout {
+    width: 20px;
+    float: right;
+    margin: 14px;
+    opacity: 0.4;
+}
+

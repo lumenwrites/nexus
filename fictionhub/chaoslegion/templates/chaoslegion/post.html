@@ -3,80 +3,67 @@
     
 <div id="page"  class="postPage">
 
-<div class="subnav">  
-  <div class="row">
-    <div class="large-9 columns">
-      <a> Hot </a>
-      <a> New </a>
-      <a> Top </a>
-    </div>
-    <div class="large-3 columns">
-      <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div>
-      <div class="fi-mail usermail"></div>      
-      <div class="userkarma">129</div>
-    </div>
-  </div>
-</div>
+<!-- <div class="subnav">   -->
+<!--   <div class="row"> -->
+<!--     <div class="large-9 columns"> -->
+<!--       <\!-- <a> Hot </a> -\-> -->
+<!--       <\!-- <a> New </a> -\-> -->
+<!--       <\!-- <a> Top </a> -\-> -->
+<!--     </div> -->
+<!--     <div class="large-3 columns"> -->
+
+<!--       <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div> -->
+<!--       <div class="fi-mail usermail"></div>       -->
+<!--       <div class="userkarma">129</div> -->
+<!--       <div class="followers">36</div>       -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 
   <div class="row">
     <div class="large-12 columns">
-
       <article>
 	<!-- Vote -->
 	<div class="vote-column">
 	  <div class="vote">
 	    <div class="fi-arrow-up"></div>
-	    <div class="score"> 430 </div>
+	    <div class="score"> {{post.score}} </div>
 	    <div class="fi-arrow-down"></div>	    
 	  </div>
 	<!-- Comments -->
 	  <div class="post-comments">
 	    <span class="fi-comment">
-	      <span class="number-of-comments"> 378 </span>
+	      <span class="number-of-comments"> 183 </span>
 	    </span>			      
 	  </div>
 	</div>	    	  
 	<!-- Post Header -->
 	<header class="post-header">
-	    <h1> The Devil's Own Space-Cowboy </h1>
-	    <span class="post-tagline">submitted 6 days ago by NaimKabir</span>
+	  <a href="{{ post.get_absolute_url }}">
+	    <h1> {{post.title}} </h1>
+	  </a>
+	    <span class="post-tagline">submitted 14 days ago by {{post.author}}</span>
 	    <hr />
 	</header>
-	<!-- Post Body -->	
+	<!-- Post Body -->
+	{{post.body}}      	
 	<div>
-
-
-
-<div class="usertext-body may-blank-within md-container "><div class="md"><p><a href="http://www.reddit.com/r/WritingPrompts/comments/35q6cs/wp_you_sold_your_soul_to_the_devil_some_years_ago/cr6s0h6"><strong>Prompt: You sold your soul to the Devil some years ago. Today he gives it back and says, "I need a favor."</strong></a></p>
-
-<p>His voice is difficult to describe.</p>
-
-<p>Picture this: your eardrum is a cigarette filter and his mouth is the burning sunspot of the lit end.</p>
-
-<p>Whenever he speaks, it’s like your brain’s taking a long, long drag.</p>
-
-<p><em>”Remember that little deal we had a while back?”</em></p>
-
-<p>Deal? More like ‘scam’. “The deal we made when I was just a kid? <em>Yeah,</em> I remember that deal.”</p>
-
-<p><em>”Whoa, now,”</em> he said. <em>”I’m detecting a little bit of acid in your speech, there. You angry about something?”</em></p>
-
-<p>“You made a deal with an eight year-old, you colossal douchebag. I wanted to be a ‘space cowboy’, and you took my soul over that?” I shook my head. “What the hell, man?”</p>
-
-<p><em>“Right. About that...”</em> He smiled and it was like watching a crack form in the glacial north arctic. Every time he did it you just knew that some polar bear was getting his life screwed over. <em>“Turns out,”</em> he said, with that same smile, <em>“that your little eight year-old fantasy may not be so useless after all.”</em></p>
-
-<p>I turned around and started locking up the drawers. I was closing up the coffee shop tonight. “Get to the point, Devil.”</p>
-
-<p>His eyes glimmered with some inner light. <em>“Well, I have a particularly difficult task I need your expertise with. I need some space cowboying done.”</em></p>
-
-<p>“You’re shitting me.”</p>
-
-	</div>	
-      </article>      
+      </article>
       
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+      <!-- Follow -->
+<div class="row">
+  <div class="large-12 columns">
+    <div class="post-footer-signup panel">
+      <div class="author">
+	by <a href="#">NaimKabir</a> 320 48
+	<button class="small button subscribe-button"> Subscribe </button>
+      </div>
+    </div>
+  </div>
+</div>  
       
-    </div> <!-- End 12 columns -->
-  </div>	 <!-- End row -->
 {% endblock content %}
-
 

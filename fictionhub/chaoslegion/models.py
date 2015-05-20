@@ -1,7 +1,7 @@
 from django.db import models
-
+from django.template.defaultfilters import slugify
 from django.conf import settings
-
+from django.db.models import permalink
 # Import User if you want to link UserProfile to it:
 # from django.contrib.auth.models import User
 # But I'm replacing it instead:
@@ -12,24 +12,45 @@ from django.contrib.auth.models import AbstractUser
 
 class Post(models.Model):
     title = models.CharField(max_length=256)
+    slug = models.SlugField(max_length=256, unique=True, default="")
+    published = models.BooleanField(default=False)
     body = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-    hubs = models.ForeignKey('Hub')
+    hubs = models.ManyToManyField('Hub', related_name="posts",
+                                  null=True, blank=True)
     score = models.IntegerField(default=0)
     
     pub_date = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        return self.title    
+    #//add bookmarks
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
+    # Response from get_absolute_url: /blog/view/how-to-create-a-basic-blog-in-django.html
+    @permalink
+    def get_absolute_url(self):
+        return ('view_post', None, { 'slug': self.slug })        
+
+    
 
 
 class Hub(models.Model):
-    pass
-    # posts ? already created in posts?
+    title = models.CharField(max_length=64)    
+    slug = models.SlugField(max_length=64, default="")
+
+    def __str__(self):
+        return self.title    
+    
 
     
 class Comment(models.Model):
+    body = models.TextField()    
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     score = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
@@ -39,6 +60,11 @@ class User(AbstractUser):
     about = models.TextField(max_length=512, blank=True)
     karma = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
+
+    # Add subscriptions
+    subscribed_to = models.ManyToManyField('User', related_name="subscribers",
+                                  null=True, blank=True)
+
 
 #link        
 # class User(models.Model):
