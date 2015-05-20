@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # chaoslegion urls
-    url(r'^$', include(chaoslegion_urls)),    
+    url(r'^', include(chaoslegion_urls)),    
 ]

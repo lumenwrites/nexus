@@ -562,8 +562,12 @@ article header {
 
 .username {
     float: left;
-    margin: 10px;
 }
+
+.username a {
+    text-transform: none;    
+}
+
 .usermail {
     float: left;
     margin: 10px;    
