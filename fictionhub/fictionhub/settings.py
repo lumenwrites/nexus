@@ -114,3 +114,4 @@ AUTH_USER_MODEL = 'chaoslegion.User'
 
 # Auth
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

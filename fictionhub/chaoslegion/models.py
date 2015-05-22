@@ -15,7 +15,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=256, unique=True, default="")
     published = models.BooleanField(default=False)
     body = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="submitted_posts")
 
     hubs = models.ManyToManyField('Hub', related_name="posts",
                                   null=True, blank=True)
@@ -64,6 +64,10 @@ class User(AbstractUser):
     # Add subscriptions
     subscribed_to = models.ManyToManyField('User', related_name="subscribers",
                                   null=True, blank=True)
+
+    # Voted
+    upvoted = models.ManyToManyField('Post', related_name="upvoters",
+                                     null=True, blank=True)
 
 
 #link        

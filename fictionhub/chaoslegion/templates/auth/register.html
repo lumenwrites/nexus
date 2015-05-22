@@ -4,15 +4,24 @@
 <div id="page"  class="postPage">
 
   <div class="row">
-    <div class="large-12 columns">
+    <div class="large-4 columns">
       <br/>
+
+      <form method="post" action="/register/">	{% csrf_token %}
+	{{form}}
+	<input type="submit" class="button small" value="submit" />
+	<input type="hidden" name="next" value="{{ next }}" />
+      </form>
+
+      <!--
       <form action="/submit/" method="post">{% csrf_token %}
 	{{form.as_p}}
 	<div style="float:right;">
 	  <button class="button small" type="submit">Save Draft</button>
 	  <button class="button small" type="submit">Publish</button>      
 	</div>
-	</form>
+	
+      </form> -->
       <!-- 
       <form action="/my-handling-form-page" method="post">
 	<div>

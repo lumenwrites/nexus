@@ -21,7 +21,6 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{% static "/static/css/main.css" %}" />    
 
-
   <!-- jQuery -->
   <script src="{% static "/static/js/vendor/jquery.js" %}" type="text/javascript"></script>
 
@@ -44,21 +43,38 @@
 	    <a href="/posts/"> Hubs </a>
 	  </ul>
 
-	  <!-- <ul> -->
-	  <!--   <a href="#"> Subscriptions </a> -->
-	  <!-- </ul> -->
-
+	  {% if user.is_authenticated %}
 	  <ul>
-	    <a href="/submit/"> Write </a>
-	  </ul>
-
-	  <ul>
-	    <a href="/submit/"> Login </a>
-	  </ul>
+	    <a href="#"> Subscriptions </a>
+	  </ul> 
 	  
 	  <ul>
-	    <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/>
+	    <a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false">
+	      <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/>
+	    </a>
+	    <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+	      <li><a href="/user/"><b>{{user.username}}</b> ({{user.karma}})</a></li>
+	      <li><a href="/submit/"> Write </a></li>
+	      <li>
+		<a href="/logout/">
+		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
+		  logout
+		</a>
+	      </li>
+	    </ul>
 	  </ul>
+	  {% else %}
+	  <ul>
+	    <a href="/login/"> Login/Signup </a>
+	  </ul>
+
+	  <ul>
+
+	  </ul>
+	  
+	  {% endif %}
+
+	  
 
 	  
 	  
@@ -71,5 +87,13 @@
 
   <footer>
   </footer>
+  
+  <!-- Scripts -->
+  <script src="  {% static "/static/js/foundation/foundation.js" %}"></script>
+  <script src="  {% static "/static/js/foundation/foundation.dropdown.js" %}"></script>
+
+  <script>
+    $(document).foundation();
+  </script>
 </body>
 </html>

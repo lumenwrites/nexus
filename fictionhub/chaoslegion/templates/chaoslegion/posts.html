@@ -19,27 +19,26 @@
       <!-- <a> Search </a> TODO: intersection of multiple hubs. -->
       
     </div>
-    <!-- <div class="large-3 columns"> -->
-    <!--   <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div> -->
-    <!--   <\!-- <div class="fi-mail usermail"></div> -\-> -->
-    <!--   <div class="userkarma">129</div> -->
-    <!--   <div class="followers">28</div>       -->
-    <!--   <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
-    <!-- </div> -->
+    <!-- <div class="large-3 columns">
+      <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div>
+      <div class="fi-mail usermail"></div>
+      <div class="userkarma">129</div>
+      <div class="followers">28</div>
+      <img class="logout" src="{% static "/static/img/logout.png" %}"/>
+      </div> -->
   </div>
 </div>
 
   <div class="row">
     <div class="large-12 columns">
-
       {% for post in posts %}
       <article>
 	<!-- Vote -->
 	<div class="vote-column">
 	  <div class="vote">
-	    <div class="fi-arrow-up"></div>
+	    <a href="/login/" class="fi-arrow-up upvote {% if post in upvoted %}voted{% endif %}" id="post-vote-{{post.id}}"></a>
 	    <div class="score"> {{post.score}} </div>
-	    <div class="fi-arrow-down"></div>	    
+	    <a href="/downvote/" class="fi-arrow-down"></a>	    
 	  </div>
 	<!-- Comments -->
 	  <div class="post-comments">
@@ -114,7 +113,7 @@
 	</div>	    	  
 	<!-- Post Header -->
 	<header class="post-header">
-	    <h1> The Devil's Own Space-Cowboy </h1>
+	    <h1> The Devils Own Space-Cowboy </h1>
 	    <span class="post-tagline">submitted 6 days ago by NaimKabir</span>
 	    <hr />
 	</header>
@@ -152,7 +151,61 @@
       
       
     </div> <!-- End 12 columns -->
-  </div>	 <!-- End row -->
+      </div>	 <!-- End row -->
+
+
+
+<script>
+    $(document).ready(function(){
+	// getting csrf token.
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+		    var cookie = jQuery.trim(cookies[i]);
+		    // Does this cookie string begin with the name we want?
+		    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+			cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			break;
+		    }
+		}
+	    }
+	    return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+	
+	function upvote(postId) {
+	    $.ajax({
+		type: "POST",
+		url: "/upvote/",
+		data: {"post-id": postId},
+		success: function(){
+		    var upvoteLink = $('#post-vote-'+postId);
+		    upvoteLink.addClass('voted');
+		    var score = upvoteLink.parent().find(".score");
+                    var notUpdated = Number(score.html());
+                    score.html(notUpdated + 1);
+		    upvoteLink.off("click");
+		    upvoteLink.click(function(){ return false;});
+		},
+		headers: {
+		    'X-CSRFToken': csrftoken
+		}
+	    });
+	    return false;
+	}
+
+	{% if user.is_authenticated %}
+	$("a.upvote").click(function(){
+	    var postId = parseInt(this.id.split("-")[2]);
+	    return upvote(postId);
+	})
+	$("a.voted").off("click");
+        $("a.voted").click(function(){ return false;});
+	{% endif %}
+    })
+</script>
 {% endblock content %}
 
 

@@ -238,8 +238,8 @@
             o = o_p.offset(),
             p = t.offset();
 
-        p.top -= o.top;
-        p.left -= o.left;
+        p.top -= o.top - 20;
+        p.left -= o.left + 20;
         
         //set some flags on the p object to pass along
         p.missRight = false;

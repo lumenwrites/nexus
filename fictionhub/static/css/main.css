@@ -92,11 +92,6 @@ header {
     color: black;
 }
 
-#mainMenu ul li{
-	list-style-type:none;
-	display: inline-block;
-}
-
 .selected a {
 	color: #f76300;
 }
@@ -108,10 +103,12 @@ header {
 	margin-right: 10px;
 }
 
-#mainMenu ul li{
+/* remove for dropdown
+#mainMenu ul li{		
 	list-style-type:none;
 	display: inline-block;
 }
+*/
 
 .avatar-icon {
     width: 40px;
@@ -120,6 +117,9 @@ header {
     /* border: 4px solid rgb(246, 99, 3)   */
 }
 
+.userbox {
+    /* float: right; */
+}
 /* Page */
 #page {
     background-color: #f6f3ea;
@@ -492,6 +492,10 @@ hr {
     margin-top: 0;
 }
 
+.logo:hover {
+    color: #3d454b;
+}
+
 
 
 
@@ -522,6 +526,15 @@ hr {
     float:left;
     width: 100%;
     text-align: center;
+    color: #3d454b;
+}
+
+.fi-arrow-up:hover {
+    color: #f76300;    
+}
+
+.voted,.voted:active,.voted:visited {
+    color: #f76300;    
 }
 
 .score {
@@ -617,3 +630,10 @@ article header {
     opacity: 0.4;
 }
 
+
+#contentDrop{left: -100px !important;}
+
+/* Auth */
+.helptext {
+    display:none;
+}
