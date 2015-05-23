@@ -17,9 +17,10 @@ urlpatterns = [
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),        
 
-    url('^login/$', views.login_or_signup, name='login'),    
+
+    url('^login/$', views.login_or_signup, name='login'),
+    # url(r'^login/', 'django.contrib.auth.views.login', {'template_name':'auth/login.html'}),
+    url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page':'/'}),
     url('^register/$', views.register, name='register'),
     url(r'^authenticate/', views.authenticate_user, name='authenticate'),
-    
-
 ]

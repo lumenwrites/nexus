@@ -13,12 +13,11 @@ from django.contrib.auth.models import AbstractUser
 class Post(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True, default="")
-    published = models.BooleanField(default=False)
+    published = models.BooleanField(default=True) # change to false when I have save draft?
     body = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="submitted_posts")
 
-    hubs = models.ManyToManyField('Hub', related_name="posts",
-                                  null=True, blank=True)
+    hubs = models.ManyToManyField('Hub', related_name="posts", blank=True)
     score = models.IntegerField(default=0)
     
     pub_date = models.DateTimeField(auto_now_add=True)
@@ -62,12 +61,10 @@ class User(AbstractUser):
     created = models.DateTimeField(auto_now_add=True)
 
     # Add subscriptions
-    subscribed_to = models.ManyToManyField('User', related_name="subscribers",
-                                  null=True, blank=True)
+    subscribed_to = models.ManyToManyField('User', related_name="subscribers", blank=True)
 
     # Voted
-    upvoted = models.ManyToManyField('Post', related_name="upvoters",
-                                     null=True, blank=True)
+    upvoted = models.ManyToManyField('Post', related_name="upvoters", blank=True)
 
 
 #link        

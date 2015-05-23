@@ -1,5 +1,6 @@
 {% extends "chaoslegion/base.html" %}
 {% load staticfiles %}
+{% load markdownify %}
 
 {% block content %}
     
@@ -7,7 +8,7 @@
 
 <div class="subnav">  
   <div class="row">
-    <div class="large-9 columns">
+    <div class="large-12 columns">
 
 
       
@@ -31,7 +32,24 @@
       <a> Subscribed </a>
       <a> All </a>
       <!-- <a> Search </a> TODO: intersection of multiple hubs. -->
-      
+
+      <!--
+	  <a style="float:right;">Hub: All <inputtype="text"></input></a>	  
+	  - Short Stories	  	  
+	  - Flash Fiction
+	  - Writing Prompts
+	  - Sketches/Jokes
+	  - Screenwriting
+
+	  - Sci-Fi
+	  - Fantasy
+	  - Comedy
+	  - Essay  
+	  - Horror
+	  - FanFiction (and categorize specific stuff with tags!!??)
+
+	  - Discussion	  
+	-->
     </div>
     <!-- <div class="large-3 columns">
       <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div>
@@ -70,7 +88,7 @@
 	  <hr />
 	</header>
 	<!-- Post Body -->
-	{{post.body}}
+	{{post.body | markdownify | safe }}
 	<br/>
 	<a href="{{ post.get_absolute_url }}">	read more >>>> </a>
 	<div>

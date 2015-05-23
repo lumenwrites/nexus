@@ -1,4 +1,5 @@
 {% extends "chaoslegion/base.html" %}
+{% load markdownify %}
 {% block content %}
     
 <div id="page"  class="postPage">
@@ -46,7 +47,7 @@
 	    <hr />
 	</header>
 	<!-- Post Body -->
-	{{post.body}}      	
+	{{post.body | markdownify | safe }}
 	<div>
       </article>
       

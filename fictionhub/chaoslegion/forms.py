@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        exclude = ['author', 'slug', 'score',] 
+        exclude = ['author', 'slug', 'score', 'published',] 
 
         
 
