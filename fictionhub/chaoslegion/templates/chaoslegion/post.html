@@ -42,7 +42,7 @@
 	  <a href="{{ post.get_absolute_url }}">
 	    <h1> {{post.title}} </h1>
 	  </a>
-	    <span class="post-tagline">submitted 14 days ago by {{post.author}}</span>
+	  <!-- <span class="post-tagline">submitted 14 days ago by <a href="#">{{post.author}}</a></span> -->
 	    <hr />
 	</header>
 	<!-- Post Body -->
@@ -57,9 +57,16 @@
 <div class="row">
   <div class="large-12 columns">
     <div class="post-footer-signup panel">
+      <!-- 
+	<span class="hub-tag">Writing Prompts</span>
+	<span class="hub-tag">Comedy</span>
+	<span class="hub-tag">Flash Fiction</span>	  	  
+       -->
       <div class="author">
-	by <a href="#">NaimKabir</a> 320 48
-	<button class="small button subscribe-button"> Subscribe </button>
+	by <a href="#">NaimKabir</a>
+	<span class="userkarma">128</span>
+	<button class="small button" style="padding:10px;margin:0 10px;">Subscribe
+	  <span class="subscribers">128</span></button>	
       </div>
     </div>
   </div>

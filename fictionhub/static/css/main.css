@@ -28,7 +28,8 @@ a {
 }
 
 p {
-    margin-top: 19px!important;
+    margin-top: 0;
+    margin-bottom: 19px;
 }
 
 h1, h2, h3, h4 {
@@ -279,7 +280,15 @@ ul, ol {
     padding: 10px 20px !important;
 }
 
+.button.small {
+    margin-bottom: 0;
+}
+
 .post-footer-signup .author {
+    float: right;
+}
+
+.author {
     float: right;
 }
 
@@ -438,9 +447,8 @@ h4 {
     margin-bottom: 0;
 }
 
-p {
-margin-top: 0!important;
-margin-bottom: 19px !important;
+.bold {
+    font-weight:bold;
 }
 
 blockquote, blockquote p {
@@ -475,10 +483,6 @@ blockquote strong {
     font-family: "Titillium Web";
     color: #3d454b;
     font-size: 36px;
-}
-
-.bold {
-    font-weight: 600;
 }
 
 .logo img {
@@ -585,7 +589,7 @@ article header {
   background-color: rgba(0,0,0,0.02);
 }
 
-.subnav a {
+.subnav a, .subnav span {
     color: #bbbbbb;
     height: 43px;
     line-height: 46px;
@@ -597,6 +601,10 @@ article header {
     margin-right: 20px;
 }
 
+.bold {
+    font-weight: bold!important;
+    color: #3d454b!important;
+}
 
 /* Sidebar */
 
@@ -614,13 +622,16 @@ article header {
 }
 
 .userkarma {
-    float: left;
-    margin: 10px;    
+  background: rgba(119, 119, 119, 0.2);
+  padding: 4px;
+  border-radius: 4px;    
 }
 
-.followers {
-    float: left;
-    margin: 10px;    
+.subscribers {
+    background: white;
+    padding: 4px;
+    border-radius: 4px;
+    margin-right: -4px;
 }
 
 .logout {
@@ -636,4 +647,28 @@ article header {
 /* Auth */
 .helptext {
     display:none;
+}
+
+/* Profile */
+.profile .button.small {
+    /* padding: 10px; */
+    /* float:left; */
+    margin: 16px;
+}
+
+.profie .subnav {
+    text-align: center;
+}
+
+.userdata {
+    margin-bottom: 0;
+}
+
+/* Hubs */
+
+.hub-tag {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
 }
