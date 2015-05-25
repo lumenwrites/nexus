@@ -12,7 +12,7 @@
 * {
     font-family: "Titillium Web";
     font-family: 'Open Sans', sans-serif;
-	color: #3d454b;
+    color: #3d454b;
 }
 
 html {
@@ -524,7 +524,9 @@ hr {
 
 }
 
-.fi-arrow-up, .fi-arrow-down {
+/* Defaut state */
+.fi-arrow-up, .fi-arrow-down,
+.fi-arrow-up:active, .fi-arrow-down:active {
     display: block;
     transform:scale(1.8,1);
     float:left;
@@ -533,13 +535,29 @@ hr {
     color: #3d454b;
 }
 
-.fi-arrow-up:hover {
+/* Upvote hover is orange */
+.upvote:hover {
     color: #f76300;    
 }
 
-.voted,.voted:active,.voted:visited {
+/* Once upvoted/downvoted state */
+.upvoted,.upvoted:active,.upvoted:visited {
     color: #f76300;    
 }
+
+.downvoted,.downvoted:active,.downvoted:visited {
+    color: #008CBA;    
+}
+
+
+/* The opposite button is grey */
+.downvoted.upvote:hover,
+.upvoted.downvote:hover,
+.downvoted.upvote:visited,
+.upvoted.downvote:visited {
+    color: #3d454b;    
+}
+
 
 .score {
     width: 100%;
@@ -591,14 +609,16 @@ article header {
 
 .subnav a, .subnav span {
     color: #bbbbbb;
-    height: 43px;
-    line-height: 46px;
     margin-bottom: -1px;
     display: inline-block;
     text-transform: uppercase;
     font-size: 18px;
     font-weight: 400;
     margin-right: 20px;
+}
+
+.rank-types a {
+    line-height: 52px;
 }
 
 .bold {
@@ -627,12 +647,6 @@ article header {
   border-radius: 4px;    
 }
 
-.subscribers {
-    background: white;
-    padding: 4px;
-    border-radius: 4px;
-    margin-right: -4px;
-}
 
 .logout {
     width: 20px;
@@ -664,6 +678,21 @@ article header {
     margin-bottom: 0;
 }
 
+.usersubscribe {
+    text-transform: none!important; /* Why do I need important here? */
+}
+
+.unsubscribe {
+    background: rgba(187, 187, 187, 0.8)!important;
+}
+.subscribers {
+    background: white;
+    padding: 4px;
+    border-radius: 4px;
+    margin-right: -4px!important; 
+}
+
+
 /* Hubs */
 
 .hub-tag {
@@ -671,4 +700,12 @@ article header {
   padding: 2px 8px;
   border-radius: 4px;
   margin-left: 6px;
+  color: #3d454b;
+}
+
+/* Comments */
+
+.comment {
+    margin: 20px;
+    padding: 20px;
 }

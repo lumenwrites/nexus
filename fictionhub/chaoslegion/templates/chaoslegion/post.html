@@ -58,20 +58,46 @@
 <div class="row">
   <div class="large-12 columns">
     <div class="post-footer-signup panel">
-      <!-- 
+
+      {% for hub in hubs %}
+      <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      {% endfor %}
+	<!-- 
 	<span class="hub-tag">Writing Prompts</span>
 	<span class="hub-tag">Comedy</span>
-	<span class="hub-tag">Flash Fiction</span>	  	  
-       -->
+	<span class="hub-tag">Flash Fiction</span>
+	-->
       <div class="author">
-	by <a href="#">NaimKabir</a>
-	<span class="userkarma">128</span>
+	by <a href="/user/{{post.author.username}}">{{post.author.username}}</a>
+	<span class="userkarma">{{post.author.karma}}</span>
 	<button class="small button" style="padding:10px;margin:0 10px;">Subscribe
 	  <span class="subscribers">128</span></button>	
       </div>
     </div>
   </div>
 </div>  
-      
+
+<div class="row">
+  <div class="large-12 columns">
+    <h4 id="comments"> Comments </h4>
+      <form action="/post/{{post.slug}}.html" method="post">{% csrf_token %}
+	{{form.body}}
+	<div style="float:right;">
+	  <button class="button small" type="submit">Submit</button>      
+	</div>
+      </form>
+      <div class="comments">
+	{% for comment in comments %}
+	<div class="comment">
+	  <b>{{comment.author.username}}</b>
+	  <p>
+	    {{comment.body}}
+	  </p>
+	</div>
+	{% endfor %}
+      </div>
+  </div>
+</div>  
+
 {% endblock content %}
 

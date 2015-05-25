@@ -1,49 +1,50 @@
 {% extends "chaoslegion/base.html" %}
+{% load staticfiles %}
 {% load markdownify %}
+
 {% block content %}
     
-<div id="page"  class="postPage profile">
-<div class="subnav">
-  <div class="row">
-    <div class="large-4 columns" style="//padding-top: 20px;">
-      <div class="rank-types">
-	<a> New </a>
-	<a> Top </a>
-	<a> Comments </a>
-      </div>
-    </div>
-    <div class="large-8 columns">
-      <div style="float:right;">
-	<!-- <a> Store </a>	 -->
-	<!-- <a> Website </a> -->
-	<!-- <a herf="/user/{{userprofile.username}}/about"> About </a> -->
-	<button class="small button" style="padding:10px;margin:0 10px;"
-		action="/user/{{userprofile.username}}" method="post">
-	  Subscribe <span class="subscribers">128</span></button>
-	<b> {{userprofile.username}} </b>
-	<span class="userkarma">{{userprofile.karma}}</span>
-
-	<!-- <a> http://orangemind.io </a> -->
-	<!-- <p class="userdata">Karma: 128 | Followers: 32</p> -->
-      </div>
-    </div>        
-  </div>
-</div>
+<div id="page"  class="postPage">
 
   <div class="row">
     <div class="large-12 columns">
       {% for post in posts %}
       <article>
+	<!-- Vote -->
+	<div class="vote-column">
+	  <div class="vote">
+	    <a href="/login/"
+	       class="fi-arrow-up upvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-upvote-{{post.id}}"></a>
+	    <div class="score"> {{post.score}} </div>
+	    <a href="/login/"
+	       class="fi-arrow-down downvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-downvote-{{post.id}}"></a>    
+	  </div>
+	<!-- Comments -->
+	  <div class="post-comments">
+	    <span class="fi-comment">
+	      <span class="number-of-comments"> 183 </span>
+	    </span>			      
+	  </div>
+	</div>	    	  
 	<!-- Post Header -->
 	<header class="post-header">
 	  <a href="{{ post.get_absolute_url }}">
-	    <h1> About </h1>
+	    <h1> {{post.title}} </h1>
 	  </a>
+	  <span class="post-tagline">submitted 14 days ago by
+	    <a href="/user/{{post.author.username}}">{{post.author}}</a></span>
 	  <hr />
 	</header>
 	<!-- Post Body -->
-	{{userprofile.about | markdownify | safe }}
+	{{post.body | markdownify | safe }}
 	<br/>
+	<a href="{{ post.get_absolute_url }}">	read more >>>> </a>
 	<div>
       </article>
       {% endfor %}
@@ -141,6 +142,8 @@
         $("a.upvoted").click(function(){ return false;});
         $("a.downvoted").click(function(){ return false;});	
 	{% endif %}
+
+
     })
 </script>
 {% endblock content %}

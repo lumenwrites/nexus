@@ -1,6 +1,6 @@
 import datetime
 from django.utils.timezone import utc
-
+import re
 import praw
 
 from django.shortcuts import render, get_object_or_404
@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 
 def rank_hot_posts(top=180, consider=1000, hub_slug=None):
@@ -23,9 +23,16 @@ def rank_hot_posts(top=180, consider=1000, hub_slug=None):
     # top - number of stories to show,
     # consider - number of latest stories to rank
     posts = Post.objects.all()
-    # if category_slug: # filter by hub
-    #     category_id = Category.objects.get(slug=category_slug).id
-    #     posts = posts.filter(category=category_id)
+
+    # filter by hub
+    # if hub_slug: 
+    #     hub = Hub.objects.get(slug=hub_slug)
+    #     posts_in_hub = []
+    #     for post in posts:
+    #         if hub in post.hubs.all():
+    #             posts_in_hub.append(post)
+    #     posts = posts_in_hub
+
     latest_posts = posts.order_by('-pub_date')#[:consider]
     #comprehension, posts with rating, sorted
     posts_with_rating = [(score(post), post) for post in latest_posts]
@@ -57,12 +64,16 @@ def hot_posts(request):
 
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
     else:
         upvoted = []
+        downvoted = []        
+        
     return render(request, 'chaoslegion/posts.html',{
         'posts': posts,
         'user': request.user,
         'upvoted': upvoted,
+        'downvoted': downvoted,                
         'rankby': "hot"
     })
 
@@ -72,13 +83,16 @@ def new_posts(request):
 
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()        
     else:
         upvoted = []
+        downvoted = []        
 
     return render(request, 'chaoslegion/posts.html',{
         'posts': posts,
         'user': request.user,
         'upvoted': upvoted,
+        'downvoted': downvoted,        
         'rankby': "new"        
     })
 
@@ -88,14 +102,72 @@ def top_posts(request,slug):
 
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
     else:
         upvoted = []
+        downvoted = []                
+
 
     return render(request, 'chaoslegion/posts.html',{
         'posts' : posts,
         'user': request.user,
         'upvoted': upvoted,
+        'downvoted': downvoted,                        
         'rankby':slug,
+    })
+
+# Hubs
+def hub_new(request,slug):
+    posts = Post.objects.all().order_by('-pub_date')#[:consider]
+
+    # filter by hub
+    hub = Hub.objects.get(slug=slug)
+    posts_in_hub = []
+    for post in posts:
+        if hub in post.hubs.all():
+            posts_in_hub.append(post)
+    posts = posts_in_hub
+
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()        
+    else:
+        upvoted = []
+        downvoted = []        
+
+    return render(request, 'chaoslegion/posts.html',{
+        'posts': posts,
+        'user': request.user,
+        'upvoted': upvoted,
+        'downvoted': downvoted,        
+        'rankby': "new"        
+    })
+
+# Subscriptions
+def subscriptions(request):
+    subscribed_to = request.user.subscribed_to.all()
+    # posts = Post.objects.filter(author=subscriptions).order_by('-pub_date')#[:consider]
+    all_posts = Post.objects.all().order_by('-pub_date')
+
+    posts = []
+    
+    for post in all_posts:
+        if post.author in subscribed_to:
+            posts.append(post)
+
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()        
+    else:
+        upvoted = []
+        downvoted = []        
+
+    return render(request, 'chaoslegion/subscriptions.html',{
+        'posts': posts,
+        'user': request.user,
+        'upvoted': upvoted,
+        'downvoted': downvoted,        
+        'rankby': "new"        
     })
 
 # View Hub
@@ -119,8 +191,29 @@ def top_posts(request,slug):
 
 # View one post
 def post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    comments = Comment.objects.filter(post = post)                
+
+    hubs = post.hubs.all()
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) # return story but don't save it to db just yet
+            comment.author = request.user
+            comment.parent = None
+            comment.post = post
+            comment.save()
+            return HttpResponseRedirect('/post/'+slug+'#comments')
+    else:
+        form = CommentForm()
+    
+    
     return render(request, 'chaoslegion/post.html',{
-        'post': get_object_or_404(Post, slug=slug)
+        'post': post,
+        'comments': comments,        
+        'form': form,
+        'hubs':hubs
     })
     
 
@@ -129,14 +222,24 @@ def upvote(request):
     post = get_object_or_404(Post, id=request.POST.get('post-id'))
     post.score += 1
     post.save()
+    post.author.karma += 1
+    post.author.save()
     user = request.user
     user.upvoted.add(post)
     user.save()
     return HttpResponse()
 
-
 def downvote(request):
-    pass
+    post = get_object_or_404(Post, id=request.POST.get('post-id'))
+    if post.score > 0:
+        post.score -= 1
+        post.author.karma -= 1        
+    post.save()
+    post.author.save()
+    user = request.user
+    user.downvoted.add(post)
+    user.save()
+    return HttpResponse()
 
 
 
@@ -155,14 +258,84 @@ def submit(request):
         form = PostForm()
     return render(request, 'chaoslegion/submit.html', {'form':form})
 
-def user(request):
+# Writing Prompt
+@login_required
+def prompt(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False) # return story but don't save it to db just yet
+            post.author = request.user
+            post.hubs = Hub.objects.get(slug="writing-prompts")
+            post.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = PostForm()
+
+    r = praw.Reddit(user_agent='my_cool_application')
+    prompts = (r.get_subreddit('WritingPrompts').get_new(limit=1))
+    prompt = list(prompts)[0]
+    promptstring = str(prompt.title)
+    cleanprompt = re.sub('\[(.*?)\]', '', promptstring) # remove [WP]
+    
+    return render(request, 'chaoslegion/prompt.html', {
+        'form':form,
+        'prompt': cleanprompt
+    })
+
+
+# User
+def user_new(request, username):
+    userprofile = get_object_or_404(User, username=username)    
+    posts = Post.objects.filter(author=userprofile).order_by('-pub_date')
+    subscribed_to = request.user.subscribed_to.all()    
+
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
+    
     return render(request, 'chaoslegion/user.html',{
+        'posts':posts,
+        'upvoted': upvoted,
+        'downvoted': downvoted,                
+        'userprofile':userprofile,
+        'subscribed_to': subscribed_to
     })
 
-def about(request):
+def subscribe(request, username):
+    userprofile = User.objects.get(username=username)    
+    user = request.user
+    user.subscribed_to.add(userprofile)
+    user.save()
+    return HttpResponseRedirect('/user/'+username)
+
+def unsubscribe(request, username):
+    userprofile = User.objects.get(username=username)    
+    user = request.user
+    user.subscribed_to.remove(userprofile)
+    user.save()
+    return HttpResponseRedirect('/user/'+username)
+
+
+def about(request, username):
+    userprofile = get_object_or_404(User, username=username)    
+    posts = Post.objects.filter(author=userprofile).order_by('-pub_date')
+
+    if request.method == 'POST':
+        user = request.user
+        userprofile.subscribers = user
+        userprofile.save()
+        return HttpResponseRedirect('/user/'+username)
+    else:
+        form = CommentForm()
+    
     return render(request, 'chaoslegion/about.html',{
+        'posts':posts,
+        'userprofile':userprofile
     })
-
 
 
 # Login or sign up

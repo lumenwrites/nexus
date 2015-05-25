@@ -15,7 +15,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=256, unique=True, default="")
     published = models.BooleanField(default=True) # change to false when I have save draft?
     body = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="submitted_posts")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts")
 
     hubs = models.ManyToManyField('Hub', related_name="posts", blank=True)
     score = models.IntegerField(default=0)
@@ -49,14 +49,20 @@ class Hub(models.Model):
 
     
 class Comment(models.Model):
+    post = models.ForeignKey('Post', related_name="comments", default=None)
+    parent = models.ForeignKey('Comment', related_name="children", null=True, default=None)
     body = models.TextField()    
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments")
     score = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.post.title
+    
     
 class User(AbstractUser):  
     about = models.TextField(max_length=512, blank=True)
+    website = models.CharField(max_length=32, blank=True)    
     karma = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -65,6 +71,7 @@ class User(AbstractUser):
 
     # Voted
     upvoted = models.ManyToManyField('Post', related_name="upvoters", blank=True)
+    downvoted = models.ManyToManyField('Post', related_name="downvoters", blank=True)    
 
 
 #link        

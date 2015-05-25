@@ -39,26 +39,30 @@
         </div>
         <div class="large-5 columns" id="mainMenu">
 	  <div style="float:right;">
-	  <ul>
+	    
+	  <!-- <ul>
 	    <a href="/posts/"> Hubs </a>
-	  </ul>
+	  </ul> -->
 
 	  {% if user.is_authenticated %}
 	  <ul>
-	    <a href="#"> Subscriptions </a>
+	    <a href="/subscriptions/"> Subscriptions </a>
 	  </ul> 
 
+	  <!-- 
 	  <ul>
-	    <a href="#"> Writing Prompt </a>
+	    <a href="/prompt/"> Writing Prompt </a>
 	  </ul>
-	  
+	   -->
+
 	  <ul>
 	    <a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false">
 	      <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/>
 	    </a>
 	    <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
-	      <li><a href="/user/"><b>{{user.username}}</b> ({{user.karma}})</a></li>
+	      <li><a href="/user/{{user.username}}"><b>{{user.username}}</b> ({{user.karma}})</a></li>
 	      <li><a href="/submit/"> Write </a></li>
+	      <li><a href="/submit/"> Dashboard </a></li>	      
 	      <li>
 		<a href="/logout/">
 		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->

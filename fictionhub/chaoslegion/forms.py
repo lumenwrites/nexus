@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Post, User
+from .models import Post, Comment, User
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -10,6 +10,11 @@ class PostForm(ModelForm):
         model = Post
         exclude = ['author', 'slug', 'score', 'published',] 
 
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['author', 'post', 'parent', 'slug', 'score', 'published',] 
+        
         
 
 class RegistrationForm(UserCreationForm):

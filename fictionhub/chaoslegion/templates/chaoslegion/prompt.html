@@ -6,14 +6,16 @@
   <div class="row">
     <div class="large-12 columns">
       <br/>
-      <form action="/submit/" method="post">{% csrf_token %}
-	{{form.as_p}}
+      <b>{{prompt}}</b>
+      <form action="/prompt/" method="post">{% csrf_token %}
+	{{form.title}}
+	{{form.body}}	
 	<div style="float:right;">
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <button class="button small" type="submit">Publish</button>      
 	</div>
 	
-      </form>
+	</form>
       <!-- 
       <form action="/my-handling-form-page" method="post">
 	<div>
