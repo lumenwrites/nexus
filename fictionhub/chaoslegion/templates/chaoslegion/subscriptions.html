@@ -48,6 +48,25 @@
 	<div>
       </article>
       {% endfor %}
+
+
+      <div class="pagination">
+	<span class="step-links">
+          {% if posts.has_previous %}
+          <a href="?page={{ posts.previous_page_number }}"><</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ posts.number }}
+	    <!-- of {{ posts.paginator.num_pages }} -->
+          </span>
+
+          {% if posts.has_next %}
+          <a href="?page={{ posts.next_page_number }}">></a>
+          {% endif %}
+	</span>
+      </div>
+      
     </div> <!-- End 12 columns -->
     </div>	 <!-- End row -->
 

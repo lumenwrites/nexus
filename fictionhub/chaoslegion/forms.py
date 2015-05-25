@@ -8,12 +8,17 @@ from django.contrib.auth.forms import UserCreationForm
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        exclude = ['author', 'slug', 'score', 'published',] 
+        exclude = ['author', 'slug', 'score', 'published',]
 
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
         exclude = ['author', 'post', 'parent', 'slug', 'score', 'published',] 
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'website',  'about'] 
         
         
 

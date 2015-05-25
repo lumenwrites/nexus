@@ -598,6 +598,9 @@ article header {
     float:left;
 }
 
+.edit-post {
+    float:right;
+}
 
 /* Subnav */
 
@@ -617,9 +620,11 @@ article header {
     margin-right: 20px;
 }
 
+/* User rank types at the center. disable when no subscribe button.
 .rank-types a {
     line-height: 52px;
 }
+*/
 
 .bold {
     font-weight: bold!important;

@@ -83,7 +83,7 @@
 	<!-- Comments -->
 	  <div class="post-comments">
 	    <span class="fi-comment">
-	      <span class="number-of-comments"> 183 </span>
+	      <a href="{{ post.get_absolute_url }}#comments"><span class="number-of-comments"> {{post.comments.count}} </span></a>
 	    </span>			      
 	  </div>
 	</div>	    	  
@@ -92,7 +92,7 @@
 	  <a href="{{ post.get_absolute_url }}">
 	    <h1> {{post.title}} </h1>
 	  </a>
-	  <span class="post-tagline">submitted 14 days ago by
+	  <span class="post-tagline"><!-- submitted 14 days ago --> by
 	    <a href="/user/{{post.author.username}}">{{post.author}}</a></span>
 	  <hr />
 	</header>
@@ -103,9 +103,28 @@
 	<div>
       </article>
       {% endfor %}
+
+      <div class="pagination">
+	<span class="step-links">
+          {% if posts.has_previous %}
+          <a href="?page={{ posts.previous_page_number }}"><</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ posts.number }}
+	    <!-- of {{ posts.paginator.num_pages }} -->
+          </span>
+
+          {% if posts.has_next %}
+          <a href="?page={{ posts.next_page_number }}">></a>
+          {% endif %}
+	</span>
+      </div>
+      
     </div> <!-- End 12 columns -->
     </div>	 <!-- End row -->
 
+    
 
 
 <script>

@@ -27,22 +27,31 @@
 	<!-- Vote -->
 	<div class="vote-column">
 	  <div class="vote">
-	    <div class="fi-arrow-up"></div>
+	    <a href="/login/"
+	       class="fi-arrow-up upvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-upvote-{{post.id}}"></a>
 	    <div class="score"> {{post.score}} </div>
-	    <div class="fi-arrow-down"></div>	    
+	    <a href="/login/"
+	       class="fi-arrow-down downvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-downvote-{{post.id}}"></a>    
 	  </div>
 	<!-- Comments -->
 	  <div class="post-comments">
 	    <span class="fi-comment">
-	      <span class="number-of-comments"> 183 </span>
+	      <a href="{{ post.get_absolute_url }}#comments"><span class="number-of-comments"> {{post.comments.count}} </span></a>
 	    </span>			      
 	  </div>
 	</div>	    	  
 	<!-- Post Header -->
 	<header class="post-header">
-	  <a href="{{ post.get_absolute_url }}">
+	  {% if user == post.author %}
+	  <a class="edit-post" href="/post/{{post.slug}}/edit">Edit Post</a>
+	  {% endif %}	  
 	    <h1> {{post.title}} </h1>
-	  </a>
 	  <!-- <span class="post-tagline">submitted 14 days ago by <a href="#">{{post.author}}</a></span> -->
 	    <hr />
 	</header>
@@ -70,8 +79,20 @@
       <div class="author">
 	by <a href="/user/{{post.author.username}}">{{post.author.username}}</a>
 	<span class="userkarma">{{post.author.karma}}</span>
-	<button class="small button" style="padding:10px;margin:0 10px;">Subscribe
-	  <span class="subscribers">128</span></button>	
+
+	<!-- 
+	{% if not user == post.author %}
+	{% if post.author not in user.subscribed_to %}
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/user/{{post.author.username}}/subscribe">
+	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</a></button>
+	{% else %}
+	<a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	   href="/user/{{post.author.username}}/unsubscribe">
+	  Ubsubscribe <span class="subscribers">{{post.author.subscribers.count}}</a></button>
+	{% endif %}
+	{% endif %}
+        -->
       </div>
     </div>
   </div>

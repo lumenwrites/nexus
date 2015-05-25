@@ -1,0 +1,27 @@
+{% extends "chaoslegion/base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+
+  <div class="row">
+    <div class="large-12 columns">
+      <br/>
+      <form action="/post/{{slug}}/edit" method="post">{% csrf_token %}
+	{{form.title}}
+	{{form.body}}	
+	<div style="float:right;">
+	  <button class="button small" type="submit">Save</button>
+	  <p></p>
+	</div>
+
+	
+	
+      </form>
+    </div>	
+</article>      
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+{% endblock content %}
+

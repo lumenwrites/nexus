@@ -30,19 +30,25 @@
 	<a href="{{userprofile.website}}"> Website </a>
 	{% endif %}
 	{% if userprofile.about %}
-	<a herf="/user/{{userprofile.username}}/about"> About </a>
+	<a href="/user/{{userprofile.username}}/about"> About </a>
 	{% endif %}
 
-	{% if not userprofile == user %}
-	{% if userprofile not in subscribed_to %}	
+	{% if user.is_authenticated %}	
+	  {% if not userprofile == user %}
+	    {% if userprofile not in subscribed_to %}	
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{userprofile.username}}/subscribe">
+	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	    {% else %}
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{userprofile.username}}/unsubscribe">
+	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	    {% endif %}
+	  {% endif %}
+        {% else %}
 	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	   href="/user/{{userprofile.username}}/subscribe">
-	  Subscribe <span class="subscribers">128</a></button>
-	{% else %}
-	<a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
-	   href="/user/{{userprofile.username}}/unsubscribe">
-	  Ubsubscribe <span class="subscribers">128</a></button>
-	{% endif %}
+	   href="/login/">
+	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	{% endif %}
 
 	<b> {{userprofile.username}} </b>
@@ -77,7 +83,7 @@
 	<!-- Comments -->
 	  <div class="post-comments">
 	    <span class="fi-comment">
-	      <span class="number-of-comments"> 183 </span>
+	      <a href="/post/{{post.slug}}#comments"><span class="number-of-comments"> {{post.comments.count}} </span></a>
 	    </span>			      
 	  </div>
 	</div>	    	  
@@ -86,7 +92,7 @@
 	  <a href="{{ post.get_absolute_url }}">
 	    <h1> {{post.title}} </h1>
 	  </a>
-	  <span class="post-tagline">submitted 14 days ago by <a>{{post.author}}</a></span>
+	  <!-- <span class="post-tagline">submitted 14 days ago by <a>{{post.author}}</a></span> -->
 	  <hr />
 	</header>
 	<!-- Post Body -->
@@ -96,102 +102,28 @@
 	<div>
       </article>
       {% endfor %}
+
+
+      <div class="pagination">
+	<span class="step-links">
+          {% if posts.has_previous %}
+          <a href="?page={{ posts.previous_page_number }}"><</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ posts.number }}
+	    <!-- of {{ posts.paginator.num_pages }} -->
+          </span>
+
+          {% if posts.has_next %}
+          <a href="?page={{ posts.next_page_number }}">></a>
+          {% endif %}
+	</span>
+      </div>
+      
     </div> <!-- End 12 columns -->
     </div>	 <!-- End row -->
 
-
-
-<script>
-    $(document).ready(function(){
-	// getting csrf token.
-	function getCookie(name) {
-	    var cookieValue = null;
-	    if (document.cookie && document.cookie != '') {
-		var cookies = document.cookie.split(';');
-		for (var i = 0; i < cookies.length; i++) {
-		    var cookie = jQuery.trim(cookies[i]);
-		    // Does this cookie string begin with the name we want?
-		    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-			cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-			break;
-		    }
-		}
-	    }
-	    return cookieValue;
-	}
-	var csrftoken = getCookie('csrftoken');
-
-	// Upvote
-	function upvote(postId) {
-	    $.ajax({
-		type: "POST",
-		url: "/upvote/",
-		data: {"post-id": postId},
-		success: function(){
-		    var upvoteLink = $('#post-upvote-'+postId);
-		    var downvoteLink = $('#post-downvote-'+postId);		    
-		    upvoteLink.addClass('upvoted');
-		    downvoteLink.addClass('upvoted');		    
-		    var score = upvoteLink.parent().find(".score");
-                    var notUpdated = Number(score.html());
-                    score.html(notUpdated + 1);
-		    upvoteLink.off("click");
-		    downvoteLink.off("click");		    
-		    upvoteLink.click(function(){ return false;});
-		    downvoteLink.click(function(){ return false;});		    
-		},
-		headers: {
-		    'X-CSRFToken': csrftoken
-		}
-	    });
-	    return false;
-	}
-
-	// Downvote
-	function downvote(postId) {
-	    $.ajax({
-		type: "POST",
-		url: "/downvote/",
-		data: {"post-id": postId},
-		success: function(){
-		    var upvoteLink = $('#post-upvote-'+postId);		    
-		    var downvoteLink = $('#post-downvote-'+postId);
-		    upvoteLink.addClass('downvoted');		    
-		    downvoteLink.addClass('downvoted');
-		    var score = downvoteLink.parent().find(".score");
-                    var notUpdated = Number(score.html());
-                    score.html(notUpdated - 1);
-		    upvoteLink.off("click");
-		    downvoteLink.off("click");		    
-		    upvoteLink.click(function(){ return false;});
-		    downvoteLink.click(function(){ return false;});	    		    
-		},
-		headers: {
-		    'X-CSRFToken': csrftoken
-		}
-	    });
-	    return false;
-	}
-	
-
-	{% if user.is_authenticated %}
-	//Connect functions
-	$("a.upvote").click(function(){
-	    var postId = parseInt(this.id.split("-")[2]);
-	    return upvote(postId);
-	})
-	$("a.downvote").click(function(){
-	    var postId = parseInt(this.id.split("-")[2]);
-	    return downvote(postId);
-	})
-	// Disabe voted
-	$("a.upvoted").off("click");
-	$("a.downvoted").off("click");	
-        $("a.upvoted").click(function(){ return false;});
-        $("a.downvoted").click(function(){ return false;});	
-	{% endif %}
-    })
-</script>
 {% endblock content %}
 
 

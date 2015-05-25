@@ -45,10 +45,11 @@
 	  </ul> -->
 
 	  {% if user.is_authenticated %}
+	  {% if user.subscribed_to.count > 0 %}	  
 	  <ul>
 	    <a href="/subscriptions/"> Subscriptions </a>
 	  </ul> 
-
+	  {% endif %}
 	  <!-- 
 	  <ul>
 	    <a href="/prompt/"> Writing Prompt </a>
@@ -57,12 +58,13 @@
 
 	  <ul>
 	    <a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false">
-	      <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/>
+	      <!-- <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/> -->
+	      {{user.username}}
 	    </a>
 	    <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}"><b>{{user.username}}</b> ({{user.karma}})</a></li>
 	      <li><a href="/submit/"> Write </a></li>
-	      <li><a href="/submit/"> Dashboard </a></li>	      
+	      <li><a href="/preferences/"> Preferences </a></li>	      
 	      <li>
 		<a href="/logout/">
 		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
@@ -98,5 +100,98 @@
   <script>
     $(document).foundation();
   </script>
+
+<script>
+    $(document).ready(function(){
+	// getting csrf token.
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+		var cookies = document.cookie.split(';');
+		for (var i = 0; i < cookies.length; i++) {
+		    var cookie = jQuery.trim(cookies[i]);
+		    // Does this cookie string begin with the name we want?
+		    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+			cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			break;
+		    }
+		}
+	    }
+	    return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+
+	// Upvote
+	function upvote(postId) {
+	    $.ajax({
+		type: "POST",
+		url: "/upvote/",
+		data: {"post-id": postId},
+		success: function(){
+		    var upvoteLink = $('#post-upvote-'+postId);
+		    var downvoteLink = $('#post-downvote-'+postId);		    
+		    upvoteLink.addClass('upvoted');
+		    downvoteLink.addClass('upvoted');		    
+		    var score = upvoteLink.parent().find(".score");
+                    var notUpdated = Number(score.html());
+                    score.html(notUpdated + 1);
+		    upvoteLink.off("click");
+		    downvoteLink.off("click");		    
+		    upvoteLink.click(function(){ return false;});
+		    downvoteLink.click(function(){ return false;});		    
+		},
+		headers: {
+		    'X-CSRFToken': csrftoken
+		}
+	    });
+	    return false;
+	}
+
+	// Downvote
+	function downvote(postId) {
+	    $.ajax({
+		type: "POST",
+		url: "/downvote/",
+		data: {"post-id": postId},
+		success: function(){
+		    var upvoteLink = $('#post-upvote-'+postId);		    
+		    var downvoteLink = $('#post-downvote-'+postId);
+		    upvoteLink.addClass('downvoted');		    
+		    downvoteLink.addClass('downvoted');
+		    var score = downvoteLink.parent().find(".score");
+                    var notUpdated = Number(score.html());
+                    score.html(notUpdated - 1);
+		    upvoteLink.off("click");
+		    downvoteLink.off("click");		    
+		    upvoteLink.click(function(){ return false;});
+		    downvoteLink.click(function(){ return false;});	    		    
+		},
+		headers: {
+		    'X-CSRFToken': csrftoken
+		}
+	    });
+	    return false;
+	}
+	
+
+	{% if user.is_authenticated %}
+	//Connect functions
+	$("a.upvote").click(function(){
+	    var postId = parseInt(this.id.split("-")[2]);
+	    return upvote(postId);
+	})
+	$("a.downvote").click(function(){
+	    var postId = parseInt(this.id.split("-")[2]);
+	    return downvote(postId);
+	})
+	// Disabe voted
+	$("a.upvoted").off("click");
+	$("a.downvoted").off("click");	
+        $("a.upvoted").click(function(){ return false;});
+        $("a.downvoted").click(function(){ return false;});	
+	{% endif %}
+    })
+</script>
+  
 </body>
 </html>

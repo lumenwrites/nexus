@@ -1,0 +1,19 @@
+{% extends "chaoslegion/base.html" %}
+{% load markdownify %}
+{% block content %}
+    
+<div id="page"  class="postPage profile">
+  <div class="row">
+    <div class="large-12 columns">
+      <h2> Preferences </h2>
+      <form method="post" action="/preferences/">	{% csrf_token %}
+	{{form}}	
+	<input type="submit" class="button small" value="submit" />
+      </form>    
+
+    </div> <!-- End 12 columns -->
+    </div>	 <!-- End row -->
+
+{% endblock content %}
+
+

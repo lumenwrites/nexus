@@ -7,19 +7,33 @@
   <div class="row">
     <div class="large-4 columns" style="//padding-top: 20px;">
       <div class="rank-types">
-	<a> New </a>
-	<a> Top </a>
-	<a> Comments </a>
+	  <a href="/user/{{userprofile.username}}"> Posts </a>
+	  <!-- <a> Top </a> -->
+	  <!-- <a> Comments </a> -->
       </div>
     </div>
     <div class="large-8 columns">
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
-	<!-- <a> Website </a> -->
-	<!-- <a herf="/user/{{userprofile.username}}/about"> About </a> -->
-	<button class="small button" style="padding:10px;margin:0 10px;"
-		action="/user/{{userprofile.username}}" method="post">
-	  Subscribe <span class="subscribers">128</span></button>
+	{% if userprofile.website %}
+	<a href="{{userprofile.website}}"> Website </a>
+	{% endif %}
+	{% if userprofile.about %}
+	<a href="/user/{{userprofile.username}}/about"> About </a>
+	{% endif %}
+
+	{% if not userprofile == user %}
+	{% if userprofile not in subscribed_to %}	
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/user/{{userprofile.username}}/subscribe">
+	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	{% else %}
+	<a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	   href="/user/{{userprofile.username}}/unsubscribe">
+	  Ubsubscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	{% endif %}
+	{% endif %}
+
 	<b> {{userprofile.username}} </b>
 	<span class="userkarma">{{userprofile.karma}}</span>
 
@@ -32,13 +46,10 @@
 
   <div class="row">
     <div class="large-12 columns">
-      {% for post in posts %}
       <article>
 	<!-- Post Header -->
 	<header class="post-header">
-	  <a href="{{ post.get_absolute_url }}">
 	    <h1> About </h1>
-	  </a>
 	  <hr />
 	</header>
 	<!-- Post Body -->
@@ -46,7 +57,6 @@
 	<br/>
 	<div>
       </article>
-      {% endfor %}
     </div> <!-- End 12 columns -->
     </div>	 <!-- End row -->
 

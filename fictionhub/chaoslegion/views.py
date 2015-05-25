@@ -5,11 +5,13 @@ import praw
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
 from .models import *
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, UserForm
 
 
 def rank_hot_posts(top=180, consider=1000, hub_slug=None):
@@ -58,16 +60,30 @@ def rank_top_posts(timespan = None):
 
     
 # View hot posts (main page)
-def hot_posts(request):
+def posts_hot(request):
     # posts = Post.objects.all()
-    posts = rank_hot_posts(top=32)
+    post_list = rank_hot_posts(top=32)
 
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    # Disable upvoted/downvoted
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
-        downvoted = request.user.downvoted.all()                
+        downvoted = request.user.downvoted.all()        
     else:
         upvoted = []
         downvoted = []        
+
         
     return render(request, 'chaoslegion/posts.html',{
         'posts': posts,
@@ -78,9 +94,22 @@ def hot_posts(request):
     })
 
 # View new posts
-def new_posts(request):
-    posts = Post.objects.all().order_by('-pub_date')#[:consider]
+def posts_new(request):
+    post_list = Post.objects.all().order_by('-pub_date')#[:consider]
 
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    # Disable upvoted/downvoted        
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         downvoted = request.user.downvoted.all()        
@@ -97,9 +126,22 @@ def new_posts(request):
     })
 
 # View top posts
-def top_posts(request,slug):
-    posts = rank_top_posts(timespan = slug)
+def posts_top(request,slug):
+    post_list = rank_top_posts(timespan = slug)
 
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    # Disable upvoted/downvoted        
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         downvoted = request.user.downvoted.all()                
@@ -149,12 +191,24 @@ def subscriptions(request):
     # posts = Post.objects.filter(author=subscriptions).order_by('-pub_date')#[:consider]
     all_posts = Post.objects.all().order_by('-pub_date')
 
-    posts = []
+    post_list = []
     
     for post in all_posts:
         if post.author in subscribed_to:
-            posts.append(post)
+            post_list.append(post)
 
+    # Pagination
+    paginator = Paginator(post_list, 2)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+            
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         downvoted = request.user.downvoted.all()        
@@ -207,15 +261,43 @@ def post(request, slug):
             return HttpResponseRedirect('/post/'+slug+'#comments')
     else:
         form = CommentForm()
+
     
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
+        
     
     return render(request, 'chaoslegion/post.html',{
         'post': post,
+        'upvoted': upvoted,
+        'downvoted': downvoted,        
         'comments': comments,        
         'form': form,
         'hubs':hubs
     })
     
+
+# Edit post
+@login_required
+def post_edit(request, slug):
+    post = Post.objects.get(slug=slug)
+    if request.method == 'POST':
+        form = PostForm(request.POST,instance=post)
+        if form.is_valid():
+            post = form.save(commit=False) # return story but don't save it to db just yet
+            post.author = request.user
+            post.save()
+            return HttpResponseRedirect('/post/'+post.slug)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'chaoslegion/edit-post.html', {
+        'form':form,
+        'slug':slug
+    })
 
 # Voting
 def upvote(request):
@@ -253,10 +335,12 @@ def submit(request):
             post = form.save(commit=False) # return story but don't save it to db just yet
             post.author = request.user
             post.save()
+            post.hubs.add(*form.cleaned_data['hubs'])
             return HttpResponseRedirect('/')
     else:
         form = PostForm()
     return render(request, 'chaoslegion/submit.html', {'form':form})
+
 
 # Writing Prompt
 @login_required
@@ -287,9 +371,27 @@ def prompt(request):
 # User
 def user_new(request, username):
     userprofile = get_object_or_404(User, username=username)    
-    posts = Post.objects.filter(author=userprofile).order_by('-pub_date')
-    subscribed_to = request.user.subscribed_to.all()    
+    post_list = Post.objects.filter(author=userprofile).order_by('-pub_date')
 
+    if not request.user.is_anonymous():
+        subscribed_to = request.user.subscribed_to.all()
+    else:
+        subscribed_to = []
+
+    # Pagination
+    paginator = Paginator(post_list, 2)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+    
+    
+    # Disable upvoted/downvoted
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         downvoted = request.user.downvoted.all()                
@@ -305,6 +407,23 @@ def user_new(request, username):
         'subscribed_to': subscribed_to
     })
 
+def user_prefs(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/preferences/')            
+    else:
+        form = UserForm(instance=request.user)
+    
+    return render(request, "chaoslegion/prefs.html", {
+        'form': form
+    })
+    
+
 def subscribe(request, username):
     userprofile = User.objects.get(username=username)    
     user = request.user
@@ -318,7 +437,6 @@ def unsubscribe(request, username):
     user.subscribed_to.remove(userprofile)
     user.save()
     return HttpResponseRedirect('/user/'+username)
-
 
 def about(request, username):
     userprofile = get_object_or_404(User, username=username)    
