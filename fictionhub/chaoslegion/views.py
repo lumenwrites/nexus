@@ -425,11 +425,14 @@ def user_prefs(request):
     
 
 def subscribe(request, username):
-    userprofile = User.objects.get(username=username)    
-    user = request.user
-    user.subscribed_to.add(userprofile)
-    user.save()
-    return HttpResponseRedirect('/user/'+username)
+    userprofile = User.objects.get(username=username)
+    if not request.user.is_anonymous():
+        user = request.user
+        user.subscribed_to.add(userprofile)
+        user.save()
+        return HttpResponseRedirect('/user/'+username)
+    else:
+        return HttpResponseRedirect('/login/')    
 
 def unsubscribe(request, username):
     userprofile = User.objects.get(username=username)    
