@@ -16,7 +16,7 @@ class Post(models.Model):
     published = models.BooleanField(default=True) # change to false when I have save draft?
     body = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts")
-
+    
     hubs = models.ManyToManyField('Hub', related_name="posts", blank=True)
     score = models.IntegerField(default=0)
     
@@ -62,7 +62,8 @@ class Comment(models.Model):
     
 class User(AbstractUser):  
     about = models.TextField(max_length=512, blank=True)
-    website = models.CharField(max_length=32, blank=True)    
+    external_url = models.BooleanField(default=False)
+    website = models.CharField(max_length=32, blank=True)
     karma = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
