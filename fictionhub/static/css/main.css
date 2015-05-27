@@ -714,3 +714,11 @@ article header {
     margin: 20px;
     padding: 20px;
 }
+
+/* Editor */
+.editor {
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+}

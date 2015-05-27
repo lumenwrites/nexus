@@ -9,6 +9,9 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         exclude = ['author', 'slug', 'score', 'published',]
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title'})
+        }
 
 class CommentForm(ModelForm):
     class Meta:
