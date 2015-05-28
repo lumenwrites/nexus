@@ -198,7 +198,7 @@ def subscriptions(request):
             post_list.append(post)
 
     # Pagination
-    paginator = Paginator(post_list, 2)
+    paginator = Paginator(post_list, 25)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -392,7 +392,7 @@ def user_new(request, username):
         subscribed_to = []
 
     # Pagination
-    paginator = Paginator(post_list, 2)
+    paginator = Paginator(post_list, 25)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
