@@ -2,42 +2,69 @@
 {% block content %}
 
 <div id="page"  class="postPage">
-
+  <!-- 
+<div class="subnav">  
   <div class="row">
     <div class="large-12 columns">
+      <div class="rank-types">
+	<a>Story</a>
+      </div>
+    </div>
+  </div>
+</div>
+   -->
+  <div class="row fullWidth">
+
+    <div class="large-3 columns sidebar">
+      <!-- 
+	   <ul class="breadcrumbs">
+	     <li><a href="#">Harry Potter and the Methods of Rationality</a></li>
+	     <li class="current"><a href="#">Comparing Reality To Its Alternatives</a></li>
+	   </ul> -->
+      <ul class="side-nav">
+	<li><a href="/story/{{story.slug}}/edit">{{story.title}}</a></li>
+	<hr/>
+	{% for chapter in story.chapters.all %}
+	<li><a href="/story/{{story.slug}}/{{chapter.slug}}/edit" >{{chapter.title}}</a></li>
+	{% endfor %}
+      </ul>
+      <!-- <span class="fi-list large" style="float:right;"></span>         -->
+
+      <a class="button small" href="/story/{{story.slug}}/add">Add Chapter</a>      
+      <div class="clearfix"></div>
+      <div style="width:100%; height: 20px"></div>
+    </div>
+
+    
+    <div class="large-9 columns">
       <br/>
-      <p> <a href="/story/">Story</a> > Chapter Title </p>
-      <form action="/submit/" method="post">
-	<input placeholder="Title" type="text"></input>
+      <!-- 
+      <div class="panel">
+      <a>Harry Potter and The Methods of Rationality</a> >
+      <span>Comparing Reality To Its Alternatives</span>
+      </div>
+      -->
+
+      <!-- Submit Form -->
+      <form action="/story/{{story.slug}}/add" method="post">{% csrf_token %}
+	{{form.title}}
 	<div class="editor">
-	  <textarea placeholder="Description">
-	  </textarea>
+	  {{form.body}}
 	</div>
-	<div style="float:right;">
+ 	<div style="float:right;">
 	  <br/>
 	  <button class="button small" type="submit">Save</button>
 	</div>
 	<div class="clearfix"></div>
 	<div style="width:100%; height: 20px"></div>
       </form>
+      <!-- End Submit Form -->
     </div>
-    <!-- 
-    <div class="large-4 columns sidebar">
-      <br/>
-      <br/>
-      <ul>
-	<li><a>Chapter 1</a></li>
-	<li><a>Chapter 2</a></li>
-	<li><a><b>Chapter 3</b></a></li>
-	<li><a>Chapter 4</a></li>	
-      </ul>
-      <button class="button small" type="submit">Add Chapter</button>      
-    </div>
-     -->
-</article>      
 
-</div> <!-- End 12 columns -->
+
 </div>	 <!-- End row -->
+
+
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
   <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>

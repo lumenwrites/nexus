@@ -22,16 +22,15 @@
 	     <li class="current"><a href="#">Comparing Reality To Its Alternatives</a></li>
 	   </ul> -->
       <ul class="side-nav">
-	<li><a href="#">Harry Potter and the Methods of Rationality</a></li>
+	<li><a href="/story/{{story.slug}}/edit">{{story.title}}</a></li>
 	<hr/>
-	<li><a href="#" >A Day of Very Low Probability</a></li>
-	<li><a href="#" >Everything I Believe Is False</a></li>
-	<li><a href="#"  class="bold">Comparing Reality To Its Alternatives</a></li>
-	<li><a href="#" >The Efficient Market Hypothesis</a></li>	
+	{% for chapter in story.chapters.all %}
+	<li><a href="/story/{{story.slug}}/{{chapter.slug}}/edit" >{{chapter.title}}</a></li>
+	{% endfor %}
       </ul>
       <!-- <span class="fi-list large" style="float:right;"></span>         -->
 
-      <button class="button small" type="submit">Add Chapter</button>      
+      <a class="button small" href="/story/{{story.slug}}/add">Add Chapter</a>      
       <div class="clearfix"></div>
       <div style="width:100%; height: 20px"></div>
     </div>
@@ -44,60 +43,23 @@
       <a>Harry Potter and The Methods of Rationality</a> >
       <span>Comparing Reality To Its Alternatives</span>
       </div>
-       -->
-      <form action="/submit/" method="post">
-	<input placeholder="Title" type="text"
-	       value="Comparing Reality To Its Alternatives"></input>
+      -->
+
+      <!-- Submit Form -->
+      <form action="/story/{{story.slug}}/edit" method="post">{% csrf_token %}
+	{{form.title}}
 	<div class="editor">
-	  <textarea placeholder="Text">
---------
-
-*“But then the question is—who?”*
-
---------
-
-“Good Lord,” said the barman, peering at Harry, “is this—can this be—?”
-
-Harry leaned towards the bar of the Leaky Cauldron as best he could, though it came up to somewhere around the tips of his eyebrows. A question like *that* deserved his very best.
-
-“Am I—could I be—maybe—you never know—if I’m *not*—but then the question is—*who?”*
-
-“Bless my soul,” whispered the old barman. “Harry Potter… what an honour.”
-
-Harry blinked, then rallied. “Well, yes, you’re quite perceptive; most people don’t realise that so quickly—”
-
-“That’s enough,” Professor McGonagall said. Her hand tightened on Harry’s shoulder. “Don’t pester the boy, Tom, he’s new to all this.”
-
-“But it is him?” quavered an old woman. “It’s Harry Potter?” With a scraping sound, she got up from her chair.
-
-“Doris—” McGonagall said warningly. The glare she shot around the room should have been enough to intimidate anyone.
-
-“I only want to shake his hand,” the woman whispered. She bent low and stuck out a wrinkled hand, which Harry, feeling confused and more uncomfortable than he ever had in his life, carefully shook. Tears fell from the woman’s eyes onto their clasped hands. “My granson was an Auror,” she whispered to him. “Died in seventy-nine. Thank you, Harry Potter. Thank heavens for you.”
-
-“You’re welcome,” Harry said automatically, and then he turned his head and shot Professor McGonagall a frightened, pleading look.
-
-Professor McGonagall slammed her foot down just as the general rush was about to start. It made a noise that gave Harry a new referent for the phrase “Crack of Doom,” and everyone froze in place.
-
-“We’re in a hurry,” Professor McGonagall said in a voice that sounded perfectly, utterly normal.
-
-They left the bar without any trouble.
-
-“Professor?” Harry said, once they were in the courtyard. He had meant to ask what was going on, but oddly found himself asking an entirely different question instead. “Who was that pale man, by the corner? The man with the twitching eye?”
-
-“Hm?” said Professor McGonagall, sounding a bit surprised; perhaps she hadn’t expected that question either. “That was Professor Quirinus Quirrell. He’ll be teaching Defence Against the Dark Arts this year at Hogwarts.”
-
-“I had the strangest feeling that I knew him…” Harry rubbed his forehead. “And that I shouldn’t ought to shake his hand.” Like meeting someone who had been a friend, once, before something went drastically wrong… that wasn’t really it at all, but Harry couldn’t find words. “And what *was…* all of that?”
-
-Professor McGonagall was giving him an odd glance. “Mr. Potter… do you know… how *much* have you been told… about how your parents died?”
-	  </textarea>
+	  {{form.description}}
 	</div>
-	<div style="float:right;">
+ 	<div style="float:right;">
+	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <br/>
 	  <button class="button small" type="submit">Save</button>
 	</div>
 	<div class="clearfix"></div>
 	<div style="width:100%; height: 20px"></div>
       </form>
+      <!-- End Submit Form -->
     </div>
 
 

@@ -54,7 +54,7 @@ class Story(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+        super(Story, self).save(*args, **kwargs)
 
     @permalink
     def get_absolute_url(self):
@@ -63,6 +63,7 @@ class Story(models.Model):
 class Chapter(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True, default="")
+    number = models.IntegerField(default=1)        
     story = models.ForeignKey('Story', related_name="chapters")    
     published = models.BooleanField(default=True)
     pub_date = models.DateTimeField(auto_now_add=True)    
@@ -77,11 +78,14 @@ class Chapter(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+        super(Chapter, self).save(*args, **kwargs)
 
     @permalink
     def get_absolute_url(self):
-        return ('view_post', None, { 'slug': self.slug })        
+        return ('view_post', None, { 'slug': self.slug })
+
+    class Meta:
+        ordering = ('number',)    
     
 
 class Hub(models.Model):

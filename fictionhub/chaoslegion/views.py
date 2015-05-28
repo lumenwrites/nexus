@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import *
-from .forms import PostForm, CommentForm, UserForm, RegistrationForm
+from .forms import *
 
 
 def rank_hot_posts(top=180, consider=1000, hub_slug=None):
@@ -346,10 +346,75 @@ def story(request):
     return render(request, 'chaoslegion/story.html')
 
 def story_create(request):
-    return render(request, 'chaoslegion/story-create.html')
+    if request.method == 'POST':
+        form = StoryForm(request.POST)
+        if form.is_valid():
+            story = form.save(commit=False) # return story but don't save it to db just yet
+            story.author = request.user
+            story.save()
+            story.hubs.add(*form.cleaned_data['hubs'])
+            return HttpResponseRedirect('/story/'+story.slug+'/edit')
+    else:
+        form = StoryForm()
+    return render(request, 'chaoslegion/story-create.html', {'form':form})
 
-def story_edit(request):
-    return render(request, 'chaoslegion/story-edit.html')
+
+def chapter_create(request, story):
+    story = Story.objects.get(slug=story)    
+    if request.method == 'POST':
+        form = ChapterForm(request.POST)
+        if form.is_valid():
+            # return HttpResponseRedirect('/asdf')                
+            chapter = form.save(commit=False) # return story but don't save it to db just yet
+            chapter.story = story
+            chapter.number = story.chapters.count()+1
+            chapter.save()
+            return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/edit')             else:
+        form = ChapterForm()
+        
+    return render(request, 'chaoslegion/chapter-create.html', {
+        'story':story,        
+        'form':form
+    })
+
+
+def story_edit(request, story):
+    story = Story.objects.get(slug=story)
+
+    if request.method == 'POST':
+        form = StoryForm(request.POST,instance=story)
+        if form.is_valid():
+            story = form.save(commit=False) # return story but don't save it to db just yet
+            story.save()
+            return HttpResponseRedirect('/story/'+story.slug+'/edit')
+    else:
+        form = StoryForm(instance=story)
+    
+    return render(request, 'chaoslegion/story-edit.html', {
+        'story':story,
+        'form':form
+    })
+
+
+
+def chapter_edit(request, story, chapter):
+    story = Story.objects.get(slug=story)
+    chapter = Chapter.objects.get(slug=chapter)
+
+    if request.method == 'POST':
+        form = ChapterForm(request.POST,instance=chapter)
+        if form.is_valid():
+            chapter = form.save(commit=False) # return story but don't save it to db just yet
+            chapter.save()
+            return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/edit')
+    else:
+        form = ChapterForm(instance=chapter)
+    
+    return render(request, 'chaoslegion/chapter-edit.html', {
+        'story':story,
+        'chapter':chapter,
+        'form':form
+    })
 
 def chapter(request):
     return render(request, 'chaoslegion/chapter.html')

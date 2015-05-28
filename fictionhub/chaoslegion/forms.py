@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Post, Comment, User
+from .models import Post, Comment, User, Story, Chapter
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -13,6 +13,22 @@ class PostForm(ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Title'})
         }
 
+class StoryForm(ModelForm):
+    class Meta:
+        model = Story
+        exclude = ['author', 'slug', 'score', 'published',]
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title'})
+        }
+
+class ChapterForm(ModelForm):
+    class Meta:
+        model = Chapter
+        exclude = ['slug', 'score', 'published', 'number', 'story',]
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title'})
+        }
+        
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
