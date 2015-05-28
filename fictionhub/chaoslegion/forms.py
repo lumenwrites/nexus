@@ -24,7 +24,7 @@ class StoryForm(ModelForm):
 class ChapterForm(ModelForm):
     class Meta:
         model = Chapter
-        exclude = ['slug', 'score', 'published', 'number', 'story',]
+        exclude = ['slug', 'score', 'published', 'story', 'number',]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'})
         }

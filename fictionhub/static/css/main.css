@@ -639,7 +639,7 @@ article header {
 
 .sidebar .button {
     padding: 10px;
-    margin: 0 10px 0 35px;    
+    margin: 0 10px 0 15px;    
 }
 
 .sidebar ul li {
@@ -753,3 +753,51 @@ article header {
 .panel {
   padding: 10px;    
 }
+
+/* Story Editing */
+
+.chapter-arrows {
+    float: right;
+    margin: 15px 0;    
+}
+
+.chapter-title {
+    width: calc(100% - 60px);
+    float: left;
+}
+
+.chapter-arrow {
+    width:100%;
+    float:right;
+    display: block;
+    line-height: 10px;
+    height: 18px;
+    overflow: hidden;    
+}
+
+.chapter-button {
+    float:right;
+    /* margin: 15px 0px; */
+    color: #3d454b;
+}
+
+.chapter-button up {
+    foat:right;
+}
+
+
+.delete-chapter {
+    padding: 10px!important;
+    background: grey!important;    
+    float:left;
+    margin: 30px 0;
+}
+.confirm-delete {
+    background: red!important;
+}
+/* 
+.chapters {
+    overflow: scroll;
+    height: 100%;
+}
+*/

@@ -369,12 +369,14 @@ def chapter_create(request, story):
             chapter.story = story
             chapter.number = story.chapters.count()+1
             chapter.save()
-            return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/edit')             else:
+            return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/edit')
+    else:
         form = ChapterForm()
         
-    return render(request, 'chaoslegion/chapter-create.html', {
+    return render(request, 'chaoslegion/story-edit.html', {
         'story':story,        
-        'form':form
+        'form':form,
+        'action':'chapter_create'        
     })
 
 
@@ -392,7 +394,8 @@ def story_edit(request, story):
     
     return render(request, 'chaoslegion/story-edit.html', {
         'story':story,
-        'form':form
+        'form':form,
+        'action':'story_edit'
     })
 
 
@@ -410,11 +413,55 @@ def chapter_edit(request, story, chapter):
     else:
         form = ChapterForm(instance=chapter)
     
-    return render(request, 'chaoslegion/chapter-edit.html', {
+    return render(request, 'chaoslegion/story-edit.html', {
         'story':story,
         'chapter':chapter,
-        'form':form
+        'form':form,
+        'action':'chapter_edit'                
     })
+
+def chapter_up(request, story, chapter):
+    story = Story.objects.get(slug=story)
+    chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+    try:
+        following_chapter = story.chapters.get(number=chapter.number+1)
+        following_chapter.number -= 1
+        following_chapter.save()
+    except:
+        pass
+
+    chapter.number += 1
+    chapter.save()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))            
+
+def chapter_down(request, story, chapter):
+    story = Story.objects.get(slug=story)
+    chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+
+    if chapter.number > 0:    
+        try:
+            following_chapter = story.chapters.get(number=chapter.number-1)
+            following_chapter.number += 1
+            following_chapter.save()
+        except:
+            pass
+
+        chapter.number -= 1
+        chapter.save()
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def chapter_delete(request, story, chapter):
+    story = Story.objects.get(slug=story)
+    chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+    chapter.delete()
+    return HttpResponseRedirect('/story/'+story.slug+'/edit')    
+
+def story_delete(request, story):
+    story = Story.objects.get(slug=story)
+    story.delete()
+    return HttpResponseRedirect('/') # to story list
 
 def chapter(request):
     return render(request, 'chaoslegion/chapter.html')

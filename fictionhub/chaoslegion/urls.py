@@ -22,12 +22,16 @@ urlpatterns = [
 
     url(r'^story/$', views.story, name='story'),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.chapter_edit),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/up$', views.chapter_up),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/down$', views.chapter_down),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.chapter_delete),        
     url(r'^story/(?P<story>[^\.]+)/edit$', views.story_edit),
     url(r'^story/add$', views.story_create),                
-    url(r'^story/(?P<story>[^\.]+)/add$', views.chapter_create),            
+    url(r'^story/(?P<story>[^\.]+)/add$', views.chapter_create),
     url(r'^story-create/$', views.story_create),
-    # url(r'^story-edit/$', views.story_edit),    
+    url(r'^story/(?P<story>[^\.]+)/delete$', views.story_delete),  
     url(r'^chapter/$', views.chapter, name='chapter'),
+
     url(r'^submit/$', views.submit, name='submit'),
     url(r'^prompt/$', views.prompt, name='prompt'),    
 

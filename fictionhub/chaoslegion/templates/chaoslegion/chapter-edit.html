@@ -25,7 +25,15 @@
 	<li><a href="/story/{{story.slug}}/edit">{{story.title}}</a></li>
 	<hr/>
 	{% for chapter in story.chapters.all %}
-	<li><a href="/story/{{story.slug}}/{{chapter.slug}}/edit" >{{chapter.title}}</a></li>
+	<div class="chapter-title">
+	  <li>
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/edit">{{chapter.number}} : {{chapter.title}}</a>
+	  </li>
+	</div>
+	<div class="chapter-arrows">
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/up" class="chapter-button chapter-arrow">&#9650;</a>
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/down" class="chapter-button chapter-arrow">&#9660;</a>
+	</div>
 	{% endfor %}
       </ul>
       <!-- <span class="fi-list large" style="float:right;"></span>         -->
@@ -46,11 +54,22 @@
       -->
 
       <!-- Submit Form -->
-      <form action="/story/{{story.slug}}/{{chapter.slug}}/edit" method="post">{% csrf_token %}
+      {% if action = "story_edit" %}
+      <form action="/story/{{story.slug}}/edit" method="post">
+      {% if action = "chapter_edit" %}
+      <form action="/story/{{story.slug}}/{{chapter.slug}}/edit" method="post">	
+      {% endif %}	
+      {% csrf_token %}
 	{{form.title}}
 	<div class="editor">
+	  {% if action = "story_edit" %}
+	  {{form.description}}
+          {% if action = "chapter_edit" %}
 	  {{form.body}}
+          {% endif %}	
 	</div>
+	<a href="/story/{{story.slug}}/{{chapter.slug}}/delete" class="button small delete-chapter" type="submit">Delete Chapter</a>      
+	
  	<div style="float:right;">
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <br/>
