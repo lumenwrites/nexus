@@ -24,9 +24,15 @@
       <!-- Register -->
       <h2> Sign Up </h2>
       <form method="post" action="/register/">	{% csrf_token %}
-	{{register_form}}
+	{{register_form.username}}
+	{{register_form.email}}
+	{{register_form.password1}}
+	{{register_form.password2}}
 	<input type="submit" class="button small" value="submit" />
 	<input type="hidden" name="next" value="{{ next }}" />
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+	<br/>
       </form>    
     </div>
 

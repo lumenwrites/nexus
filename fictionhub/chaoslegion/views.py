@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from .models import *
-from .forms import PostForm, CommentForm, UserForm
+from .forms import PostForm, CommentForm, UserForm, RegistrationForm
 
 
 def rank_hot_posts(top=180, consider=1000, hub_slug=None):
@@ -479,7 +479,10 @@ def login_or_signup(request):
         return HttpResponseRedirect('/')
 
     authenticate_form = AuthenticationForm(None, request.POST or None)
-    register_form = UserCreationForm()    
+    # register_form = UserCreationForm()
+    register_form = RegistrationForm()
+    register_form.fields['password1'].widget.attrs['placeholder'] = "Password"
+    register_form.fields['password2'].widget.attrs['placeholder'] = "Repeat Password"        
     return render(request, "auth/login.html", {
         'authenticate_form': authenticate_form,
         'register_form': register_form,        
@@ -513,7 +516,8 @@ def authenticate_user(request):
 # Only sign up
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        # form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             # new_user = form.save()
             user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['password1'])
