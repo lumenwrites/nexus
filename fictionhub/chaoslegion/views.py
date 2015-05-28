@@ -342,6 +342,19 @@ def submit(request):
     return render(request, 'chaoslegion/submit.html', {'form':form})
 
 
+def story(request):
+    return render(request, 'chaoslegion/story.html')
+
+def story_create(request):
+    return render(request, 'chaoslegion/story-create.html')
+
+def story_edit(request):
+    return render(request, 'chaoslegion/story-edit.html')
+
+def chapter(request):
+    return render(request, 'chaoslegion/chapter.html')
+
+
 # Writing Prompt
 @login_required
 def prompt(request):

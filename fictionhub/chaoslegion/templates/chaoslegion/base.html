@@ -63,6 +63,7 @@
 	    </a>
 	    <ul id="drop1" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}"><b>{{user.username}}</b> ({{user.karma}})</a></li>
+	      <!-- <li><a href="/story/"> Story </a></li>	       -->
 	      <li><a href="/submit/"> Write </a></li>
 	      <li><a href="/preferences/"> Preferences </a></li>	      
 	      <li>
@@ -96,6 +97,7 @@
   <!-- Scripts -->
   <script src="  {% static "/static/js/foundation/foundation.js" %}"></script>
   <script src="  {% static "/static/js/foundation/foundation.dropdown.js" %}"></script>
+  <script src="  {% static "/static/js/foundation/foundation.offcanvas.js" %}"></script>  
 
   <script>
     $(document).foundation();

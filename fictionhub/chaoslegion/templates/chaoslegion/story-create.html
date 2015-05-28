@@ -5,39 +5,25 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <br/>
-      <form action="/submit/" method="post">{% csrf_token %}
-	{{form.title}}
+      <h1> Create Story </h1>
+      <form action="/submit/" method="post">
+	<input placeholder="Title" type="text"
+	       value="Harry Potter and The Methods of Rationality"></input>
 	<div class="editor">
-	  {{form.body}}
+	  <textarea placeholder="Text">
+Petunia married a biochemist, and Harry grew up reading science and science fiction. Then came the Hogwarts letter, and a world of intriguing new possibilities to exploit. And new friends, like Hermione Granger, and Professor McGonagall, and Professor Quirrell...	    
+	  </textarea>
 	</div>
-	<br/>
-	{{form.hubs}}	
 	<div style="float:right;">
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
-	  <button class="button small" type="submit">Publish</button>
+	  <br/>
+	  <button class="button small" type="submit">Create</button>
 	</div>
 	<div class="clearfix"></div>
 	<div style="width:100%; height: 20px"></div>
       </form>
-      <!-- 
-      <form action="/my-handling-form-page" method="post">
-	<div>
-          <input type="text" id="title" placeholder="Title" />
-	</div>
-	<div>
-          <textarea id="text" style="height: 400px;"></textarea>
-	</div>
-	<div>
-          <input type="text" id="mail" placeholder="1-4 hubs"/>
-	</div>
-	
-	<div style="float:right;">
-	  <button class="button small" type="submit">Save Draft</button>
-	  <button class="button small" type="submit">Publish</button>      
-	</div>
-	</form> -->
-    </div>	
+      <!-- <button class="button small" type="submit">Save Draft</button> -->
+    </div>
 </article>      
 
 </div> <!-- End 12 columns -->

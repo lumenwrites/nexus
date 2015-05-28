@@ -1,0 +1,90 @@
+{% extends "chaoslegion/base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+
+  <div class="row">
+    <div class="large-12 columns">
+      <br/>
+      <p> <a href="/story/">Story</a> > A Day of Very Low Probability </p>
+      <form action="/submit/" method="post">
+	<input placeholder="Title" type="text" value="A Day of Very Low Probability"></input>
+	<div class="editor">
+	  <textarea placeholder="Description">
+* * * *
+
+*Beneath the moonlight glints a tiny fragment of silver, a fraction of a line…*
+
+*(black robes, falling)*
+
+*…blood spills out in litres, and someone screams a word.*
+
+* * * *
+
+Every inch of wall space is covered by a bookcase. Each bookcase has six shelves, going almost to the ceiling. Some bookshelves are stacked to the brim with hardback books: science, maths, history, and everything else. Other shelves have two layers of paperback science fiction, with the back layer of books propped up on old tissue boxes or lengths of wood, so that you can see the back layer of books above the books in front. And it still isn’t enough. Books are overflowing onto the tables and the sofas and making little heaps under the windows.
+
+This is the living-room of the house occupied by the eminent Professor Michael Verres-Evans, and his wife, Mrs. Petunia Evans-Verres, and their adopted son, Harry James Potter-Evans-Verres.
+
+There is a letter lying on the living-room table, and an unstamped envelope of yellowish parchment, addressed to *Mr. H. Potter* in emerald-green ink.
+
+The Professor and his wife are speaking sharply at each other, but they are not shouting. The Professor considers shouting to be uncivilised.
+
+“You’re joking,” Michael said to Petunia. His tone indicated that he was very much afraid that she was serious.
+
+“My sister was a witch,” Petunia repeated. She looked frightened, but stood her ground. “Her husband was a wizard.”
+
+“This is absurd!” Michael said sharply. “They were at our wedding—they visited for Christmas—”
+
+“I told them you weren’t to know,” Petunia whispered. “But it’s true. I’ve seen things—”
+
+The Professor rolled his eyes. “Dear, I understand that you’re not familiar with the sceptical literature. You may not realise how easy it is for a trained magician to fake the seemingly impossible. Remember how I taught Harry to bend spoons? If it seemed like they could always guess what you were thinking, that’s called cold reading—”
+
+“It wasn’t bending spoons—”
+
+“What was it, then?”
+
+Petunia bit her lip. “I can’t just tell you. You’ll think I’m—” She swallowed. “Listen. Michael. I wasn’t—always like this—” She gestured at herself, as though to indicate her lithe form. “Lily did this. Because I—because I *begged* her. For years, I begged her. Lily had *always* been prettier than me, and I’d… been mean to her, because of that, and then she got *magic,* can you imagine how I felt? And I *begged* her to use some of that magic on me so that I could be pretty too, even if I couldn’t have her magic, at least I could be pretty.”
+
+Tears were gathering in Petunia’s eyes.
+
+
+	  </textarea>
+	</div>
+	<div style="float:right;">
+	  <br/>
+	  <button class="button small" type="submit">Save</button>
+	</div>
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+      </form>
+    </div>
+    <!-- 
+    <div class="large-4 columns sidebar">
+      <br/>
+      <br/>
+      <ul>
+	<li><a>Chapter 1</a></li>
+	<li><a>Chapter 2</a></li>
+	<li><a><b>Chapter 3</b></a></li>
+	<li><a>Chapter 4</a></li>	
+      </ul>
+      <button class="button small" type="submit">Add Chapter</button>      
+    </div>
+     -->
+</article>      
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<script>
+  $(document).ready(function(){
+  var editor = new Editor();
+  editor.render();
+  })
+</script>  
+{% endblock content %}
+

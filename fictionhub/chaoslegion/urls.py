@@ -19,6 +19,10 @@ urlpatterns = [
     url(r'^preferences/$', views.user_prefs, name='preferences'),
     url(r'^user/(?P<username>[^\.]+)', views.user_new, name='user_new'),
     url(r'^about/$', views.about, name='about'),    
+    url(r'^story/$', views.story, name='story'),
+    url(r'^story-create/$', views.story_create),
+    url(r'^story-edit/$', views.story_edit),    
+    url(r'^chapter/$', views.chapter, name='chapter'),
     url(r'^submit/$', views.submit, name='submit'),
     url(r'^prompt/$', views.prompt, name='prompt'),    
 

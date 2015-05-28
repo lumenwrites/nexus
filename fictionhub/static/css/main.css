@@ -633,6 +633,18 @@ article header {
 
 /* Sidebar */
 
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar .button {
+    padding: 10px;
+    margin: 0 10px;
+}
+
+.sidebar ul li {
+    /* border-bottom: 1px solid grey; */
+}
 .username {
     float: left;
 }
@@ -721,4 +733,23 @@ article header {
     border-style: solid;
     border-width: 1px;
     border-color: #cccccc;
+}
+
+
+/* Off Canvas */
+
+.tab-bar
+{
+  /* background: none repeat scroll 0% 0% rgba(0,0,0,0.2); */
+}
+
+.fullWidth {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: initial;
+}
+
+.panel {
+  padding: 10px;    
 }
