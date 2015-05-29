@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/down$', views.chapter_down),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.chapter_delete),        
     url(r'^story/(?P<story>[^\.]+)/edit$', views.story_edit),
+    url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),
     url(r'^story/add$', views.story_create),                
     url(r'^story/(?P<story>[^\.]+)/add$', views.chapter_create),
     url(r'^story-create/$', views.story_create),
