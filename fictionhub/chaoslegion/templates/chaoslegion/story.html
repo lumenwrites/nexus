@@ -30,16 +30,26 @@
 	</div>	     -->	  
 	<!-- Post Header -->
 	<header class="post-header">
-	  {% if user == post.author %}
-	  <a class="edit-post" href="/post/{{post.slug}}/edit">Edit Post</a>
+	  {% if user == story.author %}
+	  <a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
 	  {% endif %}	  
-	    <h1> {{post.title}} </h1>
+	    <h1> {{story.title}} </h1>
 	  <!-- <span class="post-tagline">submitted 14 days ago by <a href="#">{{post.author}}</a></span> -->
 	    <hr />
 	</header>
 	<!-- Post Body -->
-	{{post.body | markdownify | safe }}
-	<div>
+	{{story.description | markdownify | safe }}
+	<div class="panel">
+	  {% for chapter in story.chapters.all %}	  
+	  <ul>
+	    <li><a href="/story/{{story.slug}}/{{chapter.slug}}">{{chapter.title}}</a></li>
+	  </ul>
+	  {% endfor %}
+	</div>
+	{% if first_chapter %}
+	<a class="button small next-chapter"
+	   href="/story/{{story.slug}}/{{first_chapter.slug}}">Read ></a> 
+	{% endif %}
       </article>
       
 </div> <!-- End 12 columns -->
@@ -61,11 +71,11 @@
 	<div class="author">
 	  by 
 	  {% if post.author.external_url %}
-	  <a href="{{post.author.website}}">{{post.author}}</a></span>	    
+	  <a href="{{story.author.website}}">{{story.author}}</a></span>	    
 	  {% else %}
-	  <a href="/user/{{post.author.username}}">{{post.author}}</a></span>
+	  <a href="/user/{{story.author.username}}">{{story.author}}</a></span>
 	  {% endif %}	  
-	<span class="userkarma">{{post.author.karma}}</span>
+	<span class="userkarma">{{story.author.karma}}</span>
 
 	<!-- 
 	{% if not user == post.author %}
@@ -85,6 +95,8 @@
   </div>
 </div>  
 
+<!-- Comments -->
+<!-- 
 <div class="row">
   <div class="large-12 columns">
     <h4 id="comments"> Comments </h4>
@@ -106,6 +118,6 @@
       </div>
   </div>
 </div>  
-
+ -->
 {% endblock content %}
 

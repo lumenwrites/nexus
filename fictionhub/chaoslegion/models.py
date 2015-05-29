@@ -58,7 +58,7 @@ class Story(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('view_post', None, { 'slug': self.slug })        
+        return ('view_story', None, { 'story': self.slug })        
 
 class Chapter(models.Model):
     title = models.CharField(max_length=256)

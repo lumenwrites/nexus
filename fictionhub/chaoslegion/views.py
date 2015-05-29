@@ -374,9 +374,136 @@ def submit(request):
         form = PostForm()
     return render(request, 'chaoslegion/submit.html', {'form':form})
 
+def user_stories(request, username):
+    userprofile = get_object_or_404(User, username=username)    
+    story_list = Story.objects.filter(author=userprofile).order_by('-pub_date')
 
-def story(request):
-    return render(request, 'chaoslegion/story.html')
+    if not request.user.is_anonymous():
+        subscribed_to = request.user.subscribed_to.all()
+    else:
+        subscribed_to = []
+
+    # Pagination
+    paginator = Paginator(story_list, 25)
+    page = request.GET.get('page')
+    try:
+        stories = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        stories = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        stories = paginator.page(paginator.num_pages)    
+    
+    
+    # Disable upvoted/downvoted
+    # if request.user.is_authenticated():
+    #     upvoted = request.user.upvoted.all()
+    #     downvoted = request.user.downvoted.all()                
+    # else:
+    #     upvoted = []
+    #     downvoted = []        
+    
+    return render(request, 'chaoslegion/user-story-list.html',{
+        'stories':stories,
+        # 'upvoted': upvoted,
+        # 'downvoted': downvoted,                
+        'userprofile':userprofile,
+        'subscribed_to': subscribed_to
+    })
+
+def story(request, story):
+    story = Story.objects.get(slug=story)
+    # comments = Comment.objects.filter(post = post)                
+
+    try:
+        first_chapter = Chapter.objects.get(story=story, number=1)
+    except:
+        first_chapter = []
+    
+    hubs = story.hubs.all()
+    
+    # if request.method == 'POST':
+    #     form = CommentForm(request.POST)
+    #     if form.is_valid():
+    #         comment = form.save(commit=False) # return story but don't save it to db just yet
+    #         comment.author = request.user
+    #         comment.parent = None
+    #         comment.post = post
+    #         comment.save()
+    #         return HttpResponseRedirect('/post/'+slug+'#comments')
+    # else:
+    #     form = CommentForm()
+
+    
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
+        
+    
+    return render(request, 'chaoslegion/story.html',{
+        'story': story,
+        'upvoted': upvoted,
+        'downvoted': downvoted,
+        'first_chapter':first_chapter,
+        # 'comments': comments,        
+        # 'form': form,
+        'hubs':hubs
+    })
+
+def chapter(request, story, chapter):
+    story = Story.objects.get(slug=story)
+    chapter = Chapter.objects.get(slug=chapter)    
+    # comments = Comment.objects.filter(post = post)                
+
+    try:
+        prev_chapter = Chapter.objects.get(story=story, number=chapter.number-1)
+    except:
+        prev_chapter = []
+
+    try:
+        next_chapter = Chapter.objects.get(story=story, number=chapter.number+1)
+    except:
+        next_chapter = []
+
+    hubs = story.hubs.all()
+    
+    # if request.method == 'POST':
+    #     form = CommentForm(request.POST)
+    #     if form.is_valid():
+    #         comment = form.save(commit=False) # return story but don't save it to db just yet
+    #         comment.author = request.user
+    #         comment.parent = None
+    #         comment.post = post
+    #         comment.save()
+    #         return HttpResponseRedirect('/post/'+slug+'#comments')
+    # else:
+    #     form = CommentForm()
+
+    
+    # if request.user.is_authenticated():
+    #     upvoted = request.user.upvoted.all()
+    #     downvoted = request.user.downvoted.all()                
+    # else:
+    #     upvoted = []
+    #     downvoted = []        
+        
+    
+    return render(request, 'chaoslegion/chapter.html',{
+        'story': story,
+        'chapter': chapter,
+        'prev_chapter': prev_chapter,
+        'next_chapter': next_chapter,       
+        # 'upvoted': upvoted,
+        # 'downvoted': downvoted,        
+        # 'comments': comments,        
+        # 'form': form,
+        'hubs':hubs
+    })
+
 
 def story_create(request):
     if request.method == 'POST':
@@ -495,9 +622,6 @@ def story_delete(request, story):
     story = Story.objects.get(slug=story)
     story.delete()
     return HttpResponseRedirect('/') # to story list
-
-def chapter(request):
-    return render(request, 'chaoslegion/chapter.html')
 
 
 # Writing Prompt

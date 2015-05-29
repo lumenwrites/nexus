@@ -10,6 +10,10 @@
 	<!-- <a> New </a> -->
 	<!-- <a> Top </a> -->
 	<!-- <a> Comments </a> -->
+	{% if userprofile.stories %}
+	<a href="/user/{{userprofile.username}}"> Posts </a>
+	<a href="/user/{{userprofile.username}}/stories"> Stories </a>
+	{% endif %}
       </div>
       <!-- <div class="username" /> <a href="/user/"><b>rayalez</b></a> </div> -->
       <!-- <div class="fi-mail usermail"></div>       -->
