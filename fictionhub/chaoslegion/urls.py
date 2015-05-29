@@ -7,8 +7,8 @@ urlpatterns = [
     # Create/edit/delete
     url(r'^submit/$', views.submit, name='submit'),
     url(r'^prompt/$', views.prompt, name='prompt'), 
-    url(r'^post/(?P<slug>[^\.]+)', views.post, name='view_post'),
     url(r'^post/(?P<slug>[^\.]+)/edit', views.post_edit, name='post_edit'),
+    url(r'^post/(?P<slug>[^\.]+)', views.post, name='view_post'),
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),
     # TODO: delete post
