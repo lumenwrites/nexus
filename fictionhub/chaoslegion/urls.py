@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     #################### Posts ####################
     # Create/edit/delete
-    url(r'^/submit/$', views.submit, name='submit'),
+    url(r'^submit/$', views.submit, name='submit'),
     url(r'^prompt/$', views.prompt, name='prompt'), 
     url(r'^post/(?P<slug>[^\.]+)', views.post, name='view_post'),
     url(r'^post/(?P<slug>[^\.]+)/edit', views.post_edit, name='post_edit'),
