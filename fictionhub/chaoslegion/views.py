@@ -2,10 +2,12 @@ import datetime
 from django.utils.timezone import utc
 import re
 import praw
+from xml.etree.ElementTree import Element, SubElement, tostring
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -280,6 +282,37 @@ def post(request, slug):
         'hubs':hubs
     })
     
+
+def story_feed(request, story):
+    story = Story.objects.get(slug=story)
+    rss = Element('rss')
+    rss.set("version","2.0")
+
+    channel = SubElement(rss,'channel')
+
+    title = SubElement(channel,'title')
+    title.text = story.title
+
+    link = SubElement(channel,'link')
+    link.text = request.build_absolute_uri(reverse("story"))
+
+    desc = SubElement(channel,'description')
+    desc.text = story.description
+
+    chapters = story.chapters.all()
+
+    for index in chapters:
+        item = SubElement(channel,'item')
+
+        title_c = SubElement(item,'title')
+        title_c.text = index.title
+        
+        link = SubElement(item,'link')
+        link.text = request.build_absolute_uri(index.get_absolute_url())
+
+    return HttpResponse(tostring(rss, encoding='UTF-8'))
+
+
 
 # Edit post
 @login_required
