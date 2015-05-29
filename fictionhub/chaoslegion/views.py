@@ -299,6 +299,16 @@ def story_feed(request, story):
     desc = SubElement(channel,'description')
     desc.text = story.description
 
+    chapters = story.chapters.all()
+
+    for index in chapters:
+        item = SubElement(channel,'item')
+
+        title_c = SubElement(item,'title')
+        title_c.text = index.title
+        
+        link = SubElement(item,'link')
+        link.text = request.build_absolute_uri(index.get_absolute_url())
 
     return HttpResponse(tostring(rss, encoding='UTF-8'))
 
