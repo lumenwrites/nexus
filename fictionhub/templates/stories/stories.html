@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdownify %}
+
+{% block content %}
+    
+<div id="page"  class="postPage">
+
+<!-- Subnav
+<div class="subnav">  
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="rank-types">
+	<a href="/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	<a href="/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
+	
+	<a href="/top/all-time">
+	  <span {% if rankby == "all-time" or rankby == "year" or rankby == "month" or rankby = "day" %}
+		class="bold"
+		{% endif %}>
+	    Top
+	</span></a>
+	{% if rankby == "all-time" or rankby == "year" or rankby == "month" or rankby = "day" %}
+	<a href="/top/all-time"><span {% if rankby = "all-time" %}class="bold"{% endif %}>All time</span></a>
+	<a href="/top/year"><span {% if rankby = "year" %}class="bold"{% endif %}>Year</span></a>
+	<a href="/top/month"><span {% if rankby = "month" %}class="bold"{% endif %}>Month</span></a>
+	<a href="/top/day"><span {% if rankby = "day" %}class="bold"{% endif %}>Day</span></a>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+<div class="row">
+  <div class="large-12 columns">
+    {% for story in stories %}
+    <article>
+      <!-- Vote
+      <div class="vote-column">
+	<div class="vote">
+	  <a href="/login/"
+	     class="fi-arrow-up upvote
+		    {% if post in upvoted %}upvoted{% endif %}
+                    {% if post in downvoted %}downvoted{% endif %}"
+	     id="post-upvote-{{post.id}}"></a>
+	  <div class="score"> {{post.score}} </div>
+	  <a href="/login/"
+	     class="fi-arrow-down downvote
+		    {% if post in upvoted %}upvoted{% endif %}
+                    {% if post in downvoted %}downvoted{% endif %}"
+	     id="post-downvote-{{post.id}}"></a>    
+	</div>
+	 -->
+	<!-- Comments
+	<div class="post-comments">
+	  <span class="fi-comment">
+	    <a href="{{ post.get_absolute_url }}#comments"><span class="number-of-comments"> {{post.comments.count}} </span></a>
+	  </span>			      
+	</div>
+      </div>  -->
+      <!-- Header -->
+      <header class="post-header">
+	<a href="{{story.get_absolute_url}}">
+	  <h1> {{story.title}} </h1>
+	</a>
+	<span class="post-tagline"><!-- submitted 14 days ago --> by
+	  {% if story.author.external_url %}
+	  <a href="{{story.author.website}}">{{story.author}}</a>
+	  {% else %}
+	  <a href="/user/{{story.author.username}}">{{story.author}}</a>
+	  {% endif %}
+	</span>	
+	<hr />
+      </header>
+      <!-- Post Body -->
+      {{post.body | markdownify | safe }}
+      <br/>
+      <a href="{{ post.get_absolute_url }}">	read more >>>> </a>
+      <div>
+    </article>
+    {% endfor %}
+
+<div class="pagination">
+  <span class="step-links">
+    {% if posts.has_previous %}
+    <a href="?page={{ posts.previous_page_number }}"><</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ posts.number }}
+      <!-- of {{ posts.paginator.num_pages }} -->
+    </span>
+
+    {% if posts.has_next %}
+    <a href="?page={{ posts.next_page_number }}">></a>
+    {% endif %}
+  </span>
+</div>
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+{% endblock content %}
+
+

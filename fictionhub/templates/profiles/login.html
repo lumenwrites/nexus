@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-5 columns">
+      <!-- Login -->
+      <h2> Login </h2>
+      {% if authenticate_form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      
+      <form method="post" action="/authenticate/"> {% csrf_token %}
+	{{authenticate_form}}
+	<input type="submit" class="button small" value="login" />
+	<input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+    
+    <div class="large-5 columns">
+      <!-- Register -->
+      <h2> Sign Up </h2>
+      <form method="post" action="/register/">	{% csrf_token %}
+	{{register_form.username}}
+	{{register_form.email}}
+	{{register_form.password1}}
+	{{register_form.password2}}
+	<input type="submit" class="button small" value="submit" />
+	<input type="hidden" name="next" value="{{ next }}" />
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+	<br/>
+      </form>    
+    </div>
+  </div>	 <!-- End row -->
+</div>
+
+{% endblock content %}
+

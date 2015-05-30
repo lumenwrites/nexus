@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load markdownify %}
+{% block content %}
+    
+<div id="page"  class="postPage profile">
+  {% include "profiles/subnav.html" %}
+
+  <div class="row">
+    <div class="large-12 columns">
+      <article>
+	<header class="post-header">
+	  <h1> About </h1>
+	  <hr />
+	</header>
+	{{userprofile.about | markdownify | safe }}
+	<br/>
+	<div>
+      </article>
+      </div> <!-- End 12 columns -->
+    </div> <!-- End row -->
+  </div>
+</div>
+
+{% endblock content %}
+
+

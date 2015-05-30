@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+
+  <div class="row">
+    <div class="large-12 columns">
+      <br/>
+      <!-- Submit Form -->
+      <form action="/story/add" method="post">{% csrf_token %}
+	{{form.title}}
+	<div class="editor">
+	  {{form.description}}
+	</div>
+	<br/>
+	  {{form.hubs}}
+	<div style="float:right;">
+	  <!-- <button class="button small" type="submit">Save Draft</button> -->
+	  <button class="button small" type="submit">Publish</button>
+	</div>
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+      </form>
+      <!-- End Submit Form -->
+      
+    </div>
+</article>      
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<script>
+  $(document).ready(function(){
+  var editor = new Editor();
+  editor.render();
+  })
+</script>  
+{% endblock content %}
+

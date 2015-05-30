@@ -38,7 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'chaoslegion',
+    'profiles',    
+    # 'chaoslegion',
+    'stories',    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,7 +59,9 @@ ROOT_URLCONF = 'fictionhub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR + '/templates/',            
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,7 +115,7 @@ STATICFILES_DIRS = (
 )
 
 
-AUTH_USER_MODEL = 'chaoslegion.User'
+AUTH_USER_MODEL = 'profiles.User'
 
 # Auth
 LOGIN_URL = '/login/'

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+  <!-- 
+<div class="subnav">  
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="rank-types">
+	<a>Story</a>
+      </div>
+    </div>
+  </div>
+</div>
+   -->
+  <div class="row fullWidth">
+
+    <div class="large-3 columns sidebar">
+      <!-- 
+	   <ul class="breadcrumbs">
+	     <li><a href="#">Harry Potter and the Methods of Rationality</a></li>
+	     <li class="current"><a href="#">Comparing Reality To Its Alternatives</a></li>
+	   </ul> -->
+      <ul class="side-nav">      
+	<li><a class="nav-story-title" href="/story/{{story.slug}}/edit">{{story.title}}</a></li>
+	<hr/>
+	<a class="button small" href="/story/{{story.slug}}/add">Add Chapter</a>
+      </ul>
+      <ul class="side-nav chapters">
+	{% for chapter in story.chapters.all %}
+	<div class="chapter-title">
+	  <li>
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/edit">{{chapter.number}} : {{chapter.title}}</a>
+	  </li>
+	</div>
+	<div class="chapter-arrows">
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/down" class="chapter-button chapter-arrow">&#9650;</a>
+	    <a href="/story/{{story.slug}}/{{chapter.slug}}/up" class="chapter-button chapter-arrow">&#9660;</a>
+	</div>
+      <div class="clearfix"></div>	
+	{% endfor %}
+      </ul>
+      <!-- <span class="fi-list large" style="float:right;"></span>         -->
+      <div class="clearfix"></div>
+      <div style="width:100%; height: 20px"></div>
+    </div>
+
+    
+    <div class="large-9 columns">
+      <br/>
+      <!-- 
+      <div class="panel">
+      <a>Harry Potter and The Methods of Rationality</a> >
+      <span>Comparing Reality To Its Alternatives</span>
+      </div>
+      -->
+
+      <!-- Submit Form -->
+      {% if action = "story_edit" %}
+      <form action="/story/{{story.slug}}/edit" method="post">
+      {% elif action = "chapter_create" %}
+      <form action="/story/{{story.slug}}/add" method="post">	
+      {% elif action = "chapter_edit" %}
+      <form action="/story/{{story.slug}}/{{chapter.slug}}/edit" method="post">
+      {% endif %}	
+      {% csrf_token %}
+	{{form.title}}
+	<div class="editor">
+	  {% if action = "story_edit" %}
+	  {{form.description}}
+          {% else %}
+	  {{form.body}}
+          {% endif %}	
+	</div>
+
+
+	<!-- Delete Story -->
+
+      {% if action = "story_edit" %}
+	<a href="#" data-reveal-id="deleteStory" class="button small delete-chapter">Delete Story</a>
+      {% elif action = "chapter_edit" %}
+	<a href="#" data-reveal-id="deleteChapter" class="button small delete-chapter">Delete Chapter</a>
+      {% endif %}	
+
+	<div id="deleteStory" class="reveal-modal"
+	     data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	  <h2 id="modalTitle"> Confirm </h2>
+	  <p class="lead">Are you sure you want to delete this story?</p>
+	  <!-- Button -->
+	  <a href="/story/{{story.slug}}/delete" class="button small confirm-delete">Delete</a>      	
+	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+	<div id="deleteChapter" class="reveal-modal"
+	     data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	  <h2 id="modalTitle"> Confirm </h2>
+	  <p class="lead">Are you sure you want to delete this chapter?</p>
+	  <!-- Button -->
+      <a href="/story/{{story.slug}}/{{chapter.slug}}/delete" class="button small confirm-delete">Delete</a>  
+	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>	
+	
+ 	<div style="float:right;">
+	  <!-- <button class="button small" type="submit">Save Draft</button> -->
+	  <br/>
+	  {% if action = "story_edit" %}	  
+	  <a href="/story/{{story.slug}}" class="button small view" type="submit">View</a>
+	  {% elif action = "chapter_edit" %}
+	  <a href="/story/{{story.slug}}/{{chapter.slug}}" class="button small view" type="submit">View</a>	  
+	  {% endif %}		  
+	  <button class="button small" type="submit">Save</button>
+	</div>
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+      </form>
+      <!-- End Submit Form -->
+    </div>
+
+
+</div>	 <!-- End row -->
+
+
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+  <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<script>
+  $(document).ready(function(){
+  var editor = new Editor();
+  editor.render();
+  })
+</script>  
+{% endblock content %}
+

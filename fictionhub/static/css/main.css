@@ -802,6 +802,9 @@ article header {
 }
 */
 
+.view {
+    background: gray!important;
+}
 
 /* View story */
 

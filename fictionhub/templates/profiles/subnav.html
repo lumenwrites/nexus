@@ -1,0 +1,45 @@
+<div class="subnav">
+  <div class="row">
+    <div class="large-6 columns" style="//padding-top: 20px;">
+      <div class="rank-types">
+	<!-- <a> New </a> -->
+	<!-- <a> Top </a> -->
+	<!-- <a> Comments </a> -->
+
+	<a href="/user/{{userprofile.username}}"> Stories </a>
+      </div>
+    </div>
+    <div class="large-6 columns">
+      <div style="float:right;">
+	<!-- <a> Store </a>	 -->
+	{% if userprofile.website %}
+	<a href="{{userprofile.website}}"> Website </a>
+	{% endif %}
+	{% if userprofile.about %}
+	<a href="/user/{{userprofile.username}}/about"> About </a>
+	{% endif %}
+
+	{% if user.is_authenticated %}	
+	  {% if not userprofile == user %}
+	    {% if userprofile not in subscribed_to %}	
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{userprofile.username}}/subscribe">
+	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	    {% else %}
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{userprofile.username}}/unsubscribe">
+	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	    {% endif %}
+	  {% endif %}
+        {% else %}
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/login/">
+	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	{% endif %}
+
+	<b> {{userprofile.username}} </b>
+	<span class="userkarma">{{userprofile.karma}}</span>
+      </div>
+    </div>        
+  </div>
+</div>
