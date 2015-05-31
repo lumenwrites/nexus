@@ -104,7 +104,12 @@
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <br/>
 	  {% if action = "story_edit" %}	  
-	  <a href="/story/{{story.slug}}" class="button small view" type="submit">View</a>
+	  <a href="/story/{{story.slug}}" class="button small view">View</a>
+	    {% if not story.published %}	  
+	    <a href="/story/{{story.slug}}/publish" class="button small">Publish</a>
+	    {% else %}
+	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
+	    {% endif %}	    
 	  {% elif action = "chapter_edit" %}
 	  <a href="/story/{{story.slug}}/{{chapter.slug}}" class="button small view" type="submit">View</a>	  
 	  {% endif %}		  

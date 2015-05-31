@@ -2,7 +2,7 @@
 <div class="subnav">  
   <div class="row">
     <div class="large-7 columns">
-      <div class="rank-types">
+      <div class="{% if userprofile %}profile{% endif %} rank-types">
 	<a href="{{filterurl}}/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
@@ -43,8 +43,10 @@
 	       href="/user/{{userprofile.username}}/unsubscribe">
 	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	    {% endif %}
+          {% else %} <!-- if it's myself -->
+	      <!-- Subscribers: {{userprofile.subscribers.count}} -->
 	  {% endif %}
-        {% else %}
+        {% else %} <!-- if not authenticated -->
 	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
 	   href="/login/">
 	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>

@@ -63,18 +63,22 @@ def stories(request, rankby="hot", timespan="all-time",
     
     if filterby == "subscriptions":
         subscribed_to = request.user.subscribed_to.all()
-        stories = Story.objects.filter(author=subscribed_to)
+        stories = Story.objects.filter(author=subscribed_to, published=True)
         filterurl="/subscriptions" # to add to href  in subnav
     elif filterby == "hub":
         hub = Hub.objects.get(slug=hubslug)
-        stories = Story.objects.filter(hubs=hub)
+        stories = Story.objects.filter(hubs=hub, published=True)
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
-        userprofile = get_object_or_404(User, username=username)            
-        stories = Story.objects.filter(author=userprofile)
+        userprofile = get_object_or_404(User, username=username)
+        if request.user == userprofile:
+            # If it's my profile - display all the stories, even unpublished.
+            stories = Story.objects.filter(author=userprofile)
+        else:
+            stories = Story.objects.filter(author=userprofile, published=True)
         filterurl="/user/"+username # to add to href  in subnav        
     else:
-        stories = Story.objects.all()
+        stories = Story.objects.filter(published=True)
         filterurl="" # to add to href  in subnav                
 
     if rankby == "hot":
@@ -357,3 +361,15 @@ def story_delete(request, story):
     story = Story.objects.get(slug=story)
     story.delete()
     return HttpResponseRedirect('/') # to story list
+
+def story_publish(request, story):
+    story = Story.objects.get(slug=story)
+    story.published = True
+    story.save()
+    return HttpResponseRedirect('/story/'+story.slug+'/edit')
+
+def story_unpublish(request, story):
+    story = Story.objects.get(slug=story)
+    story.published = False
+    story.save()
+    return HttpResponseRedirect('/story/'+story.slug+'/edit')

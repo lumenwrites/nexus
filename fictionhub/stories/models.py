@@ -7,7 +7,7 @@ from django.db.models import permalink
 class Story(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique=True, default="")
-    published = models.BooleanField(default=True)
+    published = models.BooleanField(default=False, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="stories")
