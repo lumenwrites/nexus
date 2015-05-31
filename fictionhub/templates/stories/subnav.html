@@ -8,7 +8,7 @@
 
 	<a href="{{filterurl}}/top/all-time">
 	  <span {% if rankby == "top" %}class="bold"{% endif %}>Top</span></a>
-	{% if rankby == "top" %}
+	{% if rankby == "top" and not userprofile %}
 	<a href="{{filterurl}}/top/all-time">
 	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
 	<a href="{{filterurl}}/top/year">
@@ -69,16 +69,21 @@
 	    aria-hidden="true" tabindex="-1">
 	  {% for hub in hubs %}
 	    {% if not hub.parent %}
-	      <li>
-	        <a href="/hub/{{hub.slug}}/"> {{hub.title}}</a>
-	      </li>
+	      <!-- doesn't check if children have stories -->
+	      {% if hub.children.all or hub.stories.all %} 
+	        <li>
+	          <a href="/hub/{{hub.slug}}/"> {{hub.title}}</a>
+	        </li>
+	      {% endif %}
 	      {% if hub.children.all %}
 	        {% for child in hub.children.all %}
-	        <ul>
-	          <li class="dropdown-subitems">
-	            <a href="/hub/{{child.slug}}/"> {{child.title}}</a>
-	          </li>
-	        </ul>
+	          {% if child.stories.all %}
+	          <ul>
+	            <li class="dropdown-subitems">
+	              <a href="/hub/{{child.slug}}/"> {{child.title}}</a>
+	            </li>
+	          </ul>
+	          {% endif %}
 	        {% endfor %}
 	      {% endif %}
 	    {% endif %}	  	  

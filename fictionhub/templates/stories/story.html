@@ -22,6 +22,7 @@
 	</header>
 	<!-- Post Body -->
 	{{story.description | markdownify | safe }}
+	{% if story.chapters.all %}	
 	<div class="panel">
 	  {% for chapter in story.chapters.all %}	  
 	  <ul>
@@ -29,10 +30,13 @@
 	  </ul>
 	  {% endfor %}
 	</div>
+	{% endif %}	
 	{% if first_chapter %}
 	<a class="button small next-chapter"
 	   href="/story/{{story.slug}}/{{first_chapter.slug}}">Read ></a> 
 	{% endif %}
+	<div class="clearfix"></div>	
+	<div style="width:100%; height: 20px"></div>	
       </article>
       
 </div> <!-- End 12 columns -->
@@ -77,6 +81,8 @@
 	   href="/login/">
 	  Subscribe <span class="subscribers">{{story.author.subscribers.count}}</a>
 	{% endif %}
+        </div> <!-- End Author -->
+	<div class="clearfix"></div>
       </div>
     </div>
   </div>

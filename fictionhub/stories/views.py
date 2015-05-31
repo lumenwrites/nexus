@@ -252,8 +252,17 @@ def story_create(request):
         if form.is_valid():
             story = form.save(commit=False) # return story but don't save it to db just yet
             story.author = request.user
+            # self upvote
+            story.score += 1
             story.save()
+            request.user.upvoted.add(story)            
             story.hubs.add(*form.cleaned_data['hubs'])
+            # Hacky way to 
+            # for hub in form.cleaned_data['hubs']:
+            #     if hub.parent:
+            #         story.hubs.add(hub.parent)
+            #         if hub.parent.parent:
+            #             story.hubs.add(hub.parent.parent)
             return HttpResponseRedirect('/story/'+story.slug+'/edit')
     else:
         form = StoryForm()
@@ -284,6 +293,10 @@ def chapter_create(request, story):
 def story_edit(request, story):
     story = Story.objects.get(slug=story)
 
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     if request.method == 'POST':
         form = StoryForm(request.POST,instance=story)
         if form.is_valid():
@@ -303,6 +316,10 @@ def chapter_edit(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter)
 
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+    
     if request.method == 'POST':
         form = ChapterForm(request.POST,instance=chapter)
         if form.is_valid():
@@ -322,6 +339,11 @@ def chapter_edit(request, story, chapter):
 def chapter_up(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     try:
         following_chapter = story.chapters.get(number=chapter.number+1)
         following_chapter.number -= 1
@@ -337,6 +359,10 @@ def chapter_up(request, story, chapter):
 def chapter_down(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
 
     if chapter.number > 0:    
         try:
@@ -354,22 +380,42 @@ def chapter_down(request, story, chapter):
 def chapter_delete(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter) # add story=story, to not confuse with others!
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     chapter.delete()
     return HttpResponseRedirect('/story/'+story.slug+'/edit')    
 
 def story_delete(request, story):
     story = Story.objects.get(slug=story)
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     story.delete()
     return HttpResponseRedirect('/') # to story list
 
 def story_publish(request, story):
     story = Story.objects.get(slug=story)
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     story.published = True
     story.save()
     return HttpResponseRedirect('/story/'+story.slug+'/edit')
 
 def story_unpublish(request, story):
     story = Story.objects.get(slug=story)
+
+    # throw him out if he's not an author
+    if request.user != story.author:
+        return HttpResponseRedirect('/')        
+
     story.published = False
     story.save()
     return HttpResponseRedirect('/story/'+story.slug+'/edit')
