@@ -1,15 +1,28 @@
-<div class="subnav">
+<!-- Subnav -->
+<div class="subnav">  
   <div class="row">
-    <div class="large-6 columns" style="//padding-top: 20px;">
+    <div class="large-7 columns">
       <div class="rank-types">
-	<!-- <a> New </a> -->
-	<!-- <a> Top </a> -->
-	<!-- <a> Comments </a> -->
+	<a href="{{filterurl}}/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
-	<a href="/user/{{userprofile.username}}"> Stories </a>
+	<a href="{{filterurl}}/top/all-time">
+	  <span {% if rankby == "top" %}class="bold"{% endif %}>Top</span></a>
+	{% if rankby == "top" %}
+	<a href="{{filterurl}}/top/all-time">
+	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
+	<a href="{{filterurl}}/top/year">
+	  <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
+	<a href="{{filterurl}}/top/month">
+	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
+	<a href="{{filterurl}}/top/day">
+	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
+	{% endif %}
       </div>
     </div>
-    <div class="large-6 columns">
+
+    {% if userprofile %}    
+    <div class="large-5 columns">
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
 	{% if userprofile.website %}
@@ -40,6 +53,7 @@
 	<b> {{userprofile.username}} </b>
 	<span class="userkarma">{{userprofile.karma}}</span>
       </div>
-    </div>        
+    </div> <!-- end 5 columns -->
+    {% endif %}
   </div>
 </div>

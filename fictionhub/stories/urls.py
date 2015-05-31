@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/add$', views.chapter_create),
 
     # View
-    url(r'^user/(?P<username>[^\.]+)', views.user_stories),
+    # url(r'^user/(?P<username>[^\.]+)', views.user_stories),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.chapter),            
     url(r'^story/(?P<story>[^\.]+)', views.story, name='view_story'),    
 
@@ -23,6 +23,15 @@ urlpatterns = [
     url(r'^downvote/$', views.downvote),
 
     # List stories
+    # User
+    # Subscriptions
+    url(r'^user/(?P<username>[^\.]+)/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories,
+        {'filterby': 'user'}),    
+    url(r'^user/(?P<username>[^\.]+)/(?P<rankby>[^\.]+)/$', views.stories,
+        {'filterby': 'user'}),    
+    url(r'^user/(?P<username>[^\.]+)/$', views.stories,
+        {'filterby': 'user'}),    
+    
     # Subscriptions
     url(r'^subscriptions/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories,
         {'filterby': 'subscriptions'}),    

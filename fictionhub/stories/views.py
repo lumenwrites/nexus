@@ -53,7 +53,14 @@ def rank_top(stories, timespan = None):
 
 
 def stories(request, rankby="hot", timespan="all-time",
-            filterby="", hubslug=""):
+            filterby="", hubslug="", username=""):
+    # for user profile navbar
+    userprofile = []
+    if not request.user.is_anonymous():
+        subscribed_to = request.user.subscribed_to.all()
+    else:
+        subscribed_to = []
+    
     if filterby == "subscriptions":
         subscribed_to = request.user.subscribed_to.all()
         stories = Story.objects.filter(author=subscribed_to)
@@ -61,7 +68,11 @@ def stories(request, rankby="hot", timespan="all-time",
     elif filterby == "hub":
         hub = Hub.objects.get(slug=hubslug)
         stories = Story.objects.filter(hubs=hub)
-        filterurl="/hub/"+hubslug # to add to href  in subnav        
+        filterurl="/hub/"+hubslug # to add to href  in subnav
+    elif filterby == "user":
+        userprofile = get_object_or_404(User, username=username)            
+        stories = Story.objects.filter(author=userprofile)
+        filterurl="/user/"+username # to add to href  in subnav        
     else:
         stories = Story.objects.all()
         filterurl="" # to add to href  in subnav                
@@ -102,47 +113,10 @@ def stories(request, rankby="hot", timespan="all-time",
         'downvoted': downvoted,
         'filterurl': filterurl,                
         'rankby': rankby,
-        'timespan': timespan,                        
-    })
-
-def user_stories(request, username):
-    userprofile = get_object_or_404(User, username=username)    
-    story_list = Story.objects.filter(author=userprofile).order_by('-pub_date')
-
-    if not request.user.is_anonymous():
-        subscribed_to = request.user.subscribed_to.all()
-    else:
-        subscribed_to = []
-
-    # Pagination
-    paginator = Paginator(story_list, 25)
-    page = request.GET.get('page')
-    try:
-        stories = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        stories = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        stories = paginator.page(paginator.num_pages)    
-    
-    
-    # Disable upvoted/downvoted
-    # if request.user.is_authenticated():
-    #     upvoted = request.user.upvoted.all()
-    #     downvoted = request.user.downvoted.all()                
-    # else:
-    #     upvoted = []
-    #     downvoted = []        
-    
-    return render(request, 'stories/user-stories.html',{
-        'stories':stories,
-        # 'upvoted': upvoted,
-        # 'downvoted': downvoted,                
+        'timespan': timespan,
         'userprofile':userprofile,
         'subscribed_to': subscribed_to
     })
-
 
 # Voting
 def upvote(request):
