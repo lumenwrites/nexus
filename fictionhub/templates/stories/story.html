@@ -10,28 +10,7 @@
   <div class="row">
     <div class="large-12 columns">
       <article>
-	<!-- Vote
-	<div class="vote-column">
-	  <div class="vote">
-	    <a href="/login/"
-	       class="fi-arrow-up upvote
-		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-	       id="post-upvote-{{post.id}}"></a>
-	    <div class="score"> {{post.score}} </div>
-	    <a href="/login/"
-	       class="fi-arrow-down downvote
-		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-	       id="post-downvote-{{post.id}}"></a>    
-	  </div> -->
-	<!-- Comments
-	  <div class="post-comments">
-	    <span class="fi-comment">
-	      <a href="{{ post.get_absolute_url }}#comments"><span class="number-of-comments"> {{post.comments.count}} </span></a>
-	    </span>			      
-	  </div>
-	</div>	     -->	  
+	{% include "stories/vote.html" %}
 	<!-- Post Header -->
 	<header class="post-header">
 	  {% if user == story.author %}

@@ -36,31 +36,7 @@
   <div class="large-12 columns">
     {% for story in stories %}
     <article>
-      <!-- Vote	 -->
-      <div class="vote-column">
-	<div class="vote">
-	  <a href="/login/"
-	     class="fi-arrow-up upvote
-		    {% if story in upvoted %}upvoted{% endif %}
-                    {% if story in downvoted %}downvoted{% endif %}"
-	     id="post-upvote-{{story.id}}"></a>
-	  <div class="score"> {{story.score}} </div>
-	  <a href="/login/"
-	     class="fi-arrow-down downvote
-		    {% if story in upvoted %}upvoted{% endif %}
-                    {% if story in downvoted %}downvoted{% endif %}"
-	     id="post-downvote-{{story.id}}"></a>    
-	</div>
-
-	<!-- Comments  -->
-	<div class="post-comments">
-	  <span class="fi-comment">
-	    <a href="{{story.get_absolute_url}}#comments">
-	      <span class="number-of-comments"> {{story.comments.count}} </span>
-	    </a>
-	  </span>			      
-	</div>
-      </div>
+      {% include "stories/vote.html" %}      
       <!-- Header -->
       <header class="post-header">
 	<a href="{{story.get_absolute_url}}">
