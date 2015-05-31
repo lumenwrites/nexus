@@ -56,7 +56,10 @@ class Chapter(models.Model):
 class Hub(models.Model):
     title = models.CharField(max_length=64)    
     slug = models.SlugField(max_length=64, default="")
-
+    # description = models.TextField(dafault="", blank=True)
+    parent = models.ForeignKey('Hub', related_name="children", default=None,null=True, blank=True)
+    # users_can_create_children = models.BooleanField(default=True)    
+    
     def __str__(self):
         return self.title    
 

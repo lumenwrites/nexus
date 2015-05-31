@@ -10,6 +10,8 @@
 
 <div class="row">
   <div class="large-12 columns">
+    <!-- For hubs sidebar -->
+    <!-- {% if filterby == "hub" %}9{% else %}12{% endif %}     -->
     {% for story in stories %}
     <article>
       {% include "stories/vote.html" %}      
@@ -53,6 +55,21 @@
 </div>
 
 </div> <!-- End 12 columns -->
+
+<!-- Hubs sidebar 
+{% if filterby == "hub" %}
+    <div class="large-3 columns sidebar"
+	 style="margin-top: 20px;/*border-left: 1px solid #DDDDDD;*/">
+  <h2> Hubs</h2>
+  <ul class="side-nav chapters">
+    {% for hub in hubs %}
+    <li>
+      <a href="/hub/{{hub.slug}}/"> {{hub.title}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}  -->
 </div>	 <!-- End row -->
 
 {% endblock content %}

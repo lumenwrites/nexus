@@ -19,6 +19,7 @@ html {
     font-size: 19px;
 }
 
+
 .row {
     max-width: 64em;
 }
@@ -63,6 +64,14 @@ h4 {
 
 li p {
     margin: 0px;
+}
+
+.right{
+    float:right;
+}
+
+.left{
+    float:left;
 }
 
 /* Header */
@@ -110,6 +119,18 @@ header {
 	display: inline-block;
 }
 */
+
+#hubs-dropdown ul {
+    margin-bottom: 0;
+}
+
+.dropdown-subitems {
+    list-style-type:none!important;
+}
+
+.dropdown-subitems a {
+    text-transform: none!important;
+}
 
 .avatar-icon {
     width: 40px;
@@ -814,3 +835,6 @@ article header {
 .previous-chapter {
     
 }
+
+
+

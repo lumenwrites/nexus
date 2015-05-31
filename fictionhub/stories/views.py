@@ -111,11 +111,13 @@ def stories(request, rankby="hot", timespan="all-time",
         'stories':stories,
         'upvoted': upvoted,
         'downvoted': downvoted,
+        'filterby':filterby,
         'filterurl': filterurl,                
         'rankby': rankby,
         'timespan': timespan,
         'userprofile':userprofile,
-        'subscribed_to': subscribed_to
+        'subscribed_to': subscribed_to,
+        'hubs': Hub.objects.all()
     })
 
 # Voting
@@ -209,7 +211,7 @@ def chapter(request, story, chapter):
     
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if nnnnnform.is_valid():
+        if form.is_valid():
             comment = form.save(commit=False) # return story but don't save it to db just yet
             comment.author = request.user
             comment.parent = None
