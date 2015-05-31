@@ -89,19 +89,24 @@
 	  {% endif %}	  
 	<span class="userkarma">{{story.author.karma}}</span>
 
-	<!-- Subscribe not working??
-	{% if not user == story.author %}
-	  {% if chapter.story.author not in user.subscribed_to %}
-	  <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	     href="/user/{{story.author.username}}/subscribe">
-	    Subscribe <span class="subscribers">{{story.author.subscribers.count}}</a></button>
-	  {% else %}
-	  <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
-	     href="/user/{{story.author.username}}/unsubscribe">
-	    Ubsubscribe <span class="subscribers">{{story.author.subscribers.count}}</a></button>
-	  {% endif %}
+	<!-- Subscribe/unsubscribe button -->
+	{% if user.is_authenticated %}
+	  {% if not user == story.author %} <!-- if it's not my story -->
+	    {% if story.author not in user.subscribed_to.all %} <!-- if not subscribed -->
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{story.author.username}}/subscribe">
+	      Subscribe <span class="subscribers">{{story.author.subscribers.count}}</a>
+	    {% else %} <!-- if subscribed then unsubscribe -->
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{story.author.username}}/unsubscribe">
+	      Ubsubscribe <span class="subscribers">{{story.author.subscribers.count}}</a>
+	    {% endif %}
+          {% endif %}
+        {% else %} <!-- if not authenticated then send to login -->
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/login/">
+	  Subscribe <span class="subscribers">{{story.author.subscribers.count}}</a>
 	{% endif %}
-        -->
       </div>
     </div>
   </div>

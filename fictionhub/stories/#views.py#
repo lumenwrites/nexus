@@ -209,7 +209,7 @@ def chapter(request, story, chapter):
     
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if nnnnnform.is_valid():
             comment = form.save(commit=False) # return story but don't save it to db just yet
             comment.author = request.user
             comment.parent = None

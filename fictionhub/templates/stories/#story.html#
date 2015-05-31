@@ -59,6 +59,7 @@
 	  {% endif %}	  
 	<span class="userkarma">{{story.author.karma}}</span>
 
+	<!-- Subscribe/unsubscribe button -->
 	{% if user.is_authenticated %}
 	  {% if not user == story.author %} <!-- if it's not my story -->
 	    {% if story.author not in user.subscribed_to.all %} <!-- if not subscribed -->
