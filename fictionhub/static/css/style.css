@@ -1,0 +1,28 @@
+@import url("http://fonts.googleapis.com/css?family=Titillium+Web:400");
+@import url("http://fonts.googleapis.com/css?family=Titillium+Web:200");
+@import url("http://fonts.googleapis.com/css?family=Lato");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
+/* For code */
+@import url("http://fonts.googleapis.com/css?family=Crimson+Text");
+@import url("http://fonts.googleapis.com/css?family=Kameron");
+@import url("http://fonts.googleapis.com/css?family=Lato:200,300,400");
+@import url("http://fonts.googleapis.com/css?family=Source+Code+Pro");
+/* General */
+* {
+  font-family: 'Open Sans', sans-serif;
+  color: #3d454b; }
+
+html {
+  font-size: 19px; }
+
+.row {
+  max-width: 64em; }
+
+a {
+  color: #f76300; }
+
+/* Header */
+/* Page */
+/* Footer */
+
+/*# sourceMappingURL=style.css.map */

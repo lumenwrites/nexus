@@ -15,17 +15,17 @@
 	<a href="/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 	
 	<a href="/top/all-time">
-	  <span {% if rankby == "top" %}
-		class="bold"
-		{% endif %}>
-	    Top
-	</span></a>
+	  <span {% if rankby == "top" %}class="bold"{% endif %}>Top</span></a>
 	{% if rankby == "top" %}
-	<a href="/top/all-time"><span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
-	<a href="/top/year"><span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
-	<a href="/top/month"><span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
-	<a href="/top/day"><span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
-      {% endif %}
+	<a href="/top/all-time">
+	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
+	<a href="/top/year">
+	  <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
+	<a href="/top/month">
+	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
+	<a href="/top/day">
+	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
+	{% endif %}
       </div>
     </div>
   </div>

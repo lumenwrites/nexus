@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Story, Chapter
+from .models import Story, Chapter, Comment
 
 
 class StoryForm(ModelForm):
@@ -19,3 +19,9 @@ class ChapterForm(ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'})
         }
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['author', 'story', 'parent', 'slug', 'score', 'published',] 
+        

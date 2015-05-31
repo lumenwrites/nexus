@@ -108,16 +108,16 @@
 </div>  
 
 <!-- Comments -->
-<!-- 
 <div class="row">
   <div class="large-12 columns">
     <h4 id="comments"> Comments </h4>
-      <form action="/post/{{post.slug}}.html" method="post">{% csrf_token %}
+      <form action="/story/{{story.slug}}/{{chapter.slug}}" method="post">{% csrf_token %}
 	{{form.body}}
 	<div style="float:right;">
 	  <button class="button small" type="submit">Submit</button>      
 	</div>
       </form>
+
       <div class="comments">
 	{% for comment in comments %}
 	<div class="comment">
@@ -130,6 +130,5 @@
       </div>
   </div>
 </div>  
- -->
 {% endblock content %}
 

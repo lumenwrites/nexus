@@ -6,8 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .forms import StoryForm, ChapterForm
-from .models import Story, Chapter, Hub
+from .forms import StoryForm, ChapterForm, CommentForm
+from .models import Story, Chapter, Hub, Comment
 from profiles.models import User
 
 def rank_hot(top=180, consider=1000, hub_slug=None):
@@ -160,7 +160,7 @@ def downvote(request):
 
 def story(request, story):
     story = Story.objects.get(slug=story)
-    # comments = Comment.objects.filter(post = post)                
+    comments = Comment.objects.filter(story = story)                
 
     try:
         first_chapter = Chapter.objects.get(story=story, number=1)
@@ -169,32 +169,32 @@ def story(request, story):
     
     hubs = story.hubs.all()
     
-    # if request.method == 'POST':
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False) # return story but don't save it to db just yet
-    #         comment.author = request.user
-    #         comment.parent = None
-    #         comment.post = post
-    #         comment.save()
-    #         return HttpResponseRedirect('/post/'+slug+'#comments')
-    # else:
-    #     form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) # return story but don't save it to db just yet
+            comment.author = request.user
+            comment.parent = None
+            comment.story = story
+            comment.save()
+            return HttpResponseRedirect('/story/'+story.slug+'#comments')
+    else:
+        form = CommentForm()
 
-    # if request.user.is_authenticated():
-    #     upvoted = request.user.upvoted.all()
-    #     downvoted = request.user.downvoted.all()                
-    # else:
-    #     upvoted = []
-    #     downvoted = []  
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []  
 
     return render(request, 'stories/story.html',{
         'story': story,
-        # 'upvoted': upvoted,
-        # 'downvoted': downvoted,
+        'upvoted': upvoted,
+        'downvoted': downvoted,
         'first_chapter':first_chapter,
-        # 'comments': comments,        
-        # 'form': form,
+        'comments': comments,        
+        'form': form,
         'hubs':hubs
     })
 
@@ -202,7 +202,7 @@ def story(request, story):
 def chapter(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter)    
-    # comments = Comment.objects.filter(post = post)                
+    comments = Comment.objects.filter(chapter = chapter)                
 
     try:
         prev_chapter = Chapter.objects.get(story=story, number=chapter.number-1)
@@ -216,36 +216,35 @@ def chapter(request, story, chapter):
 
     hubs = story.hubs.all()
     
-    # if request.method == 'POST':
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False) # return story but don't save it to db just yet
-    #         comment.author = request.user
-    #         comment.parent = None
-    #         comment.post = post
-    #         comment.save()
-    #         return HttpResponseRedirect('/post/'+slug+'#comments')
-    # else:
-    #     form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) # return story but don't save it to db just yet
+            comment.author = request.user
+            comment.parent = None
+            # comment.story = story
+            comment.chapter = chapter            
+            comment.save()
+            return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
+    else:
+        form = CommentForm()
 
-    
-    # if request.user.is_authenticated():
-    #     upvoted = request.user.upvoted.all()
-    #     downvoted = request.user.downvoted.all()                
-    # else:
-    #     upvoted = []
-    #     downvoted = []        
-        
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
     
     return render(request, 'stories/chapter.html',{
         'story': story,
         'chapter': chapter,
         'prev_chapter': prev_chapter,
         'next_chapter': next_chapter,       
-        # 'upvoted': upvoted,
-        # 'downvoted': downvoted,        
-        # 'comments': comments,        
-        # 'form': form,
+        'upvoted': upvoted,
+        'downvoted': downvoted,        
+        'comments': comments,        
+        'form': form,
         'hubs':hubs,
     })
 
