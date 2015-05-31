@@ -64,3 +64,16 @@ class Hub(models.Model):
         self.slug = slugify(self.title)
         super(Hub, self).save(*args, **kwargs)
     
+
+class Comment(models.Model):
+    story = models.ForeignKey('Story', related_name="comments", default=None)
+    parent = models.ForeignKey('Comment', related_name="children", null=True, default=None)
+    body = models.TextField()    
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments")
+    score = models.IntegerField(default=0)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.post.title
+    
+        

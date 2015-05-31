@@ -1,3 +1,6 @@
+import datetime, re # praw
+from django.utils.timezone import utc
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -7,8 +10,61 @@ from .forms import StoryForm, ChapterForm
 from .models import Story, Chapter, Hub
 from profiles.models import User
 
-def stories(request):
-    story_list = Story.objects.all().order_by('-pub_date')
+def rank_hot(top=180, consider=1000, hub_slug=None):
+    # top - number of stories to show,
+    # consider - number of latest stories to rank
+    
+    def score(post, gravity=1.8, timebase=120):
+        # number_of_comments = len(post.comments.all())
+        rating = (post.score + 1)**0.8 # + number_of_comments
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        age = int((now - post.pub_date).total_seconds())/60
+        return rating/(age+timebase)**1.8
+
+    stories = Story.objects.all()
+
+    # filter by hub
+    # if hub_slug: 
+    #     hub = Hub.objects.get(slug=hub_slug)
+    #     stories_in_hub = []
+    #     for post in stories:
+    #         if hub in post.hubs.all():
+    #             stories_in_hub.append(post)
+    #     stories = stories_in_hub
+
+    latest_stories = stories.order_by('-pub_date')#[:consider]
+    #comprehension, stories with rating, sorted
+    stories_with_rating = [(score(story), story) for story in latest_stories]
+    ranked_stories = sorted(stories_with_rating, reverse = True)
+    #strip away the rating and return only stories
+    return [story for _, story in ranked_stories][:top]
+
+def rank_top(timespan = None):
+    stories = Story.objects.all()
+
+    if timespan == "day":
+        day = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('day')
+        stories = stories.filter(pub_date__day = day)        
+    elif timespan == "month":
+        month = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('month')
+        stories = stories.filter(pub_date__month = month)        
+    elif timespan == "all-time":
+        year = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('year')
+        stories = stories.filter(pub_date__year = year)                
+    
+    top_stories = stories.order_by('-score')
+    return top_stories
+
+
+def stories(request, rankby="hot", timespan="all-time"):
+    if rankby == "hot":
+        story_list = rank_hot(top=32)
+    elif rankby == "top":
+        story_list = rank_top(timespan = timespan)
+    elif rankby == "new":
+        story_list = Story.objects.all().order_by('-pub_date')
+    else:
+        story_list = []
 
     # Pagination
     paginator = Paginator(story_list, 25)
@@ -22,23 +78,20 @@ def stories(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         stories = paginator.page(paginator.num_pages)    
 
-    # if not request.user.is_anonymous():
-    #     subscribed_to = request.user.subscribed_to.all()
-    # else:
-    #     subscribed_to = []
-    
     # Disable upvoted/downvoted
-    # if request.user.is_authenticated():
-    #     upvoted = request.user.upvoted.all()
-    #     downvoted = request.user.downvoted.all()                
-    # else:
-    #     upvoted = []
-    #     downvoted = []        
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
     
     return render(request, 'stories/stories.html',{
         'stories':stories,
-        # 'upvoted': upvoted,
-        # 'downvoted': downvoted,                
+        'upvoted': upvoted,
+        'downvoted': downvoted,
+        'rankby': rankby,
+        'timespan': timespan,                        
     })
 
 def user_stories(request, username):
@@ -80,6 +133,30 @@ def user_stories(request, username):
     })
 
 
+# Voting
+def upvote(request):
+    story = get_object_or_404(Story, id=request.POST.get('post-id'))
+    story.score += 1
+    story.save()
+    story.author.karma += 1
+    story.author.save()
+    user = request.user
+    user.upvoted.add(story)
+    user.save()
+    return HttpResponse()
+
+def downvote(request):
+    story = get_object_or_404(Story, id=request.POST.get('post-id'))
+    if story.score > 0:
+        story.score -= 1
+        story.author.karma -= 1        
+    story.save()
+    story.author.save()
+    user = request.user
+    user.downvoted.add(story)
+    user.save()
+    return HttpResponse()
+
 
 def story(request, story):
     story = Story.objects.get(slug=story)
@@ -110,7 +187,7 @@ def story(request, story):
     # else:
     #     upvoted = []
     #     downvoted = []  
-    
+
     return render(request, 'stories/story.html',{
         'story': story,
         # 'upvoted': upvoted,
@@ -169,7 +246,7 @@ def chapter(request, story, chapter):
         # 'downvoted': downvoted,        
         # 'comments': comments,        
         # 'form': form,
-        'hubs':hubs
+        'hubs':hubs,
     })
 
 

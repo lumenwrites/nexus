@@ -81,25 +81,25 @@
 	<span class="hub-tag">Flash Fiction</span>
 	-->
 	<div class="author">
-	  by 
-	  {% if post.author.external_url %}
+	  by
+	  {% if story.author.external_url %}
 	  <a href="{{story.author.website}}">{{story.author}}</a></span>	    
 	  {% else %}
 	  <a href="/user/{{story.author.username}}">{{story.author}}</a></span>
 	  {% endif %}	  
 	<span class="userkarma">{{story.author.karma}}</span>
 
-	<!-- 
-	{% if not user == post.author %}
-	{% if post.author not in user.subscribed_to %}
-	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	   href="/user/{{post.author.username}}/subscribe">
-	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</a></button>
-	{% else %}
-	<a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
-	   href="/user/{{post.author.username}}/unsubscribe">
-	  Ubsubscribe <span class="subscribers">{{post.author.subscribers.count}}</a></button>
-	{% endif %}
+	<!-- Subscribe not working??
+	{% if not user == story.author %}
+	  {% if chapter.story.author not in user.subscribed_to %}
+	  <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	     href="/user/{{story.author.username}}/subscribe">
+	    Subscribe <span class="subscribers">{{story.author.subscribers.count}}</a></button>
+	  {% else %}
+	  <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	     href="/user/{{story.author.username}}/unsubscribe">
+	    Ubsubscribe <span class="subscribers">{{story.author.subscribers.count}}</a></button>
+	  {% endif %}
 	{% endif %}
         -->
       </div>

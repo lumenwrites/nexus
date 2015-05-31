@@ -2,7 +2,7 @@ import datetime
 from django.utils.timezone import utc
 import re
 import praw
-from xml.etree.ElementTree import Element, SubElement, tostring
+from xml.etree.ElementTree import Element, SubElement, tostring # 
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse

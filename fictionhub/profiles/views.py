@@ -13,7 +13,7 @@ def subscribe(request, username):
         user = request.user
         user.subscribed_to.add(userprofile)
         user.save()
-        return HttpResponseRedirect('/user/'+username)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
     else:
         return HttpResponseRedirect('/login/')    
 
@@ -22,13 +22,14 @@ def unsubscribe(request, username):
     user = request.user
     user.subscribed_to.remove(userprofile)
     user.save()
-    return HttpResponseRedirect('/user/'+username)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
 
 def about(request, username):
     userprofile = get_object_or_404(User, username=username)    
-
+    subscribed_to = request.user.subscribed_to.all()
     return render(request, 'profiles/about.html',{
-        'userprofile':userprofile
+        'userprofile':userprofile,
+        'subscribed_to':subscribed_to
     })
 
 def preferences(request):
