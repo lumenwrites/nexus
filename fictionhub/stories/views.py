@@ -10,7 +10,7 @@ from .forms import StoryForm, ChapterForm, CommentForm
 from .models import Story, Chapter, Hub, Comment
 from profiles.models import User
 
-def rank_hot(top=180, consider=1000, hub_slug=None):
+def rank_hot(stories, top=180, consider=1000, hub_slug=None):
     # top - number of stories to show,
     # consider - number of latest stories to rank
     
@@ -20,8 +20,6 @@ def rank_hot(top=180, consider=1000, hub_slug=None):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         age = int((now - post.pub_date).total_seconds())/60
         return rating/(age+timebase)**1.8
-
-    stories = Story.objects.all()
 
     # filter by hub
     # if hub_slug: 
@@ -39,9 +37,7 @@ def rank_hot(top=180, consider=1000, hub_slug=None):
     #strip away the rating and return only stories
     return [story for _, story in ranked_stories][:top]
 
-def rank_top(timespan = None):
-    stories = Story.objects.all()
-
+def rank_top(stories, timespan = None):
     if timespan == "day":
         day = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('day')
         stories = stories.filter(pub_date__day = day)        
@@ -56,15 +52,29 @@ def rank_top(timespan = None):
     return top_stories
 
 
-def stories(request, rankby="hot", timespan="all-time"):
+def stories(request, rankby="hot", timespan="all-time",
+            filterby="", hubslug=""):
+    if filterby == "subscriptions":
+        subscribed_to = request.user.subscribed_to.all()
+        stories = Story.objects.filter(author=subscribed_to)
+        filterurl="/subscriptions" # to add to href  in subnav
+    elif filterby == "hub":
+        hub = Hub.objects.get(slug=hubslug)
+        stories = Story.objects.filter(hubs=hub)
+        filterurl="/hub/"+hubslug # to add to href  in subnav        
+    else:
+        stories = Story.objects.all()
+        filterurl="" # to add to href  in subnav                
+
     if rankby == "hot":
-        story_list = rank_hot(top=32)
+        story_list = rank_hot(stories, top=32)
     elif rankby == "top":
-        story_list = rank_top(timespan = timespan)
+        story_list = rank_top(stories, timespan = timespan)
     elif rankby == "new":
-        story_list = Story.objects.all().order_by('-pub_date')
+        story_list = stories.order_by('-pub_date')
     else:
         story_list = []
+
 
     # Pagination
     paginator = Paginator(story_list, 25)
@@ -90,6 +100,7 @@ def stories(request, rankby="hot", timespan="all-time"):
         'stories':stories,
         'upvoted': upvoted,
         'downvoted': downvoted,
+        'filterurl': filterurl,                
         'rankby': rankby,
         'timespan': timespan,                        
     })

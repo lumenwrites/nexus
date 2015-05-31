@@ -6,7 +6,16 @@ class ChapterAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',), }
 
 admin.site.register(Chapter, ChapterAdmin)
-admin.site.register(Hub)
-admin.site.register(Story)
+
+class StoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',), }
+
+admin.site.register(Story, StoryAdmin)
+
+class HubAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',), }
+
+admin.site.register(Hub, HubAdmin)    
+
 admin.site.register(Comment)
 
