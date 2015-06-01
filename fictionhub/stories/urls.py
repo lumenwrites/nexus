@@ -23,6 +23,8 @@ urlpatterns = [
 
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),
+    url(r'^unupvote/$', views.unupvote),
+    url(r'^undownvote/$', views.undownvote),
 
     # List stories
     # User

@@ -135,8 +135,12 @@ $(document).ready(function(){
                 score.html(notUpdated + 1);
 		upvoteLink.off("click");
 		downvoteLink.off("click");		    
-		upvoteLink.click(function(){ return false;});
-		downvoteLink.click(function(){ return false;});		    
+		// upvoteLink.click(function(){ return false;});
+		downvoteLink.click(function(){ return false;});
+		upvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return unupvote(postId);
+		})
 	    },
 	    headers: {
 		'X-CSRFToken': csrftoken
@@ -162,7 +166,11 @@ $(document).ready(function(){
 		upvoteLink.off("click");
 		downvoteLink.off("click");		    
 		upvoteLink.click(function(){ return false;});
-		downvoteLink.click(function(){ return false;});	    		    
+		// downvoteLink.click(function(){ return false;});
+		downvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return undownvote(postId);
+		})		
 	    },
 	    headers: {
 		'X-CSRFToken': csrftoken
@@ -172,6 +180,75 @@ $(document).ready(function(){
     }
     
 
+    // Upvote
+    function unupvote(postId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/unupvote/",
+	    data: {"post-id": postId},
+	    success: function(){
+		var upvoteLink = $('#post-upvote-'+postId);
+		var downvoteLink = $('#post-downvote-'+postId);		    
+		upvoteLink.removeClass('upvoted');
+		downvoteLink.removeClass('upvoted');		    
+		var score = upvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated - 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		// upvoteLink.click(function(){ return false;});
+		// downvoteLink.click(function(){ return false;});
+		upvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return upvote(postId);
+		})
+		downvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return downvote(postId);
+		})
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+
+    // Downvote
+    function undownvote(postId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/undownvote/",
+	    data: {"post-id": postId},
+	    success: function(){
+		var upvoteLink = $('#post-upvote-'+postId);		    
+		var downvoteLink = $('#post-downvote-'+postId);
+		upvoteLink.removeClass('downvoted');		    
+		downvoteLink.removeClass('downvoted');
+		var score = downvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated + 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		// upvotelink.click(function(){ return false;});
+		// downvoteLink.click(function(){ return false;});
+		upvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return upvote(postId);
+		})
+		downvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return downvote(postId);
+		})
+	    	
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+    
     {% if user.is_authenticated %}
     //Connect functions
     $("a.upvote").click(function(){
@@ -187,6 +264,20 @@ $(document).ready(function(){
     $("a.downvoted").off("click");	
     $("a.upvoted").click(function(){ return false;});
     $("a.downvoted").click(function(){ return false;});	
+    $("a.upvoted").click(function(){
+	var postId = parseInt(this.id.split("-")[2]);
+	return unupvote(postId);
+    })
+    $("a.downvoted").click(function(){
+	var postId = parseInt(this.id.split("-")[2]);
+	return undownvote(postId);
+    })
+    $("a.upvoted.downvote").off("click");
+    $("a.downvoted.upvote").off("click");	
+    $("a.upvoted.downvote").click(function(){ return false;});
+    $("a.downvoted.upvote").click(function(){ return false;});	
+    
+
     {% endif %}
 })
 </script>

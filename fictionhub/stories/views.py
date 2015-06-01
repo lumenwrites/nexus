@@ -148,6 +148,28 @@ def downvote(request):
     user.save()
     return HttpResponse()
 
+def unupvote(request):
+    story = get_object_or_404(Story, id=request.POST.get('post-id'))
+    story.score -= 1
+    story.save()
+    story.author.karma = 1
+    story.author.save()
+    user = request.user
+    user.upvoted.remove(story)
+    user.save()
+    return HttpResponse()
+
+def undownvote(request):
+    story = get_object_or_404(Story, id=request.POST.get('post-id'))
+    story.score += 1
+    story.author.karma += 1        
+    story.save()
+    story.author.save()
+    user = request.user
+    user.downvoted.remove(story)
+    user.save()
+    return HttpResponse()
+    
 
 def story(request, story):
     story = Story.objects.get(slug=story)
@@ -419,3 +441,19 @@ def story_unpublish(request, story):
     story.published = False
     story.save()
     return HttpResponseRedirect('/story/'+story.slug+'/edit')
+
+
+
+
+# def handler404(request):
+#     response = render_to_response('404.html', {},
+#                                   context_instance=RequestContext(request))
+#     response.status_code = 404
+#     return response
+
+
+# def handler500(request):
+#     response = render_to_response('500.html', {},
+#                                   context_instance=RequestContext(request))
+#     response.status_code = 500
+#     return response

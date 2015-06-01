@@ -344,7 +344,8 @@ article {
 
 /* Defaut state */
 .fi-arrow-up, .fi-arrow-down,
-.fi-arrow-up:active, .fi-arrow-down:active {
+.fi-arrow-up:active, .fi-arrow-down:active,
+.fi-arrow-up:visited, .fi-arrow-down:visited{
     display: block;
     transform:scale(1.8,1);
     float:left;
