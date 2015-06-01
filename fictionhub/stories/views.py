@@ -5,6 +5,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# for 404
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from .forms import StoryForm, ChapterForm, CommentForm
 from .models import Story, Chapter, Hub, Comment
@@ -110,7 +113,10 @@ def stories(request, rankby="hot", timespan="all-time",
     else:
         upvoted = []
         downvoted = []        
-    
+
+    if not stories:
+        return HttpResponseRedirect('/404')
+
     return render(request, 'stories/stories.html',{
         'stories':stories,
         'upvoted': upvoted,
@@ -445,15 +451,8 @@ def story_unpublish(request, story):
 
 
 
-# def handler404(request):
-#     response = render_to_response('404.html', {},
-#                                   context_instance=RequestContext(request))
-#     response.status_code = 404
-#     return response
-
-
-# def handler500(request):
-#     response = render_to_response('500.html', {},
-#                                   context_instance=RequestContext(request))
-#     response.status_code = 500
-#     return response
+def page_404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response

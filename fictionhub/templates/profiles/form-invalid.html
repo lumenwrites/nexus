@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-5 columns">
+      <!-- Login -->
+      <h2> Error </h2>
+      {% if form.errors %}
+      {{form.errors.message}}
+      {% endif %}
+      <form method="post"
+	    {% if title == "User Login" %}
+	    action="/authenticate/"
+	    {% else %}
+	    action="/register/"	    
+	    {% endif %}      	    
+	    > {% csrf_token %}
+	{{form}}
+	<button class="button small" type="submit">Submit</button>	
+      </form>
+  </div>	 <!-- End row -->
+</div>
+
+{% endblock content %}
+

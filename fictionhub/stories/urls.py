@@ -56,5 +56,7 @@ urlpatterns = [
     url(r'^(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories),    
     url(r'^(?P<rankby>[^\.]+)/$', views.stories),    
     url(r'^$', views.stories),
-    # url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),    
+    # url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),
+
+    url(r'.*', views.page_404),
 ]

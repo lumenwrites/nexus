@@ -109,7 +109,7 @@ def authenticate_user(request):
         login(request, auth_form.get_user())
         return HttpResponseRedirect(nextpage)
  
-    return render(request, 'profiles/authenticate.html', {
+    return render(request, 'profiles/form-invalid.html', {
         'form': auth_form,
         'title': 'User Login',
         'next': nextpage,
@@ -135,7 +135,7 @@ def register(request):
             return HttpResponseRedirect("/")
     else:
         form = UserCreationForm()
-    return render(request, "profiles/register.html", {
+    return render(request, "profiles/form-invalid.html", {
         'form': form,
     })
 
