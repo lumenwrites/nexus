@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^authenticate/', views.authenticate_user),
 
     url(r'^preferences/$', views.preferences),
+    url(r'^update-password/$', views.update_password),    
 
     url(r'^user/(?P<username>[^\.]+)/about', views.about),
     url(r'^user/(?P<username>[^\.]+)/subscribe', views.subscribe),

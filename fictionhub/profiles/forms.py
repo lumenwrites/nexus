@@ -17,6 +17,7 @@ class RegistrationForm(UserCreationForm):
             'password1' : forms.PasswordInput(attrs = {'placeholder': 'Password'}),
             'password2' : forms.PasswordInput(attrs = {'placeholder': 'Repeat Password'})
         }
+
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -28,4 +29,10 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'website',  'about'] 
+        widgets = {
+            'username' : forms.TextInput(attrs = {'placeholder': 'Username'}),
+            'email'    : forms.TextInput(attrs = {'placeholder': 'E-Mail'}),
+            'website'    : forms.TextInput(attrs = {'placeholder': 'Website'}),
+            'about'    : forms.Textarea(attrs = {'placeholder': 'About'}),                   
+        }
     

@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 from .models import User
 from .forms import RegistrationForm, UserForm
@@ -32,6 +33,7 @@ def about(request, username):
         'subscribed_to':subscribed_to
     })
 
+@login_required
 def preferences(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
@@ -40,12 +42,37 @@ def preferences(request):
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            # user = request.user
+            # user.set_password(form.cleaned_data.get('password'))
+            # user.save()
             return HttpResponseRedirect('/preferences/')            
     else:
         form = UserForm(instance=request.user)
+        # password_change_form = PasswordChangeForm(user=request.user)
     
     return render(request, "profiles/prefs.html", {
-        'form': form
+        'form': form,
+        # 'password_change_form': password_change_form,
+        'title': "Preferences"                
+    })
+
+@login_required
+def update_password(request):
+    form = PasswordChangeForm(user=request.user)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return HttpResponseRedirect('/preferences/')                        
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    return render(request, "profiles/prefs.html", {
+        'form': form,
+        # 'message': "Error, try again.",
+        'title': "Change Password"                        
     })
 
 

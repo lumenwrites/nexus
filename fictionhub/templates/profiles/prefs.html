@@ -5,12 +5,41 @@
 <div id="page"  class="postPage profile">
   <div class="row">
     <div class="large-12 columns">
-      <h2> Preferences </h2>
-      <form method="post" action="/preferences/">	{% csrf_token %}
-	{{form}}	
-	<input type="submit" class="button small" value="submit" />
-      </form>    
+      {% if message %}
+      <br/>
+      <div class="panel">{{message}}</div>
+      {% endif %}      
+      <h2> {{title}} </h2>
+      <form method="post"
+	    {% if title == "Preferences" %}
+	    action="/preferences/"
+	    {% else %}
+	    action="/update-password/"	    
+	    {% endif %}      	    
+	    > {% csrf_token %}
+	{{form}}
+	<!-- {{form.username}} -->
+	<!-- {{form.email}} -->
+	<!-- {{form.website}} -->
+	<!-- {{form.about}}				 -->
+	{% if title != "Change Password" %}
+	<a href="/update-password">Change Password</a>
+	{% endif %}      	
+	<button class="button small" type="submit">Save</button>	
+      </form>
 
+
+      <div class="clearfix"></div>
+      <div style="width:100%; height: 20px"></div>
+      <!-- 
+      <h3> Change Password </h3>
+      <form method="post" action="/update-password/">	{% csrf_token %}
+	{{password_change_form}}
+	<button class="button small" type="submit">Submit</button>
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+      </form>      
+      -->
     </div> <!-- End 12 columns -->
     </div>	 <!-- End row -->
 
