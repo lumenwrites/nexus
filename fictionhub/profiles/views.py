@@ -81,6 +81,7 @@ def login_or_signup(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
 
+    nextpage = request.GET.get('next', '/')
     authenticate_form = AuthenticationForm(None, request.POST or None)
     # register_form = UserCreationForm()
     register_form = RegistrationForm()
@@ -88,7 +89,8 @@ def login_or_signup(request):
     register_form.fields['password2'].widget.attrs['placeholder'] = "Repeat Password"        
     return render(request, "profiles/login.html", {
         'authenticate_form': authenticate_form,
-        'register_form': register_form,        
+        'register_form': register_form,
+        'nextpage': nextpage,                
     })
 
 

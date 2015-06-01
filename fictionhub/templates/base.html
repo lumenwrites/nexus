@@ -62,7 +62,7 @@
 	      <li><a href="/story/add"> Create Story </a></li>	      
 	      <li><a href="/preferences/"> Preferences </a></li>	      
 	      <li>
-		<a href="/logout/">
+		<a href="/logout/?next={{request.path}}">
 		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
 		  logout
 		</a>
@@ -71,7 +71,7 @@
 	  </ul>
 	  {% else %}
 	  <ul>
-	    <a href="/login/"> Login/Signup </a>
+	    <a href="/login/?next={{request.path}}"> Login/Signup </a>
 	  </ul>
 
 	  <ul>

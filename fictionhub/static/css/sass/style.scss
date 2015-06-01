@@ -486,12 +486,34 @@ article header {
 
 /* Story Comments */
 
+.comments {
+    margin-left: -32px;
+}
 .comment {
-    margin: 20px;
-    padding: 20px;
+}
+
+.comment-collapse {
+    color: $black
 }
 
 
+.comment-box {
+    /* border-left: 1px solid black; */
+    margin-left: 32px;
+    margin-top: 10px;
+}
+
+.even {
+    background: blue;
+}
+
+.odd {
+    background: red;
+}
+
+.comment-footer a {
+    color: $black    
+}
 
 /* ================ Edit Story ================ */
 
@@ -588,3 +610,4 @@ footer h4 {
 	font-size: medium;
 	font-weight: normal;
 }
+

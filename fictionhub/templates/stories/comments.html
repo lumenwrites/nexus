@@ -1,0 +1,12 @@
+<div>
+    {% for child in children %}
+    <div>
+      {{ child.body }}
+      {% if child.children.count > 0 %}
+      <div>
+	{% children_list child %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+</div>

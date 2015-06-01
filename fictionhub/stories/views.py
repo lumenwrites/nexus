@@ -176,10 +176,37 @@ def undownvote(request):
     user.save()
     return HttpResponse()
     
+# Comments
+# comments = Comment.objects.filter(story = story)
+def get_comment_list(comments=None, iteration=0):
+    """Recursively build a list of comments."""
+    # if comments==None:
+    #     #get the root posts
+    #     comments = Comment.objects.filter(parent=None)
+    #     comments[0].active=True
+    # else:
+    yield 'in'
 
+    # Loop through all the comments I've passed
+    for comment in comments:
+        # Add comment to the list
+        comment.iteration = iteration % 2
+        yield comment
+        # get comment's children
+        children = comment.children.all()
+        # If there's any children
+        if len(children):
+            comment.leaf=False
+            # loop through children, and apply this function
+            for x in get_comment_list(children, iteration=iteration+1):
+                yield x
+        else:
+            comment.leaf=True
+    yield 'out'
+
+            
 def story(request, story):
     story = Story.objects.get(slug=story)
-    comments = Comment.objects.filter(story = story)                
 
     try:
         first_chapter = Chapter.objects.get(story=story, number=1)
@@ -211,7 +238,32 @@ def story(request, story):
         subscribed_to = request.user.subscribed_to.all()
     else:
         subscribed_to = []
+
+
+    # Comments
+    # comments = Comment.objects.filter(story = story)
+    # def get_comment_list(comments=None):
+    #     """Recursively build a list of comments."""
+    #     # if comments==None:
+    #     #     #get the root posts
+    #     #     comments = Comment.objects.filter(parent=None)
+    #     #     comments[0].active=True
+    #     # else:
+    #     #     yield 'in'
+    #     yield 'in'
+
+    #     for comment in comments:
+    #         yield comment
+    #         children = Comment.objects.select_related().filter(parent=comment)
+    #         if len(children):
+    #             comment.leaf=False
+    #             for x in get_comment_list(comments):
+    #                 yield x
+    #         else:
+    #             comment.leaf=True
+    #             yield 'out'
         
+    comments = list(get_comment_list(Comment.objects.filter(story = story, parent = None)))
     return render(request, 'stories/story.html',{
         'story': story,
         'upvoted': upvoted,
@@ -456,3 +508,7 @@ def page_404(request):
                                   context_instance=RequestContext(request))
     response.status_code = 404
     return response
+
+
+
+

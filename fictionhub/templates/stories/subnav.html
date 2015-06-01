@@ -48,7 +48,7 @@
 	  {% endif %}
         {% else %} <!-- if not authenticated -->
 	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	   href="/login/">
+	   href="/login/?next={{request.path}}">
 	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	{% endif %}
 

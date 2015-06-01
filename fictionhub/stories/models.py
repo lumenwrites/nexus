@@ -69,15 +69,23 @@ class Hub(models.Model):
     
 
 class Comment(models.Model):
-    story = models.ForeignKey('Story', related_name="comments", default=None, null=True, blank=True)
-    chapter = models.ForeignKey('Chapter', related_name="comments", default=None,  null=True, blank=True)    
-    parent = models.ForeignKey('Comment', related_name="children", null=True, blank=True, default=None)
+    story = models.ForeignKey('Story', related_name="comments",
+                              default=None, null=True, blank=True)
+    chapter = models.ForeignKey('Chapter', related_name="comments",
+                                default=None,  null=True, blank=True)    
+    parent = models.ForeignKey('Comment', related_name="children",
+                               default=None, null=True, blank=True)
     body = models.TextField()    
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments")
     score = models.IntegerField(default=0)
     pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.story.title
+        string_name = ""
+        try:
+            string_name = self.body # self.story.title + self.body
+        except:
+            string_name = self.body # self.chapter.title + self.body  
+        return string_name
     
         
