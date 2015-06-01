@@ -166,7 +166,54 @@ def undownvote(request):
     user.downvoted.remove(story)
     user.save()
     return HttpResponse()
-    
+
+# Comment voting
+# Voting
+def comment_upvote(request):
+    comment = Comment.objects.get(id=request.POST.get('comment-id'))
+    comment.score += 1
+    comment.save()
+    comment.author.karma += 1
+    comment.author.save()
+    user = request.user
+    user.comments_upvoted.add(comment)
+    user.save()
+    return HttpResponse()
+
+def comment_downvote(request):
+    comment = Comment.objects.get(id=request.POST.get('comment-id'))
+    if comment.score > 0:
+        comment.score -= 1
+        comment.author.karma -= 1        
+    comment.save()
+    comment.author.save()
+    user = request.user
+    user.comments_downvoted.add(comment)
+    user.save()
+    return HttpResponse()
+
+def comment_unupvote(request):
+    comment = Comment.objects.get(id=request.POST.get('comment-id'))
+    comment.score -= 1
+    comment.save()
+    comment.author.karma = 1
+    comment.author.save()
+    user = request.user
+    user.comments_upvoted.remove(comment)
+    user.save()
+    return HttpResponse()
+
+def comment_undownvote(request):
+    comment = Comment.objects.get(id=request.POST.get('comment-id'))
+    comment.score += 1
+    comment.author.karma += 1        
+    comment.save()
+    comment.author.save()
+    user = request.user
+    user.comments_downvoted.remove(comment)
+    user.save()
+    return HttpResponse()
+
 # Comments
 def get_comment_list(comments=None, rankby="hot"):
     """Recursively build a list of comments."""
@@ -237,7 +284,7 @@ def story(request, story):
     top_lvl_comments = Comment.objects.filter(story = story, parent = None)
 
     # Rank comments
-    rankby = "new"
+    rankby = "hot"
     if rankby == "hot":
         ranked_comments = rank_hot(top_lvl_comments, top=32)
     elif rankby == "top":
@@ -250,10 +297,19 @@ def story(request, story):
     # Nested comments
     comments = list(get_comment_list(ranked_comments, rankby=rankby))
 
+    if request.user.is_authenticated():
+        comments_upvoted = request.user.comments_upvoted.all()
+        comments_downvoted = request.user.comments_downvoted.all()                
+    else:
+        comments_upvoted = []
+        comments_downvoted = []  
+    
     return render(request, 'stories/story.html',{
         'story': story,
         'upvoted': upvoted,
         'downvoted': downvoted,
+        'comments_upvoted': comments_upvoted,
+        'comments_downvoted': comments_downvoted,
         'first_chapter':first_chapter,
         'comments': comments,        
         'form': form,

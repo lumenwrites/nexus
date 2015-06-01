@@ -534,6 +534,31 @@ article header {
     margin-right: 10px;
 }
 
+/* Upvote hover is orange */
+.upvote:hover {
+    color: $orange;    
+}
+
+/* Once upvoted/downvoted state */
+.comment-upvoted,.comment-upvoted:active,.comment-upvoted:visited {
+    color: $orange;    
+}
+
+.comment-downvoted,.comment-downvoted:active,.comment-downvoted:visited {
+    color: $blue;    
+}
+
+
+/* The opposite button is grey */
+.comment-downvoted.comment-upvote:hover,
+.comment-upvoted.comment-downvote:hover,
+.comment-downvoted.comment-upvote:visited,
+.comment-upvoted.comment-downvote:visited {
+    color: $black;    
+}
+
+
+
 /* ================ Edit Story ================ */
 
 .fullWidth {

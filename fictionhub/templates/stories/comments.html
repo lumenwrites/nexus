@@ -23,7 +23,23 @@
     <!-- Comment -->
     <div class="comment-box"> <!-- Open Comment Box  -->    
       <div class="comment" id="id-{{comment.id}}">
-	
+	<!-- Vote -->
+	<div class="vote-column">
+	  <div class="vote">
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-up comment-upvote
+		      {% if comment in comments_upvoted %}comment-upvoted{% endif %}
+		      {% if comment in comments_downvoted %}comment-downvoted{% endif %}"
+	       id="comment-upvote-{{comment.id}}"></a>
+	    <div class="score"> {{comment.score}} </div>
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-down comment-downvote
+		      {% if comment in comments_upvoted %}comment-upvoted{% endif %}
+		      {% if comment in comments_downvoted %}comment-downvoted{% endif %}"
+	       id="comment-downvote-{{comment.id}}"></a>    
+	  </div>
+	</div>
+
       <div class="comment-header">
 	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
 	<span class="bold"> {{comment.author}} </span>
@@ -92,3 +108,185 @@
 
 </script>
 
+<script>
+$(document).ready(function(){
+    // getting csrf token.
+    function getCookie(name) {
+	var cookieValue = null;
+	if (document.cookie && document.cookie != '') {
+	    var cookies = document.cookie.split(';');
+	    for (var i = 0; i < cookies.length; i++) {
+		var cookie = jQuery.trim(cookies[i]);
+		// Does this cookie string begin with the name we want?
+		if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		    break;
+		}
+	    }
+	}
+	return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    // Upvote
+    function commentUpvote(commentId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/comment-upvote/",
+	    data: {"comment-id": commentId},
+	    success: function(){
+		var upvoteLink = $('#comment-upvote-'+commentId);
+		var downvoteLink = $('#comment-downvote-'+commentId);		    
+		upvoteLink.addClass('comment-upvoted');
+		downvoteLink.addClass('comment-upvoted');		    
+		var score = upvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated + 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		// upvoteLink.click(function(){ return false;});
+		downvoteLink.click(function(){ return false;});
+		upvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentUnupvote(commentId);
+		})
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+
+    // Downvote
+    function commentDownvote(commentId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/comment-downvote/",
+	    data: {"comment-id": commentId},
+	    success: function(){
+		var upvoteLink = $('#comment-upvote-'+commentId);		    
+		var downvoteLink = $('#comment-downvote-'+commentId);
+		upvoteLink.addClass('comment-downvoted');		    
+		downvoteLink.addClass('comment-downvoted');
+		var score = downvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated - 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		upvoteLink.click(function(){ return false;});
+		// downvoteLink.click(function(){ return false;});
+		downvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentUndownvote(commentId);
+		})		
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+    
+
+    // Upvote
+    function commentUnupvote(commentId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/comment-unupvote/",
+	    data: {"comment-id": commentId},
+	    success: function(){
+		var upvoteLink = $('#comment-upvote-'+commentId);
+		var downvoteLink = $('#comment-downvote-'+commentId);		    
+		upvoteLink.removeClass('comment-upvoted');
+		downvoteLink.removeClass('comment-upvoted');		    
+		var score = upvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated - 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		// upvoteLink.click(function(){ return false;});
+		// downvoteLink.click(function(){ return false;});
+		upvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentUpvote(commentId);
+		})
+		downvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentDownvote(commentId);
+		})
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+
+    // Downvote
+    function commentUndownvote(commentId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/comment-undownvote/",
+	    data: {"comment-id": commentId},
+	    success: function(){
+		var upvoteLink = $('#comment-upvote-'+commentId);		    
+		var downvoteLink = $('#comment-downvote-'+commentId);
+		upvoteLink.removeClass('comment-downvoted');		    
+		downvoteLink.removeClass('comment-downvoted');
+		var score = downvoteLink.parent().find(".score");
+                var notUpdated = Number(score.html());
+                score.html(notUpdated + 1);
+		upvoteLink.off("click");
+		downvoteLink.off("click");		    
+		// upvotelink.click(function(){ return false;});
+		// downvoteLink.click(function(){ return false;});
+console.log('yes!')
+		upvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentUpvote(commentId);
+		})
+		downvoteLink.click(function(){
+		    var commentId = parseInt(this.id.split("-")[2]);
+		    return commentDownvote(commentId);
+		})
+	    	
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+    
+    {% if user.is_authenticated %}
+    //Connect functions
+    $("a.comment-upvote").click(function(){
+	var commentId = parseInt(this.id.split("-")[2]);
+	return commentUpvote(commentId);
+    })
+    $("a.comment-downvote").click(function(){
+	var commentId = parseInt(this.id.split("-")[2]);
+	return commentDownvote(commentId);
+    })
+    // Disabe voted
+    $("a.comment-upvoted").off("click");
+    $("a.comment-downvoted").off("click");	
+    $("a.comment-upvoted").click(function(){ return false;});
+    $("a.comment-downvoted").click(function(){ return false;});	
+    $("a.comment-upvoted").click(function(){
+	var commentId = parseInt(this.id.split("-")[2]);
+	return commentUnupvote(commentId);
+    })
+    $("a.comment-downvoted").click(function(){
+	var commentId = parseInt(this.id.split("-")[2]);
+	return commentUndownvote(commentId);
+    })
+    $("a.comment-upvoted.comment-downvote").off("click");
+    $("a.comment-downvoted.comment-upvote").off("click");	
+    $("a.comment-upvoted.comment-downvote").click(function(){ return false;});
+    $("a.comment-downvoted.comment-upvote").click(function(){ return false;});	
+    
+    {% endif %}
+})
+</script>

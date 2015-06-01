@@ -15,3 +15,6 @@ class User(AbstractUser):
     upvoted = models.ManyToManyField('stories.Story', related_name="upvoters", blank=True)
     downvoted = models.ManyToManyField('stories.Story', related_name="downvoters", blank=True)    
 
+    comments_upvoted = models.ManyToManyField('stories.Comment', related_name="upvoters", blank=True)
+    comments_downvoted = models.ManyToManyField('stories.Comment', related_name="downvoters", blank=True)    
+    

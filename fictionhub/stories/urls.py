@@ -28,7 +28,12 @@ urlpatterns = [
     url(r'^undownvote/$', views.undownvote),
 
     # Comments
-    url(r'^comment-submit/(?P<comment_id>[^\.]+)', views.comment_submit),    
+    url(r'^comment-submit/(?P<comment_id>[^\.]+)', views.comment_submit),
+    url(r'^comment-upvote/', views.comment_upvote),
+    url(r'^comment-downvote/', views.comment_downvote),
+    url(r'^comment-unupvote/', views.comment_unupvote),
+    url(r'^comment-undownvote/', views.comment_undownvote),
+    # url(r'^story/(?P<story>[^\.]+)/comment-(?P<comment_id>[^\.]+)', views.view_comment),    
     # List stories
     # User
     # Subscriptions
