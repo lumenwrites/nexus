@@ -245,13 +245,33 @@ def get_comment_list(comments=None, rankby="hot"):
     yield 'out'
 
             
-def story(request, story):
+def story(request, story, comment_id="", chapter="", rankby="hot"):
     story = Story.objects.get(slug=story)
 
     try:
         first_chapter = Chapter.objects.get(story=story, number=1)
     except:
         first_chapter = []
+    
+
+    # If chapter
+    if chapter:
+        chapter = Chapter.objects.get(slug=chapter)
+        first_chapter = []  # empty first chapter to show the right button in story template
+        try:
+            prev_chapter = Chapter.objects.get(story=story, number=chapter.number-1)
+        except:
+            prev_chapter = []
+
+        try:
+            next_chapter = Chapter.objects.get(story=story, number=chapter.number+1)
+        except:
+            next_chapter = []
+    else:
+        chapter = []
+        prev_chapter = []
+        next_chapter = []
+        
     
     hubs = story.hubs.all()
     
@@ -261,9 +281,15 @@ def story(request, story):
             comment = form.save(commit=False) # return story but don't save it to db just yet
             comment.author = request.user
             comment.parent = None
-            comment.story = story
+            if chapter:
+                comment.chapter = chapter                
+            else:
+                comment.story = story
             comment.save()
-            return HttpResponseRedirect('/story/'+story.slug+'#comments')
+            if chapter:
+                return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
+            else:
+                return HttpResponseRedirect('/story/'+story.slug+'#comments')
     else:
         form = CommentForm()
 
@@ -280,11 +306,14 @@ def story(request, story):
     else:
         subscribed_to = []
 
+        
     # Get top lvl comments
-    top_lvl_comments = Comment.objects.filter(story = story, parent = None)
+    if chapter:
+        top_lvl_comments = Comment.objects.filter(chapter = chapter, parent = None)
+    else:
+        top_lvl_comments = Comment.objects.filter(story = story, parent = None)
 
     # Rank comments
-    rankby = "hot"
     if rankby == "hot":
         ranked_comments = rank_hot(top_lvl_comments, top=32)
     elif rankby == "top":
@@ -293,6 +322,13 @@ def story(request, story):
         ranked_comments = top_lvl_comments.order_by('-pub_date')
     else:
         ranked_comments = []
+
+    # Permalink to one comment
+    if comment_id:
+        comment = []
+        comment.append(Comment.objects.get(id = comment_id))
+        ranked_comments = comment
+
 
     # Nested comments
     comments = list(get_comment_list(ranked_comments, rankby=rankby))
@@ -303,15 +339,19 @@ def story(request, story):
     else:
         comments_upvoted = []
         comments_downvoted = []  
-    
+
     return render(request, 'stories/story.html',{
         'story': story,
+        'first_chapter':first_chapter,
+        'chapter': chapter,
+        'prev_chapter': prev_chapter,
+        'next_chapter': next_chapter,       
         'upvoted': upvoted,
         'downvoted': downvoted,
         'comments_upvoted': comments_upvoted,
         'comments_downvoted': comments_downvoted,
-        'first_chapter':first_chapter,
-        'comments': comments,        
+        'comments': comments,
+        'rankby': rankby,        
         'form': form,
         'hubs':hubs,
         'subscribed_to':subscribed_to        
@@ -329,7 +369,7 @@ def comment_submit(request, comment_id):
             return HttpResponseRedirect(comment_url)
 
 
-def chapter(request, story, chapter):
+def chapter_back(request, story, chapter):
     story = Story.objects.get(slug=story)
     chapter = Chapter.objects.get(slug=chapter)    
     comments = Comment.objects.filter(chapter = chapter)                

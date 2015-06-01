@@ -2,7 +2,11 @@
 {% load markdownify %}
 
 {% block title %}
-{{story.title}}
+  {% if chapter %}
+    {{chapter.title}}
+  {% else %}
+    {{story.title}}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -14,14 +18,30 @@
 	<!-- Post Header -->
 	<header class="post-header">
 	  {% if user == story.author %}
-	  <a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
-	  {% endif %}	  
-	    <h1> {{story.title}} </h1>
+	    {% if chapter %}
+	    <a class="edit-post" href="/story/{{story.slug}}/{{chapter.slug}}/edit">Edit</a>
+	    {% else %}
+	    <a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
+	    {% endif %}
+	    {% endif %}
+
+	    {% if chapter %}
+	    <h1> {{chapter.title}} </h1>	    
+	    {% else %}
+	    <h1> {{story.title}} </h1>	    
+	    {% endif %}
+	    
+
 	  <!-- <span class="post-tagline">submitted 14 days ago by <a href="#">{{post.author}}</a></span> -->
 	    <hr />
 	</header>
 	<!-- Post Body -->
-	{{story.description | markdownify | safe }}
+	{% if chapter %}
+	  {{chapter.body | markdownify | safe }}
+	{% else %}
+	  {{story.description | markdownify | safe }}
+	{% endif %}
+
 	{% if story.chapters.all %}	
 	<div class="panel">
 	  {% for chapter in story.chapters.all %}	  
@@ -31,9 +51,23 @@
 	  {% endfor %}
 	</div>
 	{% endif %}	
+
+	<!-- Button rad prev -->
+	{% if prev_chapter %}
+	<a class="button small previous-chapter"
+	   href="/story/{{story.slug}}/{{prev_chapter.slug}}">< Previous</a>
+	{% elif chapter %} <!-- If this is a chapter - go back to story -->
+	<a class="button small previous-chapter"
+	   href="/story/{{story.slug}}">< Story</a>
+	{% endif %}								
+	
+	<!-- Button read next -->
 	{% if first_chapter %}
 	<a class="button small next-chapter"
-	   href="/story/{{story.slug}}/{{first_chapter.slug}}">Read ></a> 
+	   href="/story/{{story.slug}}/{{first_chapter.slug}}">Read ></a>
+	{% elif next_chapter %}
+	<a class="button small next-chapter"
+	   href="/story/{{story.slug}}/{{next_chapter.slug}}">Next ></a> 
 	{% endif %}
 	<div class="clearfix"></div>	
 	<div style="width:100%; height: 20px"></div>	

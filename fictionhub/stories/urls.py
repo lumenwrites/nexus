@@ -3,6 +3,15 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # Comments
+    url(r'^comment-submit/(?P<comment_id>[^\.]+)', views.comment_submit),
+    url(r'^comment-upvote/', views.comment_upvote),
+    url(r'^comment-downvote/', views.comment_downvote),
+    url(r'^comment-unupvote/', views.comment_unupvote),
+    url(r'^comment-undownvote/', views.comment_undownvote),
+    
+    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', views.story),    
+
 
     # Edit story
     url(r'^story/add$', views.story_create),
@@ -18,22 +27,21 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/add$', views.chapter_create),
 
     # View
-    # url(r'^user/(?P<username>[^\.]+)', views.user_stories),
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.chapter),            
-    url(r'^story/(?P<story>[^\.]+)', views.story, name='view_story'),    
+    # url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.chapter),
+
+    # Rank comments
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
+        views.story, name='view_chapter'), 
+    url(r'^story/(?P<story>[^\.]+)/comments/(?P<rankby>[^\.]+)$', views.story, name='view_story'),    
+    # View story/chapter
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.story, name='view_chapter'), 
+    url(r'^story/(?P<story>[^\.]+)$', views.story, name='view_story'),    
 
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),
     url(r'^unupvote/$', views.unupvote),
     url(r'^undownvote/$', views.undownvote),
 
-    # Comments
-    url(r'^comment-submit/(?P<comment_id>[^\.]+)', views.comment_submit),
-    url(r'^comment-upvote/', views.comment_upvote),
-    url(r'^comment-downvote/', views.comment_downvote),
-    url(r'^comment-unupvote/', views.comment_unupvote),
-    url(r'^comment-undownvote/', views.comment_undownvote),
-    # url(r'^story/(?P<story>[^\.]+)/comment-(?P<comment_id>[^\.]+)', views.view_comment),    
     # List stories
     # User
     # Subscriptions

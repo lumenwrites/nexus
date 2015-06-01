@@ -2,7 +2,12 @@
 <div class="row">
   <div class="large-12 columns">
     <h4 id="comments"> Comments </h4>
-    <form action="/story/{{story.slug}}" method="post">{% csrf_token %}
+    <form {% if chapter %}
+	  action="/story/{{story.slug}}/{{chapter.slug}}"
+	  {% else %}
+	  action="/story/{{story.slug}}"
+	  {% endif %}
+	  method="post">{% csrf_token %}
       <div class="editor">
 	{{form.body}}
       </div>
@@ -15,6 +20,24 @@
       <div class="clearfix"></div>	
       <div style="width:100%; height: 20px"></div>	
 
+      
+<div>
+{% if chapter %}
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/hot#comments">
+    <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/new#comments">
+    <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/top#comments">
+    <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
+{% else %}
+  <a href="/story/{{story.slug}}/comments/hot#comments">
+    <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
+  <a href="/story/{{story.slug}}/comments/new#comments">
+    <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
+  <a href="/story/{{story.slug}}/comments/top#comments">
+    <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
+{% endif %}
+</div>      
 <div class="comments">   
   {% for comment in comments %}
   {% if comment == "in" %}
@@ -51,7 +74,7 @@
       </div>
       <div class="comment-footer">      
 	<a class="show-reply">reply</a> 
-	<!-- <a href="{{request.path}}#id-{{comment.id}}">link</a>  -->
+	<a href="/story/{{story.slug}}/comment/{{comment.id}}#id-{{comment.id}}">permalink</a>
       </div>
       <!-- Reply form -->
       <div class="comment-reply" style="display:none;">
