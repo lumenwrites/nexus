@@ -117,7 +117,6 @@ def authenticate_user(request):
         'next': nextpage,
     })
 
-
 # Only sign up
 def register(request):
     if request.method == 'POST':

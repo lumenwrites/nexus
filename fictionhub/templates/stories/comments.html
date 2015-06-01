@@ -1,12 +1,94 @@
-<div>
-    {% for child in children %}
-    <div>
-      {{ child.body }}
-      {% if child.children.count > 0 %}
-      <div>
-	{% children_list child %}
+<!-- Comments -->
+<div class="row">
+  <div class="large-12 columns">
+    <h4 id="comments"> Comments </h4>
+    <form action="/story/{{story.slug}}" method="post">{% csrf_token %}
+      <div class="editor">
+	{{form.body}}
       </div>
-      {% endif %}
+      <div style="float:right;">
+	<br/>
+	<button class="button small" type="submit">Submit</button>      
+      </div>
+    </form>
+
+      <div class="clearfix"></div>	
+      <div style="width:100%; height: 20px"></div>	
+
+<div class="comments">   
+  {% for comment in comments %}
+  {% if comment == "in" %}
+  <div>	<!-- Open Div -->
+  {% elif comment != "in" and comment != "out" %}        
+    <!-- Comment -->
+    <div class="comment-box"> <!-- Open Comment Box  -->    
+      <div class="comment" id="id-{{comment.id}}">
+	
+      <div class="comment-header">
+	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
+	<span class="bold"> {{comment.author}} </span>
+	<!-- {{comment.score}} points  -->
+	<!-- 2 hours ago -->
+      </div>
+      <div class="comment-body">      
+	{{comment}}
+      </div>
+      <div class="comment-footer">      
+	<a class="show-reply">reply</a> 
+	<!-- <a href="{{request.path}}#id-{{comment.id}}">link</a>  -->
+      </div>
+      <!-- Reply form -->
+      <div class="comment-reply" style="display:none;">
+	<form action="/comment-submit/{{comment.id}}?next={{request.path}}"
+	      method="post">{% csrf_token %}
+	  <div class="editor">
+	    {{form.body}}
+	  </div>
+	  <button class="button small" type="submit">Submit</button>
+	  <div class="clearfix"></div>		    
+	</form>
+      </div>
     </div>
-    {% endfor %}
+    <!-- End Comment -->
+    {% if comment.leaf %}        
+    </div> <!-- Close Comment Box -->
+    {% endif %}   
+  {% elif comment == "out" %}        
+  </div> <!-- Close Div -->
+  </div> <!-- Close Comment Box -->
+  <br/>
+  {% endif %}    
+  {% endfor %}  
+</div> <!-- End .comments -->
 </div>
+</div>  
+
+<div class="clearfix"></div>	
+<div style="width:100%; height: 20px"></div>	
+
+<!-- Editor -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<script>
+  $(document).ready(function(){
+
+  //Editor
+      $('textarea').each(function( index ) {
+	  var editor = new Editor({
+	      element: this
+	  });
+      editor.render();
+ });
+
+  //Toggle reply
+  $('.show-reply').click(function () {
+  $('.comment-reply').hide()
+  $(this).parent().parent().find('.comment-reply').toggle();
+  });
+  })
+
+
+</script>
+

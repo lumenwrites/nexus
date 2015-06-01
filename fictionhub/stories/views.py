@@ -13,7 +13,7 @@ from .forms import StoryForm, ChapterForm, CommentForm
 from .models import Story, Chapter, Hub, Comment
 from profiles.models import User
 
-def rank_hot(stories, top=180, consider=1000, hub_slug=None):
+def rank_hot(stories, top=180, consider=1000):
     # top - number of stories to show,
     # consider - number of latest stories to rank
     
@@ -23,15 +23,6 @@ def rank_hot(stories, top=180, consider=1000, hub_slug=None):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         age = int((now - post.pub_date).total_seconds())/60
         return rating/(age+timebase)**1.8
-
-    # filter by hub
-    # if hub_slug: 
-    #     hub = Hub.objects.get(slug=hub_slug)
-    #     stories_in_hub = []
-    #     for post in stories:
-    #         if hub in post.hubs.all():
-    #             stories_in_hub.append(post)
-    #     stories = stories_in_hub
 
     latest_stories = stories.order_by('-pub_date')#[:consider]
     #comprehension, stories with rating, sorted
@@ -177,27 +168,30 @@ def undownvote(request):
     return HttpResponse()
     
 # Comments
-# comments = Comment.objects.filter(story = story)
-def get_comment_list(comments=None, iteration=0):
+def get_comment_list(comments=None, rankby="hot"):
     """Recursively build a list of comments."""
-    # if comments==None:
-    #     #get the root posts
-    #     comments = Comment.objects.filter(parent=None)
-    #     comments[0].active=True
-    # else:
     yield 'in'
 
     # Loop through all the comments I've passed
     for comment in comments:
-        # Add comment to the list         # comment.iteration = iteration % 2
+        # Add comment to the list
         yield comment
         # get comment's children
         children = comment.children.all()
+        if rankby == "hot":
+            ranked_children = rank_hot(children, top=32)
+        elif rankby == "top":
+            ranked_children = rank_top(children, timespan = "all-time")
+        elif rankby == "new":
+            ranked_children = children.order_by('-pub_date')
+        else:
+            ranked_children = []
+        
         # If there's any children
-        if len(children):
+        if len(ranked_children):
             comment.leaf=False
             # loop through children, and apply this function
-            for x in get_comment_list(children, iteration=iteration+1):
+            for x in get_comment_list(ranked_children, rankby=rankby):
                 yield x
         else:
             comment.leaf=True
@@ -233,36 +227,29 @@ def story(request, story):
         upvoted = []
         downvoted = []  
 
+    # For subscribe button
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
     else:
         subscribed_to = []
 
+    # Get top lvl comments
+    top_lvl_comments = Comment.objects.filter(story = story, parent = None)
 
-    # Comments
-    # comments = Comment.objects.filter(story = story)
-    # def get_comment_list(comments=None):
-    #     """Recursively build a list of comments."""
-    #     # if comments==None:
-    #     #     #get the root posts
-    #     #     comments = Comment.objects.filter(parent=None)
-    #     #     comments[0].active=True
-    #     # else:
-    #     #     yield 'in'
-    #     yield 'in'
+    # Rank comments
+    rankby = "new"
+    if rankby == "hot":
+        ranked_comments = rank_hot(top_lvl_comments, top=32)
+    elif rankby == "top":
+        ranked_comments = rank_top(top_lvl_comments, timespan = "all-time")
+    elif rankby == "new":
+        ranked_comments = top_lvl_comments.order_by('-pub_date')
+    else:
+        ranked_comments = []
 
-    #     for comment in comments:
-    #         yield comment
-    #         children = Comment.objects.select_related().filter(parent=comment)
-    #         if len(children):
-    #             comment.leaf=False
-    #             for x in get_comment_list(comments):
-    #                 yield x
-    #         else:
-    #             comment.leaf=True
-    #             yield 'out'
-        
-    comments = list(get_comment_list(Comment.objects.filter(story = story, parent = None)))
+    # Nested comments
+    comments = list(get_comment_list(ranked_comments, rankby=rankby))
+
     return render(request, 'stories/story.html',{
         'story': story,
         'upvoted': upvoted,
@@ -273,6 +260,17 @@ def story(request, story):
         'hubs':hubs,
         'subscribed_to':subscribed_to        
     })
+
+def comment_submit(request, comment_id):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.parent = Comment.objects.get(id=comment_id)
+            comment.save()
+            comment_url = request.GET.get('next', '/')+"#id-"+str(comment.id)
+            return HttpResponseRedirect(comment_url)
 
 
 def chapter(request, story, chapter):

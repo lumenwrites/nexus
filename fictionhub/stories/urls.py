@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
 
+    # Edit story
     url(r'^story/add$', views.story_create),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.chapter_edit),    
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/up$', views.chapter_up),
@@ -26,6 +27,8 @@ urlpatterns = [
     url(r'^unupvote/$', views.unupvote),
     url(r'^undownvote/$', views.undownvote),
 
+    # Comments
+    url(r'^comment-submit/(?P<comment_id>[^\.]+)', views.comment_submit),    
     # List stories
     # User
     # Subscriptions

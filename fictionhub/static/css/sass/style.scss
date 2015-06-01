@@ -484,11 +484,12 @@ article header {
 }
 
 
-/* Story Comments */
+/* ================ Story Comments ================ */
 
 .comments {
     margin-left: -32px;
 }
+
 .comment {
 }
 
@@ -523,6 +524,14 @@ article header {
 
 .comment-footer a {
     color: $black    
+}
+
+/* Comments voting */
+.comment-box .vote-column {
+    width: 40px;
+    float: left;
+    margin-left: 0px;
+    margin-right: 10px;
 }
 
 /* ================ Edit Story ================ */

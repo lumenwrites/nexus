@@ -517,18 +517,18 @@ article header {
   font-size: 40px;
 }
 
-/* Story Comments */
+/* ================ Story Comments ================ */
 /* line 489, ../sass/style.scss */
 .comments {
   margin-left: -32px;
 }
 
-/* line 495, ../sass/style.scss */
+/* line 496, ../sass/style.scss */
 .comment-collapse {
   color: #3d454b;
 }
 
-/* line 499, ../sass/style.scss */
+/* line 500, ../sass/style.scss */
 .comment-box {
   border-left: 1px solid #DDDDDD;
   margin-left: 32px;
@@ -538,32 +538,41 @@ article header {
   padding: 10px 10px 0px 10px;
 }
 
-/* line 508, ../sass/style.scss */
+/* line 509, ../sass/style.scss */
 .comment-body {
   padding: 10px 0px;
 }
 
-/* line 512, ../sass/style.scss */
+/* line 513, ../sass/style.scss */
 .comment-reply textarea {
   margin-bottom: 4px;
   background: #f6f3ea;
   height: 150px;
 }
 
-/* line 518, ../sass/style.scss */
+/* line 519, ../sass/style.scss */
 .comment-reply .button.small {
   float: right;
   padding: 10px;
   margin-bottom: 8px;
 }
 
-/* line 524, ../sass/style.scss */
+/* line 525, ../sass/style.scss */
 .comment-footer a {
   color: #3d454b;
 }
 
-/* ================ Edit Story ================ */
+/* Comments voting */
 /* line 530, ../sass/style.scss */
+.comment-box .vote-column {
+  width: 40px;
+  float: left;
+  margin-left: 0px;
+  margin-right: 10px;
+}
+
+/* ================ Edit Story ================ */
+/* line 539, ../sass/style.scss */
 .fullWidth {
   width: 100%;
   margin-left: auto;
@@ -572,30 +581,30 @@ article header {
 }
 
 /* Sidebar */
-/* line 540, ../sass/style.scss */
+/* line 549, ../sass/style.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 544, ../sass/style.scss */
+/* line 553, ../sass/style.scss */
 .sidebar .button {
   padding: 10px;
   margin: 0 10px 0 15px;
 }
 
-/* line 549, ../sass/style.scss */
+/* line 558, ../sass/style.scss */
 .chapter-arrows {
   float: right;
   margin: 15px 0;
 }
 
-/* line 554, ../sass/style.scss */
+/* line 563, ../sass/style.scss */
 .chapter-title {
   width: calc(100% - 60px);
   float: left;
 }
 
-/* line 559, ../sass/style.scss */
+/* line 568, ../sass/style.scss */
 .chapter-arrow {
   width: 100%;
   float: right;
@@ -605,20 +614,20 @@ article header {
   overflow: hidden;
 }
 
-/* line 568, ../sass/style.scss */
+/* line 577, ../sass/style.scss */
 .chapter-button {
   float: right;
   /* margin: 15px 0px; */
   color: #3d454b;
 }
 
-/* line 574, ../sass/style.scss */
+/* line 583, ../sass/style.scss */
 .chapter-button up {
   foat: right;
 }
 
 /* Story Editor */
-/* line 580, ../sass/style.scss */
+/* line 589, ../sass/style.scss */
 .editor {
   background-color: #FFFFFF;
   border-style: solid;
@@ -626,7 +635,7 @@ article header {
   border-color: #cccccc;
 }
 
-/* line 587, ../sass/style.scss */
+/* line 596, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -634,34 +643,34 @@ article header {
   margin: 30px 0;
 }
 
-/* line 593, ../sass/style.scss */
+/* line 602, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 597, ../sass/style.scss */
+/* line 606, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
 /* Footer */
-/* line 604, ../sass/style.scss */
+/* line 613, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 608, ../sass/style.scss */
+/* line 617, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 613, ../sass/style.scss */
+/* line 622, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 617, ../sass/style.scss */
+/* line 626, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
