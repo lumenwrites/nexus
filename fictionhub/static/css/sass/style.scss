@@ -12,7 +12,7 @@
 $orange:#f76300;
 $blue: #008CBA;
 $black: #3d454b;
-
+$cream: #f6f3ea;
 
 /* General */
 
@@ -496,19 +496,29 @@ article header {
     color: $black
 }
 
-
 .comment-box {
-    /* border-left: 1px solid black; */
+    border-left: 1px solid #DDDDDD;
     margin-left: 32px;
     margin-top: 10px;
+    background: rgba(0, 0, 0, 0.04);
+    box-shadow: -0px -0px 3px 0px rgb(114, 114, 114);
+    padding: 10px 10px 0px 10px;
 }
 
-.even {
-    background: blue;
+.comment-body {
+    padding: 10px 0px;
 }
 
-.odd {
-    background: red;
+.comment-reply textarea {
+    margin-bottom: 4px;
+    background: $cream;
+    height: 150px;
+}
+
+.comment-reply .button.small {
+    float: right;
+    padding: 10px;
+    margin-bottom: 8px
 }
 
 .comment-footer a {

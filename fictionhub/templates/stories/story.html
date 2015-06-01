@@ -65,7 +65,7 @@
 
 	<!-- Subscribe/unsubscribe button -->
 	{% if user.is_authenticated %}
-	  {% if not user == story.author %} <!-- if it's not my story -->
+	  {% if not user == story.author %} <!-- if it's not my story' -->
 	    {% if story.author not in user.subscribed_to.all %} <!-- if not subscribed -->
 	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
 	       href="/user/{{story.author.username}}/subscribe">
@@ -92,13 +92,19 @@
 <div class="row">
   <div class="large-12 columns">
     <h4 id="comments"> Comments </h4>
-      <form action="/story/{{story.slug}}" method="post">{% csrf_token %}
+    <form action="/story/{{story.slug}}" method="post">{% csrf_token %}
+      <div class="editor">
 	{{form.body}}
+      </div>
 	<div style="float:right;">
 	  <button class="button small" type="submit">Submit</button>      
 	</div>
       </form>
 
+      <div class="clearfix"></div>	
+      <div style="width:100%; height: 20px"></div>	
+
+      <!-- Regular comments -->
       <!-- <div class="comments"> -->
       <!-- 	{% for comment in comments %} -->
       <!-- 	<artcle> -->
@@ -112,23 +118,19 @@
       <!-- 	{% endfor %} -->
       <!-- </div> -->
 
-  <h1> Test comments: </h1>
 <div class="comments">   
   {% for comment in comments %}
-
   {% if comment == "in" %}
-  <div class="comment-box"> <!-- Open Comment Box  -->
+  <div>	<!-- Open Div -->
   {% elif comment != "in" and comment != "out" %}        
     <!-- Comment -->
-    <div class="comment
-	 {% if comment.iteration = 0 %}even{% else %}odd{% endif %}">
+    <div class="comment-box"> <!-- Open Comment Box  -->    
+    <div class="comment">
       <div class="comment-header">
 	<a class="comment-collapse">[-]</a>
 	<span class="bold"> {{comment.author}} </span>
 	{{comment.score}} points 
-	2 hours ago |   
-	iteration:        
-	
+	2 hours ago
       </div>
       <div class="comment-body">      
 	{{comment}}
@@ -137,15 +139,22 @@
 	<a>reply</a> 
 	<a>permalink</a> 
       </div>
+      <div class="comment-reply">
+	<div class="editor"><textarea></textarea></div>
+	<button class="button small" type="submit">Submit</button>
+	<div class="clearfix"></div>	
+      </div>      
       
     </div>
     <!-- End Comment -->
-
+    {% if comment.leaf %}        
+    </div> <!-- Close Comment Box -->
+    {% endif %}   
   {% elif comment == "out" %}        
+  </div> <!-- Close Div -->
   </div> <!-- Close Comment Box -->
   <br/>
   {% endif %}    
-
   {% endfor %}  
 </div> <!-- End .comments -->
 </div>
@@ -154,5 +163,24 @@
 <div class="clearfix"></div>	
 <div style="width:100%; height: 20px"></div>	
 
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<script>
+  $(document).ready(function(){
+      $('textarea').each(function( index ) {
+	  var editor = new Editor({
+	      element: this
+	  });
+      editor.render();
+  });  
+  })
+</script>  
+
+<script>
+
+</script>
 {% endblock content %}
 

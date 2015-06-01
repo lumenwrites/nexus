@@ -189,8 +189,7 @@ def get_comment_list(comments=None, iteration=0):
 
     # Loop through all the comments I've passed
     for comment in comments:
-        # Add comment to the list
-        comment.iteration = iteration % 2
+        # Add comment to the list         # comment.iteration = iteration % 2
         yield comment
         # get comment's children
         children = comment.children.all()
