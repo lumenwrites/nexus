@@ -109,6 +109,10 @@ li p {
     float:left;
 }
 
+.gray {
+    background: gray!important;
+}
+
 /* Elements */
 /* Elements */
 .button {
@@ -486,6 +490,11 @@ article header {
 
 /* ================ Story Comments ================ */
 
+/* Submit */
+.comment-type {
+    margin: 5px;
+}
+/* List */
 .comments {
     margin-left: -32px;
 }
@@ -519,7 +528,8 @@ article header {
 .comment-reply .button.small {
     float: right;
     padding: 10px;
-    margin-bottom: 8px
+    margin: 8px;
+    margin-right: 0;
 }
 
 .comment-footer a {

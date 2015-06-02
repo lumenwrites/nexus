@@ -245,7 +245,7 @@ def get_comment_list(comments=None, rankby="hot"):
     yield 'out'
 
             
-def story(request, story, comment_id="", chapter="", rankby="hot"):
+def story(request, story, comment_id="", chapter="", rankby="new"):
     story = Story.objects.get(slug=story)
 
     try:

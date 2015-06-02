@@ -23,5 +23,5 @@ class ChapterForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        exclude = ['author', 'story', 'parent', 'slug', 'score', 'published',] 
+        exclude = ['author', 'story', 'parent', 'slug', 'score', 'published', 'comment_type',] 
         
