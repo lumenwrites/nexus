@@ -66,3 +66,6 @@ target/
 *.pyc
 __pycache__/
 local_settings.py
+
+# sass
+.sass-cache

@@ -72,7 +72,7 @@
 	  {{form.body}}
           {% endif %}	
 	</div>
-
+	<br/>	
 
 	<!-- Delete Story -->
 
@@ -103,6 +103,10 @@
  	<div style="float:right;">
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <br/>
+      <div class="set-hubs">
+	{{form.hubs}}
+      </div>
+	  
 	  {% if action = "story_edit" %}	  
 	  <a href="/story/{{story.slug}}" class="button small view">View</a>
 	    {% if not story.published %}	  
@@ -130,11 +134,77 @@
   <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
   <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
 
+<!-- Select2 -->
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+  
+
 <script>
   $(document).ready(function(){
   var editor = new Editor();
   editor.render();
+
+  $("#id_hubs").select2({
+  placeholder: "Select hubs",
+  allowClear: true,
+  maximumSelectionLength: 4  
+  
+})
+
   })
-</script>  
+</script>
+
+<style>
+.set-hubs {
+    width: calc(100% - 120px);
+    width: 200px;
+float:left;
+    margin-right: 420px;    
+}
+
+
+<!-- Container -->
+.select2-container--default
+.select2-selection--multiple, {
+  border-color: #cccccc;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: #cccccc;
+}
+
+
+.select2-container--default .select2-selection--multiple {
+    height: 50px;
+}
+
+.set-hubs input {
+margin-top: -7px!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+#id_hubs {
+    list-style-type: none;
+width:600px;
+padding: 0px;
+}
+ 
+
+<!-- Tags -->
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #e4e4e4;
+  border: none!important;
+border-radius: 0px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  border-radius: 0px;
+  border: none;
+}
+  
+</style>
 {% endblock content %}
 

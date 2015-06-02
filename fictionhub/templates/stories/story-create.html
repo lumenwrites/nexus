@@ -1,45 +1,148 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
 <div id="page"  class="postPage">
 
-  <div class="row">
-    <div class="large-12 columns">
+<div class="row">
+  <div class="large-12 columns">
+    <br/>
+    <!-- Submit Form -->
+    <form action="/story/add" method="post">{% csrf_token %}
+      {{form.title}}
+      <div class="editor">
+	{{form.description}}
+      </div>
       <br/>
-      <!-- Submit Form -->
-      <form action="/story/add" method="post">{% csrf_token %}
-	{{form.title}}
-	<div class="editor">
-	  {{form.description}}
-	</div>
-	<br/>
-	<div class="set-hubs">
-	  {{form.hubs}}
-	</div>
-	<div style="float:right;">
-	  <!-- <button class="button small" type="submit">Save Draft</button> -->
-	  <button class="button small" type="submit">Save</button>
-	</div>
-	<div class="clearfix"></div>
-	<div style="width:100%; height: 20px"></div>
-      </form>
-      <!-- End Submit Form -->
-      
-    </div>
-</article>      
-
-</div> <!-- End 12 columns -->
+      <div class="set-hubs">
+	{{form.hubs}}
+      </div>
+      <div style="float:right;">
+	<button class="button small" type="submit">Save</button>
+      </div>
+      <div class="clearfix"></div>
+      <div style="width:100%; height: 20px"></div>
+    </form>
+    <!-- End Submit Form -->
+  </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
 
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
-  <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
-  <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<!-- loop through hubs in form
+     {% for choice_id, choice_label in form.hubs.field.choices %}
+     {{ choice_id }}
+     {{ choice_label }}<br/>
+     {% endfor %}
+  -->
+
+<!-- Loop through hubs
+     <div  style="float:right; width: 20%;">
+       <ul class="side-nav">
+	 {% for hub in hubs %}
+	 {% if not hub.parent %}
+	 <li>
+	   <a id="hub-id-{{hub.id}}"> {{hub.title}}</a>
+ 	 </li>
+	 {% if hub.children.all %}
+	 <ul>
+	   {% for child in hub.children.all %}
+	   <ul>
+	     <li class="dropdown-subitems">
+	       <a id="hub-id-{{hub.id}}"> {{child.title}}</a>
+	     </li>
+	   </ul>
+	   {% endfor %}
+	 </ul>
+	 {% endif %}
+	 {% endif %}	  	  
+	 {% endfor %}
+       </ul>
+     </div> -->
+
+
+<!-- Editor -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
+<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+<!-- Chosen -->
+<link rel="stylesheet" href="{% static "/static/chosen/chosen.css" %}" />  
+<script src="{% static "/static/chosen/chosen.jquery.js" %}" type="text/javascript"></script>
+<script src="{% static "/static/chosen/chosen.proto.js" %}" type="text/javascript"></script>
+
+<!-- Select2 -->
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
 <script>
   $(document).ready(function(){
+  //Editor
   var editor = new Editor();
   editor.render();
+
+  
+  $("#id_hubs").select2({
+  placeholder: "Select hubs",
+  allowClear: true,
+  maximumSelectionLength: 4    
+})
+
   })
-</script>  
+</script>
+
+
+<style>
+.set-hubs {
+    width: calc(100% - 120px);
+    width: 200px;
+float:left;
+    margin-right: 420px;    
+}
+
+
+<!-- Container -->
+.select2-container--default
+.select2-selection--multiple, {
+  border-color: #cccccc;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: #cccccc;
+}
+
+
+.select2-container--default .select2-selection--multiple {
+    height: 50px;
+}
+
+.set-hubs input {
+margin-top: -7px!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+#id_hubs {
+    list-style-type: none;
+width:600px;
+padding: 0px;
+}
+ 
+
+<!-- Tags -->
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #e4e4e4;
+  border: none!important;
+border-radius: 0px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  border-radius: 0px;
+  border: none;
+}
+  
+</style>
+
 {% endblock content %}
 

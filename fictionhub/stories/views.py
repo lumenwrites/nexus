@@ -440,7 +440,12 @@ def story_create(request):
             return HttpResponseRedirect('/story/'+story.slug+'/edit')
     else:
         form = StoryForm()
-    return render(request, 'stories/story-create.html', {'form':form})
+        form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')
+
+    return render(request, 'stories/story-create.html', {
+        'form':form,
+        'hubs':Hub.objects.all()
+    })
 
 
 def chapter_create(request, story):
@@ -476,6 +481,8 @@ def story_edit(request, story):
         if form.is_valid():
             story = form.save(commit=False) # return story but don't save it to db just yet
             story.save()
+            story.hubs = []
+            story.hubs.add(*form.cleaned_data['hubs'])            
             return HttpResponseRedirect('/story/'+story.slug+'/edit')
     else:
         form = StoryForm(instance=story)

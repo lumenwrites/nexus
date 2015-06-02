@@ -61,7 +61,11 @@ class Hub(models.Model):
     # users_can_create_children = models.BooleanField(default=True)    
     
     def __str__(self):
-        return self.title    
+        try:
+            parent_title = self.parent.title + " | "
+        except:
+            parent_title = ""
+        return parent_title  + self.title
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

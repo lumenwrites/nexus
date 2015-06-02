@@ -669,10 +669,28 @@ article header {
 /* Story create */
 .set-hubs {
     width: calc(100% - 120px);
-    /* width: 200px;     */
+    width: 200px;
     float:left;
 }
 
+ 
+.select2-container--default .select2-selection--multiple {
+    height: 50px;
+}
+
+.set-hubs input {
+margin-top: -7px!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+#id_hubs {
+    list-style-type: none;
+width:400px;
+padding: 0px;
+}
 /* Story Editor */
 
 .editor {

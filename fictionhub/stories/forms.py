@@ -12,6 +12,8 @@ class StoryForm(ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Title'})
         }
 
+        # 'hubs': forms.CheckboxSelectMultiple()                    
+
 class ChapterForm(ModelForm):
     class Meta:
         model = Chapter

@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'', include(profiles_urls)),            
     url(r'', include(stories_urls)),
 
-
+    # url(r'.*', stories.views.page_404),
     # chaoslegion urls
     # url(r'', include(chaoslegion_urls)),    
 ]
