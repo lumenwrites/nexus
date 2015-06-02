@@ -58,7 +58,7 @@ class Hub(models.Model):
     slug = models.SlugField(max_length=64, default="")
     # description = models.TextField(dafault="", blank=True)
     parent = models.ForeignKey('Hub', related_name="children", default=None,null=True, blank=True)
-    # users_can_create_children = models.BooleanField(default=True)    
+    users_can_create_children = models.BooleanField(default=False)    
     description = models.TextField(max_length=512, blank=True)
 
     def __str__(self):

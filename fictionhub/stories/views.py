@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from .forms import StoryForm, ChapterForm, CommentForm
+from .forms import StoryForm, ChapterForm, CommentForm, HubForm
 from .models import Story, Chapter, Hub, Comment
 from profiles.models import User
 
@@ -623,3 +623,20 @@ def page_404(request):
 
 
 
+def hub_create(request):
+    nextpage = request.GET.get('next', '/')
+    
+    if request.method == 'POST':
+        form = HubForm(request.POST)
+        if form.is_valid():
+            hub = form.save(commit=False) # return story but don't save it to db just yet
+            hub.save()
+            return HttpResponseRedirect(nextpage)
+    else:
+        form = HubForm()
+
+    return render(request, 'stories/hub-create.html', {
+        'form':form,
+        'nextpage':nextpage
+    })
+        
