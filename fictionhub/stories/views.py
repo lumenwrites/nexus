@@ -61,6 +61,9 @@ def stories(request, rankby="hot", timespan="all-time",
         filterurl="/subscriptions" # to add to href  in subnav
     elif filterby == "hub":
         hub = Hub.objects.get(slug=hubslug)
+        # Show stories from all the children hubs? Don't know how to sort.
+        # children = Hub.objects.filter(parent=hub)
+        # hubs = []
         stories = Story.objects.filter(hubs=hub, published=True)
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
@@ -431,6 +434,9 @@ def story_create(request):
             story.save()
             request.user.upvoted.add(story)            
             story.hubs.add(*form.cleaned_data['hubs'])
+            hubs = story.hubs.all()
+            for hub in hubs:
+                story.hubs.add(hub.parent)
             # Hacky way to 
             # for hub in form.cleaned_data['hubs']:
             #     if hub.parent:
@@ -482,10 +488,14 @@ def story_edit(request, story):
             story = form.save(commit=False) # return story but don't save it to db just yet
             story.save()
             story.hubs = []
-            story.hubs.add(*form.cleaned_data['hubs'])            
+            story.hubs.add(*form.cleaned_data['hubs'])
+            hubs = story.hubs.all()
+            for hub in hubs:
+                story.hubs.add(hub.parent)
             return HttpResponseRedirect('/story/'+story.slug+'/edit')
     else:
         form = StoryForm(instance=story)
+        form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')        
     
     return render(request, 'stories/edit.html', {
         'story':story,

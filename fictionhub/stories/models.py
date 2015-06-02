@@ -59,6 +59,7 @@ class Hub(models.Model):
     # description = models.TextField(dafault="", blank=True)
     parent = models.ForeignKey('Hub', related_name="children", default=None,null=True, blank=True)
     # users_can_create_children = models.BooleanField(default=True)    
+    description = models.TextField(max_length=512, blank=True)
     
     def __str__(self):
         try:
