@@ -105,8 +105,9 @@ def stories(request, rankby="hot", timespan="all-time",
         upvoted = []
         downvoted = []        
 
-    if not stories:
-        return HttpResponseRedirect('/404')
+    
+    # if not stories:
+    #     return HttpResponseRedirect('/404')
 
     return render(request, 'stories/stories.html',{
         'stories':stories,

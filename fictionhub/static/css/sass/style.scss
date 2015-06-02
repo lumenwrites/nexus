@@ -363,21 +363,49 @@ article {
     color: $orange;    
 }
 
+.upvote,
+.downvote,
+.upvote:focus,
+.downvote:focus,
+.upvote:visited,
+.downvote:visited,
+.upvote:active,
+.downvote:active {
+    color: $black;        
+}
+
 /* Once upvoted/downvoted state */
-.upvoted,.upvoted:active,.upvoted:visited {
+.upvoted,
+.upvoted:focus,
+.upvoted:active,
+.upvoted:visited {
     color: $orange;    
 }
 
-.downvoted,.downvoted:active,.downvoted:visited {
+.downvoted,
+.downvoted:focus,
+.downvoted:active,
+.downvoted:visited {
     color: $blue;    
 }
 
 
 /* The opposite button is grey */
-.downvoted.upvote:hover,
+.downvote.upvoted:hover,
 .upvoted.downvote:hover,
+.downvoted.upvote:focus,
+.upvoted.downvote:focus,
 .downvoted.upvote:visited,
 .upvoted.downvote:visited {
+    color: $black;    
+}
+
+.downvote.upvoted,
+.upvote.downvoted,
+.downvote.upvoted:focus,
+.upvote.downvoted:focus,
+.downvote.upvoted:visited,
+.upvote.downvoted:visited {
     color: $black;    
 }
 
@@ -636,6 +664,13 @@ article header {
 
 .chapter-button up {
     foat:right;
+}
+
+/* Story create */
+.set-hubs {
+    width: calc(100% - 120px);
+    /* width: 200px;     */
+    float:left;
 }
 
 /* Story Editor */

@@ -23,7 +23,8 @@
       <div class="clearfix"></div>	
       <div style="width:100%; height: 20px"></div>	
 
-      
+
+{% if comments %}      
 <div class="left">
 {% if chapter %}
   <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/hot#comments">
@@ -47,6 +48,7 @@
   <a>Reviews</a>  
 </div>
  -->
+{% endif %}
 <div class="clearfix"></div>	
 <div class="comments">   
   {% for comment in comments %}
