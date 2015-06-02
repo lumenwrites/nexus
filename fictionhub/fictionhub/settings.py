@@ -125,3 +125,7 @@ LOGIN_REDIRECT_URL = '/'
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+FIXTURE_DIRS = (
+      os.path.join(BASE_DIR, "fixtures",),
+)
