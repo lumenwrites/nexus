@@ -372,6 +372,48 @@ def comment_submit(request, comment_id):
             comment_url = request.GET.get('next', '/')+"#id-"+str(comment.id)
             return HttpResponseRedirect(comment_url)
 
+def comment_edit(request, comment_id):
+    comment = Comment.objects.get(id = comment_id)
+    nextpage = request.GET.get('next', '/')
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST,instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.save()
+            return HttpResponseRedirect(nextpage)
+    else:
+        form = CommentForm(instance=comment)
+    
+    return render(request, 'stories/comment-edit.html', {
+        'comment':comment,
+        'form':form,
+        'nextpage':nextpage
+    })
+    
+    # throw him out if he's not an author
+    if request.user != comment.author:
+        return HttpResponseRedirect('/')        
+    return HttpResponseRedirect('/') # to story list
+
+        
+def comment_delete(request, comment_id):
+    comment = Comment.objects.get(id = comment_id)
+
+    # throw him out if he's not an author
+    if request.user != comment.author:
+        return HttpResponseRedirect('/')        
+
+    try:
+        path = '/story/'+comment.story.slug + '/' + comment.chapter.slug + '#comments'
+    except:
+        path = '/story/'+comment.story.slug + '#comments'        
+
+    comment.delete()
+
+    return HttpResponseRedirect(path) # to story list
+
+        
 
 def chapter_back(request, story, chapter):
     story = Story.objects.get(slug=story)

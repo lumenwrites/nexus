@@ -25,7 +25,7 @@ class ChapterForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        exclude = ['author', 'story', 'parent', 'slug', 'score', 'published', 'comment_type',] 
+        fields = ['body',] 
         
 class HubForm(ModelForm):
     hubs = Hub.objects.filter(users_can_create_children=True).order_by('id')

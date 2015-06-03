@@ -9,8 +9,13 @@ urlpatterns = [
     url(r'^comment-downvote/', views.comment_downvote),
     url(r'^comment-unupvote/', views.comment_unupvote),
     url(r'^comment-undownvote/', views.comment_undownvote),
+
+    url(r'^comment/(?P<comment_id>[^\.]+)/edit', views.comment_edit),
+    url(r'^comment/(?P<comment_id>[^\.]+)/delete', views.comment_delete), 
     
-    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', views.story),    
+    # view comment
+    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', views.story),
+
 
 
     # Edit story

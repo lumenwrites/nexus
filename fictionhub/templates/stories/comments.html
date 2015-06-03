@@ -93,8 +93,8 @@
 	{% endif %}        
 	<a href="/story/{{story.slug}}/comment/{{comment.id}}#id-{{comment.id}}">permalink</a>
 	{% if comment.author == user %}        
-	<a href="/story/{{story.slug}}/comment/{{comment.id}}/edit">edit</a>
-	<a href="/story/{{story.slug}}/comment/{{comment.id}}/delete">delete</a>
+	<a href="/comment/{{comment.id}}/edit?next={{request.path}}">edit</a>
+	<a href="/comment/{{comment.id}}/delete?next={{request.path}}">delete</a>
 	{% endif %}        
       </div>
       <!-- Reply form -->
