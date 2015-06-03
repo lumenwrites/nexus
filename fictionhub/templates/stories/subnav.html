@@ -69,26 +69,21 @@
 	    aria-hidden="true" tabindex="-1">
 	  {% for hub in hubs %}
 	    {% if not hub.parent %}
-	  <!-- doesn't check if children have stories -->
-	  <!-- Check if has children
-	  {% if hub.children.all or hub.stories.all %}
-	  {% endif %}
-	   -->
+	      {% if hub.stories.all %}
 	        <li>
 		  <a href="/hub/{{hub.slug}}/"> {{hub.title}}</a>
  	        </li>
+	      {% endif %}
 
-		
 	      {% if hub.children.all %}
 	        {% for child in hub.children.all %}
-		<!-- Check if has stories
 	          {% if child.stories.all %}
-	          {% endif %} -->
 	          <ul>
 	            <li class="dropdown-subitems">
 	              <a href="/hub/{{child.slug}}/"> {{child.title}}</a>
 	            </li>
 	          </ul>
+	          {% endif %}
 	        {% endfor %}
 	      {% endif %}
 	    {% endif %}	  	  

@@ -112,6 +112,8 @@ def stories(request, rankby="hot", timespan="all-time",
     # if not stories:
     #     return HttpResponseRedirect('/404')
 
+    hubs = Hub.objects.all().order_by('id')
+
     return render(request, 'stories/stories.html',{
         'stories':stories,
         'upvoted': upvoted,
@@ -122,7 +124,7 @@ def stories(request, rankby="hot", timespan="all-time",
         'timespan': timespan,
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
-        'hubs': Hub.objects.all()
+        'hubs': hubs
     })
 
 # Voting
