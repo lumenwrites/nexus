@@ -81,7 +81,7 @@
 
 <script>
   $(document).ready(function(){
-  var isMobile = false;
+  var isMobile = true;
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
   
   //Editor
@@ -89,8 +89,8 @@
   var editor = new Editor();
   editor.render();
   } else {
-  }
   $('.markdown').markdownify();  
+  }
 
 
   
