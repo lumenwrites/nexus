@@ -687,6 +687,11 @@ article header {
     margin-bottom: 10px; 	/*for mobile*/
 }
 
+textarea[rows] {
+  margin-bottom: 0!important;
+  height: 400px!important;
+}
+
 @media screen and (max-width: 1300px) {
     .set-hubs {
 	width: 100%!important;
