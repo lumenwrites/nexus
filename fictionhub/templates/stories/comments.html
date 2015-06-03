@@ -135,14 +135,19 @@
 
 <script>
   $(document).ready(function(){
+  var isMobile = false;
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
 
-  //Editor
-      $('textarea').each(function( index ) {
-	  var editor = new Editor({
-	      element: this
-	  });
-      editor.render();
- });
+      //Editor
+      if(!isMobile){
+	  $('textarea').each(function( index ) {
+	      var editor = new Editor({
+		  element: this
+	      });
+	      editor.render();
+	  })
+	      }
+
 
   //Toggle reply
   $('.show-reply').click(function () {
@@ -157,7 +162,7 @@
 
 
 
-  })
+  });
 
 
 </script>
@@ -344,3 +349,4 @@ console.log('yes!')
     {% endif %}
 })
 </script>
+

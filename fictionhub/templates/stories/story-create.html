@@ -65,20 +65,23 @@
 <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
 <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
 
-<!-- Chosen -->
-<link rel="stylesheet" href="{% static "/static/chosen/chosen.css" %}" />  
-<script src="{% static "/static/chosen/chosen.jquery.js" %}" type="text/javascript"></script>
-<script src="{% static "/static/chosen/chosen.proto.js" %}" type="text/javascript"></script>
-
 <!-- Select2 -->
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
+<style>
+</style>
+
 <script>
   $(document).ready(function(){
+  var isMobile = false;
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
+  
   //Editor
+  if(!isMobile){
   var editor = new Editor();
   editor.render();
+  }
 
   
   $("#id_hubs").select2({

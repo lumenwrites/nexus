@@ -484,7 +484,8 @@ def story_create(request):
             story.hubs.add(*form.cleaned_data['hubs'])
             hubs = story.hubs.all()
             for hub in hubs:
-                story.hubs.add(hub.parent)
+                if hub.parent:
+                    story.hubs.add(hub.parent)
             # Hacky way to 
             # for hub in form.cleaned_data['hubs']:
             #     if hub.parent:
@@ -539,7 +540,8 @@ def story_edit(request, story):
             story.hubs.add(*form.cleaned_data['hubs'])
             hubs = story.hubs.all()
             for hub in hubs:
-                story.hubs.add(hub.parent)
+                if hub.parent:
+                    story.hubs.add(hub.parent)
             return HttpResponseRedirect('/story/'+story.slug+'/edit')
     else:
         form = StoryForm(instance=story)

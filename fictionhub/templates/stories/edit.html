@@ -141,8 +141,14 @@
 
 <script>
   $(document).ready(function(){
+  var isMobile = false;
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
+
+  //Editor
+  if(!isMobile){
   var editor = new Editor();
   editor.render();
+  }
 
   $("#id_hubs").select2({
   placeholder: "Select hubs",

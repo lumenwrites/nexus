@@ -737,8 +737,14 @@ article header {
   /*for mobile*/
 }
 
+/* line 690, ../sass/style.scss */
+textarea {
+  margin-bottom: 0 !important;
+  height: 400px;
+}
+
 @media screen and (max-width: 1300px) {
-  /* line 691, ../sass/style.scss */
+  /* line 696, ../sass/style.scss */
   .set-hubs {
     width: 100% !important;
     float: left;
@@ -746,22 +752,22 @@ article header {
     /*for mobile*/
   }
 }
-/* line 698, ../sass/style.scss */
+/* line 703, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple {
   height: 50px;
 }
 
-/* line 702, ../sass/style.scss */
+/* line 707, ../sass/style.scss */
 .set-hubs input {
   margin-top: -7px !important;
 }
 
-/* line 706, ../sass/style.scss */
+/* line 711, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: 10px;
 }
 
-/* line 710, ../sass/style.scss */
+/* line 715, ../sass/style.scss */
 #id_hubs {
   list-style-type: none;
   width: 400px;
@@ -769,7 +775,7 @@ article header {
 }
 
 /* Story Editor */
-/* line 717, ../sass/style.scss */
+/* line 722, ../sass/style.scss */
 .editor {
   background-color: #FFFFFF;
   border-style: solid;
@@ -777,7 +783,7 @@ article header {
   border-color: #cccccc;
 }
 
-/* line 724, ../sass/style.scss */
+/* line 729, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -785,34 +791,34 @@ article header {
   margin: 30px 0;
 }
 
-/* line 730, ../sass/style.scss */
+/* line 735, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 734, ../sass/style.scss */
+/* line 739, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
 /* Footer */
-/* line 741, ../sass/style.scss */
+/* line 746, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 745, ../sass/style.scss */
+/* line 750, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 750, ../sass/style.scss */
+/* line 755, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 754, ../sass/style.scss */
+/* line 759, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
