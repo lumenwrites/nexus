@@ -10,9 +10,9 @@
     <!-- Submit Form -->
     <form action="/story/add" method="post">{% csrf_token %}
       {{form.title}}
-      <div class="editor">
+
 	{{form.description}}
-      </div>
+
       <div class="clearfix"></div>
       <div style="width:100%; height: 20px"></div>
       
