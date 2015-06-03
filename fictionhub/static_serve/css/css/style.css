@@ -801,24 +801,29 @@ textarea[rows] {
   background: gray !important;
 }
 
+/* line 743, ../sass/style.scss */
+.edit-buttons {
+  float: right;
+}
+
 /* Footer */
-/* line 746, ../sass/style.scss */
+/* line 749, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 750, ../sass/style.scss */
+/* line 753, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 755, ../sass/style.scss */
+/* line 758, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 759, ../sass/style.scss */
+/* line 762, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
