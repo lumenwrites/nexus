@@ -21,7 +21,7 @@ If you want to contribute to this project and make it more awesome, here's what 
 # To-Do
 
 - Major cleanup.  
-  Basic features are done, now - refactoring and cleaning the code according to PEP8 and 2 Scoops of Django.
+  The most basic features are done, now - refactoring and cleaning the code according to PEP8 and 2 Scoops of Django.
 
 # Upcoming Features
 
@@ -30,7 +30,7 @@ If you want to contribute to this project and make it more awesome, here's what 
 
 - Search sidebar. 
     - Filter by hubs. Like on http://www.fimfiction.net/
-    - ability to filter out tags
+    - Ability to filter out tags
 
 - PMs
 - Notifications(when someone comments, messages, etc)
