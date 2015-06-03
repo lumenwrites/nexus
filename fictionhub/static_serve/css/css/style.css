@@ -783,7 +783,13 @@ textarea[rows] {
   border-color: #cccccc;
 }
 
-/* line 729, ../sass/style.scss */
+/* border on mobile  */
+/* line 730, ../sass/style.scss */
+* {
+  outline: none;
+}
+
+/* line 734, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -791,39 +797,39 @@ textarea[rows] {
   margin: 30px 0;
 }
 
-/* line 735, ../sass/style.scss */
+/* line 740, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 739, ../sass/style.scss */
+/* line 744, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
-/* line 743, ../sass/style.scss */
+/* line 748, ../sass/style.scss */
 .edit-buttons {
   float: right;
 }
 
 /* Footer */
-/* line 749, ../sass/style.scss */
+/* line 754, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 753, ../sass/style.scss */
+/* line 758, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 758, ../sass/style.scss */
+/* line 763, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 762, ../sass/style.scss */
+/* line 767, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
