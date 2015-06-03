@@ -1,0 +1,821 @@
+@import url("http://fonts.googleapis.com/css?family=Titillium+Web:400");
+@import url("http://fonts.googleapis.com/css?family=Titillium+Web:200");
+@import url("http://fonts.googleapis.com/css?family=Lato");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700");
+/* For code */
+@import url("http://fonts.googleapis.com/css?family=Crimson+Text");
+@import url("http://fonts.googleapis.com/css?family=Kameron");
+@import url("http://fonts.googleapis.com/css?family=Lato:200,300,400");
+@import url("http://fonts.googleapis.com/css?family=Source+Code+Pro");
+/* General */
+/* line 19, ../sass/style.scss */
+* {
+  font-family: "Titillium Web";
+  font-family: 'Open Sans', sans-serif;
+  color: #3d454b;
+}
+
+/* line 25, ../sass/style.scss */
+html {
+  font-size: 19px;
+}
+
+/* line 29, ../sass/style.scss */
+.row {
+  max-width: 64em;
+}
+
+/* line 33, ../sass/style.scss */
+a {
+  color: #f76300;
+}
+
+/* line 37, ../sass/style.scss */
+h1, h2, h3, h4 {
+  /* font-family: Lato; */
+  font-weight: normal;
+  color: #3d454b;
+}
+
+/* line 43, ../sass/style.scss */
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+/* line 50, ../sass/style.scss */
+h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* line 56, ../sass/style.scss */
+h3 {
+  font-size: 26px;
+  margin: 10px 0 2px 0;
+}
+
+/* line 61, ../sass/style.scss */
+h4 {
+  font-size: 21px;
+  margin-top: 10px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+/* line 69, ../sass/style.scss */
+hr {
+  margin-top: 0;
+}
+
+/* line 74, ../sass/style.scss */
+blockquote, blockquote p {
+  line-height: 1.6;
+  color: #6F6F6F;
+  font-weight: normal;
+}
+
+/* line 80, ../sass/style.scss */
+blockquote strong {
+  color: #6F6F6F;
+}
+
+/* line 90, ../sass/style.scss */
+#page li {
+  margin-top: 10px;
+}
+
+/* line 94, ../sass/style.scss */
+li p {
+  margin: 0px;
+}
+
+/* Helpers */
+/* line 100, ../sass/style.scss */
+.bold {
+  font-weight: bold;
+}
+
+/* line 104, ../sass/style.scss */
+.right {
+  float: right;
+}
+
+/* line 108, ../sass/style.scss */
+.left {
+  float: left;
+}
+
+/* line 112, ../sass/style.scss */
+.gray {
+  background: gray !important;
+}
+
+/* Elements */
+/* Elements */
+/* line 118, ../sass/style.scss */
+.button {
+  background-color: #f76301;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px #d05301;
+}
+
+/* line 125, ../sass/style.scss */
+.button:hover {
+  background-color: #f76301;
+  box-shadow: 0 4px #d05301;
+  position: relative;
+  top: 1px;
+}
+
+/* line 132, ../sass/style.scss */
+.button.small {
+  background-color: #f76300;
+  box-shadow: none;
+  /* font-family: Lato; */
+  font-size: 16px;
+  font-weight: normal;
+  color: #fff;
+}
+
+/* line 142, ../sass/style.scss */
+.button.small:hover {
+  background-color: #f76300;
+  box-shadow: none;
+  /* font-family: Lato; */
+  font-size: 16px;
+  font-weight: normal;
+  color: #fff;
+  top: 0px;
+}
+
+/* Header */
+/* line 155, ../sass/style.scss */
+#orange-line {
+  background-color: #f66303;
+  height: 4px;
+  width: 100%;
+}
+
+/* line 162, ../sass/style.scss */
+header {
+  height: 130;
+  padding: 40px;
+  padding-bottom: 20px;
+}
+
+/* Logo */
+/* line 169, ../sass/style.scss */
+.logo {
+  font-family: "Titillium Web";
+  color: #3d454b;
+  font-size: 36px;
+}
+
+/* line 175, ../sass/style.scss */
+.logo img {
+  width: 50px;
+  margin-top: -4px;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+/* line 182, ../sass/style.scss */
+.logo:hover {
+  color: #3d454b;
+}
+
+/* Main menu */
+/* line 189, ../sass/style.scss */
+#mainMenu {
+  margin-top: 10px;
+  /* font-family: "Titillium Web"; */
+  font-size: 16px;
+  text-transform: uppercase;
+  color: black;
+  text-align: right;
+}
+
+/* line 198, ../sass/style.scss */
+#mainMenu a {
+  color: black;
+}
+
+/* line 202, ../sass/style.scss */
+.selected a {
+  color: #f76300;
+}
+
+/* line 206, ../sass/style.scss */
+#mainMenu ul {
+  margin: 0;
+  padding: 0;
+  float: left;
+  margin-right: 10px;
+}
+
+/* line 213, ../sass/style.scss */
+#hubs-dropdown ul {
+  margin-bottom: 0;
+}
+
+/* line 217, ../sass/style.scss */
+.dropdown-subitems {
+  list-style-type: none !important;
+}
+
+/* line 221, ../sass/style.scss */
+.dropdown-subitems a {
+  text-transform: none !important;
+}
+
+/* line 225, ../sass/style.scss */
+.avatar-icon {
+  width: 40px;
+  border-radius: 8px;
+  margin-top: -4px;
+  /* border: 4px solid rgb(246, 99, 3)   */
+}
+
+/* ================ Subnav ================ */
+/* line 234, ../sass/style.scss */
+.subnav {
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* line 240, ../sass/style.scss */
+.subnav a, .subnav span {
+  color: #bbbbbb;
+  margin-bottom: -1px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 400;
+  margin-right: 20px;
+}
+
+/* line 250, ../sass/style.scss */
+.rank-types .bold {
+  font-weight: bold;
+  color: #3d454b;
+}
+
+/* ================ User Profile ================ */
+/* Subnav */
+/* line 257, ../sass/style.scss */
+.userkarma {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+/* line 264, ../sass/style.scss */
+.logout {
+  width: 20px;
+  float: right;
+  margin: 14px;
+  opacity: 0.4;
+}
+
+/* line 271, ../sass/style.scss */
+.profile .button.small {
+  float: right;
+}
+
+/* line 275, ../sass/style.scss */
+.profie .subnav {
+  text-align: center;
+}
+
+/* line 279, ../sass/style.scss */
+.userdata {
+  margin-bottom: 0;
+}
+
+/* line 283, ../sass/style.scss */
+.usersubscribe {
+  text-transform: none !important;
+  /* Why do I need important here? */
+}
+
+/* line 287, ../sass/style.scss */
+.unsubscribe {
+  background: rgba(187, 187, 187, 0.8) !important;
+}
+
+/* line 290, ../sass/style.scss */
+.subscribers {
+  background: white;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+/* margin-right: -4px!important;  */
+/* line 297, ../sass/style.scss */
+.profile.rank-types {
+  margin-top: 10px !important;
+}
+
+/* ================ Log in ================ */
+/* line 303, ../sass/style.scss */
+.helptext {
+  display: none;
+}
+
+/* ================ Page ================ */
+/* line 308, ../sass/style.scss */
+#page li {
+  margin-top: 10px;
+}
+
+/* line 312, ../sass/style.scss */
+li p {
+  margin: 0px;
+}
+
+/* line 316, ../sass/style.scss */
+#page {
+  background-color: #f6f3ea;
+  /* padding-top: 20px; */
+}
+
+/* ================ Stories ================ */
+/* line 323, ../sass/style.scss */
+article {
+  margin-top: 20px;
+  /* margin-bottom: 80px; */
+}
+
+/* Votes */
+/* line 330, ../sass/style.scss */
+.vote-column {
+  width: 40px;
+  float: left;
+  margin-left: -52px;
+}
+
+@media screen and (max-width: 1300px) {
+  /* line 337, ../sass/style.scss */
+  .vote-column {
+    margin: 10px;
+  }
+}
+/* line 342, ../sass/style.scss */
+.vote {
+  width: 40px;
+  background: #edeceb;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 rgba(83, 69, 64, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  float: left;
+  margin: 0 11px 0 0;
+  position: relative;
+  text-align: center;
+}
+
+/* Defaut state */
+/* line 356, ../sass/style.scss */
+.fi-arrow-up, .fi-arrow-down,
+.fi-arrow-up:active, .fi-arrow-down:active,
+.fi-arrow-up:visited, .fi-arrow-down:visited {
+  display: block;
+  transform: scale(1.8, 1);
+  float: left;
+  width: 100%;
+  text-align: center;
+  color: #3d454b;
+}
+
+/* Upvote hover is orange */
+/* line 368, ../sass/style.scss */
+.upvote:hover {
+  color: #f76300;
+}
+
+/* line 372, ../sass/style.scss */
+.upvote,
+.downvote,
+.upvote:focus,
+.downvote:focus,
+.upvote:visited,
+.downvote:visited,
+.upvote:active,
+.downvote:active {
+  color: #3d454b;
+}
+
+/* Once upvoted/downvoted state */
+/* line 384, ../sass/style.scss */
+.upvoted,
+.upvoted:focus,
+.upvoted:active,
+.upvoted:visited {
+  color: #f76300;
+}
+
+/* line 391, ../sass/style.scss */
+.downvoted,
+.downvoted:focus,
+.downvoted:active,
+.downvoted:visited {
+  color: #008CBA;
+}
+
+/* The opposite button is grey */
+/* line 400, ../sass/style.scss */
+.downvote.upvoted:hover,
+.upvoted.downvote:hover,
+.downvoted.upvote:focus,
+.upvoted.downvote:focus,
+.downvoted.upvote:visited,
+.upvoted.downvote:visited {
+  color: #3d454b;
+}
+
+/* line 409, ../sass/style.scss */
+.downvote.upvoted,
+.upvote.downvoted,
+.downvote.upvoted:focus,
+.upvote.downvoted:focus,
+.downvote.upvoted:visited,
+.upvote.downvoted:visited {
+  color: #3d454b;
+}
+
+/* line 419, ../sass/style.scss */
+.score {
+  width: 100%;
+  text-align: center;
+}
+
+/* line 424, ../sass/style.scss */
+.post-comments {
+  width: 40px;
+  font-size: 30px;
+  text-align: center;
+}
+
+/* line 430, ../sass/style.scss */
+.fi-comment {
+  font-size: 42px;
+}
+
+/* line 434, ../sass/style.scss */
+.number-of-comments {
+  font-size: 18px;
+  color: white;
+  display: block;
+  margin-top: -45px;
+  margin-bottom: 10px;
+}
+
+/* line 443, ../sass/style.scss */
+article header {
+  float: left;
+  padding: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 1300px) {
+  /* line 451, ../sass/style.scss */
+  article header {
+    width: calc(100% - 60px);
+  }
+}
+/* line 456, ../sass/style.scss */
+.post-header {
+  float: left;
+}
+
+/* line 460, ../sass/style.scss */
+.post-tagline {
+  float: left;
+}
+
+/* line 464, ../sass/style.scss */
+.edit-post {
+  float: right;
+}
+
+/* line 468, ../sass/style.scss */
+#readmore {
+  float: right;
+  font-style: italic;
+}
+
+/* ================ Story ================ */
+/* line 476, ../sass/style.scss */
+.next-chapter {
+  float: right;
+}
+
+/* Story footer */
+/* line 486, ../sass/style.scss */
+.hub-tag {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  color: #3d454b;
+}
+
+/* line 495, ../sass/style.scss */
+.button.small {
+  margin-bottom: 0;
+}
+
+/* line 499, ../sass/style.scss */
+.post-footer-signup .author {
+  float: right;
+}
+
+/* line 503, ../sass/style.scss */
+.author {
+  float: right;
+}
+
+/* line 508, ../sass/style.scss */
+.post-footer-signup .followers {
+  background: white;
+  float: right;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0;
+}
+
+/* line 518, ../sass/style.scss */
+#rss-icon {
+  float: right;
+  margin: 0 0 0 10px;
+}
+
+/* line 523, ../sass/style.scss */
+#rss-icon i {
+  color: #666;
+}
+
+/* line 527, ../sass/style.scss */
+.large {
+  font-size: 40px;
+}
+
+/* ================ Story Comments ================ */
+/* Submit */
+/* line 535, ../sass/style.scss */
+.comment-type {
+  margin: 5px;
+}
+
+/* List */
+/* line 539, ../sass/style.scss */
+.comments {
+  margin-left: -32px;
+}
+
+/* line 546, ../sass/style.scss */
+.comment-collapse {
+  color: #3d454b;
+}
+
+/* line 550, ../sass/style.scss */
+.comment-box {
+  border-left: 1px solid #DDDDDD;
+  margin-left: 32px;
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 0px 3px 0px #727272;
+  padding: 10px 10px 0px 10px;
+}
+
+/* line 559, ../sass/style.scss */
+.comment-body {
+  padding: 10px 0px;
+}
+
+/* line 563, ../sass/style.scss */
+.comment-reply textarea {
+  margin-bottom: 4px;
+  background: #f6f3ea;
+  height: 150px;
+}
+
+/* line 569, ../sass/style.scss */
+.comment-reply .button.small {
+  float: right;
+  padding: 10px;
+  margin: 8px;
+  margin-right: 0;
+}
+
+/* line 576, ../sass/style.scss */
+.comment-footer a {
+  color: #3d454b;
+}
+
+/* Comments voting */
+/* line 581, ../sass/style.scss */
+.comment-box .vote-column {
+  width: 40px;
+  float: left;
+  margin-left: 0px;
+  margin-right: 10px;
+}
+
+/* Upvote hover is orange */
+/* line 589, ../sass/style.scss */
+.comment-upvote:hover {
+  color: #f76300;
+}
+
+/* line 593, ../sass/style.scss */
+.comment-upvote,
+.comment-downvote,
+.comment-upvote:focus,
+.comment-downvote:focus,
+.comment-upvote:visited,
+.comment-downvote:visited,
+.comment-upvote:active,
+.comment-downvote:active {
+  color: #3d454b;
+}
+
+/* Once upvoted/downvoted state */
+/* line 605, ../sass/style.scss */
+.comment-upvoted,
+.comment-upvoted:focus,
+.comment-upvoted:active,
+.comment-upvoted:visited {
+  color: #f76300;
+}
+
+/* line 612, ../sass/style.scss */
+.comment-downvoted,
+.comment-downvoted:focus,
+.comment-downvoted:active,
+.comment-downvoted:visited {
+  color: #008CBA;
+}
+
+/* The opposite button is grey */
+/* line 621, ../sass/style.scss */
+.comment-downvoted.comment-upvote,
+.comment-upvoted.comment-downvote,
+.comment-downvoted.comment-upvote:hover,
+.comment-upvoted.comment-downvote:hover,
+.comment-downvoted.comment-upvote:visited,
+.comment-upvoted.comment-downvote:visited {
+  color: #3d454b;
+}
+
+/* ================ Edit Story ================ */
+/* line 634, ../sass/style.scss */
+.fullWidth {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: initial;
+}
+
+/* Sidebar */
+/* line 644, ../sass/style.scss */
+.sidebar ul {
+  list-style-type: none;
+}
+
+/* line 648, ../sass/style.scss */
+.sidebar .button {
+  padding: 10px;
+  margin: 0 10px 0 15px;
+}
+
+/* line 653, ../sass/style.scss */
+.chapter-arrows {
+  float: right;
+  margin: 15px 0;
+}
+
+/* line 658, ../sass/style.scss */
+.chapter-title {
+  width: calc(100% - 60px);
+  float: left;
+}
+
+/* line 663, ../sass/style.scss */
+.chapter-arrow {
+  width: 100%;
+  float: right;
+  display: block;
+  line-height: 10px;
+  height: 18px;
+  overflow: hidden;
+}
+
+/* line 672, ../sass/style.scss */
+.chapter-button {
+  float: right;
+  /* margin: 15px 0px; */
+  color: #3d454b;
+}
+
+/* line 678, ../sass/style.scss */
+.chapter-button up {
+  foat: right;
+}
+
+/* Story create */
+/* line 683, ../sass/style.scss */
+.set-hubs {
+  width: calc(100% - 120px);
+  width: 200px;
+  float: left;
+  margin-bottom: 10px;
+  /*for mobile*/
+}
+
+@media screen and (max-width: 1300px) {
+  /* line 691, ../sass/style.scss */
+  .set-hubs {
+    width: 100% !important;
+    float: left;
+    margin-bottom: 10px;
+    /*for mobile*/
+  }
+}
+/* line 698, ../sass/style.scss */
+.select2-container--default .select2-selection--multiple {
+  height: 50px;
+}
+
+/* line 702, ../sass/style.scss */
+.set-hubs input {
+  margin-top: -7px !important;
+}
+
+/* line 706, ../sass/style.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+/* line 710, ../sass/style.scss */
+#id_hubs {
+  list-style-type: none;
+  width: 400px;
+  padding: 0px;
+}
+
+/* Story Editor */
+/* line 717, ../sass/style.scss */
+.editor {
+  background-color: #FFFFFF;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+}
+
+/* line 724, ../sass/style.scss */
+.delete-chapter {
+  padding: 10px !important;
+  background: grey !important;
+  float: left;
+  margin: 30px 0;
+}
+
+/* line 730, ../sass/style.scss */
+.confirm-delete {
+  background: red !important;
+}
+
+/* line 734, ../sass/style.scss */
+.view {
+  background: gray !important;
+}
+
+/* Footer */
+/* line 741, ../sass/style.scss */
+footer {
+  height: 40px;
+}
+
+/* line 745, ../sass/style.scss */
+footer, footer li, footer p {
+  background-color: #333a42;
+  color: #babfc2;
+}
+
+/* line 750, ../sass/style.scss */
+footer a {
+  color: #babfc2;
+}
+
+/* line 754, ../sass/style.scss */
+footer h4 {
+  color: #babfc2;
+  text-transform: uppercase;
+  font-size: medium;
+  font-weight: normal;
+}
