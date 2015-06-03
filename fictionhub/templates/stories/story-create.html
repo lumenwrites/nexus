@@ -70,11 +70,16 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
 <style>
+textarea {
+  margin-bottom: 0!important;
+  height: 400px;
+}
 </style>
+
 
 <script>
   $(document).ready(function(){
-  var isMobile = false;
+  var isMobile = true;
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
   
   //Editor
