@@ -14,7 +14,7 @@ Project is in active development. This is a very early version, not even alpha y
 If you want to contribute to this project and make it more awesome, here's what you can do:
 
 - First and foremost - feedback, ideas, and bug reports.
-  At this point I'm actively refactoring code so it will be hard to make a meaningful contribution on backend, but can use the website and write me your thoughts about it to raymestalez@gmail.com - I will be very grateful =)
+  At this point I'm actively refactoring code, so it will be hard to make a meaningful contribution on the backend, but you can use the website and write me your thoughts about it or suggest new features to raymestalez@gmail.com - I will be very grateful =)
 - If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work very well on mobile.
 
 # To-Do
