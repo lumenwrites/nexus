@@ -10,7 +10,10 @@ class StoryForm(ModelForm):
         model = Story
         exclude = ['author', 'slug', 'score','published',]
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Title'})
+            'title': forms.TextInput(attrs={'placeholder': 'Title'}),
+            'description': forms.Textarea(attrs={'class': 'markdown',
+                                                 'id': 'markdown'}),            
+
         }
 
         # 'hubs': forms.CheckboxSelectMultiple()                    
