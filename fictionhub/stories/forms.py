@@ -1,8 +1,9 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Story, Chapter, Comment, Hub
-
+from .models import Story, Chapter
+from hubs.models import Hub
+from comments.models import Comment
 
 class StoryForm(ModelForm):
     class Meta:

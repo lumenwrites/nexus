@@ -10,8 +10,12 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from .forms import StoryForm, ChapterForm, CommentForm, HubForm
-from .models import Story, Chapter, Hub, Comment
+from .models import Story, Chapter
 from profiles.models import User
+
+from hubs.models import Hub
+from comments.models import Comment
+
 
 def rank_hot(stories, top=180, consider=1000):
     # top - number of stories to show,
