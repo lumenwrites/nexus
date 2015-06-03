@@ -4,7 +4,7 @@
 
 http://fictionhub.io/
 
-Community for writers. My goal is to create the perfect website for people to share stories they write.
+My goal is to create the perfect place for people to share stories they write, discuss fiction/fanfiction, and help each other to get better at writing.
 
 Project is in active development. This is a very early version, not even alpha yet, just a prototype.
 
@@ -15,7 +15,8 @@ If you want to contribute to this project and make it more awesome, here's what 
 
 - First and foremost - feedback, ideas, and bug reports.
   At this point I'm actively refactoring code, so it will be hard to make a meaningful contribution on the backend, but you can use the website and write me your thoughts about it or suggest new features to raymestalez@gmail.com - I will be very grateful =)
-- If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work very well on mobile.
+- If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work well on mobile.
+
 
 # To-Do
 
