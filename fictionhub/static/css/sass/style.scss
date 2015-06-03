@@ -726,6 +726,11 @@ padding: 0px;
     border-color: #cccccc;
 }
 
+/* border on mobile  */
+* {
+  outline: none;
+}
+
 .delete-chapter {
     padding: 10px!important;
     background: grey!important;    
@@ -765,4 +770,7 @@ footer h4 {
 	font-size: medium;
 	font-weight: normal;
 }
+
+
+
 
