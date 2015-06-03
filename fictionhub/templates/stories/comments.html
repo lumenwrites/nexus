@@ -127,26 +127,27 @@
 </div>
 </div>  
 
-
-<!-- Editor -->
+{% include "stories/editor.html" %}
+<!-- Editor
 <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
 <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
 <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
-
+ -->
 <script>
-  $(document).ready(function(){
-  var isMobile = false;
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
+    $(document).ready(function(){
+	// editor
+  // var isMobile = false;
+  // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
 
-      //Editor
-      if(!isMobile){
-	  $('textarea').each(function( index ) {
-	      var editor = new Editor({
-		  element: this
-	      });
-	      editor.render();
-	  })
-	      }
+  //     //Editor
+  //     if(!isMobile){
+  // 	  $('textarea').each(function( index ) {
+  // 	      var editor = new Editor({
+  // 		  element: this
+  // 	      });
+  // 	      editor.render();
+  // 	  })
+  // 	      }
 
 
   //Toggle reply
