@@ -314,9 +314,9 @@ header {
   background: white;
   padding: 4px;
   border-radius: 4px;
-  margin-right: -4px !important;
 }
 
+/* margin-right: -4px!important;  */
 /* line 297, ../sass/style.scss */
 .profile.rank-types {
   margin-top: 10px !important;
@@ -360,7 +360,13 @@ article {
   margin-left: -52px;
 }
 
-/* line 336, ../sass/style.scss */
+@media screen and (max-width: 1300px) {
+  /* line 337, ../sass/style.scss */
+  .vote-column {
+    margin: 10px;
+  }
+}
+/* line 342, ../sass/style.scss */
 .vote {
   width: 40px;
   background: #edeceb;
@@ -373,7 +379,7 @@ article {
 }
 
 /* Defaut state */
-/* line 350, ../sass/style.scss */
+/* line 356, ../sass/style.scss */
 .fi-arrow-up, .fi-arrow-down,
 .fi-arrow-up:active, .fi-arrow-down:active,
 .fi-arrow-up:visited, .fi-arrow-down:visited {
@@ -386,12 +392,12 @@ article {
 }
 
 /* Upvote hover is orange */
-/* line 362, ../sass/style.scss */
+/* line 368, ../sass/style.scss */
 .upvote:hover {
   color: #f76300;
 }
 
-/* line 366, ../sass/style.scss */
+/* line 372, ../sass/style.scss */
 .upvote,
 .downvote,
 .upvote:focus,
@@ -404,7 +410,7 @@ article {
 }
 
 /* Once upvoted/downvoted state */
-/* line 378, ../sass/style.scss */
+/* line 384, ../sass/style.scss */
 .upvoted,
 .upvoted:focus,
 .upvoted:active,
@@ -412,7 +418,7 @@ article {
   color: #f76300;
 }
 
-/* line 385, ../sass/style.scss */
+/* line 391, ../sass/style.scss */
 .downvoted,
 .downvoted:focus,
 .downvoted:active,
@@ -421,7 +427,7 @@ article {
 }
 
 /* The opposite button is grey */
-/* line 394, ../sass/style.scss */
+/* line 400, ../sass/style.scss */
 .downvote.upvoted:hover,
 .upvoted.downvote:hover,
 .downvoted.upvote:focus,
@@ -431,7 +437,7 @@ article {
   color: #3d454b;
 }
 
-/* line 403, ../sass/style.scss */
+/* line 409, ../sass/style.scss */
 .downvote.upvoted,
 .upvote.downvoted,
 .downvote.upvoted:focus,
@@ -441,25 +447,25 @@ article {
   color: #3d454b;
 }
 
-/* line 413, ../sass/style.scss */
+/* line 419, ../sass/style.scss */
 .score {
   width: 100%;
   text-align: center;
 }
 
-/* line 418, ../sass/style.scss */
+/* line 424, ../sass/style.scss */
 .post-comments {
   width: 40px;
   font-size: 30px;
   text-align: center;
 }
 
-/* line 424, ../sass/style.scss */
+/* line 430, ../sass/style.scss */
 .fi-comment {
   font-size: 42px;
 }
 
-/* line 428, ../sass/style.scss */
+/* line 434, ../sass/style.scss */
 .number-of-comments {
   font-size: 18px;
   color: white;
@@ -468,42 +474,48 @@ article {
   margin-bottom: 10px;
 }
 
-/* line 437, ../sass/style.scss */
+/* line 443, ../sass/style.scss */
 article header {
   float: left;
   padding: 0;
   width: 100%;
 }
 
-/* line 443, ../sass/style.scss */
+@media screen and (max-width: 1300px) {
+  /* line 451, ../sass/style.scss */
+  article header {
+    width: calc(100% - 60px);
+  }
+}
+/* line 456, ../sass/style.scss */
 .post-header {
   float: left;
 }
 
-/* line 447, ../sass/style.scss */
+/* line 460, ../sass/style.scss */
 .post-tagline {
   float: left;
 }
 
-/* line 451, ../sass/style.scss */
+/* line 464, ../sass/style.scss */
 .edit-post {
   float: right;
 }
 
-/* line 455, ../sass/style.scss */
+/* line 468, ../sass/style.scss */
 #readmore {
   float: right;
   font-style: italic;
 }
 
 /* ================ Story ================ */
-/* line 463, ../sass/style.scss */
+/* line 476, ../sass/style.scss */
 .next-chapter {
   float: right;
 }
 
 /* Story footer */
-/* line 473, ../sass/style.scss */
+/* line 486, ../sass/style.scss */
 .hub-tag {
   background: rgba(119, 119, 119, 0.2);
   padding: 2px 8px;
@@ -512,22 +524,22 @@ article header {
   color: #3d454b;
 }
 
-/* line 482, ../sass/style.scss */
+/* line 495, ../sass/style.scss */
 .button.small {
   margin-bottom: 0;
 }
 
-/* line 486, ../sass/style.scss */
+/* line 499, ../sass/style.scss */
 .post-footer-signup .author {
   float: right;
 }
 
-/* line 490, ../sass/style.scss */
+/* line 503, ../sass/style.scss */
 .author {
   float: right;
 }
 
-/* line 495, ../sass/style.scss */
+/* line 508, ../sass/style.scss */
 .post-footer-signup .followers {
   background: white;
   float: right;
@@ -536,41 +548,41 @@ article header {
   margin: 0;
 }
 
-/* line 505, ../sass/style.scss */
+/* line 518, ../sass/style.scss */
 #rss-icon {
   float: right;
   margin: 0 0 0 10px;
 }
 
-/* line 510, ../sass/style.scss */
+/* line 523, ../sass/style.scss */
 #rss-icon i {
   color: #666;
 }
 
-/* line 514, ../sass/style.scss */
+/* line 527, ../sass/style.scss */
 .large {
   font-size: 40px;
 }
 
 /* ================ Story Comments ================ */
 /* Submit */
-/* line 522, ../sass/style.scss */
+/* line 535, ../sass/style.scss */
 .comment-type {
   margin: 5px;
 }
 
 /* List */
-/* line 526, ../sass/style.scss */
+/* line 539, ../sass/style.scss */
 .comments {
   margin-left: -32px;
 }
 
-/* line 533, ../sass/style.scss */
+/* line 546, ../sass/style.scss */
 .comment-collapse {
   color: #3d454b;
 }
 
-/* line 537, ../sass/style.scss */
+/* line 550, ../sass/style.scss */
 .comment-box {
   border-left: 1px solid #DDDDDD;
   margin-left: 32px;
@@ -580,19 +592,19 @@ article header {
   padding: 10px 10px 0px 10px;
 }
 
-/* line 546, ../sass/style.scss */
+/* line 559, ../sass/style.scss */
 .comment-body {
   padding: 10px 0px;
 }
 
-/* line 550, ../sass/style.scss */
+/* line 563, ../sass/style.scss */
 .comment-reply textarea {
   margin-bottom: 4px;
   background: #f6f3ea;
   height: 150px;
 }
 
-/* line 556, ../sass/style.scss */
+/* line 569, ../sass/style.scss */
 .comment-reply .button.small {
   float: right;
   padding: 10px;
@@ -600,13 +612,13 @@ article header {
   margin-right: 0;
 }
 
-/* line 563, ../sass/style.scss */
+/* line 576, ../sass/style.scss */
 .comment-footer a {
   color: #3d454b;
 }
 
 /* Comments voting */
-/* line 568, ../sass/style.scss */
+/* line 581, ../sass/style.scss */
 .comment-box .vote-column {
   width: 40px;
   float: left;
@@ -615,12 +627,12 @@ article header {
 }
 
 /* Upvote hover is orange */
-/* line 576, ../sass/style.scss */
+/* line 589, ../sass/style.scss */
 .comment-upvote:hover {
   color: #f76300;
 }
 
-/* line 580, ../sass/style.scss */
+/* line 593, ../sass/style.scss */
 .comment-upvote,
 .comment-downvote,
 .comment-upvote:focus,
@@ -633,7 +645,7 @@ article header {
 }
 
 /* Once upvoted/downvoted state */
-/* line 592, ../sass/style.scss */
+/* line 605, ../sass/style.scss */
 .comment-upvoted,
 .comment-upvoted:focus,
 .comment-upvoted:active,
@@ -641,7 +653,7 @@ article header {
   color: #f76300;
 }
 
-/* line 599, ../sass/style.scss */
+/* line 612, ../sass/style.scss */
 .comment-downvoted,
 .comment-downvoted:focus,
 .comment-downvoted:active,
@@ -650,7 +662,7 @@ article header {
 }
 
 /* The opposite button is grey */
-/* line 608, ../sass/style.scss */
+/* line 621, ../sass/style.scss */
 .comment-downvoted.comment-upvote,
 .comment-upvoted.comment-downvote,
 .comment-downvoted.comment-upvote:hover,
@@ -661,7 +673,7 @@ article header {
 }
 
 /* ================ Edit Story ================ */
-/* line 621, ../sass/style.scss */
+/* line 634, ../sass/style.scss */
 .fullWidth {
   width: 100%;
   margin-left: auto;
@@ -670,30 +682,30 @@ article header {
 }
 
 /* Sidebar */
-/* line 631, ../sass/style.scss */
+/* line 644, ../sass/style.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 635, ../sass/style.scss */
+/* line 648, ../sass/style.scss */
 .sidebar .button {
   padding: 10px;
   margin: 0 10px 0 15px;
 }
 
-/* line 640, ../sass/style.scss */
+/* line 653, ../sass/style.scss */
 .chapter-arrows {
   float: right;
   margin: 15px 0;
 }
 
-/* line 645, ../sass/style.scss */
+/* line 658, ../sass/style.scss */
 .chapter-title {
   width: calc(100% - 60px);
   float: left;
 }
 
-/* line 650, ../sass/style.scss */
+/* line 663, ../sass/style.scss */
 .chapter-arrow {
   width: 100%;
   float: right;
@@ -703,28 +715,61 @@ article header {
   overflow: hidden;
 }
 
-/* line 659, ../sass/style.scss */
+/* line 672, ../sass/style.scss */
 .chapter-button {
   float: right;
   /* margin: 15px 0px; */
   color: #3d454b;
 }
 
-/* line 665, ../sass/style.scss */
+/* line 678, ../sass/style.scss */
 .chapter-button up {
   foat: right;
 }
 
 /* Story create */
-/* line 670, ../sass/style.scss */
+/* line 683, ../sass/style.scss */
 .set-hubs {
   width: calc(100% - 120px);
-  /* width: 200px;     */
+  width: 200px;
   float: left;
+  margin-bottom: 10px;
+  /*for mobile*/
+}
+
+@media screen and (max-width: 1300px) {
+  /* line 691, ../sass/style.scss */
+  .set-hubs {
+    width: 100% !important;
+    float: left;
+    margin-bottom: 10px;
+    /*for mobile*/
+  }
+}
+/* line 698, ../sass/style.scss */
+.select2-container--default .select2-selection--multiple {
+  height: 50px;
+}
+
+/* line 702, ../sass/style.scss */
+.set-hubs input {
+  margin-top: -7px !important;
+}
+
+/* line 706, ../sass/style.scss */
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 10px;
+}
+
+/* line 710, ../sass/style.scss */
+#id_hubs {
+  list-style-type: none;
+  width: 400px;
+  padding: 0px;
 }
 
 /* Story Editor */
-/* line 678, ../sass/style.scss */
+/* line 717, ../sass/style.scss */
 .editor {
   background-color: #FFFFFF;
   border-style: solid;
@@ -732,7 +777,7 @@ article header {
   border-color: #cccccc;
 }
 
-/* line 685, ../sass/style.scss */
+/* line 724, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -740,34 +785,34 @@ article header {
   margin: 30px 0;
 }
 
-/* line 691, ../sass/style.scss */
+/* line 730, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 695, ../sass/style.scss */
+/* line 734, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
 /* Footer */
-/* line 702, ../sass/style.scss */
+/* line 741, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 706, ../sass/style.scss */
+/* line 745, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 711, ../sass/style.scss */
+/* line 750, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 715, ../sass/style.scss */
+/* line 754, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;

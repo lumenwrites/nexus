@@ -291,8 +291,8 @@ header {
     background: white;
     padding: 4px;
     border-radius: 4px;
-    margin-right: -4px!important; 
 }
+    /* margin-right: -4px!important;  */
 
 .profile.rank-types {
   margin-top: 10px!important;
@@ -330,7 +330,13 @@ article {
 .vote-column {
     width: 40px;
     float: left;
-    margin-left: -52px;    
+    margin-left: -52px;
+}
+
+@media screen and (max-width: 1300px) {
+    .vote-column {    
+        margin: 10px;
+    }
 }
 
 .vote {
@@ -438,6 +444,13 @@ article header {
     float: left;
     padding: 0;
     width: 100%;
+
+}
+
+@media screen and (max-width: 1300px) {
+    article header {
+	width: calc(100% - 60px);
+    }
 }
 
 .post-header {
@@ -671,8 +684,16 @@ article header {
     width: calc(100% - 120px);
     width: 200px;
     float:left;
+    margin-bottom: 10px; 	/*for mobile*/
 }
 
+@media screen and (max-width: 1300px) {
+    .set-hubs {
+	width: 100%!important;
+	float:left;
+	margin-bottom: 10px; 	/*for mobile*/
+    }
+}
  
 .select2-container--default .select2-selection--multiple {
     height: 50px;

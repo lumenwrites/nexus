@@ -100,12 +100,12 @@
 	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>	
 	
- 	<div style="float:right;">
+ 	<div class="edit-buttons">
 	  <!-- <button class="button small" type="submit">Save Draft</button> -->
 	  <br/>
-      <div class="set-hubs">
-	{{form.hubs}}
-      </div>
+	  <div class="set-hubs">
+	    {{form.hubs}}
+	  </div>
 	  
 	  {% if action = "story_edit" %}	  
 	  <a href="/story/{{story.slug}}" class="button small view">View</a>
@@ -191,7 +191,31 @@ margin-top: -7px!important;
 width:600px;
 padding: 0px;
 }
- 
+
+#id_hubs {
+    list-style-type: none;
+width:600px;
+padding: 0px;
+}
+
+@media screen and (max-width: 1300px) {
+#id_hubs {
+width: 400px;
+}
+}
+
+.edit-buttons{
+float:right;
+}
+
+@media screen and (max-width: 1300px) {
+.edit-buttons{
+float:left;
+}
+}
+
+
+
 
 <!-- Tags -->
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
