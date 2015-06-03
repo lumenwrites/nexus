@@ -738,9 +738,9 @@ article header {
 }
 
 /* line 690, ../sass/style.scss */
-textarea {
+textarea[rows] {
   margin-bottom: 0 !important;
-  height: 400px;
+  height: 400px !important;
 }
 
 @media screen and (max-width: 1300px) {
