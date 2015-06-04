@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Hub
+
+class HubAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',), }
+
+admin.site.register(Hub, HubAdmin)    
+
