@@ -797,7 +797,7 @@ def story_feed(request, story):
         title_c.text = index.title
         
         link = SubElement(item,'link')
-        link.text = request.build_absolute_uri(index.get_absolute_url())
-
-    return HttpResponse(tostring(rss, encoding='UTF-8'))
+        #link.text = request.build_absolute_uri(index.get_absolute_url())
+        link.text = "http://fictionhub.io/story/"+story.slug
+    return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
 
