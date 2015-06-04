@@ -18,6 +18,11 @@
 	<a href="{{filterurl}}/top/day">
 	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
 	{% endif %}
+
+	{% if userprofile %}	
+	<a href="/user/{{userprofile.username}}/comments">
+	  <span {% if filterby = "comments_user" %}class="bold"{% endif %}>Comments</span></a>
+	{% endif %}	
       </div>
     </div>
 

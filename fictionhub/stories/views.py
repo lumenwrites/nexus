@@ -77,7 +77,7 @@ def stories(request, rankby="hot", timespan="all-time",
             stories = Story.objects.filter(author=userprofile)
         else:
             stories = Story.objects.filter(author=userprofile, published=True)
-        filterurl="/user/"+username # to add to href  in subnav        
+        filterurl="/user/"+username # to add to href  in subnav
     else:
         stories = Story.objects.filter(published=True)
         filterurl="" # to add to href  in subnav                
@@ -690,3 +690,76 @@ def hub_create(request):
         'nextpage':nextpage
     })
         
+
+def comments_user(request, username, filterby="", comment_id=""):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) # return story but don't save it to db just yet
+            comment.author = request.user
+            comment.parent = None
+            if chapter:
+                comment.chapter = chapter                
+            else:
+                comment.story = story
+            comment.save()
+            if chapter:
+                return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
+            else:
+                return HttpResponseRedirect('/story/'+story.slug+'#comments')
+    else:
+        form = CommentForm()
+
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []  
+
+    userprofile = User.objects.get(username=username)
+    top_lvl_comments = Comment.objects.filter(author = userprofile)
+
+    rankby = "new"
+    # Rank comments
+    if rankby == "hot":
+        ranked_comments = rank_hot(top_lvl_comments, top=32)
+    elif rankby == "top":
+        ranked_comments = rank_top(top_lvl_comments, timespan = "all-time")
+    elif rankby == "new":
+        ranked_comments = top_lvl_comments.order_by('-pub_date')
+    else:
+        ranked_comments = []
+
+    # Permalink to one comment
+    if comment_id:
+        comment = []
+        comment.append(Comment.objects.get(id = comment_id))
+        ranked_comments = comment
+
+
+    # Nested comments
+    # comments = list(get_comment_list(ranked_comments, rankby=rankby))
+    comments = ranked_comments
+
+    if request.user.is_authenticated():
+        comments_upvoted = request.user.comments_upvoted.all()
+        comments_downvoted = request.user.comments_downvoted.all()                
+    else:
+        comments_upvoted = []
+        comments_downvoted = []  
+
+    subscribed_to = request.user.subscribed_to.all()
+    filterurl = '/user/'+ userprofile.username
+    return render(request, 'comments/comments-user.html',{
+        'upvoted': upvoted,
+        'downvoted': downvoted,
+        'comments_upvoted': comments_upvoted,
+        'comments_downvoted': comments_downvoted,
+        'comments': comments,
+        'form': form,
+        'subscribed_to':subscribed_to,
+        'filterby':'comments_user',
+        'userprofile':userprofile,
+        'filterurl':filterurl
+    })

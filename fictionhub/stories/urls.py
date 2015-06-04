@@ -16,8 +16,9 @@ urlpatterns = [
     # view comment
     url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', views.story),
 
-
-
+    url(r'^user/(?P<username>[^\.]+)/comments$', views.comments_user,
+        {'filterby': 'comments_user'}),
+    
     # Edit story
     url(r'^story/add$', views.story_create),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.chapter_edit),    
