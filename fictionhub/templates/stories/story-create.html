@@ -29,39 +29,6 @@
   </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
 
-
-<!-- loop through hubs in form
-     {% for choice_id, choice_label in form.hubs.field.choices %}
-     {{ choice_id }}
-     {{ choice_label }}<br/>
-     {% endfor %}
-  -->
-
-<!-- Loop through hubs
-     <div  style="float:right; width: 20%;">
-       <ul class="side-nav">
-	 {% for hub in hubs %}
-	 {% if not hub.parent %}
-	 <li>
-	   <a id="hub-id-{{hub.id}}"> {{hub.title}}</a>
- 	 </li>
-	 {% if hub.children.all %}
-	 <ul>
-	   {% for child in hub.children.all %}
-	   <ul>
-	     <li class="dropdown-subitems">
-	       <a id="hub-id-{{hub.id}}"> {{child.title}}</a>
-	     </li>
-	   </ul>
-	   {% endfor %}
-	 </ul>
-	 {% endif %}
-	 {% endif %}	  	  
-	 {% endfor %}
-       </ul>
-     </div> -->
-
-
 {% include "stories/editor.html" %}
 
 {% endblock content %}

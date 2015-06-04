@@ -17,16 +17,19 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 # from chaoslegion import urls as chaoslegion_urls
-from stories import urls as stories_urls
 from profiles import urls as profiles_urls
+from comments import urls as comments_urls
+from hubs import urls as hubs_urls
+from stories import urls as stories_urls
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'', include(profiles_urls)),            
+    url(r'', include(profiles_urls)),
+    url(r'', include(comments_urls)),
+    url(r'', include(hubs_urls)),        
     url(r'', include(stories_urls)),
 
     # url(r'.*', stories.views.page_404),
-    # chaoslegion urls
-    # url(r'', include(chaoslegion_urls)),    
 ]

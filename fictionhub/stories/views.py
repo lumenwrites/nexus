@@ -1,5 +1,4 @@
-import datetime, re # praw
-from django.utils.timezone import utc
+import re # praw
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
@@ -9,10 +8,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from .forms import StoryForm, ChapterForm, CommentForm, HubForm
+# Forms
+from .forms import StoryForm, ChapterForm
+from comments.forms import CommentForm
+from hubs.forms import HubForm
+
+# Models
 from .models import Story, Chapter
 from profiles.models import User
-
 from hubs.models import Hub
 from comments.models import Comment
 
@@ -20,38 +23,9 @@ from comments.models import Comment
 from xml.etree.ElementTree import Element, SubElement, tostring
 from django.core.urlresolvers import *
 
-def rank_hot(stories, top=180, consider=1000):
-    # top - number of stories to show,
-    # consider - number of latest stories to rank
-    
-    def score(post, gravity=1.8, timebase=120):
-        # number_of_comments = len(post.comments.all())
-        rating = (post.score + 1)**0.8 # + number_of_comments
-        now = datetime.datetime.utcnow().replace(tzinfo=utc)
-        age = int((now - post.pub_date).total_seconds())/60
-        return rating/(age+timebase)**1.8
-
-    latest_stories = stories.order_by('-pub_date')#[:consider]
-    #comprehension, stories with rating, sorted
-    stories_with_rating = [(score(story), story) for story in latest_stories]
-    ranked_stories = sorted(stories_with_rating, reverse = True)
-    #strip away the rating and return only stories
-    return [story for _, story in ranked_stories][:top]
-
-def rank_top(stories, timespan = None):
-    if timespan == "day":
-        day = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('day')
-        stories = stories.filter(pub_date__day = day)        
-    elif timespan == "month":
-        month = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('month')
-        stories = stories.filter(pub_date__month = month)        
-    elif timespan == "all-time":
-        year = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('year')
-        stories = stories.filter(pub_date__year = year)                
-    
-    top_stories = stories.order_by('-score')
-    return top_stories
-
+# utility functions
+from comments.utils import get_comment_list
+from .utils import rank_hot, rank_top
 
 def stories(request, rankby="hot", timespan="all-time",
             filterby="", hubslug="", username=""):
@@ -179,84 +153,6 @@ def undownvote(request):
     user.downvoted.remove(story)
     user.save()
     return HttpResponse()
-
-# Comment voting
-# Voting
-def comment_upvote(request):
-    comment = Comment.objects.get(id=request.POST.get('comment-id'))
-    comment.score += 1
-    comment.save()
-    comment.author.karma += 1
-    comment.author.save()
-    user = request.user
-    user.comments_upvoted.add(comment)
-    user.save()
-    return HttpResponse()
-
-def comment_downvote(request):
-    comment = Comment.objects.get(id=request.POST.get('comment-id'))
-    if comment.score > 0:
-        comment.score -= 1
-        comment.author.karma -= 1        
-    comment.save()
-    comment.author.save()
-    user = request.user
-    user.comments_downvoted.add(comment)
-    user.save()
-    return HttpResponse()
-
-def comment_unupvote(request):
-    comment = Comment.objects.get(id=request.POST.get('comment-id'))
-    comment.score -= 1
-    comment.save()
-    comment.author.karma = 1
-    comment.author.save()
-    user = request.user
-    user.comments_upvoted.remove(comment)
-    user.save()
-    return HttpResponse()
-
-def comment_undownvote(request):
-    comment = Comment.objects.get(id=request.POST.get('comment-id'))
-    comment.score += 1
-    comment.author.karma += 1        
-    comment.save()
-    comment.author.save()
-    user = request.user
-    user.comments_downvoted.remove(comment)
-    user.save()
-    return HttpResponse()
-
-# Comments
-def get_comment_list(comments=None, rankby="hot"):
-    """Recursively build a list of comments."""
-    yield 'in'
-
-    # Loop through all the comments I've passed
-    for comment in comments:
-        # Add comment to the list
-        yield comment
-        # get comment's children
-        children = comment.children.all()
-        if rankby == "hot":
-            ranked_children = rank_hot(children, top=32)
-        elif rankby == "top":
-            ranked_children = rank_top(children, timespan = "all-time")
-        elif rankby == "new":
-            ranked_children = children.order_by('-pub_date')
-        else:
-            ranked_children = []
-        
-        # If there's any children
-        if len(ranked_children):
-            comment.leaf=False
-            # loop through children, and apply this function
-            for x in get_comment_list(ranked_children, rankby=rankby):
-                yield x
-        else:
-            comment.leaf=True
-    yield 'out'
-
             
 def story(request, story, comment_id="", chapter="", rankby="new"):
     try:
@@ -373,60 +269,6 @@ def story(request, story, comment_id="", chapter="", rankby="new"):
         'hubs':hubs,
         'subscribed_to':subscribed_to        
     })
-
-def comment_submit(request, comment_id):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.parent = Comment.objects.get(id=comment_id)
-            comment.save()
-            comment_url = request.GET.get('next', '/')+"#id-"+str(comment.id)
-            return HttpResponseRedirect(comment_url)
-
-def comment_edit(request, comment_id):
-    comment = Comment.objects.get(id = comment_id)
-    nextpage = request.GET.get('next', '/')
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST,instance=comment)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.save()
-            return HttpResponseRedirect(nextpage)
-    else:
-        form = CommentForm(instance=comment)
-    
-    return render(request, 'stories/comment-edit.html', {
-        'comment':comment,
-        'form':form,
-        'nextpage':nextpage
-    })
-    
-    # throw him out if he's not an author
-    if request.user != comment.author:
-        return HttpResponseRedirect('/')        
-    return HttpResponseRedirect('/') # to story list
-
-        
-def comment_delete(request, comment_id):
-    comment = Comment.objects.get(id = comment_id)
-
-    # throw him out if he's not an author
-    if request.user != comment.author:
-        return HttpResponseRedirect('/')        
-
-    try:
-        path = '/story/'+comment.story.slug + '/' + comment.chapter.slug + '#comments'
-    except:
-        path = '/story/'+comment.story.slug + '#comments'        
-
-    comment.delete()
-
-    return HttpResponseRedirect(path) # to story list
-
-        
 
 def chapter_back(request, story, chapter):
     story = Story.objects.get(slug=story)
@@ -676,100 +518,6 @@ def page_404(request):
                                   context_instance=RequestContext(request))
     response.status_code = 404
     return response
-
-
-
-
-def hub_create(request):
-    nextpage = request.GET.get('next', '/')
-    
-    if request.method == 'POST':
-        form = HubForm(request.POST)
-        if form.is_valid():
-            hub = form.save(commit=False) # return story but don't save it to db just yet
-            hub.save()
-            return HttpResponseRedirect(nextpage)
-    else:
-        form = HubForm()
-
-    return render(request, 'stories/hub-create.html', {
-        'form':form,
-        'nextpage':nextpage
-    })
-        
-
-def comments_user(request, username, filterby="", comment_id=""):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False) # return story but don't save it to db just yet
-            comment.author = request.user
-            comment.parent = None
-            if chapter:
-                comment.chapter = chapter                
-            else:
-                comment.story = story
-            comment.save()
-            if chapter:
-                return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
-            else:
-                return HttpResponseRedirect('/story/'+story.slug+'#comments')
-    else:
-        form = CommentForm()
-
-    if request.user.is_authenticated():
-        upvoted = request.user.upvoted.all()
-        downvoted = request.user.downvoted.all()                
-    else:
-        upvoted = []
-        downvoted = []  
-
-    userprofile = User.objects.get(username=username)
-    top_lvl_comments = Comment.objects.filter(author = userprofile)
-
-    rankby = "new"
-    # Rank comments
-    if rankby == "hot":
-        ranked_comments = rank_hot(top_lvl_comments, top=32)
-    elif rankby == "top":
-        ranked_comments = rank_top(top_lvl_comments, timespan = "all-time")
-    elif rankby == "new":
-        ranked_comments = top_lvl_comments.order_by('-pub_date')
-    else:
-        ranked_comments = []
-
-    # Permalink to one comment
-    if comment_id:
-        comment = []
-        comment.append(Comment.objects.get(id = comment_id))
-        ranked_comments = comment
-
-
-    # Nested comments
-    # comments = list(get_comment_list(ranked_comments, rankby=rankby))
-    comments = ranked_comments
-
-    if request.user.is_authenticated():
-        comments_upvoted = request.user.comments_upvoted.all()
-        comments_downvoted = request.user.comments_downvoted.all()                
-    else:
-        comments_upvoted = []
-        comments_downvoted = []  
-
-    subscribed_to = request.user.subscribed_to.all()
-    filterurl = '/user/'+ userprofile.username
-    return render(request, 'comments/comments-user.html',{
-        'upvoted': upvoted,
-        'downvoted': downvoted,
-        'comments_upvoted': comments_upvoted,
-        'comments_downvoted': comments_downvoted,
-        'comments': comments,
-        'form': form,
-        'subscribed_to':subscribed_to,
-        'filterby':'comments_user',
-        'userprofile':userprofile,
-        'filterurl':filterurl
-    })
 
 
 def story_feed(request, story):

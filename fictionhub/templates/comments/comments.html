@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load markdownify %}
 
 <!-- Comments -->
@@ -23,8 +24,8 @@
     {% else %}
     <a href="/login/?next={{request.path}}">Login</a> to leave a comment.
     {% endif %}	<!-- end  user.is_authenticated -->
-      <div class="clearfix"></div>	
-      <div style="width:100%; height: 20px"></div>	
+    <div class="clearfix"></div>	
+    <div style="width:100%; height: 20px"></div>	
 
 
 {% if comments.all %}      
@@ -132,41 +133,7 @@
 <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
 <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
 
-<script>
-    $(document).ready(function(){
-	// editor
-  var isMobile = false;
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
-
-      //Editor
-      if(!isMobile){
-  	  $('textarea').each(function( index ) {
-  	      var editor = new Editor({
-  		  element: this
-  	      });
-  	      editor.render();
-  	  })
-  	      }
-
-
-  //Toggle reply
-  $('.show-reply').click(function () {
-  $('.comment-reply').hide()
-  $(this).parent().parent().find('.comment-reply').toggle();
-  });
-  //cancel
-  $('.cancel').click(function () {
-  $('.comment-reply').hide()
-  });
-
-
-
-
-  });
-
-
-</script>
-
+<!-- Comments js -->
 <script>
 $(document).ready(function(){
     // getting csrf token.
@@ -348,5 +315,36 @@ console.log('yes!')
     
     {% endif %}
 })
+
+
+// Editor
+$(document).ready(function(){
+    // editor
+    var isMobile = false;
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
+
+    //Editor
+    if(!isMobile){
+  	$('textarea').each(function( index ) {
+  	    var editor = new Editor({
+  		element: this
+  	    });
+  	    editor.render();
+  	})
+    }
+
+
+    //Toggle reply
+    $('.show-reply').click(function () {
+	$('.comment-reply').hide()
+	$(this).parent().parent().find('.comment-reply').toggle();
+    });
+    //cancel
+    $('.cancel').click(function () {
+	$('.comment-reply').hide()
+    });
+
+})
+  
 </script>
 

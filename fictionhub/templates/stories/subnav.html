@@ -15,8 +15,10 @@
 	  <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
 	<a href="{{filterurl}}/top/month">
 	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
+	<!-- While website is not being updated that often.
 	<a href="{{filterurl}}/top/day">
 	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
+	 -->
 	{% endif %}
 
 	{% if userprofile and userprofile.comments.all %}
