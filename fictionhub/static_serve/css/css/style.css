@@ -551,7 +551,7 @@ article header {
 /* line 517, ../sass/style.scss */
 .rss-icon {
   float: right;
-  margin: -6px 0 0 10px;
+  /* margin: -6px 0 0 10px; */
   line-height: 10px;
 }
 
