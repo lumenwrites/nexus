@@ -69,3 +69,6 @@ local_settings.py
 
 # sass
 .sass-cache
+
+# Emacs autosave
+\#*#
