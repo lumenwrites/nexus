@@ -25,9 +25,6 @@ If you want to contribute to this project and make it more awesome, here's what 
 
 # Upcoming Features
 
-- rss feeds for stories and authors and hubs
-- list comments on user's page
-
 - Search sidebar. 
     - Filter by hubs. Like on http://www.fimfiction.net/
     - Ability to filter out tags

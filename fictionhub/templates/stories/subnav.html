@@ -19,7 +19,7 @@
 	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
 	{% endif %}
 
-	{% if userprofile %}	
+	{% if userprofile and userprofile.comments.all %}
 	<a href="/user/{{userprofile.username}}/comments">
 	  <span {% if filterby = "comments_user" %}class="bold"{% endif %}>Comments</span></a>
 	{% endif %}	
