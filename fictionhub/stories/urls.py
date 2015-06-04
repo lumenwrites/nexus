@@ -37,6 +37,11 @@ urlpatterns = [
     # View
     # url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.chapter),
 
+    # Rss
+    url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),        
+
+    url(r'^404/', views.page_404),
+    
     # Rank comments
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
         views.story, name='view_chapter'), 
@@ -74,7 +79,7 @@ urlpatterns = [
     url(r'^hub/(?P<hubslug>[^\.]+)/(?P<rankby>[^\.]+)/$', views.stories,
         {'filterby': 'hub'}),    
     url(r'^hub/(?P<hubslug>[^\.]+)/$', views.stories,
-        {'filterby': 'hub'}),    
+        {'filterby': 'hub'}),
 
     # Frontpage(all)
     url(r'^(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories),    

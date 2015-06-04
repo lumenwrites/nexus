@@ -16,6 +16,9 @@ from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
 
+# rss
+from xml.etree.ElementTree import Element, SubElement, tostring
+from django.core.urlresolvers import *
 
 def rank_hot(stories, top=180, consider=1000):
     # top - number of stories to show,
@@ -256,7 +259,11 @@ def get_comment_list(comments=None, rankby="hot"):
 
             
 def story(request, story, comment_id="", chapter="", rankby="new"):
-    story = Story.objects.get(slug=story)
+    try:
+        story = Story.objects.get(slug=story)
+    except:
+        return HttpResponseRedirect('/404')
+        
 
     try:
         first_chapter = Chapter.objects.get(story=story, number=1)
@@ -763,3 +770,34 @@ def comments_user(request, username, filterby="", comment_id=""):
         'userprofile':userprofile,
         'filterurl':filterurl
     })
+
+
+def story_feed(request, story):
+    story = Story.objects.get(slug=story)
+    rss = Element('rss')
+    rss.set("version","2.0")
+
+    channel = SubElement(rss,'channel')
+
+    title = SubElement(channel,'title')
+    title.text = story.title
+
+    link = SubElement(channel,'link')
+    link.text = "http://fictionhub.io/story/"+story.slug # request.build_absolute_uri(reverse("story"))
+
+    desc = SubElement(channel,'description')
+    desc.text = story.description
+
+    chapters = story.chapters.all()
+
+    for index in chapters:
+        item = SubElement(channel,'item')
+
+        title_c = SubElement(item,'title')
+        title_c.text = index.title
+        
+        link = SubElement(item,'link')
+        link.text = request.build_absolute_uri(index.get_absolute_url())
+
+    return HttpResponse(tostring(rss, encoding='UTF-8'))
+

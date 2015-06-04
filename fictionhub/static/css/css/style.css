@@ -548,14 +548,15 @@ article header {
   margin: 0;
 }
 
-/* line 518, ../sass/style.scss */
-#rss-icon {
+/* line 517, ../sass/style.scss */
+.rss-icon {
   float: right;
-  margin: 0 0 0 10px;
+  margin: -6px 0 0 10px;
+  line-height: 10px;
 }
 
 /* line 523, ../sass/style.scss */
-#rss-icon i {
+.rss-icon i {
   color: #666;
 }
 
