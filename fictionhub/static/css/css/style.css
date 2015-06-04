@@ -285,7 +285,7 @@ header {
 
 /* line 271, ../sass/style.scss */
 .profile .button.small {
-  float: right;
+  /* float: right; */
 }
 
 /* line 275, ../sass/style.scss */
@@ -314,9 +314,9 @@ header {
   background: white;
   padding: 4px;
   border-radius: 4px;
+  margin-right: 0 !important;
 }
 
-/* margin-right: -4px!important;  */
 /* line 297, ../sass/style.scss */
 .profile.rank-types {
   margin-top: 10px !important;

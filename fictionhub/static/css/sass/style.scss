@@ -269,7 +269,7 @@ header {
 }
 
 .profile .button.small {
-    float: right;
+    /* float: right; */
 }
 
 .profie .subnav {
@@ -291,8 +291,8 @@ header {
     background: white;
     padding: 4px;
     border-radius: 4px;
+    margin-right: 0!important;
 }
-    /* margin-right: -4px!important;  */
 
 .profile.rank-types {
   margin-top: 10px!important;
