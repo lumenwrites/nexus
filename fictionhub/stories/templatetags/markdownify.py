@@ -12,7 +12,7 @@ def markdownify(text):
     tags = ['img', 'p', 'em', 'strong', 'a', 'span', 'b', 'i', 'blockquote', 'hr'] # bleach.ALLOWED_TAGS
     attributes = {
         '*': ['class', 'style'],
-        'A': ['href', 'rel'],
+        'a': ['href', 'rel'],
         'img': ['src', 'alt', 'style'],
     }
     styles = ['float','font-weight', 'width']
