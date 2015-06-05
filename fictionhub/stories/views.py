@@ -23,6 +23,9 @@ from comments.models import Comment
 from xml.etree.ElementTree import Element, SubElement, tostring
 from django.core.urlresolvers import *
 
+# json
+import json
+
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
@@ -549,3 +552,20 @@ def story_feed(request, story):
         link.text = "http://fictionhub.io/story/"+story.slug
     return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
 
+
+def story_json(request, slug):
+    try:
+        story = Story.objects.get(slug=slug)
+    except:
+        return HttpResponseRedirect('/404')
+
+    res = {}
+    res['title'] = story.title
+    res['author'] = story.author.username
+    res['chapters'] = []
+    chapters = story.chapters.all()
+
+    for index in chapters:
+        res['chapters'].append({"title": index.title, "number": index.number, "text": index.body})
+
+    return HttpResponse(json.dumps(res), content_type='application/json')
