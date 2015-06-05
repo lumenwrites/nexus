@@ -19,6 +19,10 @@ urlpatterns = [
     # Rss
     url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),        
 
+    # JSON
+    url(r'^story/(?P<slug>[^\.]+)/json$', views.story_json),        
+
+
     url(r'^404/', views.page_404),
     
     # Rank comments
