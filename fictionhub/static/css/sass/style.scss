@@ -101,6 +101,9 @@ li p {
     font-weight:bold;
 }
 
+.italic {
+    font-style: italic;
+}
 .right{
     float:right;
 }
@@ -465,9 +468,13 @@ article header {
     float:right;
 }
 
-#readmore {
-    float:right;
-    font-style: italic;
+.readmore {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.stories-page .story-footer-signup {
+  padding: 8px;    
 }
 
 /* ================ Story ================ */

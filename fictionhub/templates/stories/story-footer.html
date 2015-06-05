@@ -1,0 +1,41 @@
+    <div class="story-footer-signup panel">
+
+      {% for hub in story.hubs.all %} <!-- Different between story and stories -->
+      <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      {% endfor %}
+	<div class="author">
+	  by
+	  {% if post.author.external_url %}
+	  <a href="{{story.author.website}}">{{story.author}}</a></span>	    
+	  {% else %}
+	  <a href="/user/{{story.author.username}}">{{story.author}}</a></span>
+	  {% endif %}	  
+	<span class="userkarma">{{story.author.karma}}</span>
+
+	<!-- Subscribe/unsubscribe button -->
+	{% if user.is_authenticated %}
+	  {% if not user == story.author %} <!-- if it's not my story' -->
+	    {% if story.author not in user.subscribed_to.all %} <!-- if not subscribed -->
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{story.author.username}}/subscribe">
+	      Subscribe <span class="subscribers">{{story.author.subscribers.count}}</span>
+	    </a>
+	    <span class="rss-icon"><a href="/story/{{story.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    {% else %} <!-- if subscribed then unsubscribe -->
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{story.author.username}}/unsubscribe">
+	      Ubsubscribe <span class="subscribers">{{story.author.subscribers.count}}</span>
+	    </a>
+	    <span class="rss-icon"><a href="/story/{{story.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    {% endif %}
+          {% endif %}
+        {% else %} <!-- if not authenticated then send to login -->
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/login/?next={{request.path}}">
+	  Subscribe <span class="subscribers">{{story.author.subscribers.count}}</span>
+	</a>
+	<span class="rss-icon"><a href="/story/{{story.slug}}/feed"><i class="fi-rss large"></i></a></span>
+	{% endif %}
+        </div> <!-- End Author -->
+	<div class="clearfix"></div>
+      </div>

@@ -4,7 +4,7 @@
 
 {% block content %}
     
-<div id="page"  class="postPage">
+<div id="page"  class="stories-page">
   
 {% include "stories/subnav.html" %}
 
@@ -16,9 +16,20 @@
       <!-- Header -->
       <header class="post-header">
 	<a href="{{story.get_absolute_url}}">
-	  <h1> {{story.title}} </h1>
+	  {% if user == story.author %}
+	  <a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
+	  {% endif %}
+	  <h1 class="left"> {{story.title}} </h1>
 	</a>
-	<span class="post-tagline"><!-- submitted 14 days ago --> by
+	<div class="clearfix"></div>	
+	
+	<div class="right" style="/*margin-top: 16px;*/">
+	  {% for hub in story.hubs.all %} <!-- Different between story and stories -->
+	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+	  {% endfor %}
+	</div>
+	<span class="post-tagline"><!-- submitted 14 days ago -->
+	  by
 	  {% if story.author.external_url %}
 	  <a href="{{story.author.website}}">{{story.author}}</a>
 	  {% else %}
@@ -29,9 +40,11 @@
       </header>
       <!-- Post Body -->
       {{story.description | markdownify | safe }}
-      <br/>
-      <a href="{{story.get_absolute_url }}"> read more >>>> </a>
-      <div>
+      <div class="readmore">
+	<a href="{{story.get_absolute_url }}" class="right"> read more >>>> </a>
+	<div class="clearfix"></div>
+      </div>
+      {# {% include "stories/story-footer.html" %} #}
     </article>
     {% endfor %}
 
