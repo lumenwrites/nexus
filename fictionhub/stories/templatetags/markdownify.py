@@ -9,7 +9,7 @@ def markdownify(text):
     html = markdown.markdown(text)
 
     linkify_html = bleach.linkify(html)
-    tags = ['img', 'p', 'em', 'strong'] # bleach.ALLOWED_TAGS
+    tags = ['img', 'p', 'em', 'strong', 'a', 'span', 'b', 'i', 'blockquote', 'hr'] # bleach.ALLOWED_TAGS
     attributes = {
         '*': ['class', 'style'],
         'A': ['href', 'rel'],
