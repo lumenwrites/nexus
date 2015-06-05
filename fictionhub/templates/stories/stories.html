@@ -16,13 +16,12 @@
       <!-- Header -->
       <header class="post-header">
 	<a href="{{story.get_absolute_url}}">
-	  {% if user == story.author %}
-	  <a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
-	  {% endif %}
-	  <a href="/story/{{story.slug}}"><h1 class="left"> {{story.title}} </h1></a>
+	  <h1 class="left"> {{story.title}} </h1>
 	</a>
+	{% if user == story.author %}
+	<a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
+	{% endif %}	
 	<div class="clearfix"></div>	
-	
 	<div class="right" style="/*margin-top: 16px;*/">
 	  {% for hub in story.hubs.all %} <!-- Different between story and stories -->
 	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
