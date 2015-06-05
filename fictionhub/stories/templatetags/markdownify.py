@@ -18,4 +18,4 @@ def markdownify(text):
     styles = ['float','font-weight', 'width']
     
     clean_html = bleach.clean(linkify_html, styles=styles, tags=tags, attributes=attributes, strip=True)
-    return clean_html
+    return html #clean_html
