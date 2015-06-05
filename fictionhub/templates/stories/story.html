@@ -41,7 +41,8 @@
 	{% else %}
 	  {{story.description | markdownify | safe }}
 	{% endif %}
-
+	<div class="clearfix"></div>
+	<br/>
 	{% if story.chapters.all %}	
 	<div class="panel">
 	  {% for chapter in story.chapters.all %}	  
