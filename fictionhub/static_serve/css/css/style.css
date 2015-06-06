@@ -627,7 +627,7 @@ article header {
   float: right;
 }
 
-/* line 580, ../sass/style.scss */
+/* line 581, ../sass/style.scss */
 .rating-bar {
   display: block;
   width: 16px;
@@ -638,7 +638,7 @@ article header {
 }
 
 /* Center in container */
-/* line 589, ../sass/style.scss */
+/* line 590, ../sass/style.scss */
 .br-wrapper-b {
   width: 410px;
   position: absolute;
@@ -647,23 +647,23 @@ article header {
 }
 
 /* Submit */
-/* line 598, ../sass/style.scss */
+/* line 599, ../sass/style.scss */
 .comment-type {
   margin: 5px;
 }
 
 /* List */
-/* line 602, ../sass/style.scss */
+/* line 603, ../sass/style.scss */
 .comments {
   margin-left: -32px;
 }
 
-/* line 609, ../sass/style.scss */
+/* line 610, ../sass/style.scss */
 .comment-collapse {
   color: #3d454b;
 }
 
-/* line 613, ../sass/style.scss */
+/* line 614, ../sass/style.scss */
 .comment-box {
   border-left: 1px solid #DDDDDD;
   margin-left: 32px;
@@ -673,19 +673,19 @@ article header {
   padding: 10px 10px 0px 10px;
 }
 
-/* line 622, ../sass/style.scss */
+/* line 623, ../sass/style.scss */
 .comment-body {
   padding: 10px 0px;
 }
 
-/* line 626, ../sass/style.scss */
+/* line 627, ../sass/style.scss */
 .comment-reply textarea {
   margin-bottom: 4px;
   background: #f6f3ea;
   height: 150px;
 }
 
-/* line 632, ../sass/style.scss */
+/* line 633, ../sass/style.scss */
 .comment-reply .button.small {
   float: right;
   padding: 10px;
@@ -693,13 +693,13 @@ article header {
   margin-right: 0;
 }
 
-/* line 639, ../sass/style.scss */
+/* line 640, ../sass/style.scss */
 .comment-footer a {
   color: #3d454b;
 }
 
 /* Comments voting */
-/* line 644, ../sass/style.scss */
+/* line 645, ../sass/style.scss */
 .comment-box .vote-column {
   width: 40px;
   float: left;
@@ -708,12 +708,12 @@ article header {
 }
 
 /* Upvote hover is orange */
-/* line 652, ../sass/style.scss */
+/* line 653, ../sass/style.scss */
 .comment-upvote:hover {
   color: #f76300;
 }
 
-/* line 656, ../sass/style.scss */
+/* line 657, ../sass/style.scss */
 .comment-upvote,
 .comment-downvote,
 .comment-upvote:focus,
@@ -726,7 +726,7 @@ article header {
 }
 
 /* Once upvoted/downvoted state */
-/* line 668, ../sass/style.scss */
+/* line 669, ../sass/style.scss */
 .comment-upvoted,
 .comment-upvoted:focus,
 .comment-upvoted:active,
@@ -734,7 +734,7 @@ article header {
   color: #f76300;
 }
 
-/* line 675, ../sass/style.scss */
+/* line 676, ../sass/style.scss */
 .comment-downvoted,
 .comment-downvoted:focus,
 .comment-downvoted:active,
@@ -743,7 +743,7 @@ article header {
 }
 
 /* The opposite button is grey */
-/* line 684, ../sass/style.scss */
+/* line 685, ../sass/style.scss */
 .comment-downvoted.comment-upvote,
 .comment-upvoted.comment-downvote,
 .comment-downvoted.comment-upvote:hover,
@@ -754,7 +754,7 @@ article header {
 }
 
 /* ================ Edit Story ================ */
-/* line 697, ../sass/style.scss */
+/* line 698, ../sass/style.scss */
 .fullWidth {
   width: 100%;
   margin-left: auto;
@@ -763,30 +763,30 @@ article header {
 }
 
 /* Sidebar */
-/* line 707, ../sass/style.scss */
+/* line 708, ../sass/style.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 711, ../sass/style.scss */
+/* line 712, ../sass/style.scss */
 .sidebar .button {
   padding: 10px;
   margin: 0 10px 0 15px;
 }
 
-/* line 716, ../sass/style.scss */
+/* line 717, ../sass/style.scss */
 .chapter-arrows {
   float: right;
   margin: 15px 0;
 }
 
-/* line 721, ../sass/style.scss */
+/* line 722, ../sass/style.scss */
 .chapter-title {
   width: calc(100% - 60px);
   float: left;
 }
 
-/* line 726, ../sass/style.scss */
+/* line 727, ../sass/style.scss */
 .chapter-arrow {
   width: 100%;
   float: right;
@@ -796,20 +796,20 @@ article header {
   overflow: hidden;
 }
 
-/* line 735, ../sass/style.scss */
+/* line 736, ../sass/style.scss */
 .chapter-button {
   float: right;
   /* margin: 15px 0px; */
   color: #3d454b;
 }
 
-/* line 741, ../sass/style.scss */
+/* line 742, ../sass/style.scss */
 .chapter-button up {
   foat: right;
 }
 
 /* Story create */
-/* line 746, ../sass/style.scss */
+/* line 747, ../sass/style.scss */
 .set-hubs {
   width: calc(100% - 120px);
   width: 200px;
@@ -818,14 +818,14 @@ article header {
   /*for mobile*/
 }
 
-/* line 753, ../sass/style.scss */
+/* line 754, ../sass/style.scss */
 textarea[rows] {
   margin-bottom: 0 !important;
   height: 400px !important;
 }
 
 @media screen and (max-width: 1300px) {
-  /* line 759, ../sass/style.scss */
+  /* line 760, ../sass/style.scss */
   .set-hubs {
     width: 100% !important;
     float: left;
@@ -833,22 +833,22 @@ textarea[rows] {
     /*for mobile*/
   }
 }
-/* line 766, ../sass/style.scss */
+/* line 767, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple {
   height: 50px;
 }
 
-/* line 770, ../sass/style.scss */
+/* line 771, ../sass/style.scss */
 .set-hubs input {
   margin-top: -7px !important;
 }
 
-/* line 774, ../sass/style.scss */
+/* line 775, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: 10px;
 }
 
-/* line 778, ../sass/style.scss */
+/* line 779, ../sass/style.scss */
 #id_hubs {
   list-style-type: none;
   width: 400px;
@@ -856,7 +856,7 @@ textarea[rows] {
 }
 
 /* Story Editor */
-/* line 785, ../sass/style.scss */
+/* line 786, ../sass/style.scss */
 .editor {
   background-color: #FFFFFF;
   border-style: solid;
@@ -865,12 +865,12 @@ textarea[rows] {
 }
 
 /* border on mobile  */
-/* line 793, ../sass/style.scss */
+/* line 794, ../sass/style.scss */
 * {
   outline: none;
 }
 
-/* line 797, ../sass/style.scss */
+/* line 798, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -878,39 +878,39 @@ textarea[rows] {
   margin: 30px 0;
 }
 
-/* line 803, ../sass/style.scss */
+/* line 804, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 807, ../sass/style.scss */
+/* line 808, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
-/* line 811, ../sass/style.scss */
+/* line 812, ../sass/style.scss */
 .edit-buttons {
   float: right;
 }
 
 /* Footer */
-/* line 817, ../sass/style.scss */
+/* line 818, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 821, ../sass/style.scss */
+/* line 822, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 826, ../sass/style.scss */
+/* line 827, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 830, ../sass/style.scss */
+/* line 831, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
