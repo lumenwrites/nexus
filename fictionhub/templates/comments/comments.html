@@ -102,7 +102,7 @@
 	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
 	<span class="bold"> {{comment.author}} </span>
 	{% if comment.rating %}
-	<div class="comment-rating">{{comment.rating}}</div>
+	<div class="comment-rating" id="{{comment.rating}}"></div>
 	{% endif %}        	
 	<!-- {{comment.score}} points  -->
 	<!-- 2 hours ago -->
@@ -392,7 +392,32 @@ $(document).ready(function(){
     })
 
     // Display rating in comments.
-    
+    $('.comment-rating').each(function(index) {
+	var color = ""
+	switch ($(this).attr('id')) {
+	case "5":
+	    color = "green";
+	    break;
+	case "4":
+	    color = "rgba(0, 128, 0, 0.64)";
+	    break;
+	case "3":
+	    color = "rgba(98, 128, 0, 0.32)";
+	    break;
+	case "2":
+	    color = "rgba(215, 0, 0, 0.56)";
+	    break;
+	case "1":
+	    color = "rgb(215, 0, 0)"
+	    break;
+	default:
+	    color =""
+	}
+
+	for (i = 0; i < this.id; i++) {
+	    $(this).append("<span class='rating-bar' style='background:"+color+"'></span>");
+	}
+    })
 
 })
 </script>
