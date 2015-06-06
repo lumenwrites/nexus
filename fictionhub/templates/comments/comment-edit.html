@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
 <div id="page"  class="postPage">
@@ -10,6 +11,9 @@
       <form method="post" action="/comment/{{comment.id}}/edit?next={{nextpage}}">
 	{% csrf_token %}
 	{{form.body}}
+	<br/>
+	{{form.comment_type}}
+	{{form.rating}}		
 	<input type="submit" class="button small right" value="Save" />
       </form>
     </div>
@@ -18,5 +22,36 @@
 
   </div> <!-- End row -->
 </div>
+
+<!-- Barrating -->
+<script src="{% static "/static/js/vendor/jquery.barrating.min.js" %}" type="text/javascript"></script>
+
+<script>
+// Bar rating
+$(document).ready(function(){
+    // Add rating
+    $('option:contains("---------")').text("")
+    $('#rating').barrating('show', {
+        wrapperClass: 'br-wrapper-b',
+        //readonly: true
+    });
+
+    if ($('#id_comment_type').val() == 1) {
+	$('.br-wrapper-b').css("display", "none")
+    }
+
+    $('#id_comment_type').change(function(){
+	if (this.value == 1) {
+	    $('.br-wrapper-b').css("display", "none")
+	} else {
+	    $('.br-wrapper-b').css("display", "inline")	    
+	}
+    })
+})
+</script>
+
+<style>
+</style>
+
 {% endblock content %}
 
