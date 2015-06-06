@@ -572,6 +572,19 @@ article header {
 .br-wrapper-b .br-readonly a.br-selected {
   background-color: $orange;
 }
+
+/* Display rating */
+.comment-rating {
+    float:right;
+}
+.rating-bar {
+  display: block;
+  width: 16px;
+  height: 8px;
+  float: left;
+  background-color: $orange;
+  margin: 1px;    
+}
 /* Center in container */
 .br-wrapper-b {
   width: 410px;
