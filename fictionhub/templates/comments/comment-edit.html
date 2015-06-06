@@ -12,7 +12,7 @@
 	{% csrf_token %}
 	{{form.body}}
 	<br/>
-	{{form.comment_type}}
+	<span class="left">{{form.comment_type}}</span>
 	{{form.rating}}		
 	<input type="submit" class="button small right" value="Save" />
       </form>
