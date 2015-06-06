@@ -538,6 +538,49 @@ article header {
 
 /* ================ Story Comments ================ */
 
+/* Review rating */
+#id_comment_type {
+    width: 120px;
+    margin-right: 20px;    
+}    
+
+.br-wrapper-b .br-widget {
+  height: 40px;
+}
+.br-wrapper-b .br-widget a {
+  display: block;
+  width: 80px;
+  height: 40px;
+  float: left;
+  background-color: #F5D4BE;
+  margin: 1px;
+}
+.br-wrapper-b .br-widget a.br-active,
+.br-wrapper-b .br-widget a.br-selected {
+  background-color: $orange;
+}
+.br-wrapper-b .br-widget .br-current-rating {
+  clear: both;
+  width: 410px;
+  text-align: center;
+  font-weight: 600;
+  display: block;
+  padding: .5em 0;
+  color: $orange;
+}
+.br-wrapper-b .br-readonly a.br-active,
+.br-wrapper-b .br-readonly a.br-selected {
+  background-color: $orange;
+}
+/* Center in container */
+.br-wrapper-b {
+  width: 410px;
+  position: absolute;
+  margin: 0px 0 0 -168px;
+  left: 50%;
+  }
+
+
 /* Submit */
 .comment-type {
     margin: 5px;

@@ -1,34 +1,31 @@
+# standard library imports
 import re # praw
+from xml.etree.ElementTree import Element, SubElement, tostring # for rss
+import json # for temporary story api. Replace with REST.
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+# core django components
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import * # for rss
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+# My own stuff
+# utility functions
+from comments.utils import get_comment_list
+from .utils import rank_hot, rank_top
 # Forms
 from .forms import StoryForm, ChapterForm
 from comments.forms import CommentForm
 from hubs.forms import HubForm
-
 # Models
 from .models import Story, Chapter
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
 
-# rss
-from xml.etree.ElementTree import Element, SubElement, tostring
-from django.core.urlresolvers import *
-
-# json
-import json
-
-# utility functions
-from comments.utils import get_comment_list
-from .utils import rank_hot, rank_top
 
 def stories(request, rankby="hot", timespan="all-time",
             filterby="", hubslug="", username=""):
@@ -157,7 +154,7 @@ def undownvote(request):
     user.save()
     return HttpResponse()
             
-def story(request, story, comment_id="", chapter="", rankby="new"):
+def story(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     try:
         story = Story.objects.get(slug=story)
     except:
@@ -202,10 +199,17 @@ def story(request, story, comment_id="", chapter="", rankby="new"):
             else:
                 comment.story = story
             comment.save()
-            if chapter:
-                return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
+            if comment.comment_type == 1:
+                if chapter:
+                    return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
+                else:
+                    return HttpResponseRedirect('/story/'+story.slug+'#comments')
             else:
-                return HttpResponseRedirect('/story/'+story.slug+'#comments')
+                if chapter:
+                    return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/reviews#comments')
+                else:
+                    return HttpResponseRedirect('/story/'+story.slug+'/reviews#comments')
+                
     else:
         form = CommentForm()
 
@@ -222,12 +226,27 @@ def story(request, story, comment_id="", chapter="", rankby="new"):
     else:
         subscribed_to = []
 
-        
+
     # Get top lvl comments
-    if chapter:
-        top_lvl_comments = Comment.objects.filter(chapter = chapter, parent = None)
+    if filterby == "reviews":
+        filterurl = "reviews"
+        if chapter:
+            top_lvl_comments = Comment.objects.filter(chapter = chapter,
+                                                      comment_type=2,
+                                                      parent = None)
+        else:
+            top_lvl_comments = Comment.objects.filter(story = story,
+                                                      comment_type=2,
+                                                      parent = None)
     else:
-        top_lvl_comments = Comment.objects.filter(story = story, parent = None)
+        if chapter:
+            top_lvl_comments = Comment.objects.filter(chapter = chapter,
+                                                      comment_type=1,
+                                                      parent = None)
+        else:
+            top_lvl_comments = Comment.objects.filter(story = story,
+                                                      comment_type=1,
+                                                      parent = None)
 
     # Rank comments
     if rankby == "hot":
@@ -270,7 +289,8 @@ def story(request, story, comment_id="", chapter="", rankby="new"):
         'rankby': rankby,        
         'form': form,
         'hubs':hubs,
-        'subscribed_to':subscribed_to        
+        'subscribed_to':subscribed_to,
+        'filterby':filterby
     })
 
 def chapter_back(request, story, chapter):
@@ -553,6 +573,7 @@ def story_feed(request, story):
     return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
 
 
+# Story API. Replace with REST.
 def story_json(request, slug):
     try:
         story = Story.objects.get(slug=slug)

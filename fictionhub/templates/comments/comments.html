@@ -18,7 +18,8 @@
       <div style="float:right;">
 	<br/>
 	<button class="button small right" type="submit">Submit</button>
-	<div class="right comment-type">{{form.comment_type}}</div>	
+	<div class="right comment-type">{{form.comment_type}}</div>
+	<div class="right comment-type">{{form.rating}}</div>		
       </div>
     </form>
     {% else %}
@@ -27,32 +28,50 @@
     <div class="clearfix"></div>	
     <div style="width:100%; height: 20px"></div>	
 
+    <!-- Ranking -->
 
-{% if comments.all %}      
+{% if comments %}      
 <div class="left">
 {% if chapter %}
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/hot#comments">
+  {% if not filterurl == "reviews" %} <!-- Hide hot if reviews -->
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/new#comments">
+  {% endif %}
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/new#comments">
     <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/top#comments">
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/top#comments">
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
 {% else %}
-  <a href="/story/{{story.slug}}/comments/hot#comments">
+  {% if not filterby == "reviews" %}
+  <a href="/story/{{story.slug}}/{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
-  <a href="/story/{{story.slug}}/comments/new#comments">
+  {% endif %}
+  <a href="/story/{{story.slug}}/{{filterby}}/new#comments">
     <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
-  <a href="/story/{{story.slug}}/comments/top#comments">
+  <a href="/story/{{story.slug}}/{{filterby}}/top#comments">
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
 {% endif %}
 </div>
-<!-- 
+
+<!-- Comments or reviews -->
+{% if chapter %}
 <div class="right">
-  <a>Comments</a>
-  <a>Reviews</a>  
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/top#comments">
+    <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
+  <a href="/story/{{story.slug}}/{{chapter.slug}}/reviews/top#comments">
+    <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
 </div>
- -->
-{% endif %}
+
+{% else %}
+<div class="right">
+  <a href="/story/{{story.slug}}/comments/top#comments">
+    <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
+  <a href="/story/{{story.slug}}/reviews/top#comments">
+    <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
+</div>
+{% endif %} <!-- end if chapter -->
+{% endif %} <!-- End if comments -->
+
 <div class="clearfix"></div>	
 <div class="comments">   
   {% for comment in comments %}
@@ -82,6 +101,9 @@
       <div class="comment-header">
 	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
 	<span class="bold"> {{comment.author}} </span>
+	{% if comment.rating %}
+	<div class="comment-rating">{{comment.rating}}</div>
+	{% endif %}        	
 	<!-- {{comment.score}} points  -->
 	<!-- 2 hours ago -->
       </div>
@@ -345,6 +367,35 @@ $(document).ready(function(){
     });
 
 })
-  
 </script>
 
+<!-- Barrating -->
+<script src="{% static "/static/js/vendor/jquery.barrating.min.js" %}" type="text/javascript"></script>
+
+<script>
+// Bar rating
+$(document).ready(function(){
+    // Add rating
+    $('option:contains("---------")').text("")
+    $('#rating').barrating('show', {
+        wrapperClass: 'br-wrapper-b',
+        //readonly: true
+    });
+
+    $('.br-wrapper-b').css("display", "none")    
+    $('#id_comment_type').change(function(){
+	if (this.value == 1) {
+	    $('.br-wrapper-b').css("display", "none")
+	} else {
+	    $('.br-wrapper-b').css("display", "inline")	    
+	}
+    })
+
+    // Display rating in comments.
+    
+
+})
+</script>
+
+<style>
+</style>

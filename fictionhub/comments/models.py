@@ -17,11 +17,27 @@ class Comment(models.Model):
     score = models.IntegerField(default=0)
     pub_date = models.DateTimeField(auto_now_add=True)
 
+    # COMMENT_TYPES = (
+    # (u'1', u'Comment'),
+    # (u'2', u'Review'),
+    # )    
+    # comment_type = models.CharField(max_length=64, default="Comment", choices=COMMENT_TYPES)
+
     COMMENT_TYPES = (
-    (u'1', u'Comment'),
-    (u'2', u'Review'),
-    )    
-    comment_type = models.CharField(max_length=64, default="Comment", choices=COMMENT_TYPES)
+    (1, "Comment"),
+    (2, "Review"),
+    )
+    comment_type = models.IntegerField(default=1, choices=COMMENT_TYPES)    
+
+
+    RATING_CHOICES = [
+        (1, "Horrible"),
+        (2, "Bad"),
+        (3, "Okay"),
+        (4, "Good"),
+        (5, "Brilliant"),
+    ]
+    rating = models.IntegerField(default=None, null=True, blank=True, choices=RATING_CHOICES)    
 
     def __str__(self):
         string_name = ""

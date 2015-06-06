@@ -1,22 +1,26 @@
+# Standard library
 import datetime, re # praw
 from django.utils.timezone import utc
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+# Core django components
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+# My own stuff
+# Forms
 from stories.forms import StoryForm, ChapterForm
 from hubs.forms import HubForm
 from comments.forms import CommentForm
-
+# Models
 from stories.models import Story, Chapter
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
+
 
 def comment_submit(request, comment_id):
     if request.method == 'POST':

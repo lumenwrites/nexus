@@ -28,7 +28,28 @@ urlpatterns = [
     # Rank comments
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
         views.story, name='view_chapter'), 
-    url(r'^story/(?P<story>[^\.]+)/comments/(?P<rankby>[^\.]+)$', views.story, name='view_story'),    
+    url(r'^story/(?P<story>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
+        views.story, name='view_story'),
+
+    # Reviews
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/reviews$',
+        views.story, 
+        {'filterby': 'reviews'},
+        name='view_chapter'), 
+    url(r'^story/(?P<story>[^\.]+)/reviews$',
+        views.story, 
+        {'filterby': 'reviews'},
+        name='view_story'),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/reviews/(?P<rankby>[^\.]+)$',
+        views.story, 
+        {'filterby': 'reviews'},
+        name='view_chapter'), 
+    url(r'^story/(?P<story>[^\.]+)/reviews/(?P<rankby>[^\.]+)$',
+        views.story, 
+        {'filterby': 'reviews'},
+        name='view_story'),
+
+
     # View story/chapter
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.story, name='view_chapter'), 
     url(r'^story/(?P<story>[^\.]+)$', views.story, name='view_story'),    
