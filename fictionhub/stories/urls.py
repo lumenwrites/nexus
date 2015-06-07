@@ -3,6 +3,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+
+    # import feed
+    url(r'^user/(?P<username>[^\.]+)/feedimport$', views.feed_import),
+
     # Edit story
     url(r'^story/add$', views.story_create),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.chapter_edit),    

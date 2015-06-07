@@ -17,13 +17,22 @@ class Story(models.Model):
     hubs = models.ManyToManyField('hubs.Hub', related_name="stories", blank=True)
     score = models.IntegerField(default=0)
 
+    imported = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Story, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+    #     super(Story, self).save(*args, **kwargs)
 
+    def save(self, slug="", *args, **kwargs):
+        if self.imported == True and slug != "":
+            self.slug = slug            
+        else:
+            self.slug = slugify(self.title)
+        super(Story, self).save(*args, **kwargs)
+    
     @permalink
     def get_absolute_url(self):
         return ('view_story', None, { 'story': self.slug })        

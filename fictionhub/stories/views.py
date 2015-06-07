@@ -2,6 +2,7 @@
 import re # praw
 from xml.etree.ElementTree import Element, SubElement, tostring # for rss
 import json # for temporary story api. Replace with REST.
+import feedparser
 
 # core django components
 from django.shortcuts import render, get_object_or_404
@@ -11,6 +12,9 @@ from django.core.urlresolvers import * # for rss
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+# date
+from datetime import datetime
+from time import mktime
 
 # My own stuff
 # utility functions
@@ -590,3 +594,46 @@ def story_json(request, slug):
         res['chapters'].append({"title": index.title, "number": index.number, "text": index.body})
 
     return HttpResponse(json.dumps(res), content_type='application/json')
+
+
+# import feed
+def feed_import(request, username):
+    feed = feedparser.parse("http://orangemind.io/feeds/all.atom.xml")
+
+    author = request.user
+    
+    for entry in feed.entries:
+        import_entry = False
+        # Check if story has "fictionhub" in it's tags
+        if "tags" in entry.keys():
+            for tag in entry.tags:
+                if tag.term == "fictionhub":
+                    import_entry = True
+        if import_entry:
+            title = entry.title
+            slug = entry.link.rsplit('/',1)[-1]
+            description = entry.description
+            date = datetime.fromtimestamp(mktime(entry.updated_parsed))        
+            try:
+                # Open existing story
+                post = Story.objects.get(slug=slug)
+            except:
+                # Import story
+                post = Story(slug=slug)
+                post.score = 1
+                
+            post.title = title
+            post.description = description
+            post.date = date
+            post.author = author
+            for tag in entry.tags:
+                # post.title = post.title + " " + tag.term
+                try:
+                    hub = Hub.objects.get(slug=tag.term)
+                    post.hubs.add(hub)
+                except:
+                    pass
+            post.imported = True
+            post.published = True
+            post.save(slug=slug)
+    return HttpResponse()
