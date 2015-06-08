@@ -180,11 +180,12 @@ def comments_user(request, username, filterby="", comment_id=""):
     if request.user.is_authenticated():
         comments_upvoted = request.user.comments_upvoted.all()
         comments_downvoted = request.user.comments_downvoted.all()                
+        subscribed_to = request.user.subscribed_to.all()
     else:
         comments_upvoted = []
         comments_downvoted = []  
-
-    subscribed_to = request.user.subscribed_to.all()
+        subscribed_to = []
+    
     filterurl = '/user/'+ userprofile.username
     return render(request, 'comments/comments-user.html',{
         'upvoted': upvoted,
