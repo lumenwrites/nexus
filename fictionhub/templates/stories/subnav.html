@@ -1,7 +1,11 @@
 <!-- Subnav -->
 <div class="subnav">  
   <div class="row">
+    {% if userprofile %}
+    <div class="large-6 columns">
+    {% else %}
     <div class="large-7 columns">
+    {% endif %}            
       <div class="{% if userprofile %}profile{% endif %} rank-types">
 	<a href="{{filterurl}}/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
@@ -29,7 +33,7 @@
     </div>
 
     {% if userprofile %}    
-    <div class="large-5 columns">
+    <div class="large-6 columns">
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
 	{% if userprofile.website %}
