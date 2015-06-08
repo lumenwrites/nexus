@@ -72,6 +72,11 @@ urlpatterns = [
         {'filterby': 'user'}),    
     url(r'^user/(?P<username>[^\.]+)/$', views.stories,
         {'filterby': 'user'}),    
+
+    # Shorthand
+    url(r'^u/(?P<username>[^\.]+)$', views.stories,
+        {'filterby': 'user'}),    
+    
     
     # Subscriptions
     url(r'^subscriptions/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories,
