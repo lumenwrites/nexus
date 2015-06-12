@@ -20,8 +20,11 @@
 	</a>
 	{% if user == story.author %}
 	<a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
+	{% endif %}
+	{% if not story.published %}
+	<span class="hub-tag right margins-side-20">Not published</span>
 	{% endif %}	
-	<div class="clearfix"></div>	
+	<div class="clearfix"></div>
 	<div class="right" style="/*margin-top: 16px;*/">
 	  {% for hub in story.hubs.all %} <!-- Different between story and stories -->
 	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
