@@ -30,9 +30,8 @@
 
     <!-- Ranking -->
 
-{% if comments %}      
 <div class="left">
-{% if chapter %}
+{% if chapter and chapter.comments.all %}
   {% if not filterurl == "reviews" %} <!-- Hide hot if reviews -->
   <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
@@ -41,7 +40,7 @@
     <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
   <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/top#comments">
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
-{% else %}
+{% elif story and story.comments.all %}
   {% if not filterby == "reviews" %}
   <a href="/story/{{story.slug}}/{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
@@ -50,11 +49,11 @@
     <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
   <a href="/story/{{story.slug}}/{{filterby}}/top#comments">
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
-{% endif %}
+{% endif %}  
 </div>
 
 <!-- Comments or reviews -->
-{% if chapter %}
+{% if chapter and chapter.comments.all %}
 <div class="right">
   <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/top#comments">
     <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
@@ -62,7 +61,7 @@
     <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
 </div>
 
-{% else %}
+{% elif story and story.comments.all %}
 <div class="right">
   <a href="/story/{{story.slug}}/comments/top#comments">
     <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
@@ -70,7 +69,6 @@
     <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
 </div>
 {% endif %} <!-- end if chapter -->
-{% endif %} <!-- End if comments -->
 
 <div class="clearfix"></div>	
 <div class="comments">   
