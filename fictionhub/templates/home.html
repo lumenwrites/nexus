@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% load firstparagraph %}
+
+{% block head_extra %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<ul class="featured-orbit" data-orbit>
+  <li class="featured-image">
+    <a href="http://www.reddit.com/r/rational/comments/39dxi3/introducing_the_new_weekly_challenge/">
+      <img src="http://pre12.deviantart.net/9c86/th/pre/i/2012/307/1/0/fantasy_landscape_by_deevad-d5jwoei.jpg"/>
+      <div class="orbit-caption">
+	Weekly Challenge: Portal Fantasy
+      </div>
+    </a>
+  </li>
+
+  <li class="featured-image">
+    <a href="http://fictionhub.io/story/zombie-apocalypse">
+      <img src="http://fengzhudesign.com/blog/fzd_zombie_01b.JPG"/>
+      <div class="orbit-caption">
+	Featured Story: Zombie Apocalypse
+      </div>
+    </a>
+  </li>
+  
+  
+</ul>  
+
+</div>
+
+<div class="row">
+  <div class="large-6 columns">
+    <h3>Hot</h3>
+    <ul>    
+    {% for story in hot_stories %}
+      <li>
+	<a href="{{story.get_absolute_url}}"><b>{{story.title}} </b></a> <br/>
+	{% if story.hubs.all %}
+  	  {% for hub in story.hubs.all %}
+	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>	
+	  {% endfor %}
+	  <br/>
+	{% endif %}
+	{{story.description | firstparagraph | safe }}
+	<hr/>
+      </li>
+      {% endfor%}
+    </ul>
+  </div>
+
+  <div class="large-6 columns">
+    <h3>New</h3>
+    <ul>    
+    {% for story in new_stories %}
+      <li>
+	<a href="{{story.get_absolute_url}}"><b>{{story.title}} </b></a> <br/>
+	{% if story.hubs.all %}
+  	  {% for hub in story.hubs.all %}
+	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>	
+	  {% endfor %}
+	  <br/>
+	{% endif %}
+	{{story.description | firstparagraph | safe }}
+	<hr/>
+      </li>
+      {% endfor%}
+    </ul>
+  </div>
+
+  <!-- <hr/> -->
+</div>
+
+<!-- 
+<div class="row">
+  <h3>Hubs</h3>
+  <div class="large-4 columns">
+    {% for hub in hubs %}
+
+    {% if hub.children.all %}
+    </div>
+    <div class="large-4 columns">
+    {% endif %}
+    
+    {% if not hub.parent %}
+    {% if hub.stories.all %}
+    {% endif %}
+    <li>
+      <a href="/hub/{{hub.slug}}/"> <b> {{hub}} </b></a>
+    </li>
+
+
+    {% if hub.children.all %}
+      {% for child in hub.children.all %}
+        {% if child.stories.all %}
+        {% endif %}
+          <li class="dropdown-subitems">
+            <a href="/hub/{{child.slug}}/"> <b> {{child.title}} </b> </a>
+          </li>
+      {% endfor %}
+    {% endif %}
+
+
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+ -->
+
+<style>
+h2, h3 {
+  text-align: center;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+ul li, li {
+list-style-type:none;
+margin: 10px 0px;
+}
+
+.featured-image {
+height: 320px;
+}
+
+.hub-tag {
+margin-left: 0;
+}
+</style>
+
+
+<script>
+  $(document).ready(function() {
+  $(".orbit-bullets").remove();
+  $(".orbit-slide-number").remove();  
+  });
+</script>
+{% endblock %}

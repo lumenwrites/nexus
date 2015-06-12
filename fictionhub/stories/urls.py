@@ -95,8 +95,8 @@ urlpatterns = [
         {'filterby': 'hub'}),
 
     # Frontpage(all)
+    url(r'^stories/$', views.stories),
     url(r'^(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.stories),    
     url(r'^(?P<rankby>[^\.]+)/$', views.stories),    
-    url(r'^$', views.stories),
     # url(r'^story/(?P<story>[^\.]+)/feed$', views.story_feed),
 ]

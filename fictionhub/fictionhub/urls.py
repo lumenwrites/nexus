@@ -23,15 +23,24 @@ from hubs import urls as hubs_urls
 from stories import urls as stories_urls
 from challenges import urls as challenges_urls
 
+from . import views
+from stories import views as stories_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^home/$', views.home),
+    url(r'^test/$', views.test),    
 
     url(r'', include(profiles_urls)),
     url(r'', include(comments_urls)),
     url(r'', include(hubs_urls)),
     url(r'', include(challenges_urls)),    
     url(r'', include(stories_urls)),
+
+    
+    # Front page
+    url(r'^$', stories_views.stories),    
 
     # url(r'.*', stories.views.page_404),
 ]
