@@ -5,6 +5,7 @@ from django.db.models import permalink
 
 from hubs.models import Hub
 from comments.models import Comment
+from challenges.models import Challenge
 
 class Story(models.Model):
     title = models.CharField(max_length=256)
@@ -19,7 +20,16 @@ class Story(models.Model):
 
     imported = models.BooleanField(default=False)
 
-    # challenge = models.ForeignKey('challenges.Challenge', related_name="stories", default="")
+    challenge = models.ForeignKey('challenges.Challenge', related_name="stories",default=None, null=True, blank=True)
+
+    # parent = models.ForeignKey('Story', related_name="children",default=None, null=True, blank=True)
+    STORY_TYPES = (
+        (1, "Post"), # no chapters
+        (2, "Story"), # children are chapters
+        (4, "Challenge"), # children are other stories
+        (5, "Prompt"), # children are other stories        
+    )
+
 
     def __str__(self):
         return self.title

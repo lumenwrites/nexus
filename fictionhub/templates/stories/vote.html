@@ -1,17 +1,23 @@
 	<!-- Vote -->
 	<div class="vote-column">
 	  <div class="vote">
+	    {% if challengestate != "completed" %}
 	    <a href="/login/?next={{request.path}}"
 	       class="fi-arrow-up upvote
 		      {% if story in upvoted %}upvoted{% endif %}
                       {% if story in downvoted %}downvoted{% endif %}"
 	       id="post-upvote-{{story.id}}"></a>
+	    {% endif %}	    
+	    {% if challengestate != "voting" %}
 	    <div class="score"> {{story.score}} </div>
+	    {% endif %}
+	    {% if challengestate != "completed" %}	    
 	    <a href="/login/?next={{request.path}}"
 	       class="fi-arrow-down downvote
 		      {% if story in upvoted %}upvoted{% endif %}
                       {% if story in downvoted %}downvoted{% endif %}"
-	       id="post-downvote-{{story.id}}"></a>    
+	       id="post-downvote-{{story.id}}"></a>
+	    {% endif %}
 	  </div>
 
 	  <!-- Comments  -->

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import  Challenge
+
+class ChallengeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',), }
+
+admin.site.register(Challenge, ChallengeAdmin)

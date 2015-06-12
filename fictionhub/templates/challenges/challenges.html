@@ -10,48 +10,25 @@
 
 <div class="row">
   <div class="large-12 columns">
-    {% for story in stories %}
+    {% for challenge in challenges %}
     <article>
-      {% include "stories/vote.html" %}      
       <!-- Header -->
       <header class="post-header">
-	<a href="{{story.get_absolute_url}}">
-	  <h1 class="left"> {{story.title}} </h1>
+	<a href="/challenge/{{challenge.slug}}">
+	  <h1 class="left"> {{challenge.title}} </h1>
 	</a>
-	{% if user == story.author %}
-	<a class="edit-post" href="/story/{{story.slug}}/edit">Edit</a>
-	{% endif %}
-	{% if not story.published %}
-	<span class="hub-tag right margins-side-20">Not published</span>
-	{% endif %}	
-	<div class="clearfix"></div>
-	<div class="right" style="/*margin-top: 16px;*/">
-	  {% for hub in story.hubs.all %} <!-- Different between story and stories -->
-	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
-	  {% endfor %}
-	</div>
-	<span class="post-tagline"><!-- submitted 14 days ago -->
-	  by
-	  {% if story.author.external_url %}
-	  <a href="{{story.author.website}}">{{story.author}}</a>
-	  {% else %}
-	  <a href="/user/{{story.author.username}}">{{story.author}}</a>
-	  {% endif %}
-	</span>	
 	<hr />
       </header>
       <!-- Post Body -->
-      {{story.description | markdownify | safe }}
+      <!-- 
+      {# {{challenge.description | markdownify | safe }} #}
+       -->
       <div class="clearfix"></div>
-      <div class="readmore">
-	<a href="{{story.get_absolute_url }}" class="right"> read more >>>> </a>
-	<div class="clearfix"></div>
-      </div>
-      {# {% include "stories/story-footer.html" %} #}
     </article>
     {% endfor %}
 
 <!-- Pagination -->
+<!-- 
 <div class="pagination">
   <span class="step-links">
     {% if stories.has_previous %}
@@ -60,7 +37,7 @@
 
     <span class="current">
       Page {{ stories.number }}
-      <!-- of {{ stories.paginator.num_pages }} -->
+      <!-- of {{ stories.paginator.num_pages }} 
     </span>
 
     {% if stories.has_next %}
@@ -68,6 +45,7 @@
     {% endif %}
   </span>
 </div>
+ -->
 
 </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->

@@ -29,12 +29,16 @@ from .models import Story, Chapter
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
+from challenges.models import Challenge
 
 
 def stories(request, rankby="hot", timespan="all-time",
-            filterby="", hubslug="", username=""):
+            filterby="", hubslug="", username="", challenge=""):
     # for user profile navbar
     userprofile = []
+    filterurl = ""
+    challengestate = ""
+
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
     else:
@@ -59,9 +63,19 @@ def stories(request, rankby="hot", timespan="all-time",
         else:
             stories = Story.objects.filter(author=userprofile, published=True)
         filterurl="/user/"+username # to add to href  in subnav
+    elif filterby == "challenge":
+        challenge = Challenge.objects.get(slug=challenge)
+        if challenge.state == 1:
+            challengestate = "open"
+        elif challenge.state == 2:
+            challengestate = "voting"
+            rankby = "new" # later do random
+        elif challenge.state == 3:            
+            challengestate = "completed"
+            rankby = "top"
+        stories = Story.objects.filter(challenge=challenge)
     else:
         stories = Story.objects.filter(published=True)
-        filterurl="" # to add to href  in subnav                
 
     if rankby == "hot":
         story_list = rank_hot(stories, top=32)
@@ -109,7 +123,8 @@ def stories(request, rankby="hot", timespan="all-time",
         'timespan': timespan,
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
-        'hubs': hubs
+        'hubs': hubs,
+        'challengestate':challengestate
     })
 
 # Voting

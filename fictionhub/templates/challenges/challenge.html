@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdownify %}
+
+{% block content %}
+    
+<div id="page"  class="stories-page">
+
+<div class="row">
+  <div class="large-12 columns">
+
+    <article>
+      <h1>{{challenge.title}}</h1>
+      <hr/>
+      {{challenge.description | markdownify | safe }}
+      <div class="clearfix"></div>
+      <a class="button small" href="/challenge/{{challenge.slug}}/submit-story">Submit a story</a>
+    </article>
+    <br/>
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+{% endblock content %}
+
+

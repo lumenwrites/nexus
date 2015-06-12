@@ -12,9 +12,21 @@ class Challenge(models.Model):
     description = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="challenges", default="")
 
-    score = models.IntegerField(default=0)
+    # score = models.IntegerField(default=0)
 
-    imported = models.BooleanField(default=False)
+    # CHALLENGE_TYPES = (
+    # (1, "Weekly Challenge"),
+    # (2, "Writing Prompt"),
+    # )
+    # challenge_type = models.IntegerField(default=1, choices=CHALLENGE_TYPES)    
+
+    CHALLENGE_STATES = (
+    (1, "Open"),
+    (2, "Voting"),
+    (3, "Completed"),    
+    )
+    state = models.IntegerField(default=1, choices=CHALLENGE_STATES)    
+    
 
     def __str__(self):
         return self.title
@@ -23,13 +35,10 @@ class Challenge(models.Model):
     #     self.slug = slugify(self.title)
     #     super(Story, self).save(*args, **kwargs)
 
-    def save(self, slug="", *args, **kwargs):
-        if self.imported == True and slug != "":
-            self.slug = slug            
-        else:
-            self.slug = slugify(self.title)
-        super(Story, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Challenge, self).save(*args, **kwargs)
     
-    @permalink
-    def get_absolute_url(self):
-        return ('view_story', None, { 'story': self.slug })        
+    # @permalink
+    # def get_absolute_url(self):
+    #     return ('view_story', None, { 'story': self.slug })        
