@@ -21,6 +21,7 @@ from profiles import urls as profiles_urls
 from comments import urls as comments_urls
 from hubs import urls as hubs_urls
 from stories import urls as stories_urls
+from challenges import urls as challenges_urls
 
 
 urlpatterns = [
@@ -28,7 +29,8 @@ urlpatterns = [
 
     url(r'', include(profiles_urls)),
     url(r'', include(comments_urls)),
-    url(r'', include(hubs_urls)),        
+    url(r'', include(hubs_urls)),
+    url(r'', include(challenges_urls)),    
     url(r'', include(stories_urls)),
 
     # url(r'.*', stories.views.page_404),

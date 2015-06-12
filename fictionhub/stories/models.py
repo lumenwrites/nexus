@@ -19,6 +19,8 @@ class Story(models.Model):
 
     imported = models.BooleanField(default=False)
 
+    # challenge = models.ForeignKey('challenges.Challenge', related_name="stories", default="")
+
     def __str__(self):
         return self.title
 

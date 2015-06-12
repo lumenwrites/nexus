@@ -41,7 +41,8 @@ INSTALLED_APPS = (
     'profiles',    
     'stories',
     'comments',
-    'hubs',        
+    'hubs',
+    # 'challenges',
 )
 
 MIDDLEWARE_CLASSES = (
