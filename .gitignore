@@ -8,9 +8,6 @@ __pycache__/
 # C extensions
 *.so
 
-keys.py
-reddit.py
-
 # Distribution / packaging
 .Python
 env/
