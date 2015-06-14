@@ -12,13 +12,13 @@ from django.template import RequestContext
 
 # My own stuff
 # Forms
-from stories.forms import StoryForm, ChapterForm
+from posts.forms import PostForm
 from hubs.forms import HubForm
 from comments.forms import CommentForm
 # Models
-from stories.models import Story, Chapter
 from profiles.models import User
 from hubs.models import Hub
+from posts.models import Post
 from comments.models import Comment
 
 
@@ -29,14 +29,16 @@ def comment_submit(request, comment_id):
             comment = form.save(commit=False)
             comment.author = request.user
             comment.parent = Comment.objects.get(id=comment_id)
-            comment.story = comment.parent.story
-            try: 
-                comment.chapter = comment.parent.chapter
-            except:
-                pass
+            comment.post = comment.parent.post
             comment.save()
             comment_url = request.GET.get('next', '/')+"#id-"+str(comment.id)
             return HttpResponseRedirect(comment_url)
+        else:
+            # return HttpResponse("string")
+            return render(request, 'posts/create.html', {
+                'form':form,
+            })
+
 
 def comment_edit(request, comment_id):
     comment = Comment.objects.get(id = comment_id)
@@ -70,9 +72,9 @@ def comment_delete(request, comment_id):
     if request.user != comment.author:
         return HttpResponseRedirect('/')        
     try:
-        path = '/story/'+comment.story.slug + '/' + comment.chapter.slug + '#comments'
+        path = '/story/'+comment.parent.post.slug + '/' + comment.post.slug + '#comments'
     except:
-        path = '/story/'+comment.story.slug + '#comments'
+        path = '/story/'+comment.post.slug + '#comments'
 
     comment.delete()
 
@@ -127,6 +129,8 @@ def comment_undownvote(request):
     return HttpResponse()
 
 def comments_user(request, username, filterby="", comment_id=""):
+    # wtf, is it just copypaste from comments list?
+    # comments user has no submit form
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from django.db.models import Count
 
-from stories.models import Story
-from stories.utils import rank_hot, rank_top
+from posts.models import Post
+from posts.utils import rank_hot, rank_top
 from hubs.models import Hub
 
 def home(request):
-    stories = Story.objects.filter(published=True)    
-    hot_stories = rank_hot(stories, top=32)[:10]
-    new_stories = stories.order_by('-pub_date')[:10]
-    hubs = Hub.objects.all().annotate(number_of_stories=Count('stories')).order_by('-number_of_stories')
+    posts = Post.objects.filter(published=True)    
+    hot_posts = rank_hot(posts, top=32)[:10]
+    new_posts = posts.order_by('-pub_date')[:10]
+    hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
     return render(request, 'home.html', {
-        'hot_stories':hot_stories,
-        'new_stories':new_stories,
+        'hot_posts':hot_posts,
+        'new_posts':new_posts,
         'hubs':hubs
     })
 

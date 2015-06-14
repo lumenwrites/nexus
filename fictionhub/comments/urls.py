@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from stories.views import story
+from posts.views import post
 
 urlpatterns = [
     # Comments
@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^comment/(?P<comment_id>[^\.]+)/delete', views.comment_delete), 
     
     # view comment
-    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', story),
+    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', post),
 
     url(r'^user/(?P<username>[^\.]+)/comments$', views.comments_user,
         {'filterby': 'comments_user'}),

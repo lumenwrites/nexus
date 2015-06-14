@@ -1,4 +1,4 @@
-from stories.utils import rank_hot, rank_top
+from posts.utils import rank_hot, rank_top
 
 # Comments
 def get_comment_list(comments=None, rankby="hot"):

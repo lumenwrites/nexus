@@ -18,29 +18,28 @@ from django.contrib import admin
 
 # from chaoslegion import urls as chaoslegion_urls
 from profiles import urls as profiles_urls
-from comments import urls as comments_urls
 from hubs import urls as hubs_urls
-from stories import urls as stories_urls
-from challenges import urls as challenges_urls
+from posts import urls as posts_urls
+from comments import urls as comments_urls
+
 
 from . import views
-from stories import views as stories_views
+
+
+from posts import views as posts_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^home/$', views.home),
-    url(r'^test/$', views.test),    
-
     url(r'', include(profiles_urls)),
-    url(r'', include(comments_urls)),
     url(r'', include(hubs_urls)),
-    url(r'', include(challenges_urls)),    
-    url(r'', include(stories_urls)),
+    url(r'', include(posts_urls)),    
+    url(r'', include(comments_urls)),
+
 
     
     # Front page
-    url(r'^$', stories_views.stories),    
+    url(r'^$', views.home),    
 
     # url(r'.*', stories.views.page_404),
 ]

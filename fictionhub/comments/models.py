@@ -3,13 +3,11 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models import permalink
 
-from stories.models import *
+from posts.models import *
 
 class Comment(models.Model):
-    story = models.ForeignKey('stories.Story', related_name="comments",
+    post = models.ForeignKey('posts.Post', related_name="comments",
                               default=None, null=True, blank=True)
-    chapter = models.ForeignKey('stories.Chapter', related_name="comments",
-                                default=None,  null=True, blank=True)    
     parent = models.ForeignKey('Comment', related_name="children",
                                default=None, null=True, blank=True)
     body = models.TextField()    
@@ -24,11 +22,10 @@ class Comment(models.Model):
     # comment_type = models.CharField(max_length=64, default="Comment", choices=COMMENT_TYPES)
 
     COMMENT_TYPES = (
-    (1, "Comment"),
-    (2, "Review"),
+    ("comment", "Comment"),
+    ("review", "Review"),
     )
-    comment_type = models.IntegerField(default=1, choices=COMMENT_TYPES)    
-
+    comment_type = models.CharField(default="comment", max_length=64, choices=COMMENT_TYPES, blank=True)
 
     RATING_CHOICES = [
         (1, "Horrible"),

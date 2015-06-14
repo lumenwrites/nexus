@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block title %}
+    {{post.title}}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <article>
+	{% include "posts/vote.html" %}
+	<!-- Post Header -->
+	<header class="post-header">
+	  {% if user == post.author %}
+	  <a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
+	  {% endif %}
+
+	  <h1> {{post.title}} </h1>	    
+	    
+	  <!-- <span class="post-tagline">submitted 14 days ago by <a href="#">{{post.author}}</a></span> -->
+	    <hr />
+	</header>
+	<!-- Post Body -->
+	{{post.body | markdownify | safe }}
+
+	<div class="clearfix"></div>
+	<br/>
+	{% if post.posttype == "story" and post.children.all %}	
+	<div class="panel">
+	  {% for chapter in post.children.all %}	  
+	  <ul>
+	    <li><a href="{{chapter.get_absolute_url}}">{{chapter.title}}</a></li>
+	  </ul>
+	  {% endfor %}
+	</div>
+	{% endif %}	
+
+	<!-- Button rad prev -->
+	{% if prev_chapter %}
+	<a class="button small previous-chapter"
+	   href="{{prev_chapter.get_absolute_url}}">< Previous</a>
+	{% elif chapter %} <!-- If this is a chapter - go back to story -->
+	<a class="button small previous-chapter"
+	   href="{{post.parent.get_absolute_url}}">< Story</a>
+	{% endif %}								
+	
+	<!-- Button read next -->
+	{% if first_chapter %}
+	<a class="button small next-chapter"
+	   href="{{first_chapter.get_absolute_url}}">Read ></a>
+	{% elif next_chapter %}
+	<a class="button small next-chapter"
+	   href="{{next_chapter.get_absolute_url}}">Next ></a> 
+	{% endif %}
+	<div class="clearfix"></div>	
+	<div style="width:100%; height: 20px"></div>	
+      </article>
+      
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+      <!-- Follow -->
+<div class="row">
+  <div class="large-12 columns">
+    <div class="post-footer-signup panel">
+
+      {% for hub in hubs %}
+      <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      {% endfor %}
+	<!-- 
+	<span class="hub-tag">Writing Prompts</span>
+	<span class="hub-tag">Comedy</span>
+	<span class="hub-tag">Flash Fiction</span>
+	-->
+	<div class="author">
+	  {% if post.author.external_url %}
+	  <a href="{{post.author.website}}">{{post.author}}</a></span>	    
+	  {% else %}
+	  <a href="/user/{{post.author.username}}">{{post.author}}</a></span>
+	  {% endif %}	  
+	<span class="userkarma">{{post.author.karma}}</span>
+
+	<!-- Subscribe/unsubscribe button -->
+	{% if user.is_authenticated %}
+	  {% if not user == post.author %} <!-- if it's not my story' -->
+	    {% if post.author not in user.subscribed_to.all %} <!-- if not subscribed -->
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{post.author.username}}/subscribe">
+	      Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
+	    </a>
+	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    {% else %} <!-- if subscribed then unsubscribe -->
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	       href="/user/{{post.author.username}}/unsubscribe">
+	      Ubsubscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
+	    </a>
+	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    {% endif %}
+          {% endif %}
+        {% else %} <!-- if not authenticated then send to login -->
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	   href="/login/?next={{request.path}}">
+	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
+	</a>
+	<span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>
+	{% endif %}
+        </div> <!-- End Author -->
+	<div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+{% include "comments/comments.html" %}
+
+{% endblock content %}
+

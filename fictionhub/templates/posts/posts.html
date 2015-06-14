@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdownify %}
+
+{% block content %}
+    
+<div id="page"  class="posts-page">
+
+{% include "posts/subnav.html" %}
+
+<div class="row">
+  <div class="large-12 columns">
+    {% for post in posts %}
+    <article>
+      {% include "posts/vote.html" %}
+      <!-- Header -->
+      <header class="post-header">
+	<a href="{{post.get_absolute_url}}">
+	  <h1 class="left"> {{post.title}} </h1>
+	</a>
+	{% if user == post.author %}
+	<a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
+	{% endif %}
+	{% if not post.published %}
+	<span class="hub-tag right margins-side-20">Not published</span>
+	{% endif %}	
+	<div class="clearfix"></div>
+	<div class="right" style="/*margin-top: 16px;*/">
+	  {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+	  {% endfor %}
+	</div>
+	<span class="post-tagline"><!-- submitted 14 days ago -->
+	  by
+	  {% if post.author.external_url %}
+	  <a href="{{post.author.website}}">{{post.author}}</a>
+	  {% else %}
+	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
+	  {% endif %}
+	</span>	
+	<hr />
+      </header>
+      <!-- Post Body -->
+      {{post.body | markdownify | safe }}
+      <div class="clearfix"></div>
+      <div class="readmore">
+	<a href="{{post.get_absolute_url }}" class="right"> read more >>>> </a>
+	<div class="clearfix"></div>
+      </div>
+      {# {% include "posts/post-footer.html" %} #}
+    </article>
+    {% endfor %}
+
+<!-- Pagination -->
+<div class="pagination">
+  <span class="step-links">
+    {% if posts.has_previous %}
+    <a href="?page={{ posts.previous_page_number }}"><</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ posts.number }}
+      <!-- of {{ posts.paginator.num_pages }} -->
+    </span>
+
+    {% if posts.has_next %}
+    <a href="?page={{ posts.next_page_number }}">></a>
+    {% endif %}
+  </span>
+</div>
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+{% endblock content %}
+
+

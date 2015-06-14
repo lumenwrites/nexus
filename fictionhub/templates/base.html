@@ -55,9 +55,9 @@
         <div class="large-5 columns" id="mainMenu">
 	  <div style="float:right;">
 
-	  <!-- <ul><a href="/"> Stories </a></ul> -->
+	  <ul><a href="/stories/"> Stories </a></ul>
 	  <!-- <ul><a href="/challenges/"> Challenges </a></ul> -->
-	    
+
 	  {% if user.is_authenticated %}
 	  {% if user.subscribed_to.count > 0 %}	  
 	  <ul>
@@ -159,7 +159,7 @@ $(document).ready(function(){
                 score.html(notUpdated + 1);
 		upvoteLink.off("click");
 		downvoteLink.off("click");		    
-v		// upvoteLink.click(function(){ return false;});
+		// upvoteLink.click(function(){ return false;});
 		downvoteLink.click(function(){ return false;});
 		upvoteLink.click(function(){
 		    var postId = parseInt(this.id.split("-")[2]);

@@ -3,8 +3,6 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.db.models import permalink
 
-from stories.models import *
-
 class Hub(models.Model):
     title = models.CharField(max_length=64)    
     slug = models.SlugField(max_length=64, default="")

@@ -1,0 +1,31 @@
+	<!-- Vote -->
+	<div class="vote-column">
+	  <div class="vote">
+	    {% if challengestate != "completed" %}
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-up upvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-upvote-{{post.id}}"></a>
+	    {% endif %}	    
+	    {% if challengestate != "voting" %}
+	    <div class="score"> {{post.score}} </div>
+	    {% endif %}
+	    {% if challengestate != "completed" %}	    
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-down downvote
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-downvote-{{post.id}}"></a>
+	    {% endif %}
+	  </div>
+
+	  <!-- Comments  -->
+	  <div class="post-comments">
+	    <span class="fi-comment">
+	      <a href="{{post.get_absolute_url}}#comments">
+		<span class="number-of-comments"> {{post.comments.count}} </span>
+	      </a>
+	    </span>			      
+	  </div>
+	</div>

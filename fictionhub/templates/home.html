@@ -33,16 +33,16 @@
   <div class="large-6 columns">
     <a href="http://fictionhub.io/hot/"><h3>Hot</h3></a>
     <ul>    
-    {% for story in hot_stories %}
+    {% for post in hot_posts %}
       <li>
-	<a href="{{story.get_absolute_url}}"><b>{{story.title}} </b></a> <br/>
-	{% if story.hubs.all %}
-  	  {% for hub in story.hubs.all %}
+	<a href="{{post.get_absolute_url}}"><b>{{post.title}} </b></a> <br/>
+	{% if post.hubs.all %}
+  	  {% for hub in post.hubs.all %}
 	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>	
 	  {% endfor %}
 	  <br/>
 	{% endif %}
-	{{story.description | firstparagraph | safe }}
+	{{post.body | firstparagraph | safe }}
 	<hr/>
       </li>
       {% endfor%}
@@ -52,16 +52,16 @@
   <div class="large-6 columns">
     <a href="http://fictionhub.io/new/"><h3>New</h3></a>
     <ul>    
-    {% for story in new_stories %}
+    {% for post in new_posts %}
       <li>
-	<a href="{{story.get_absolute_url}}"><b>{{story.title}} </b></a> <br/>
-	{% if story.hubs.all %}
-  	  {% for hub in story.hubs.all %}
+	<a href="{{post.get_absolute_url}}"><b>{{post.title}} </b></a> <br/>
+	{% if post.hubs.all %}
+  	  {% for hub in post.hubs.all %}
 	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>	
 	  {% endfor %}
 	  <br/>
 	{% endif %}
-	{{story.description | firstparagraph | safe }}
+	{{post.body | firstparagraph | safe }}
 	<hr/>
       </li>
       {% endfor%}
@@ -77,7 +77,7 @@
     {% for hub in hubs %}
 
     {% if not hub.parent %}
-    {% if hub.stories.all %}
+    {% if hub.posts.all %}
     {% endif %}
 
     {% if hub.children.all %}
@@ -92,12 +92,12 @@
       {% endif %}
 
       <a href="/hub/{{hub.slug}}/">{{hub}}
-	<span class="number-of-stories">{{hub.stories.all|length}}</span></a> 
+	<span class="number-of-stories">{{hub.posts.all|length}}</span></a> 
     
       {% if hub.children.all %}
         <div  class="padding-10 children">      
         {% for child in hub.children.all %}
-          {% if child.stories.all %}
+          {% if child.posts.all %}
           {% endif %}
             <div  class="hub-tag second-lvl container">
 	      <!-- Expand/collapse -->
@@ -106,16 +106,16 @@
 	      {% endif %}
 
               <a href="/hub/{{child.slug}}/"> {{child.title}}
-			<span class="number-of-stories">{{child.stories.all|length}}</span></a>
+			<span class="number-of-stories">{{child.posts.all|length}}</span></a>
 
                   {% if child.children.all %}
                     <div  class="padding-10 children">      
                     {% for child in child.children.all %}
-                      {% if child.stories.all %}
+                      {% if child.posts.all %}
                       {% endif %}
                         <span  class="hub-tag">
                           <a href="/hub/{{child.slug}}/"> {{child.title}}
-			    <span class="number-of-stories">{{child.stories.all|length}}</span></a>
+			    <span class="number-of-stories">{{child.posts.all|length}}</span></a>
             	        </span>
                     {% endfor %}
 		    <div class="clearfix"></div>

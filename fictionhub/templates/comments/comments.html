@@ -6,11 +6,7 @@
   <div class="large-12 columns">
     <h4 id="comments"> Comments </h4>
     {% if user.is_authenticated %}      
-    <form {% if chapter %}
-	  action="/story/{{story.slug}}/{{chapter.slug}}"
-	  {% else %}
-	  action="/story/{{story.slug}}"
-	  {% endif %}
+    <form action="{{post.get_absolute_url}}"
 	  method="post">{% csrf_token %}
       <div class="editor">
 	{{form.body}}
@@ -31,42 +27,25 @@
     <!-- Ranking -->
 
 <div class="left">
-{% if chapter and chapter.comments.all %}
+{% if post.comments.all %}
   {% if not filterurl == "reviews" %} <!-- Hide hot if reviews -->
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/hot#comments">
+  <a href="{{post.get_absolute_url}}{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
   {% endif %}
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/new#comments">
+  <a href="{{post.get_absolute_url}}{{filterby}}/new#comments">
     <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/{{filterby}}/top#comments">
-    <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
-{% elif story and story.comments.all %}
-  {% if not filterby == "reviews" %}
-  <a href="/story/{{story.slug}}/{{filterby}}/hot#comments">
-    <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
-  {% endif %}
-  <a href="/story/{{story.slug}}/{{filterby}}/new#comments">
-    <span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>	
-  <a href="/story/{{story.slug}}/{{filterby}}/top#comments">
+  <a href="{{post.get_absolute_url}}{{filterby}}/top#comments">
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
 {% endif %}  
 </div>
 
 <!-- Comments or reviews -->
-{% if chapter and chapter.comments.all %}
+{% if post.comments.all %}
 <div class="right">
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/comments/top#comments">
-    <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
-  <a href="/story/{{story.slug}}/{{chapter.slug}}/reviews/top#comments">
-    <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
-</div>
-
-{% elif story and story.comments.all %}
-<div class="right">
-  <a href="/story/{{story.slug}}/comments/top#comments">
-    <span {% if filterby = "comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
-  <a href="/story/{{story.slug}}/reviews/top#comments">
-    <span {% if filterby = "reviews" %}class="bold"{% endif %}>Reviews</span></a>	
+  <a href="{{post.get_absolute_url}}/comments/top#comments">
+    <span {% if filterby = "/comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
+  <a href="{{post.get_absolute_url}}/reviews/top#comments">
+    <span {% if filterby = "/reviews" %}class="bold"{% endif %}>Reviews</span></a>	
 </div>
 {% endif %} <!-- end if chapter -->
 

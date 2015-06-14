@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from stories.models import Story
+from posts.models import Post
 from comments.models import Comment
 
 class User(AbstractUser):  
@@ -13,8 +13,8 @@ class User(AbstractUser):
 
     subscribed_to = models.ManyToManyField('User', related_name="subscribers", blank=True)
 
-    upvoted = models.ManyToManyField('stories.Story', related_name="upvoters", blank=True)
-    downvoted = models.ManyToManyField('stories.Story', related_name="downvoters", blank=True)   
+    upvoted = models.ManyToManyField('posts.Post', related_name="upvoters", blank=True)
+    downvoted = models.ManyToManyField('posts.Post', related_name="downvoters", blank=True)   
 
     comments_upvoted = models.ManyToManyField('comments.Comment', related_name="upvoters", blank=True)
     comments_downvoted = models.ManyToManyField('comments.Comment', related_name="downvoters", blank=True)    
