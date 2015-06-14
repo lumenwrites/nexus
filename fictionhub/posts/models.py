@@ -25,9 +25,9 @@ class Post(models.Model):
         # ("post", "Post"), # no children
         ("story", "Story"), # children are chapters
         ("chapter", "Chapter"), # no children
-        # ("thread", "Thread"), # no children
-        # ("prompt", "Prompt"), # children are other posts/stories        
-        # ("challenge", "Challenge"), # children are other posts/stories
+        ("thread", "Thread"), # no children
+        ("prompt", "Prompt"), # children are other posts/stories        
+        ("challenge", "Challenge"), # children are other posts/stories
     )
     post_type = models.CharField(default="story", max_length=64, choices=POST_TYPES, blank=True)
 
@@ -38,7 +38,7 @@ class Post(models.Model):
     ("voting", "Voting"),
     ("completed", "Completed"),    
     )
-    state = models.CharField(default=None, max_length=64, choices=POST_TYPES, blank=True, null=True)    
+    state = models.CharField(default=None, max_length=64, choices=CHALLENGE_STATES, blank=True, null=True)    
 
     # Chapter
     number = models.IntegerField(default=1)        
@@ -63,8 +63,10 @@ class Post(models.Model):
         elif self.post_type == "chapter":
             return ('view_chapter', None, { 'chapter': self.slug,
                                             'story': self.parent.slug})            
+        elif self.post_type == "challenge":
+            return ('view_challenge', None, { 'story': self.slug })            
         else:
-            return ('view_post', None, { 'slug': self.slug })            
+            return ('view_post', None, { 'story': self.slug })            
 
     class Meta:
         ordering = ('number',)        

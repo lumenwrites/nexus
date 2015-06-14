@@ -8,6 +8,9 @@ from django.contrib.auth import update_session_auth_hash
 from .models import User
 from .forms import RegistrationForm, UserForm
 
+# import praw
+# import webbrowser
+
 def subscribe(request, username):
     userprofile = User.objects.get(username=username)
     if not request.user.is_anonymous():
@@ -141,3 +144,6 @@ def register(request):
         'form': form,
     })
 
+
+def grant_reddit_access(request):
+    pass

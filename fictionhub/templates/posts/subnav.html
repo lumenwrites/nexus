@@ -6,6 +6,8 @@
     {% else %}
     <div class="large-7 columns">
     {% endif %}            
+
+    {% if not challenge %}    
       <div class="{% if userprofile %}profile{% endif %} rank-types">
 	<a href="{{filterurl}}/hot/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
@@ -23,7 +25,12 @@
 	<a href="{{filterurl}}/top/day">
 	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
 	 -->
-	{% endif %}
+	{% endif %} <!-- end rankby top, showing timespans -->
+	{% else %}	    <!-- if it's a challenge -->
+	Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>
+     {% endif %}    <!-- end if not challengestate -->
+
+
 
 	{% if userprofile and userprofile.comments.all %}
 	<a href="/user/{{userprofile.username}}/comments">
@@ -71,7 +78,7 @@
     <div class="large-5 columns">
       <div style="float:right;">
 
-	{% if filterby != "subscriptions" %}	
+	{% if filterby != "subscriptions" and not challenge %}	
 	<a data-dropdown="hubs-dropdown"
 	   aria-controls="hubs-dropdown" aria-expanded="false">Hubs </a>
 	{% endif %}	  	  

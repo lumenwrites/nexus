@@ -101,6 +101,9 @@ li p {
     font-weight:bold;
 }
 
+.italic {
+    font-style: italic;
+}
 .right{
     float:right;
 }
@@ -111,6 +114,30 @@ li p {
 
 .gray {
     background: gray!important;
+}
+
+.margins-10 {
+    margin: 10px;
+}
+
+.margins-20 {
+    margin: 20px;
+}
+
+.margins-side-20 {
+    margin: 0 20px;
+}
+
+.padding-10 {
+    padding: 20px;    
+}
+
+.padding-20 {
+    padding: 20px;    
+}
+
+.grey {
+    color: #bbbbbb;
 }
 
 /* Elements */
@@ -252,6 +279,11 @@ header {
     color: $black;
 }
 
+.subnav .challenge-title {
+    font-weight: bold;
+    color: $black;
+    text-transform: none;
+}
 /* ================ User Profile ================ */
 /* Subnav */
 .userkarma {
@@ -269,7 +301,7 @@ header {
 }
 
 .profile .button.small {
-    float: right;
+    /* float: right; */
 }
 
 .profie .subnav {
@@ -291,8 +323,8 @@ header {
     background: white;
     padding: 4px;
     border-radius: 4px;
+    margin-right: 0!important;
 }
-    /* margin-right: -4px!important;  */
 
 .profile.rank-types {
   margin-top: 10px!important;
@@ -465,9 +497,13 @@ article header {
     float:right;
 }
 
-#readmore {
-    float:right;
-    font-style: italic;
+.readmore {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.stories-page .story-footer-signup {
+  padding: 8px;    
 }
 
 /* ================ Story ================ */
@@ -514,13 +550,13 @@ article header {
   margin: 0;    
 }
 
-
-#rss-icon {
-    float:right;
-    margin: 0 0 0 10px;
+.rss-icon {
+  float: right;
+  /* margin: -6px 0 0 10px; */
+  line-height: 10px;
 }
 
-#rss-icon i {
+.rss-icon i {
     color: #666;
 }
 
@@ -530,6 +566,63 @@ article header {
 
 
 /* ================ Story Comments ================ */
+
+/* Review rating */
+#id_comment_type {
+    width: 120px;
+    margin-right: 20px;    
+}    
+
+.br-wrapper-b .br-widget {
+  height: 40px;
+}
+.br-wrapper-b .br-widget a {
+  display: block;
+  width: 80px;
+  height: 40px;
+  float: left;
+  background-color: #F5D4BE;
+  margin: 1px;
+}
+.br-wrapper-b .br-widget a.br-active,
+.br-wrapper-b .br-widget a.br-selected {
+  background-color: $orange;
+}
+.br-wrapper-b .br-widget .br-current-rating {
+  clear: both;
+  width: 410px;
+  text-align: center;
+  font-weight: 600;
+  display: block;
+  padding: .5em 0;
+  color: $orange;
+}
+.br-wrapper-b .br-readonly a.br-active,
+.br-wrapper-b .br-readonly a.br-selected {
+  background-color: $orange;
+}
+
+/* Display rating */
+.comment-rating {
+    float:right;
+}
+
+.rating-bar {
+  display: block;
+  width: 16px;
+  height: 8px;
+  float: left;
+  background-color: $orange;
+  margin: 1px;    
+}
+/* Center in container */
+.br-wrapper-b {
+  width: 410px;
+  position: absolute;
+  margin: 0px 0 0 -168px;
+  left: 50%;
+  }
+
 
 /* Submit */
 .comment-type {
@@ -687,9 +780,14 @@ article header {
     margin-bottom: 10px; 	/*for mobile*/
 }
 
+textarea[rows] {
+  margin-bottom: 0!important;
+  height: 400px!important;
+}
+
 @media screen and (max-width: 1300px) {
     .set-hubs {
-	width: 100%u!important;
+	width: 100%!important;
 	float:left;
 	margin-bottom: 10px; 	/*for mobile*/
     }
@@ -721,6 +819,11 @@ padding: 0px;
     border-color: #cccccc;
 }
 
+/* border on mobile  */
+* {
+  outline: none;
+}
+
 .delete-chapter {
     padding: 10px!important;
     background: grey!important;    
@@ -735,6 +838,9 @@ padding: 0px;
     background: gray!important;
 }
 
+.edit-buttons {
+    float: right;
+}
 
 /* Footer */
 
@@ -757,4 +863,7 @@ footer h4 {
 	font-size: medium;
 	font-weight: normal;
 }
+
+
+
 

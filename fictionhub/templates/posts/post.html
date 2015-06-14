@@ -27,7 +27,7 @@
 
 	<div class="clearfix"></div>
 	<br/>
-	{% if post.posttype == "story" and post.children.all %}	
+	{% if post.post_type == "story" and post.children.all %}	
 	<div class="panel">
 	  {% for chapter in post.children.all %}	  
 	  <ul>
@@ -37,6 +37,24 @@
 	</div>
 	{% endif %}	
 
+	{% if post.post_type == "challenge" %}
+	    {% if post.state == "open" %}
+	        {% if user.is_authenticated %}
+	        <a class="button small"
+	           href="{{post.get_absolute_url}}/submit-story">Submit a story</a>
+	        {% else %}
+	        <a class="button small"
+	           href="/login/?next={{request.path}}">Login to submit a story</a>
+	        {% endif %}
+	    {% elif post.state == "voting" %}
+	    <a class="button small"
+	       href="{{post.get_absolute_url}}/submissions">View submissions </a>
+	    {% elif post.state == "completed" %}
+	    <a class="button small"
+	       href="{{post.get_absolute_url}}/submissions">View results</a>
+	    {% endif %}				    
+	{% endif %}			
+						
 	<!-- Button rad prev -->
 	{% if prev_chapter %}
 	<a class="button small previous-chapter"
@@ -47,7 +65,7 @@
 	{% endif %}								
 	
 	<!-- Button read next -->
-	{% if first_chapter %}
+	{% if first_chapter and post.post_type != "challenge" %}
 	<a class="button small next-chapter"
 	   href="{{first_chapter.get_absolute_url}}">Read ></a>
 	{% elif next_chapter %}

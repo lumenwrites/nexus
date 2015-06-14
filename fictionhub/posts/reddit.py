@@ -15,7 +15,7 @@ def get_access():
 
 
 def get_user_info():    
-    access_information = r.get_access_information('PXYQZOjiGTDLGIrE0OG1gd9rdOM')
+    access_information = r.get_access_information('Wyi6kUY72ot_Sugt3F_CzcyZeCk')
     authenticated_user = r.get_me()
     print ("username: " + str(authenticated_user.name), "userkarma: " + str(authenticated_user.link_karma))
 

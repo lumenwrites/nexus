@@ -3,6 +3,29 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # Post
+    url(r'^post/(?P<story>[^\.]+)$', views.post, name='view_post'),
+
+    # Challenges list
+    url(r'^challenges/$', views.posts,
+        {'filterby':'challenges'}),                
+
+    # Submissions list
+    url(r'^challenge/(?P<challenge>[^\.]+)/submissions$', views.posts,
+        {'filterby':'challenge'}),                
+
+    # Challenge
+    url(r'^challenge/(?P<challenge>[^\.]+)/submit-story$', views.post_create),            
+    url(r'^challenge/(?P<story>[^\.]+)$', views.post, name='view_challenge'),
+
+
+    # url(r'^challenges/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
+    #     {'filterby': 'challenges'}),    
+    # url(r'^challenges/(?P<rankby>[^\.]+)/$', views.posts,
+    #     {'filterby': 'challenges'}),    
+    # url(r'^challenges/$', views.posts,
+    #     {'filterby': 'challenges'}),    
+    
 
     # import feed
     url(r'^user/(?P<username>[^\.]+)/feedimport$', views.feed_import),
@@ -20,6 +43,8 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
     url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
 
+
+    
     # Rss
     url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),        
 
@@ -56,7 +81,7 @@ urlpatterns = [
 
     # View story/chapter
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.post, name='view_chapter'), 
-    url(r'^story/(?P<story>[^\.]+)$', views.post, name='view_story'),    
+    url(r'^story/(?P<story>[^\.]+)$', views.post, name='view_story'),
 
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),

@@ -36,7 +36,8 @@ def posts(request, rankby="hot", timespan="all-time",
     # for user profile navbar
     userprofile = []
     filterurl = ""
-    challengestate = ""
+    if not challenge:
+        challenge = []
 
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
@@ -62,17 +63,16 @@ def posts(request, rankby="hot", timespan="all-time",
         else:
             posts = Post.objects.filter(author=userprofile, published=True)
         filterurl="/user/"+username # to add to href  in subnav
+    elif filterby == "challenges":
+        posts = Post.objects.filter(post_type = "challenge")
+        rankby = "new"
     elif filterby == "challenge":
-        challenge = Challenge.objects.get(slug=challenge)
-        if challenge.state == 1:
-            challengestate = "open"
-        elif challenge.state == 2:
-            challengestate = "voting"
+        challenge = Post.objects.get(slug=challenge)
+        if challenge.state == "voting":
             rankby = "new" # later do random
-        elif challenge.state == 3:            
-            challengestate = "completed"
+        elif challenge.state == "completed":            
             rankby = "top"
-        posts = Post.objects.filter(challenge=challenge)
+        posts = Post.objects.filter(parent=challenge)
     else:
         posts = Post.objects.filter(published=True)
         filterurl="/stories"
@@ -124,7 +124,7 @@ def posts(request, rankby="hot", timespan="all-time",
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
         'hubs': hubs,
-        'challengestate':challengestate
+        'challenge':challenge
     })
 
 # Voting
@@ -323,7 +323,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'filterby':filterby
     })
 
-def post_create(request, story=""):
+def post_create(request, story="", challenge=""):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -335,6 +335,8 @@ def post_create(request, story=""):
             if story:
                 post.parent = Post.objects.get(slug=story)
                 post.post_type = "chapter"
+            if challenge:
+                post.parent = Post.objects.get(slug=challenge)
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
@@ -355,18 +357,25 @@ def post_create(request, story=""):
     else:
         form = PostForm()
         form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')
+        if challenge:
+            challenge = Post.objects.get(slug=challenge)
+        else:
+            challenge =[]
 
     if story:
         story = Post.objects.get(slug=story)
         return render(request, 'posts/edit.html', {
             'story':story,        
             'form':form,
-            'action':'chapter_create'        
+            'action':'chapter_create',
+            'challenge':challenge
+            
         })
     else:
         return render(request, 'posts/create.html', {
             'form':form,
-            'hubs':Hub.objects.all()
+            'hubs':Hub.objects.all(),
+            'challenge':challenge            
         })
 
 

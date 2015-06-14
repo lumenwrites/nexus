@@ -1,17 +1,19 @@
-	<!-- Vote -->
+
+	<!-- Voteo -->
 	<div class="vote-column">
+	  {% if filterby != "challenges" and post.post_type != "challenge" %}
 	  <div class="vote">
-	    {% if challengestate != "completed" %}
+	    {% if challenge.state != "completed" and post.parent.state != "completed" %}
 	    <a href="/login/?next={{request.path}}"
 	       class="fi-arrow-up upvote
 		      {% if post in upvoted %}upvoted{% endif %}
                       {% if post in downvoted %}downvoted{% endif %}"
 	       id="post-upvote-{{post.id}}"></a>
 	    {% endif %}	    
-	    {% if challengestate != "voting" %}
+	    {% if challenge.state != "voting" and post.parent.state != "voting"  %}
 	    <div class="score"> {{post.score}} </div>
 	    {% endif %}
-	    {% if challengestate != "completed" %}	    
+	    {% if challenge.state != "completed" and post.parent.state != "completed" %}	    
 	    <a href="/login/?next={{request.path}}"
 	       class="fi-arrow-down downvote
 		      {% if post in upvoted %}upvoted{% endif %}
@@ -19,7 +21,7 @@
 	       id="post-downvote-{{post.id}}"></a>
 	    {% endif %}
 	  </div>
-
+	  {% endif %} <!-- end if not challenges -->
 	  <!-- Comments  -->
 	  <div class="post-comments">
 	    <span class="fi-comment">

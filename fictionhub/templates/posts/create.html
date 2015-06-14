@@ -9,7 +9,14 @@
     <br/>
     {{form.errors}}
     <!-- Submit Form -->
-    <form action="/story/add" method="post">{% csrf_token %}
+
+    <form
+       {% if challenge %}
+       action="{{challenge.get_absolute_url}}/submit-story"       
+       {% else %}
+       action="/story/add"
+       {% endif %}       
+       method="post">{% csrf_token %}
       {{form.title}}
       <div class="editor">
       	{{form.body}}

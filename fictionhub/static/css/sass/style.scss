@@ -136,6 +136,9 @@ li p {
     padding: 20px;    
 }
 
+.grey {
+    color: #bbbbbb;
+}
 /* Elements */
 /* Elements */
 .button {
@@ -275,6 +278,11 @@ header {
     color: $black;
 }
 
+.subnav .challenge-title {
+    font-weight: bold;
+    color: $black;
+    text-transform: none;
+}
 /* ================ User Profile ================ */
 /* Subnav */
 .userkarma {

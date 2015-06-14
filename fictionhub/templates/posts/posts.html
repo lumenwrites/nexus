@@ -10,6 +10,13 @@
 
 <div class="row">
   <div class="large-12 columns">
+{% if challenge.state = "open" %}
+      <div class="panel">
+	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.
+	  Come back here next wednesday when voting will begin =)</p>
+      </div>
+    
+{% else %}    
     {% for post in posts %}
     <article>
       {% include "posts/vote.html" %}
@@ -68,6 +75,8 @@
     {% endif %}
   </span>
 </div>
+
+{% endif %} <!-- End if not an open challenge -->
 
 </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
