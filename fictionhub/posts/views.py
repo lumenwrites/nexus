@@ -64,7 +64,7 @@ def posts(request, rankby="hot", timespan="all-time",
             posts = Post.objects.filter(author=userprofile, published=True)
         filterurl="/user/"+username # to add to href  in subnav
     elif filterby == "challenges":
-        posts = Post.objects.filter(post_type = "challenge")
+        posts = Post.objects.filter(post_type = "challenge", published=True)
         rankby = "new"
     elif filterby == "challenge":
         challenge = Post.objects.get(slug=challenge)
@@ -72,7 +72,7 @@ def posts(request, rankby="hot", timespan="all-time",
             rankby = "new" # later do random
         elif challenge.state == "completed":            
             rankby = "top"
-        posts = Post.objects.filter(parent=challenge)
+        posts = Post.objects.filter(parent=challenge, published=True)
     else:
         posts = Post.objects.filter(published=True)
         filterurl="/stories"
