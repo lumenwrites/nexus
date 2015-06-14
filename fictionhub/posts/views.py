@@ -331,10 +331,10 @@ def post_create(request, story=""):
             post.author = request.user
             # self upvote
             post.score += 1
-            post.posttype = "story"
+            post.post_type = "story"
             if story:
                 post.parent = Post.objects.get(slug=story)
-                post.posttype = "chapter"
+                post.post_type = "chapter"
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
@@ -390,7 +390,7 @@ def post_edit(request, story, chapter=""):
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             if chapter:
-                post.posttype = "chapter"
+                post.post_type = "chapter"
                 post.parent = story
             post.save()
             post.hubs = []
@@ -595,7 +595,7 @@ def feed_import(request, username):
                     post.hubs.add(hub)
                 except:
                     pass
-            post.posttype = "story"
+            post.post_type = "story"
             post.imported = True
             post.published = True
             post.save(slug=slug)
