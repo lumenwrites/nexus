@@ -38,7 +38,7 @@ class Post(models.Model):
     ("voting", "Voting"),
     ("completed", "Completed"),    
     )
-    state = models.CharField(default=None, max_length=64, choices=POST_TYPES, blank=True)    
+    state = models.CharField(default=None, max_length=64, choices=POST_TYPES, blank=True, null=True)    
 
     # Chapter
     number = models.IntegerField(default=1)        
