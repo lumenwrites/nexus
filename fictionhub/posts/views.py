@@ -799,6 +799,53 @@ def prompt(request):
     
 
 
+def prompt_import(request):
+    import praw
+    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+    subreddit = r.get_subreddit('writingprompts')
+    prompts = subreddit.get_new(limit=64)
+    new_prompts = list(prompts)
+    prompts = []
+
+    # less than 5 replies, more than 1 upvote and less than 60 minutes old
+    for prompt in new_prompts:
+        if (prompt.score > 1) \
+        and ((prompt.num_comments-2) < 5) \
+        and (age(prompt.created_utc) < 60):
+            if prompt.num_comments > 0:
+                prompt.num_comments -= 2 # remove 2 fake replies
+            prompts.append(prompt)
+
+    # sort by score
+    prompts.sort(key=lambda p: p.score, reverse=True)
+
+    prompt = prompts[0]
+
+    # save prompt
+    author = request.user
+    title = prompt.title
+    body = ""
+    slug = slugify(title[:32]) # learn to remove [WP] from slug
+
+    # try:
+    #     post = Post.objects.get(slug=slug)
+    # except:
+    #     post = Post(slug=slug)
+    #     post.score = 1
+
+    
+    # post.title = title
+    # post.body = body
+    # post.author = author # separate account?
+    # post.post_type = "prompt"
+    # post.published = True # False
+    # post.imported = True    
+    # post.save(slug=slug)    
+    
+    return HttpResponse("<span id='title'>"+title+"</span>" + \
+                        "<span id='slug'>"+slug+"</span>")
+    
+
 
 # TODO: replace with CBVs
 # from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView

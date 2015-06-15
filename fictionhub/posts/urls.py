@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^dropboximport/$', views.dropbox_import),
 
     url(r'^prompts/$', views.prompts),
-    url(r'^prompt/$', views.prompt),        
+    url(r'^prompt/$', views.prompt),
+    url(r'^prompt-import/$', views.prompt_import),            
 
     # Edit story
     url(r'^story/add$', views.post_create),
