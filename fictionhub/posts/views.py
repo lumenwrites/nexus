@@ -635,7 +635,6 @@ def dropbox_import(request):
         if not file["is_dir"]:
             path = file["path"]
             f, metadata = client.get_file_and_metadata(path)
-            f, metadata = client.get_file_and_metadata(path)
             text = f.read()
             text = text.decode("utf-8")
     
@@ -772,9 +771,31 @@ def prompt(request):
 
     # sort by score
     prompts.sort(key=lambda p: p.score, reverse=True)
-            
-        
-    return HttpResponse(prompts[0].title)
+
+    prompt = prompts[0]
+
+    # save prompt
+    # author = request.user
+    # title = prompt.title
+    # body = ""
+    # slug = slugify(title[:32]) # learn to remove [WP] from slug
+
+    # try:
+    #     post = Post.objects.get(slug=slug)
+    # except:
+    #     post = Post(slug=slug)
+    #     post.score = 1
+
+    
+    # post.title = title
+    # post.body = body
+    # post.author = author # separate account?
+    # post.post_type = "prompt"
+    # post.published = True # False
+    # post.imported = True    
+    # post.save(slug=slug)    
+    
+    return HttpResponse(prompt.title)
     
 
 
