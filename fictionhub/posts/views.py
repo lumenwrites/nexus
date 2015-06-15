@@ -669,7 +669,7 @@ def dropbox_import(request):
                 body = content
                 date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
                 try:
-                    # Open existing post
+                # Open existing post
                     post = Post.objects.get(slug=slug)
                     updated += title + " " 
                 except:
