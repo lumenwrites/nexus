@@ -30,6 +30,12 @@ from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
 
+#dropbox
+import os
+import dropbox
+from markdown import Markdown
+
+
 
 def posts(request, rankby="hot", timespan="all-time",
             filterby="", hubslug="", username="", challenge=""):
@@ -611,6 +617,75 @@ def feed_import(request, username):
     return HttpResponse()
 
 
+def dropbox_import(request):
+    author = request.user
+    
+    
+    access_token = os.environ["ACCESS_TOKEN"]
+    client = dropbox.client.DropboxClient(access_token)
+    folder_metadata = client.metadata('/')
+
+    teststring = ""
+    for file in folder_metadata["contents"]:
+        path = file["path"]
+        f, metadata = client.get_file_and_metadata(path)
+        f, metadata = client.get_file_and_metadata(path)
+        text = f.read()
+        text = text.decode("utf-8")
+
+        md = Markdown(extensions = ['meta', 'codehilite'])
+        content = md.convert(text)
+        metadata = {}
+        for name, value in md.Meta.items():
+            metadata[name] = value[0]
+            teststring += name + ": " + value[0] + "<br/>"
+
+        # teststring += "Title: " + metadata['title'] + "\n" + \
+        #               "Date: " + metadata['date'] + \
+        #               "Content: " + content
+
+        tags = metadata["tags"].split(",")
+        import_entry = False
+        # Check if post has "fictionhub" in it's tags
+        for tag in tags:
+            if tag == "fictionhub":
+                import_entry = True
+
+        if import_entry:
+            title = metadata["title"]
+            slug = metadata["slug"]
+            body = content
+            date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
+            try:
+                # Open existing post
+                post = Post.objects.get(slug=slug)
+            except:
+                # Import post
+                post = Post(slug=slug)
+                post.score = 1
+
+            post.title = title
+            post.body = body
+            post.date = date
+            post.author = author
+            for tag in tags:
+                # post.title = post.title + " " + tag.term
+                try:
+                    hub = Hub.objects.get(slug=tag)
+                    post.hubs.add(hub)
+                except:
+                    pass
+            post.post_type = "story"
+            post.imported = True
+            post.published = True
+            post.save(slug=slug)
+                
+                
+            
+    return render(request, 'posts/test.html', {
+        'teststring': tags,
+    })
+           
 
 
 
