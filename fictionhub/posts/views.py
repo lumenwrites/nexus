@@ -629,70 +629,85 @@ def dropbox_import(request):
     folder_metadata = client.metadata('/')
 
     teststring = ""
+    imported = ""
+    updated = ""
     for file in folder_metadata["contents"]:
-        path = file["path"]
-        f, metadata = client.get_file_and_metadata(path)
-        f, metadata = client.get_file_and_metadata(path)
-        text = f.read()
-        text = text.decode("utf-8")
-
-        md = Markdown(extensions = ['meta', 'codehilite'])
-        content = md.convert(text)
-        metadata = {}
-        for name, value in md.Meta.items():
-            metadata[name] = value[0]
-            teststring += name + ": " + value[0] + "<br/>"
-
-        # teststring += "Title: " + metadata['title'] + "\n" + \
-        #               "Date: " + metadata['date'] + \
-        #               "Content: " + content
-
-        try:
-            tags = metadata["tags"].split(",")
-        except:
-            tags = []
-        import_entry = False
-        # Check if post has "fictionhub" in it's tags
-        for tag in tags:
-            if tag == "fictionhub":
-                import_entry = True
-
-        if import_entry:
-            title = metadata["title"]
+        if not file["is_dir"]:
+            path = file["path"]
+            f, metadata = client.get_file_and_metadata(path)
+            f, metadata = client.get_file_and_metadata(path)
+            text = f.read()
+            text = text.decode("utf-8")
+    
+            md = Markdown(extensions = ['meta', 'codehilite'])
+            content = md.convert(text)
+            metadata = {}
+            for name, value in md.Meta.items():
+                metadata[name] = value[0]
+                # teststring += name + ": " + value[0] + "<br/>"
+    
+            # teststring += "Title: " + metadata['title'] + "\n" + \
+            #               "Date: " + metadata['date'] + \
+            #               "Content: " + content
+    
             try:
-                slug = metadata["slug"]
+                tags = metadata["tags"].split(",")
             except:
-                slug = slugify(title)
-            body = content
-            date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
-            try:
-                # Open existing post
-                post = Post.objects.get(slug=slug)
-            except:
-                # Import post
-                post = Post(slug=slug)
-                post.score = 1
-
-            post.title = title
-            post.body = body
-            post.date = date
-            post.author = author
+                tags = []
+            import_entry = False
+            # Check if post has "fictionhub" in it's tags
             for tag in tags:
-                # post.title = post.title + " " + tag.term
+                if tag == "fictionhub":
+                    import_entry = True
+    
+            if import_entry:
+                title = metadata["title"]
                 try:
-                    hub = Hub.objects.get(slug=tag)
-                    post.hubs.add(hub)
+                    slug = metadata["slug"]
                 except:
-                    pass
-            post.post_type = "story"
-            post.imported = True
-            post.published = True
-            post.save(slug=slug)
+                    slug = slugify(title)
+                body = content
+                date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
+                try:
+                    # Open existing post
+                    post = Post.objects.get(slug=slug)
+                    updated += title + " " 
+                except:
+                    # Import post
+                    post = Post(slug=slug)
+                    post.score = 1
+                    imported += title + " "
+    
+                    # If it is a writing prompt
+                    # try and see if it has metadata["promptslug"]
+                    # check if propmt with this slug exists
+                    # if it does - set it as parent
+                    # if it doesn't - create it and set it as parent.
+                    # don't forget to set it's type as "prompt"
+    
+                post.title = title
+                post.body = body
+                post.date = date
+                post.author = author
+                for tag in tags:
+                    # post.title = post.title + " " + tag.term
+                    try:
+                        hub = Hub.objects.get(slug=tag)
+                        post.hubs.add(hub)
+                    except:
+                        pass
+                post.post_type = "story"
+                post.imported = True
+                post.published = True
+                post.save(slug=slug)
+
+                if imported:
+                    teststring += "Imported: " + imported + "<br/>"
+                if updated:
+                    teststring += "Updated: " + updated + "<br/>"
                 
-                
-            
     return render(request, 'posts/test.html', {
-        'teststring': tags,
+        'teststring': teststring,
     })
            
 
