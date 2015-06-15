@@ -1,6 +1,8 @@
+# markdownify
 from django import template
 import markdown
 import bleach
+
  
 register = template.Library()
  
@@ -19,3 +21,4 @@ def markdownify(text):
     
     # clean_html = bleach.clean(linkify_html, styles=styles, tags=tags, attributes=attributes, strip=True)
     return html #clean_html
+

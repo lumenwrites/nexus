@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load markdownify %}
+{% load age %}
+
+{% block title %}
+    {{post.title}}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <h1> Prompts </h1>
+      <div class="panel">
+	<p>
+	  Prompts that are
+	  less than 60 minutes old,
+	  have more than one upvote,
+	  and less than 5 replies.
+	  Sorted by score.
+	</p>
+      </div>
+      
+      {% for prompt in prompts %}
+      <article>
+	<div class="vote-column">
+	  <div class="vote">
+	    <div class="score"> <b> {{prompt.score}} </b> </div>
+	  </div>
+	</div>
+	<a href="{{prompt.permalink}}" class="bold black">{{prompt.title}}</a> <br/>
+	Replies: <b>{{prompt.num_comments}}</b> &nbsp; 
+	<!-- Score: <b>{{prompt.score}}</b> -->
+	submitted {{prompt.created_utc | age}}
+	<!-- <span class="grey">Upvotes: {{prompt.ups}} -->
+	<!--   Downvotes:{{prompt.downs}}	</span> -->
+	<!-- <p>{{prompt.selftext}}</p> -->
+	<hr/>
+      </article>
+      {% endfor %}	
+
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+{% endblock content %}
+

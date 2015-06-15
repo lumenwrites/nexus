@@ -1,5 +1,5 @@
 # standard library imports
-import re # praw
+import re, praw
 from xml.etree.ElementTree import Element, SubElement, tostring # for rss
 import json # for temporary post api. Replace with REST.
 import feedparser
@@ -14,6 +14,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 # date
 from datetime import datetime
+from django.utils.timezone import utc
 from time import mktime
 # slugify dropbox title
 from django.template.defaultfilters import slugify
@@ -695,7 +696,42 @@ def dropbox_import(request):
     })
            
 
+def age(timestamp):
+    now = datetime.utcnow().replace(tzinfo=utc)
+    created_at = datetime.fromtimestamp(timestamp).replace(tzinfo=utc)
+    
+    age_in_minutes = int((now-created_at).total_seconds())/60
 
+    return age_in_minutes
+
+
+
+def prompt(request):
+    import praw
+    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+    subreddit = r.get_subreddit('writingprompts')
+    prompts = subreddit.get_new(limit=64)
+    new_prompts = list(prompts)
+    prompts = []
+
+    # less than 5 replies, more than 1 upvote and less than 60 minutes old
+    for prompt in new_prompts:
+        if (prompt.score > 1) \
+        and ((prompt.num_comments-2) < 5) \
+        and (age(prompt.created_utc) < 60):
+            if prompt.num_comments > 0:
+                prompt.num_comments -= 2 # remove 2 fake replies
+            prompts.append(prompt)
+
+    # sort by score
+    prompts.sort(key=lambda p: p.score, reverse=True)
+            
+        
+    return render(request, 'posts/prompt.html', {
+        'prompts': prompts[:8],
+    })
+    
+    pass
 
 
 # TODO: replace with CBVs
