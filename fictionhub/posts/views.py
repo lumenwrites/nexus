@@ -699,6 +699,11 @@ def dropbox_import(request):
                 post.post_type = "story"
                 post.imported = True
                 post.published = True
+                try:
+                    if metadata['published'] == False:
+                        post.published = False
+                except:
+                    pass
                 post.save(slug=slug)
 
                 if imported:
