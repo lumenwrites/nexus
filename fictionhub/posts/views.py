@@ -15,6 +15,8 @@ from django.template import RequestContext
 # date
 from datetime import datetime
 from time import mktime
+# slugify dropbox title
+from django.template.defaultfilters import slugify
 
 # My own stuff
 # utility functions
@@ -644,7 +646,10 @@ def dropbox_import(request):
         #               "Date: " + metadata['date'] + \
         #               "Content: " + content
 
-        tags = metadata["tags"].split(",")
+        try:
+            tags = metadata["tags"].split(",")
+        except:
+            tags = []
         import_entry = False
         # Check if post has "fictionhub" in it's tags
         for tag in tags:
@@ -653,7 +658,10 @@ def dropbox_import(request):
 
         if import_entry:
             title = metadata["title"]
-            slug = metadata["slug"]
+            try:
+                slug = metadata["slug"]
+            except:
+                slug = slugify(title)
             body = content
             date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
             try:
