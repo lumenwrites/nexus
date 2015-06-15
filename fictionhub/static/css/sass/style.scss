@@ -22,6 +22,7 @@ $cream: #f6f3ea;
     color: $black;
 }
 
+
 html {
     font-size: 19px;
 }
@@ -84,7 +85,9 @@ blockquote strong {
 
 
 
-
+#page {
+    min-height:82vh;
+}
 
 
 #page li {
