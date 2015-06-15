@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^user/(?P<username>[^\.]+)/feedimport$', views.feed_import),
     url(r'^dropboximport/$', views.dropbox_import),
 
-    url(r'^prompt/$', views.prompt),    
+    url(r'^prompts/$', views.prompt),    
 
     # Edit story
     url(r'^story/add$', views.post_create),
