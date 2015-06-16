@@ -683,7 +683,9 @@ def dropbox_import(request):
                     # if it does - set it as parent
                     # if it doesn't - create it and set it as parent.
                     # don't forget to set it's type as "prompt"
-    
+
+
+
                 post.title = title
                 post.body = body
                 post.date = date
@@ -695,7 +697,17 @@ def dropbox_import(request):
                         post.hubs.add(hub)
                     except:
                         pass
+
                 post.post_type = "story"
+
+                # If it has prompt information - grab the prompt and parent it.
+                try:
+                    prompt = Post.objects.get(slug=metadata["prompt"])
+                    post.parent = prompt
+                    post.post_type = "prompt"
+                except:
+                    pass
+                
                 post.imported = True
                 post.published = True
                 try:
@@ -774,76 +786,55 @@ def prompt(request):
 
     prompt = prompts[0]
 
-    # save prompt
-    # author = request.user
-    # title = prompt.title
-    # body = ""
-    # slug = slugify(title[:32]) # learn to remove [WP] from slug
-
-    # try:
-    #     post = Post.objects.get(slug=slug)
-    # except:
-    #     post = Post(slug=slug)
-    #     post.score = 1
-
-    
-    # post.title = title
-    # post.body = body
-    # post.author = author # separate account?
-    # post.post_type = "prompt"
-    # post.published = True # False
-    # post.imported = True    
-    # post.save(slug=slug)    
-    
     return HttpResponse(prompt.title)
     
 
 
-def prompt_import(request):
-    import praw
-    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-    subreddit = r.get_subreddit('writingprompts')
-    prompts = subreddit.get_new(limit=64)
-    new_prompts = list(prompts)
-    prompts = []
+# def prompt_import(request):
+#     import praw
+#     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+#     subreddit = r.get_subreddit('writingprompts')
+#     prompts = subreddit.get_new(limit=64)
+#     new_prompts = list(prompts)
+#     prompts = []
 
-    # less than 5 replies, more than 1 upvote and less than 60 minutes old
-    for prompt in new_prompts:
-        if (prompt.score > 1) \
-        and ((prompt.num_comments-2) < 5) \
-        and (age(prompt.created_utc) < 60):
-            if prompt.num_comments > 0:
-                prompt.num_comments -= 2 # remove 2 fake replies
-            prompts.append(prompt)
+#     # less than 5 replies, more than 1 upvote and less than 60 minutes old
+#     for prompt in new_prompts:
+#         if (prompt.score > 1) \
+#         and ((prompt.num_comments-2) < 5) \
+#         and (age(prompt.created_utc) < 60):
+#             if prompt.num_comments > 0:
+#                 prompt.num_comments -= 2 # remove 2 fake replies
+#             prompts.append(prompt)
 
-    # sort by score
-    prompts.sort(key=lambda p: p.score, reverse=True)
+#     # sort by score
+#     prompts.sort(key=lambda p: p.score, reverse=True)
 
-    prompt = prompts[0]
+#     prompt = prompts[0]
 
-    # save prompt
-    author = request.user
-    title = prompt.title
-    body = ""
-    slug = slugify(title[:32]) # learn to remove [WP] from slug
+#     # save prompt
+#     author = request.user
+#     title = prompt.title[:255] # deal with too long titles.
+#     body = " "
+#     slug = slugify(title[:32]) # learn to remove [WP] from slug
 
-    # try:
-    #     post = Post.objects.get(slug=slug)
-    # except:
-    #     post = Post(slug=slug)
-    #     post.score = 1
-
+#     try:
+#         post = Post.objects.get(slug=slug)
+#     except:
+#         post = Post(slug=slug)
+#         post.score = 1
     
-    # post.title = title
-    # post.body = body
-    # post.author = author # separate account?
-    # post.post_type = "prompt"
-    # post.published = True # False
-    # post.imported = True    
-    # post.save(slug=slug)    
+#     post.title = title
+#     post.body = body
+#     post.author = author # separate account?
+#     post.post_type = "challenge" #"prompt"
+#     post.state = "voting"
+#     post.published = True # False
+#     post.imported = True    
+#     post.save(slug=slug)    
     
-    return HttpResponse("<span id='title'>"+title+"</span>" + \
-                        "<span id='slug'>"+slug+"</span>")
+#     return HttpResponse("<span id='title'>"+title+"</span>" + \
+#                         "<span id='slug'>"+slug+"</span>")
     
 
 

@@ -65,6 +65,8 @@ class Post(models.Model):
                                             'story': self.parent.slug})            
         elif self.post_type == "challenge":
             return ('view_challenge', None, { 'story': self.slug })            
+        # elif self.post_type == "prompt":
+        #     return ('view_challenge', None, { 'story': self.slug }) # TODO change to prompt
         else:
             return ('view_post', None, { 'story': self.slug })            
 
