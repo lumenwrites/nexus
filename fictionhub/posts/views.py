@@ -745,11 +745,12 @@ def prompts(request):
     new_prompts = list(prompts)
     prompts = []
 
+    max_age = 2*60
     # less than 5 replies, more than 1 upvote and less than 60 minutes old
     for prompt in new_prompts:
         if (prompt.score > 1) \
         and ((prompt.num_comments-2) < 5) \
-        and (age(prompt.created_utc) < 60):
+        and (age(prompt.created_utc) < max_age):
             if prompt.num_comments > 0:
                 prompt.num_comments -= 2 # remove 2 fake replies
             prompts.append(prompt)
@@ -760,6 +761,7 @@ def prompts(request):
         
     return render(request, 'posts/prompt.html', {
         'prompts': prompts[:8],
+        'max_age': max_age,        
     })
 
 

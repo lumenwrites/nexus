@@ -1,3 +1,8 @@
+# to count words
+from string import punctuation
+import re
+import datetime
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -7,6 +12,8 @@ from django.contrib.auth import update_session_auth_hash
 
 from .models import User
 from .forms import RegistrationForm, UserForm
+
+from posts.models import Post
 
 # import praw
 # import webbrowser
@@ -147,3 +154,25 @@ def register(request):
 
 def grant_reddit_access(request):
     pass
+
+def stats(request):
+    user = request.user
+    posts = Post.objects.filter(author=user)
+    today = datetime.date.today()
+    wordcount = 0
+    r = re.compile(r'[{}]'.format(punctuation))
+
+    days = [0]*(today.day+1)
+    for post in posts:
+        no_punctuation = r.sub(' ',post.body)
+        wordcount += len(no_punctuation.split())
+        pub_date = post.pub_date
+        if post.pub_date.month == today.month and post.pub_date.day < len(days):
+            days[post.pub_date.day] += len(no_punctuation.split())
+
+    
+    return render(request, "profiles/test.html", {
+        'wordcount': wordcount,
+        'pub_date':pub_date,
+        'days':days
+    })
