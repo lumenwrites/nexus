@@ -160,19 +160,22 @@ def stats(request):
     posts = Post.objects.filter(author=user)
     today = datetime.date.today()
     wordcount = 0
+    this_month = 0
     r = re.compile(r'[{}]'.format(punctuation))
 
     days = [0]*(today.day+1)
     for post in posts:
         no_punctuation = r.sub(' ',post.body)
-        wordcount += len(no_punctuation.split())
+        number_of_words_in_a_post = len(no_punctuation.split())
+        wordcount += number_of_words_in_a_post
         pub_date = post.pub_date
         if post.pub_date.month == today.month and post.pub_date.day < len(days):
-            days[post.pub_date.day] += len(no_punctuation.split())
-
+            days[post.pub_date.day] += number_of_words_in_a_post
+            this_month += number_of_words_in_a_post
     
     return render(request, "profiles/test.html", {
         'wordcount': wordcount,
+        'this_month': this_month,        
         'pub_date':pub_date,
         'days':days
     })
