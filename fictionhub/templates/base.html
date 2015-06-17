@@ -20,6 +20,8 @@
   <link href="http://fictionhub.io{{request.get_full_path}}" rel="canonical" />
   {% endif %}
 
+  {{request.META.HTTP_HOST}}
+
   {% endblock head %}
 
   <!-- Import css and scripts  -->
