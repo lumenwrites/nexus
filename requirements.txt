@@ -6,3 +6,5 @@ bleach
 beautifulsoup4
 
 dropbox
+
+html2text
