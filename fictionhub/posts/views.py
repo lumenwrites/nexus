@@ -531,23 +531,23 @@ def page_404(request):
     return response
 
 
-def post_feed(request, post):
-    post = Post.objects.get(slug=post)
+def post_feed(request, story):
+    story = Post.objects.get(slug=story)
     rss = Element('rss')
     rss.set("version","2.0")
 
     channel = SubElement(rss,'channel')
 
     title = SubElement(channel,'title')
-    title.text = post.title
+    title.text = story.title
 
     link = SubElement(channel,'link')
-    link.text = "/story/"+post.slug # request.build_absolute_uri(reverse("post"))
+    link.text = "/story/"+story.slug # request.build_absolute_uri(reverse("post"))
 
     desc = SubElement(channel,'description')
-    desc.text = post.description
+    desc.text = story.body
 
-    chapters = post.chapters.all()
+    chapters = story.children.all()
 
     for index in chapters:
         item = SubElement(channel,'item')
@@ -557,7 +557,7 @@ def post_feed(request, post):
         
         link = SubElement(item,'link')
         #link.text = request.build_absolute_uri(index.get_absolute_url())
-        link.text = "/story/"+post.slug
+        link.text = "/story/"+story.slug
     return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
 
 
