@@ -540,7 +540,7 @@ def post_feed(request, post):
     title.text = post.title
 
     link = SubElement(channel,'link')
-    link.text = "http://fictionhub.io/story/"+post.slug # request.build_absolute_uri(reverse("post"))
+    link.text = "/story/"+post.slug # request.build_absolute_uri(reverse("post"))
 
     desc = SubElement(channel,'description')
     desc.text = post.description
@@ -555,7 +555,7 @@ def post_feed(request, post):
         
         link = SubElement(item,'link')
         #link.text = request.build_absolute_uri(index.get_absolute_url())
-        link.text = "http://fictionhub.io/story/"+post.slug
+        link.text = "/story/"+post.slug
     return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
 
 

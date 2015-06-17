@@ -6,9 +6,16 @@
   {% block head %}
   <meta charset="utf-8" />
 
-  <title> {% block title %} fictionhub {% endblock title %} </title>
-  {% endblock %}
-
+  <title>
+    {% block title %} 
+    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "rationalfiction.io"  %}
+    rationalfiction     
+    {% else %}	    
+    fictionhub 
+    {% endif %}	    
+    {% endblock %}
+    {% endblock title %}
+  </title>
   <!-- Import css and scripts  -->
   <link rel="stylesheet" href="{% static "/static/foundation/css/foundation.css" %}" />
   <link rel="stylesheet" href="{% static "/static/foundation/css/foundation-icons/foundation-icons.css" %}" />
