@@ -16,6 +16,10 @@
     {% endblock title %}
   </title>
 
+  {% if  request.META.HTTP_HOST == "http://rationalfiction.io"  %}
+  <link href="http://fictionhub.io{{request.get_full_path}}" rel="canonical" />
+  {% endif %}
+
   {% endblock head %}
 
   <!-- Import css and scripts  -->
