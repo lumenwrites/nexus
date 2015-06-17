@@ -91,7 +91,7 @@
 	{% if user.is_authenticated %}      
 	<a class="show-reply">reply</a>
 	{% endif %}        
-	<a href="/story/{{story.slug}}/comment/{{comment.id}}#id-{{comment.id}}">permalink</a>
+	<a href="{{comment.get_absolute_url}}#comments">permalink</a>
 	{% if comment.author == user %}        
 	<a href="/comment/{{comment.id}}/edit?next={{request.path}}">edit</a>
 	<a href="/comment/{{comment.id}}/delete?next={{request.path}}">delete</a>

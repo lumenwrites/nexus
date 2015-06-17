@@ -45,3 +45,8 @@ class Comment(models.Model):
         return string_name
     
 
+    @permalink
+    def get_absolute_url(self):
+        return ('view_comment', None, { 'story': self.post.slug,
+                                            'comment_id': self.id })
+        

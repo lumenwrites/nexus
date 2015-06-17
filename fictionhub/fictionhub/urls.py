@@ -33,8 +33,8 @@ urlpatterns = [
 
     url(r'', include(profiles_urls)),
     url(r'', include(hubs_urls)),
-    url(r'', include(posts_urls)),    
     url(r'', include(comments_urls)),
+    url(r'', include(posts_urls)),    
 
 
     url(r'^test/$', views.test),        

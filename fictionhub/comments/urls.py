@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^comment/(?P<comment_id>[^\.]+)/delete', views.comment_delete), 
     
     # view comment
-    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', post),
+    url(r'^story/(?P<story>[^\.]+)/comment/(?P<comment_id>[^\.]+)', post, name="view_comment"),
 
     url(r'^user/(?P<username>[^\.]+)/comments$', views.comments_user,
         {'filterby': 'comments_user'}),
