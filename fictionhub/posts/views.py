@@ -3,6 +3,8 @@ import re, praw
 from xml.etree.ElementTree import Element, SubElement, tostring # for rss
 import json # for temporary post api. Replace with REST.
 import feedparser
+from bs4 import BeautifulSoup # to parse prompt
+from html2text import html2text
 
 # core django components
 from django.shortcuts import render, get_object_or_404
@@ -704,7 +706,7 @@ def dropbox_import(request):
                 try:
                     prompt = Post.objects.get(slug=metadata["prompt"])
                     post.parent = prompt
-                    post.post_type = "prompt"
+                    post.parent.post_type = "prompt"
                 except:
                     pass
                 
@@ -767,7 +769,6 @@ def prompts(request):
 
 
 def prompt(request):
-    import praw
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')
     prompts = subreddit.get_new(limit=64)
@@ -792,51 +793,79 @@ def prompt(request):
     
 
 
-# def prompt_import(request):
-#     import praw
-#     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-#     subreddit = r.get_subreddit('writingprompts')
-#     prompts = subreddit.get_new(limit=64)
-#     new_prompts = list(prompts)
-#     prompts = []
+def prompt_import(request):
+    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+    subreddit = r.get_subreddit('writingprompts')
+    prompts = subreddit.get_new(limit=64)
+    new_prompts = list(prompts)
+    prompts = []
 
-#     # less than 5 replies, more than 1 upvote and less than 60 minutes old
-#     for prompt in new_prompts:
-#         if (prompt.score > 1) \
-#         and ((prompt.num_comments-2) < 5) \
-#         and (age(prompt.created_utc) < 60):
-#             if prompt.num_comments > 0:
-#                 prompt.num_comments -= 2 # remove 2 fake replies
-#             prompts.append(prompt)
+    # less than 5 replies, more than 1 upvote and less than 60 minutes old
+    for prompt in new_prompts:
+        if (prompt.score > 1) \
+        and ((prompt.num_comments-2) < 5) \
+        and (age(prompt.created_utc) < 60):
+            if prompt.num_comments > 0:
+                prompt.num_comments -= 2 # remove 2 fake replies
+            prompts.append(prompt)
 
-#     # sort by score
-#     prompts.sort(key=lambda p: p.score, reverse=True)
+    # sort by score
+    prompts.sort(key=lambda p: p.score, reverse=True)
 
-#     prompt = prompts[0]
+    prompt = prompts[0]
 
-#     # save prompt
-#     author = request.user
-#     title = prompt.title[:255] # deal with too long titles.
-#     body = " "
-#     slug = slugify(title[:32]) # learn to remove [WP] from slug
+    # save prompt
+    author = request.user
+    title = prompt.title[:255] # deal with too long titles.
+    body = prompt.title
+    slug = slugify(title[:32]) # learn to remove [WP] from slug
 
-#     try:
-#         post = Post.objects.get(slug=slug)
-#     except:
-#         post = Post(slug=slug)
-#         post.score = 1
+    try:
+        post = Post.objects.get(slug=slug)
+    except:
+        post = Post(slug=slug)
+        post.score = 1
     
-#     post.title = title
-#     post.body = body
-#     post.author = author # separate account?
-#     post.post_type = "challenge" #"prompt"
-#     post.state = "voting"
-#     post.published = True # False
-#     post.imported = True    
-#     post.save(slug=slug)    
+    post.title = title
+    post.body = body
+    post.reddit_url = prompt.url
+    post.author = author # separate account?
+    post.post_type = "prompt"
+    post.state = "voting"
+    post.published = True # False
+    post.imported = True    
+    post.save(slug=slug)    
     
-#     return HttpResponse("<span id='title'>"+title+"</span>" + \
-#                         "<span id='slug'>"+slug+"</span>")
+    return HttpResponse("<span id='title'>"+title+"</span>" + \
+                        "<span id='slug'>"+slug+"</span>")
+
+def prompt_repost(request, story):
+    story = Post.objects.get(slug=story)
+    prompt = story.parent.body
+    prompt_url = story.parent.reddit_url    
+
+    r = praw.Reddit(user_agent='Test Script by /u/raymestalez')
+    r.login(os.environ["REDDIT_USERNAME"],os.environ["REDDIT_PASSWORD"])
+    subreddit = r.get_subreddit('OrangeMind')
+    # thread = list(r.search("[WP]", subreddit=subreddit, sort="new", syntax='cloudsearch'))[0]
+
+    if story.reddit_url:
+        comment = r.get_submission(story.reddit_url).comments[0]
+        comment.edit(html2text(story.body))
+    else:
+        thread = r.get_submission(url = prompt_url)
+        comment = thread.add_comment(html2text(story.body))
+        story.reddit_url = comment.permalink
+        story.save()
+        
+    teststring = "<br/>url: " + prompt_url + \
+                 "<br/>Reddit premalink: " + comment.permalink
+
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
+    })
+
+    
     
 
 

@@ -37,9 +37,10 @@ urlpatterns = [
     url(r'', include(comments_urls)),
 
 
+    url(r'^test/$', views.test),        
     
     # Front page
-    url(r'^$', views.home),    
+    url(r'^$', views.home),
 
     # url(r'.*', stories.views.page_404),
 ]

@@ -46,8 +46,13 @@
       <!-- Logo -->      
         <div class="large-7 columns" >
           <a href="/" class="logo">
+	    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "rationalfiction.io"  %}
+	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+	    rational<span class="bold">fiction</span>
+	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+	    {% endif %}	    
 	  </a>
         </div>
 

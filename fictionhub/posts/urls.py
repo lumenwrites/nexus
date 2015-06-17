@@ -12,12 +12,16 @@ urlpatterns = [
 
     # Submissions list
     url(r'^challenge/(?P<challenge>[^\.]+)/submissions$', views.posts,
+        {'filterby':'challenge'}),
+    url(r'^prompt/(?P<challenge>[^\.]+)/submissions$', views.posts,
         {'filterby':'challenge'}),                
 
     # Challenge
     url(r'^challenge/(?P<challenge>[^\.]+)/submit-story$', views.post_create),            
     url(r'^challenge/(?P<story>[^\.]+)$', views.post, name='view_challenge'),
 
+    url(r'^prompt/(?P<story>[^\.]+)$', views.post, name='view_prompt'),    
+    url(r'^story/(?P<story>[^\.]+)/repost$', views.prompt_repost),    
 
     # url(r'^challenges/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
     #     {'filterby': 'challenges'}),    
@@ -34,7 +38,7 @@ urlpatterns = [
     url(r'^prompts/$', views.prompts),
     url(r'^prompt/$', views.prompt),
 
-    # url(r'^prompt-import/$', views.prompt_import),            
+    url(r'^prompt-import/$', views.prompt_import),            
 
     # Edit story
     url(r'^story/add$', views.post_create),

@@ -43,12 +43,14 @@ class Post(models.Model):
     # Chapter
     number = models.IntegerField(default=1)        
 
-    
+    # reddit url
+    reddit_url = models.URLField(max_length=256, blank=True, null=True, default="")
+
     def __str__(self):
         return self.title
 
     def save(self, slug="", *args, **kwargs):
-        if self.imported == True and slug != "":
+        if (self.imported == True or self.post_type == "prompt") and slug != "":
             self.slug = slug            
         else:
             self.slug = slugify(self.title)
@@ -65,8 +67,8 @@ class Post(models.Model):
                                             'story': self.parent.slug})            
         elif self.post_type == "challenge":
             return ('view_challenge', None, { 'story': self.slug })            
-        # elif self.post_type == "prompt":
-        #     return ('view_challenge', None, { 'story': self.slug }) # TODO change to prompt
+        elif self.post_type == "prompt":
+            return ('view_prompt', None, { 'story': self.slug })
         else:
             return ('view_post', None, { 'story': self.slug })            
 

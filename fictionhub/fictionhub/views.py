@@ -17,4 +17,8 @@ def home(request):
     })
 
 def test(request):
-    return render(request, 'test.html')
+    test = request.META['HTTP_HOST']
+    return render(request, 'test.html', {
+        'test':test,
+        'domain':request.META['HTTP_HOST']
+})
