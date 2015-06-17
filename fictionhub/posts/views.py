@@ -6,6 +6,7 @@ import feedparser
 from bs4 import BeautifulSoup # to parse prompt
 from html2text import html2text
 
+
 # core django components
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
@@ -25,6 +26,7 @@ from django.template.defaultfilters import slugify
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
+from .ffnet import Munger, FFNetAdapter
 # Forms
 from .forms import PostForm
 from comments.forms import CommentForm
@@ -582,22 +584,28 @@ def post_json(request, slug):
 
 
 # import feed
-def feed_import(request, username):
-    feed = feedparser.parse("http://orangemind.io/feeds/all.atom.xml")
+def feed_import(request):
+    feed = feedparser.parse(request.user.rss_feed)
 
     author = request.user
+
+    teststring = "Imported: "
     
     for entry in feed.entries:
         import_entry = False
         # Check if post has "fictionhub" in it's tags
-        if "tags" in entry.keys():
-            for tag in entry.tags:
-                if tag.term == "fictionhub":
-                    import_entry = True
+        if author.categories_to_import == "":
+            import_entry = True            
+        else:
+            if "tags" in entry.keys():
+                for tag in entry.tags:
+                    if tag.term == "fictionhub":
+                        import_entry = True
+                        # check if it's in categories to import splitted by comma
         if import_entry:
             title = entry.title
             slug = entry.link.rsplit('/',1)[-1]
-            body = entry.description
+            body = html2text(entry.description)
             date = datetime.fromtimestamp(mktime(entry.updated_parsed))        
             try:
                 # Open existing post
@@ -609,7 +617,7 @@ def feed_import(request, username):
                 
             post.title = title
             post.body = body
-            post.date = date
+            post.pub_date = date
             post.author = author
             for tag in entry.tags:
                 # post.title = post.title + " " + tag.term
@@ -622,8 +630,68 @@ def feed_import(request, username):
             post.imported = True
             post.published = True
             post.save(slug=slug)
-    return HttpResponse()
+            teststring += title + " "
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
+    })
 
+def ffnet_import(request):
+    author = request.user
+
+    url = "https://www.fanfiction.net/s/2468349/1/Daily-Prophet-My-Ass"
+    url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
+    
+    munger = Munger(url, FFNetAdapter())
+    imported_story = munger.DownloadStory()
+
+    imported_story_title = str(imported_story.title)
+
+    try:
+        story = Post.objects.get(slug=slugify(imported_story_title))
+    except:
+        story = Post()
+    story.title = imported_story_title
+    story.author = author
+    story.post_type = "story"
+    story.imported = True
+    story.published = True
+
+    if imported_story.chapters[0].title:
+        story.body = " "
+    else:
+        contents = imported_story.chapters[0].contents
+        contents = html2text(str(contents))
+        story.body = contents
+    story.save()
+
+    teststring = "Imported: " + story.title + "<br/>"
+
+    if imported_story.chapters[0].title:
+        for index, imported_chapter in enumerate(imported_story.chapters):
+            title = imported_chapter.title.split(".",1)[1].strip()
+            # title = story.title + "| Chapter " + str(story.children.count()+1)
+            contents = imported_chapter.contents
+            contents = html2text(str(contents))
+    
+            try:
+                chapter = Post.objects.get(slug=slugify(title))
+            except:
+                chapter = Post()
+            chapter.title = title
+            chapter.body = contents
+            chapter.number = index
+            chapter.author = author
+            chapter.post_type = "chapter"
+            chapter.imported = True
+            chapter.parent = story
+            chapter.save()
+            teststring += "Imported: " + chapter.title + "<br/>"
+        
+    
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
+    })
+    
 
 def dropbox_import(request):
     author = request.user
@@ -693,7 +761,7 @@ def dropbox_import(request):
 
                 post.title = title
                 post.body = body
-                post.date = date
+                post.pub_date = date
                 post.author = author
                 for tag in tags:
                     # post.title = post.title + " " + tag.term
