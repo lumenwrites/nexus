@@ -346,6 +346,8 @@ def post_create(request, story="", challenge=""):
             if story:
                 post.parent = Post.objects.get(slug=story)
                 post.post_type = "chapter"
+                number_of_chapters = post.parent.children.count()
+                post.number = number_of_chapters + 1
             if challenge:
                 post.parent = Post.objects.get(slug=challenge)
             post.save()
