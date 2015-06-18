@@ -26,7 +26,7 @@ from django.template.defaultfilters import slugify
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
-from .ffnet import Munger, FFNetAdapter
+# from .ffnet import Munger, FFNetAdapter
 # Forms
 from .forms import PostForm
 from comments.forms import CommentForm

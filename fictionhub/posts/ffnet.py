@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-# TODO: image support
+# TODO: add to requirements.txt what's needed.
 
 import argparse
 import codecs
