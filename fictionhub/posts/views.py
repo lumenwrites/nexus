@@ -34,6 +34,7 @@ from comments.forms import CommentForm
 from hubs.forms import HubForm
 # Models
 from .models import Post
+from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
@@ -639,7 +640,7 @@ def post_json(request, slug):
 def ffnet_import(request):
     author = request.user
 
-    url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
+    url = Util.objects.get(pk=1).ffnet_url
     
     munger = Munger(url, FFNetAdapter())
     imported_story = munger.DownloadStory()
@@ -690,7 +691,7 @@ def ffnet_import(request):
             teststring += "Imported: " + chapter.title + "<br/>"
         
     
-    return render(request, 'posts/test.html', {
+    return render(request, 'posts/import.html', {
         'teststring': teststring,
     })
     
