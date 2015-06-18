@@ -8,3 +8,5 @@ beautifulsoup4
 dropbox
 
 html2text
+
+pycurl
