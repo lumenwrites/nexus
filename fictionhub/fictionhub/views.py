@@ -6,7 +6,11 @@ from posts.utils import rank_hot, rank_top
 from hubs.models import Hub
 
 def home(request):
-    posts = Post.objects.filter(published=True)    
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
+        rational = True
+
+    posts = Post.objects.filter(published=True, rational=rational)    
     hot_posts = rank_hot(posts, top=32)[:10]
     new_posts = posts.order_by('-pub_date')[:10]
     hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')

@@ -54,6 +54,10 @@ def posts(request, rankby="hot", timespan="all-time",
     if not challenge:
         challenge = []
 
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
+        rational = True
+
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
     else:
@@ -61,14 +65,14 @@ def posts(request, rankby="hot", timespan="all-time",
     
     if filterby == "subscriptions":
         subscribed_to = request.user.subscribed_to.all()
-        posts = Post.objects.filter(author=subscribed_to, published=True)
+        posts = Post.objects.filter(author=subscribed_to, published=True, rational = rational)
         filterurl="/subscriptions" # to add to href  in subnav
     elif filterby == "hub":
         hub = Hub.objects.get(slug=hubslug)
         # Show posts from all the children hubs? Don't know how to sort.
         # children = Hub.objects.filter(parent=hub)
         # hubs = []
-        posts = Post.objects.filter(hubs=hub, published=True)
+        posts = Post.objects.filter(hubs=hub, published=True, rational = rational)
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
         userprofile = get_object_or_404(User, username=username)
@@ -76,10 +80,10 @@ def posts(request, rankby="hot", timespan="all-time",
             # If it's my profile - display all the posts, even unpublished.
             posts = Post.objects.filter(author=userprofile)
         else:
-            posts = Post.objects.filter(author=userprofile, published=True)
+            posts = Post.objects.filter(author=userprofile, published=True, rational = rational)
         filterurl="/user/"+username # to add to href  in subnav
     elif filterby == "challenges":
-        posts = Post.objects.filter(post_type = "challenge", published=True)
+        posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational)
         rankby = "new"
     elif filterby == "challenge":
         challenge = Post.objects.get(slug=challenge)
@@ -87,9 +91,9 @@ def posts(request, rankby="hot", timespan="all-time",
             rankby = "new" # later do random
         elif challenge.state == "completed":            
             rankby = "top"
-        posts = Post.objects.filter(parent=challenge, published=True)
+        posts = Post.objects.filter(parent=challenge, published=True, rational = rational)
     else:
-        posts = Post.objects.filter(published=True)
+        posts = Post.objects.filter(published=True, rational = rational)
         filterurl="/stories"
 
     if rankby == "hot":
@@ -339,6 +343,10 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     })
 
 def post_create(request, story="", challenge=""):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
+        rational = True
+    
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -347,6 +355,7 @@ def post_create(request, story="", challenge=""):
             # self upvote
             post.score += 1
             post.post_type = "story"
+            post.rational = rational
             if story:
                 post.parent = Post.objects.get(slug=story)
                 post.post_type = "chapter"
@@ -403,6 +412,9 @@ def post_edit(request, story, chapter=""):
         chapter = Post.objects.get(slug=chapter)
         action="chapter_edit"
 
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
+        rational = True
 
     # throw him out if he's not an author
     if request.user != story.author:
@@ -416,6 +428,7 @@ def post_edit(request, story, chapter=""):
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             post.post_type = "story"
+            post.rational = rational
             if chapter:
                 post.post_type = "chapter"
                 post.parent = story
