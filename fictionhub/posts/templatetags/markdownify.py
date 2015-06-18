@@ -8,11 +8,11 @@ register = template.Library()
  
 @register.filter
 def markdownify(text, short = "False"):
-    # if short == "True":
-    try:
-        text = text.split("<!-- more -->")[0].strip()
-    except:
-        pass
+    if short == "True":
+        try:
+            text = text.split("<!-- more -->")[0].strip()
+        except:
+            pass
     html = markdown.markdown(text)
 
     # linkify_html = bleach.linkify(html)

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup # to parse prompt
 from html2text import html2text
 
 
+
 # core django components
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
@@ -26,7 +27,7 @@ from django.template.defaultfilters import slugify
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
-# from .ffnet import Munger, FFNetAdapter
+from .ffnet import Munger, FFNetAdapter
 # Forms
 from .forms import PostForm
 from comments.forms import CommentForm
@@ -635,62 +636,63 @@ def post_json(request, slug):
 #         'teststring': teststring,
 #     })
 
-# def ffnet_import(request):
-#     author = request.user
+def ffnet_import(request):
+    author = request.user
 
-#     url = "https://www.fanfiction.net/s/2468349/1/Daily-Prophet-My-Ass"
-#     url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
+    url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
     
-#     munger = Munger(url, FFNetAdapter())
-#     imported_story = munger.DownloadStory()
+    munger = Munger(url, FFNetAdapter())
+    imported_story = munger.DownloadStory()
 
-#     imported_story_title = str(imported_story.title)
+    imported_story_title = str(imported_story.title)
 
-#     try:
-#         story = Post.objects.get(slug=slugify(imported_story_title))
-#     except:
-#         story = Post()
-#     story.title = imported_story_title
-#     story.author = author
-#     story.post_type = "story"
-#     story.imported = True
-#     story.published = True
+    try:
+        story = Post.objects.get(slug=slugify(imported_story_title))
+    except:
+        story = Post()
+    story.title = imported_story_title
+    story.author = author
+    story.post_type = "story"
+    story.imported = True
+    story.rational = True    
+    story.published = True
 
-#     if imported_story.chapters[0].title:
-#         story.body = " "
-#     else:
-#         contents = imported_story.chapters[0].contents
-#         contents = html2text(str(contents))
-#         story.body = contents
-#     story.save()
 
-#     teststring = "Imported: " + story.title + "<br/>"
+    if imported_story.chapters[0].title:
+        story.body = " "
+    else:
+        contents = imported_story.chapters[0].contents
+        contents = html2text(str(contents))
+        story.body = contents
+    story.save()
 
-#     if imported_story.chapters[0].title:
-#         for index, imported_chapter in enumerate(imported_story.chapters):
-#             title = imported_chapter.title.split(".",1)[1].strip()
-#             # title = story.title + "| Chapter " + str(story.children.count()+1)
-#             contents = imported_chapter.contents
-#             contents = html2text(str(contents))
+    teststring = "Imported: " + story.title + "<br/>"
+
+    if imported_story.chapters[0].title:
+        for index, imported_chapter in enumerate(imported_story.chapters):
+            title = imported_chapter.title.split(".",1)[1].strip()
+            # title = story.title + "| Chapter " + str(story.children.count()+1)
+            contents = imported_chapter.contents
+            contents = html2text(str(contents))
     
-#             try:
-#                 chapter = Post.objects.get(slug=slugify(title))
-#             except:
-#                 chapter = Post()
-#             chapter.title = title
-#             chapter.body = contents
-#             chapter.number = index
-#             chapter.author = author
-#             chapter.post_type = "chapter"
-#             chapter.imported = True
-#             chapter.parent = story
-#             chapter.save()
-#             teststring += "Imported: " + chapter.title + "<br/>"
+            try:
+                chapter = Post.objects.get(slug=slugify(title))
+            except:
+                chapter = Post()
+            chapter.title = title
+            chapter.body = contents
+            chapter.number = index
+            chapter.author = author
+            chapter.post_type = "chapter"
+            chapter.imported = True
+            chapter.parent = story
+            chapter.save()
+            teststring += "Imported: " + chapter.title + "<br/>"
         
     
-#     return render(request, 'posts/test.html', {
-#         'teststring': teststring,
-#     })
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
+    })
     
 
 def dropbox_import(request):
@@ -740,6 +742,9 @@ def dropbox_import(request):
                     slug = metadata["slug"]
                 except:
                     slug = slugify(title)
+                    
+                # remove meta from text??
+                text = text.split("\n")[1:].strip()                
                 body = text # content
                 date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
 

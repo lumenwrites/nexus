@@ -18,6 +18,7 @@ class Post(models.Model):
     score = models.IntegerField(default=0)
 
     imported = models.BooleanField(default=False)
+    rational = models.BooleanField(default=False)    
 
     parent = models.ForeignKey('Post', related_name="children",default=None, null=True, blank=True)
 
