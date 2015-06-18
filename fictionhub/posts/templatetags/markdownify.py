@@ -13,7 +13,7 @@ def markdownify(text, short = "False"):
             text = text.split("<!-- more -->")[0].strip()
         except:
             pass
-        text = text[:512]
+        text = text[:1024]
     html = markdown.markdown(text)
 
     # linkify_html = bleach.linkify(html)
