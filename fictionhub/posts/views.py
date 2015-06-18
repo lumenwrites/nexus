@@ -699,6 +699,7 @@ def ffnet_import(request):
             chapter.author = author
             chapter.post_type = "chapter"
             chapter.imported = True
+            chapter.rational = True
             chapter.parent = story
             chapter.save()
             teststring += "Imported: " + chapter.title + "<br/>"
