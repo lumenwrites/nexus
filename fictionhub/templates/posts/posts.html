@@ -48,7 +48,7 @@
 	<hr />
       </header>
       <!-- Post Body -->
-      {{post.body | markdownify | safe }}
+      {{post.body | markdownify:"True" | safe }}
       <div class="clearfix"></div>
       <div class="readmore">
 	<a href="{{post.get_absolute_url }}" class="right"> read more >>>> </a>

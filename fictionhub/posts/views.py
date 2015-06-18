@@ -740,7 +740,7 @@ def dropbox_import(request):
                     slug = metadata["slug"]
                 except:
                     slug = slugify(title)
-                body = content
+                body = text # content
                 date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
 
 
