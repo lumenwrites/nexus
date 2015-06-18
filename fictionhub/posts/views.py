@@ -735,12 +735,16 @@ def dropbox_import(request):
     
             if import_entry:
                 title = metadata["title"]
+                # Slug
                 try:
                     slug = metadata["slug"]
                 except:
                     slug = slugify(title)
                 body = content
                 date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
+
+
+                # Get or create
                 try:
                 # Open existing post
                     post = Post.objects.get(slug=slug)
@@ -750,7 +754,7 @@ def dropbox_import(request):
                     post = Post(slug=slug)
                     post.score = 1
                     imported += title + " "
-    
+
                     # If it is a writing prompt
                     # try and see if it has metadata["promptslug"]
                     # check if propmt with this slug exists
@@ -758,12 +762,18 @@ def dropbox_import(request):
                     # if it doesn't - create it and set it as parent.
                     # don't forget to set it's type as "prompt"
 
+                    
 
 
                 post.title = title
                 post.body = body
                 post.pub_date = date
                 post.author = author
+
+                post.imported = True
+                post.published = True
+
+                # Tags
                 for tag in tags:
                     # post.title = post.title + " " + tag.term
                     try:
@@ -771,26 +781,46 @@ def dropbox_import(request):
                         post.hubs.add(hub)
                     except:
                         pass
-
+                    
                 post.post_type = "story"
 
-                # If it has prompt information - grab the prompt and parent it.
+                # Prompt
                 try:
                     prompt = Post.objects.get(slug=metadata["prompt"])
                     post.parent = prompt
                     post.parent.post_type = "prompt"
                 except:
                     pass
-                
-                post.imported = True
-                post.published = True
+
+                # Parent
+                try:
+                    parent = Post.objects.get(slug=metadata["parent"])
+                    post.parent = parent
+                    post.post_type = "chapter"
+                    post.parent.post_type = "story"
+                    post.published = False
+                except:
+                    pass
+
+                # Number
+                try:
+                    number = metadata["number"]
+                    post.number = int(number)
+                except:
+                    pass                
+
+
+                # Published
                 try:
                     if metadata['published'] == "False":
                         post.published = False
                 except:
                     pass
+
+                # Save
                 post.save(slug=slug)
 
+                # Test
                 if imported:
                     teststring += "Imported: " + imported + "<br/>"
                 if updated:
