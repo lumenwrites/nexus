@@ -28,7 +28,7 @@ class RegistrationForm(UserCreationForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'website', 'rss_feed', 'categories_to_import', 'about'] 
+        fields = ['username', 'email', 'website', 'about'] # 'rss_feed', 'categories_to_import',
         widgets = {
             'username' : forms.TextInput(attrs = {'placeholder': 'Username'}),
             'email'    : forms.TextInput(attrs = {'placeholder': 'E-Mail'}),

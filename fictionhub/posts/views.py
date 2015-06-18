@@ -584,113 +584,113 @@ def post_json(request, slug):
 
 
 # import feed
-def feed_import(request):
-    feed = feedparser.parse(request.user.rss_feed)
+# def feed_import(request):
+#     feed = feedparser.parse(request.user.rss_feed)
 
-    author = request.user
+#     author = request.user
 
-    teststring = "Imported: "
+#     teststring = "Imported: "
     
-    for entry in feed.entries:
-        import_entry = False
-        # Check if post has "fictionhub" in it's tags
-        if author.categories_to_import == "":
-            import_entry = True            
-        else:
-            if "tags" in entry.keys():
-                for tag in entry.tags:
-                    if tag.term == "fictionhub":
-                        import_entry = True
-                        # check if it's in categories to import splitted by comma
-        if import_entry:
-            title = entry.title
-            slug = entry.link.rsplit('/',1)[-1]
-            body = html2text(entry.description)
-            date = datetime.fromtimestamp(mktime(entry.updated_parsed))        
-            try:
-                # Open existing post
-                post = Post.objects.get(slug=slug)
-            except:
-                # Import post
-                post = Post(slug=slug)
-                post.score = 1
+#     for entry in feed.entries:
+#         import_entry = False
+#         # Check if post has "fictionhub" in it's tags
+#         if author.categories_to_import == "":
+#             import_entry = True            
+#         else:
+#             if "tags" in entry.keys():
+#                 for tag in entry.tags:
+#                     if tag.term == "fictionhub":
+#                         import_entry = True
+#                         # check if it's in categories to import splitted by comma
+#         if import_entry:
+#             title = entry.title
+#             slug = entry.link.rsplit('/',1)[-1]
+#             body = html2text(entry.description)
+#             date = datetime.fromtimestamp(mktime(entry.updated_parsed))        
+#             try:
+#                 # Open existing post
+#                 post = Post.objects.get(slug=slug)
+#             except:
+#                 # Import post
+#                 post = Post(slug=slug)
+#                 post.score = 1
                 
-            post.title = title
-            post.body = body
-            post.pub_date = date
-            post.author = author
-            for tag in entry.tags:
-                # post.title = post.title + " " + tag.term
-                try:
-                    hub = Hub.objects.get(slug=tag.term)
-                    post.hubs.add(hub)
-                except:
-                    pass
-            post.post_type = "story"
-            post.imported = True
-            post.published = True
-            post.save(slug=slug)
-            teststring += title + " "
-    return render(request, 'posts/test.html', {
-        'teststring': teststring,
-    })
+#             post.title = title
+#             post.body = body
+#             post.pub_date = date
+#             post.author = author
+#             for tag in entry.tags:
+#                 # post.title = post.title + " " + tag.term
+#                 try:
+#                     hub = Hub.objects.get(slug=tag.term)
+#                     post.hubs.add(hub)
+#                 except:
+#                     pass
+#             post.post_type = "story"
+#             post.imported = True
+#             post.published = True
+#             post.save(slug=slug)
+#             teststring += title + " "
+#     return render(request, 'posts/test.html', {
+#         'teststring': teststring,
+#     })
 
-def ffnet_import(request):
-    author = request.user
+# def ffnet_import(request):
+#     author = request.user
 
-    url = "https://www.fanfiction.net/s/2468349/1/Daily-Prophet-My-Ass"
-    url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
+#     url = "https://www.fanfiction.net/s/2468349/1/Daily-Prophet-My-Ass"
+#     url = "https://www.fanfiction.net/s/10360716/" #metropolitan man
     
-    munger = Munger(url, FFNetAdapter())
-    imported_story = munger.DownloadStory()
+#     munger = Munger(url, FFNetAdapter())
+#     imported_story = munger.DownloadStory()
 
-    imported_story_title = str(imported_story.title)
+#     imported_story_title = str(imported_story.title)
 
-    try:
-        story = Post.objects.get(slug=slugify(imported_story_title))
-    except:
-        story = Post()
-    story.title = imported_story_title
-    story.author = author
-    story.post_type = "story"
-    story.imported = True
-    story.published = True
+#     try:
+#         story = Post.objects.get(slug=slugify(imported_story_title))
+#     except:
+#         story = Post()
+#     story.title = imported_story_title
+#     story.author = author
+#     story.post_type = "story"
+#     story.imported = True
+#     story.published = True
 
-    if imported_story.chapters[0].title:
-        story.body = " "
-    else:
-        contents = imported_story.chapters[0].contents
-        contents = html2text(str(contents))
-        story.body = contents
-    story.save()
+#     if imported_story.chapters[0].title:
+#         story.body = " "
+#     else:
+#         contents = imported_story.chapters[0].contents
+#         contents = html2text(str(contents))
+#         story.body = contents
+#     story.save()
 
-    teststring = "Imported: " + story.title + "<br/>"
+#     teststring = "Imported: " + story.title + "<br/>"
 
-    if imported_story.chapters[0].title:
-        for index, imported_chapter in enumerate(imported_story.chapters):
-            title = imported_chapter.title.split(".",1)[1].strip()
-            # title = story.title + "| Chapter " + str(story.children.count()+1)
-            contents = imported_chapter.contents
-            contents = html2text(str(contents))
+#     if imported_story.chapters[0].title:
+#         for index, imported_chapter in enumerate(imported_story.chapters):
+#             title = imported_chapter.title.split(".",1)[1].strip()
+#             # title = story.title + "| Chapter " + str(story.children.count()+1)
+#             contents = imported_chapter.contents
+#             contents = html2text(str(contents))
     
-            try:
-                chapter = Post.objects.get(slug=slugify(title))
-            except:
-                chapter = Post()
-            chapter.title = title
-            chapter.body = contents
-            chapter.number = index
-            chapter.author = author
-            chapter.post_type = "chapter"
-            chapter.imported = True
-            chapter.parent = story
-            chapter.save()
-            teststring += "Imported: " + chapter.title + "<br/>"
+#             try:
+#                 chapter = Post.objects.get(slug=slugify(title))
+#             except:
+#                 chapter = Post()
+#             chapter.title = title
+#             chapter.body = contents
+#             chapter.number = index
+#             chapter.author = author
+#             chapter.post_type = "chapter"
+#             chapter.imported = True
+#             chapter.parent = story
+#             chapter.save()
+#             teststring += "Imported: " + chapter.title + "<br/>"
         
     
-    return render(request, 'posts/test.html', {
-        'teststring': teststring,
-    })
+#     return render(request, 'posts/test.html', {
+#         'teststring': teststring,
+#     })
     
 
 def dropbox_import(request):
@@ -724,6 +724,7 @@ def dropbox_import(request):
     
             try:
                 tags = metadata["tags"].split(",")
+                tags = [tag.strip() for tag in tags]
             except:
                 tags = []
             import_entry = False

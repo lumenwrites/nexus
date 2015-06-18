@@ -8,7 +8,7 @@
 
   <title>
     {% block title %} 
-    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "rationalfiction.io"  %}
+    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
     rationalfiction     
     {% else %}	    
     fictionhub 
@@ -59,9 +59,15 @@
       <!-- Logo -->      
         <div class="large-7 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "rationalfiction.io"  %}
+	    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
 	    rational<span class="bold">fiction</span>
+	    <!-- 
+	    <img style="border-radius: 65px;
+			padding: 3px;
+			background: black;"
+		 src="http://i.imgur.com/7S2KYdJ.png"/>
+	    -->
 	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
