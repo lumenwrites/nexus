@@ -682,7 +682,7 @@ def ffnet_import(request):
                 chapter = Post()
             chapter.title = title
             chapter.body = contents
-            chapter.number = index
+            chapter.number = index + 1
             chapter.author = author
             chapter.post_type = "chapter"
             chapter.imported = True
