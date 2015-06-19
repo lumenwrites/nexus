@@ -159,7 +159,7 @@ def search(request, rankby="top", timespan="all-time"):
 
     query = ""
     selectedhubs = ""
-    filterhubs = ""
+    filterhubs = []
     if request.method == 'POST':
         selectedhubs = request.POST.getlist('selectedhubs')
         filterhubs = []
@@ -184,12 +184,12 @@ def search(request, rankby="top", timespan="all-time"):
         query = request.POST.get('query')
         if query:
             posts = posts.filter(Q(title__icontains=query, published=True) | \
-                                        Q(body__icontains=query, published=True))
+                                 Q(body__icontains=query, published=True))
         else:
             posts = posts.filter(published=True, rational = rational)
     else:
         posts = Post.objects.filter(published=True, rational = rational)
-        filterhubs = Hub.objects.all().order_by('id')
+        filterhubs = []
 
 
     # Ranking
@@ -219,6 +219,7 @@ def search(request, rankby="top", timespan="all-time"):
     return render(request, 'posts/search.html',{
         'posts':posts,
         'rankby': rankby,
+        'filterby': "search",
         'timespan': timespan,
         'query':query,
         'hubs': hubs,

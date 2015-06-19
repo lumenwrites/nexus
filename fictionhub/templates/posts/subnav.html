@@ -77,7 +77,7 @@
     {% else %}
     <div class="large-5 columns">
       <div class="right">
-	{% if filterby != "subscriptions" and not challenge %}	
+	{% if filterby != "subscriptions" and filterby != "search" and not challenge %}	
 	<a data-dropdown="hubs-dropdown"
 	   aria-controls="hubs-dropdown" aria-expanded="false">Hubs </a>
 	{% endif %}	  	  
