@@ -4,7 +4,7 @@
 	  <div class="vote">
 	    {% if challenge.state != "completed" and post.parent.state != "completed" %}
 	    <a href="/login/?next={{request.path}}"
-	       class="fi-arrow-up upvote
+	       class="fi-arrow-up upvote arrow
 		      {% if post in upvoted %}upvoted{% endif %}
                       {% if post in downvoted %}downvoted{% endif %}"
 	       id="post-upvote-{{post.id}}"></a>
@@ -14,7 +14,7 @@
 	    {% endif %}
 	    {% if challenge.state != "completed" and post.parent.state != "completed" %}	    
 	    <a href="/login/?next={{request.path}}"
-	       class="fi-arrow-down downvote
+	       class="fi-arrow-down downvote arrow
 		      {% if post in upvoted %}upvoted{% endif %}
                       {% if post in downvoted %}downvoted{% endif %}"
 	       id="post-downvote-{{post.id}}"></a>

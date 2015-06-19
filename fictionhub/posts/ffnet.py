@@ -74,6 +74,61 @@ class FFNetAdapter:
         return '%s%s' % (story_url, chapter)
 
 
+class FPAdapter:
+    UrlRegex = re.compile('fictionpress\.com/s/([0-9]+)(?:$|/.*)')
+    AuthorProfileRegex = re.compile('/u/.*')
+
+    def CanHandle(self, url):
+        return 'fictionpress.com/' in url
+
+    def StoryUrl(self, raw_url):
+        match = FPAdapter.UrlRegex.search(raw_url)
+        if match:
+            story_id = int(match.group(1))
+        else:
+            raise ValueError("story id should be either a URL or a story id")
+        return 'http://www.fictionpress.com/s/%s/' % story_id
+
+    def Title(self, page_soup):
+        # PORTKEYORG >> Foobar and the Rackinfrats - Chapter 1
+        chapter_title = self.ChapterTitle(page_soup)
+        title = (page_soup.find('title').contents[0])
+        # if chapter_title and chapter_title in title:
+        #     title = title[0:title.rfind(chapter_title)]
+        # else:
+        #     title = title[0:title.rfind(',')]
+        #     title = title[0:title.rfind('Chapter')]
+        title = title[0:title.rfind('|')].strip()
+        return title #.strip()
+
+    def Author(self, page_soup):
+        top = page_soup.find('div', id='profile_top')
+        link = top.find('a', href=FPAdapter.AuthorProfileRegex)
+        return (link.string)
+
+    def ChapterTitle(self, page_soup):
+        select = page_soup.find('select', id='chap_select')
+        if not select:
+            return ''
+        for s in select.findAll('option'):
+            for k, v in s.attrs.items():
+                if k == 'selected':
+                    return u'Chapter ' + (s.string)
+        return 'Missing chapter title'
+
+    def ChapterContents(self, page_soup):
+        return page_soup.find('div', id='storytext')
+
+    def ChapterCount(self, page_soup):
+        select = page_soup.find('select', id='chap_select')
+        if not select:
+            return 1
+        return len(select.findAll('option'))
+
+    def ChapterUrl(self, story_url, chapter):
+        return '%s%s' % (story_url, chapter)
+
+
 
 
 class ParagraphCleaner:

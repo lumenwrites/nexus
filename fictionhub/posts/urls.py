@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^dropboximport/$', views.dropbox_import),
     # url(r'^feedimport/$', views.feed_import),
     url(r'^ffnetimport/$', views.ffnet_import),
+    url(r'^fpimport/$', views.fp_import),    
 
     url(r'^prompts/$', views.prompts),
     url(r'^prompt/$', views.prompt),
@@ -136,6 +137,12 @@ urlpatterns = [
     url(r'^stories/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts),    
     url(r'^stories/(?P<rankby>[^\.]+)/$', views.posts),    
     # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
+
+    # Search
+    url(r'^search/$', views.search),
+    url(r'^search/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.search),    
+    url(r'^search/(?P<rankby>[^\.]+)/$', views.search),    
+    
 ]
 
 

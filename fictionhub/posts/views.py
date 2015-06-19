@@ -5,8 +5,7 @@ import json # for temporary post api. Replace with REST.
 import feedparser
 from bs4 import BeautifulSoup # to parse prompt
 from html2text import html2text
-
-
+from django.db.models import Q
 
 # core django components
 from django.shortcuts import render, get_object_or_404
@@ -27,7 +26,7 @@ from django.template.defaultfilters import slugify
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
-from .ffnet import Munger, FFNetAdapter
+from .ffnet import Munger, FPAdapter
 # Forms
 from .forms import PostForm
 from comments.forms import CommentForm
@@ -144,6 +143,87 @@ def posts(request, rankby="hot", timespan="all-time",
         'subscribed_to': subscribed_to,
         'hubs': hubs,
         'challenge':challenge
+    })
+
+
+def search(request, rankby="top", timespan="all-time"):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
+        rational = True
+
+    # Filter by hubs
+    # hub = Hub.objects.get(slug=hubslug)
+    # posts = Post.objects.filter(hubs=hub, published=True, rational = rational)
+
+
+
+    query = ""
+    selectedhubs = ""
+    filterhubs = ""
+    if request.method == 'POST':
+        selectedhubs = request.POST.getlist('selectedhubs')
+        filterhubs = []
+        if selectedhubs:
+            for hubslug in selectedhubs:
+                filterhubs.append(Hub.objects.get(slug=hubslug))
+
+            # Either
+            # filterhubs_qs = Q()
+            # for hub in filterhubs:
+            #     filterhubs_qs = filterhubs_qs | Q(hubs=hub)
+            # posts = Post.objects.filter(filterhubs_qs)
+            # # posts = Post.objects.filter(hubs__in=filterhubs)
+
+            # Both
+            posts = Post.objects.all()
+            for hub in filterhubs:
+                posts = posts.filter(hubs=hub)
+        else:
+            posts = Post.objects.all()            
+
+        query = request.POST.get('query')
+        if query:
+            posts = posts.filter(Q(title__icontains=query, published=True) | \
+                                        Q(body__icontains=query, published=True))
+        else:
+            posts = posts.filter(published=True, rational = rational)
+    else:
+        posts = Post.objects.filter(published=True, rational = rational)
+        filterhubs = Hub.objects.all().order_by('id')
+
+
+    # Ranking
+    if rankby == "hot":
+        post_list = rank_hot(posts, top=32)
+    elif rankby == "top":
+        post_list = rank_top(posts, timespan = timespan)
+    elif rankby == "new":
+        post_list = posts.order_by('-pub_date')
+    else:
+        post_list = []
+
+
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    hubs = Hub.objects.all().order_by('id')
+    return render(request, 'posts/search.html',{
+        'posts':posts,
+        'rankby': rankby,
+        'timespan': timespan,
+        'query':query,
+        'hubs': hubs,
+        'filterhubs':filterhubs,
+        'test': filterhubs
     })
 
 # Voting
@@ -708,7 +788,66 @@ def ffnet_import(request):
     return render(request, 'posts/import.html', {
         'teststring': teststring,
     })
+
+def fp_import(request):
+    author = request.user
+
+    url = Util.objects.get(pk=1).ffnet_url
     
+    munger = Munger(url, FPAdapter())
+    imported_story = munger.DownloadStory()
+
+    imported_story_title = str(imported_story.title)
+
+    try:
+        story = Post.objects.get(slug=slugify(imported_story_title))
+    except:
+        story = Post()
+    story.title = imported_story_title
+    story.author = author
+    story.post_type = "story"
+    story.imported = True
+    story.rational = True    
+    story.published = True
+
+
+    if imported_story.chapters[0].title:
+        story.body = " "
+    else:
+        contents = imported_story.chapters[0].contents
+        contents = html2text(str(contents))
+        story.body = contents
+    story.save()
+
+    teststring = "Imported: " + story.title + "<br/>"
+
+    if imported_story.chapters[0].title:
+        for index, imported_chapter in enumerate(imported_story.chapters):
+            title = imported_chapter.title.split(".",1)[1].strip()
+            # title = story.title + "| Chapter " + str(story.children.count()+1)
+            contents = imported_chapter.contents
+            contents = html2text(str(contents))
+    
+            try:
+                chapter = Post.objects.get(slug=slugify(title))
+            except:
+                chapter = Post()
+            chapter.title = title
+            chapter.body = contents
+            chapter.number = index + 1
+            chapter.author = author
+            chapter.post_type = "chapter"
+            chapter.imported = True
+            chapter.rational = True
+            chapter.parent = story
+            chapter.save()
+            teststring += "Imported: " + chapter.title + "<br/>"
+        
+    
+    return render(request, 'posts/import.html', {
+        'teststring': teststring,
+    })
+
 
 def dropbox_import(request):
     author = request.user
@@ -759,7 +898,7 @@ def dropbox_import(request):
                     slug = slugify(title)
                     
                 # remove meta from text??
-                text = text.split("\n")[1:].strip()                
+                text = "".join(text.split("\n\n", 1)[1:]).strip()
                 body = text # content
                 date = datetime.strptime(metadata['date'], "%Y-%m-%d")# %H:%M:%S.%f
 

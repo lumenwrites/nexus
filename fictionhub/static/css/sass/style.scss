@@ -391,9 +391,9 @@ article {
 }
 
 /* Defaut state */
-.fi-arrow-up, .fi-arrow-down,
-.fi-arrow-up:active, .fi-arrow-down:active,
-.fi-arrow-up:visited, .fi-arrow-down:visited{
+.arrow,
+.arrow:active,
+.arrow:visited,{
     display: block;
     transform:scale(1.8,1);
     float:left;
@@ -401,6 +401,17 @@ article {
     text-align: center;
     color: $black;
 }
+
+/* .fi-arrow-up, .fi-arrow-down, */
+/* .fi-arrow-up:active, .fi-arrow-down:active, */
+/* .fi-arrow-up:visited, .fi-arrow-down:visited{ */
+/*     display: block; */
+/*     transform:scale(1.8,1); */
+/*     float:left; */
+/*     width: 100%; */
+/*     text-align: center; */
+/*     color: $black; */
+/* } */
 
 /* Upvote hover is orange */
 .upvote:hover {

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdownify %}
+{% load firstparagraph %}
+
+{% block content %}
+    
+<div id="page"  class="posts-page">
+
+  {% include "posts/subnav.html" %}
+
+
+<div class="row">
+  <div class="large-8 columns">
+    <!-- {{test}} -->
+    {% for post in posts %}
+    <article>
+      <!-- Header -->
+      <header class="post-header">
+	<a href="{{post.get_absolute_url}}" class="bold black">
+	  {{post.title}}
+	</a>
+	<div class="clearfix"></div>
+	<div style="padding:5px 0;">
+      	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      	{% endfor %}
+	</div>
+      </header>
+      <!-- Post Body -->
+      {{post.body | firstparagraph | safe }}
+      <div class="clearfix"></div>
+      <!-- Post Footer -->
+      <div class="panel" style="padding:8px;">
+	<span class="fi-arrow-up"
+	      style="font-size: 20px;">
+	  {{post.score}}
+	</span>	
+	<!-- 
+	<span class="fi-arrow-down"
+	      style="font-size: 20px;">
+	  {{post.downvoters.count}}
+	</span>	 -->
+	<span class="fi-comment"
+	      style="font-size: 20px;">
+	  {{post.comments.count}}
+	</span>
+	<div class="right">
+	  by
+	  {% if post.author.external_url %}
+	  <a href="{{post.author.website}}">{{post.author}}</a>
+	  {% else %}
+	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
+	  {% endif %}
+	</div>
+      </div>
+      <hr/>
+    </article>
+    {% endfor %}
+
+<!-- Pagination -->
+<div class="pagination">
+  <span class="step-links">
+    {% if posts.has_previous %}
+    <a href="?page={{ posts.previous_page_number }}"><</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ posts.number }}
+      <!-- of {{ posts.paginator.num_pages }} -->
+    </span>
+
+    {% if posts.has_next %}
+    <a href="?page={{ posts.next_page_number }}">></a>
+    {% endif %}
+  </span>
+</div>
+
+</div> <!-- End 8 columns -->
+
+<div class="large-4 columns">
+  <br/>
+
+  <form action="/search/" method="post">{% csrf_token %}
+    <input placeholder="Search" type="text" name="query" class="left" value="{{query}}"
+	   style="width:88%;">
+    <button class="button small left fi-magnifying-glass right"
+	    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"
+	    type="submit"></button>
+
+    <select multiple="multiple" id="hubs" name="selectedhubs">
+      {% for hub in hubs %} <!-- Different between post and posts -->
+        <option value="{{hub.slug}}"
+		{% if hub in filterhubs %}selected{% endif %}>
+	  {{hub.title}}</option> <!-- selected -->
+      {% endfor %}
+    </select>
+  </form>
+
+</div> <!-- End 4 columns -->
+
+</div>	 <!-- End row -->
+</div>	 <!-- end page -->
+
+<!-- Select2 -->
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css"
+      rel="stylesheet" />
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script> -->
+
+<link rel="stylesheet" href="{% static "/static/css/zurb5-multiselect.css" %}" />
+<script src="{% static "/static/js/select2.js" %}" type="text/javascript"></script>
+
+<script>
+$(document).ready(function(){
+    // Multiselect
+    $("#hubs").select2({
+	placeholder: "Select hubs",
+	allowClear: true,
+	maximumSelectionLength: 10    
+    })
+})
+</script>
+
+<style>
+  .select2-selection__choice {
+  width: 100%;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #3d454b;
+  border-radius: 0;
+  margin: 1px!important;
+  border: 0;  
+  }
+
+  .select2-selection__clear {
+  height: 50px;
+  margin-top: 10px!important;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  float: right;
+  display: none;
+  }
+
+  .select2-container--default .select2-search--inline .select2-search__field {
+  position: absolute;
+  top: 0;
+  }  
+  
+  .select2-container--default .select2-selection--multiple,
+  .select2-container--default.select2-container--focus .select2-selection--multiple
+  {
+  border-radius:0;
+  border-color: #cccccc
+  }
+
+  .select2-container--default .select2-search--inline
+  .select2-search__field {
+  box-shadow:none;
+  width:80%!important;
+  }
+
+  .select2-container--default .select2-search--inline
+  .select2-search__field:before {
+    content:"YES!"!important;
+  }  
+  
+
+
+.hub-tag {
+  margin-left: 0;
+  
+}  
+</style>
+
+{% endblock content %}
+
+  .select2-container--open .select2-dropdown--below {
+  margin-top: 100px;
+  }  
+
+var margin = $(".select2-selection__rendered").height()-60;
+$(".select2-container--open").find(".select2-dropdown--below").css('margin-top',margin+'px');
+
