@@ -458,8 +458,8 @@ def post_create(request, story="", challenge=""):
             for hub in hubs:
                 if hub.parent:
                     post.hubs.add(hub.parent)
-                if hub.parent.parent:
-                    post.hubs.add(hub.parent.parent)
+                    if hub.parent.parent:
+                        post.hubs.add(hub.parent.parent)
 
             # Hacky way to 
             # for hub in form.cleaned_data['hubs']:
@@ -530,8 +530,8 @@ def post_edit(request, story, chapter=""):
             for hub in hubs:
                 if hub.parent:
                     post.hubs.add(hub.parent)
-                if hub.parent.parent:
-                    post.hubs.add(hub.parent.parent)
+                    if hub.parent.parent:
+                        post.hubs.add(hub.parent.parent)
             if chapter:
                 return HttpResponseRedirect('/story/'+story.slug+'/'+post.slug+'/edit')
             else:
