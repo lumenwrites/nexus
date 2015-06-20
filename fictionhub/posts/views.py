@@ -514,7 +514,7 @@ def post_edit(request, story, chapter=""):
         rational = True
 
     # throw him out if he's not an author
-    if request.user != story.author and not user.is_staff :
+    if request.user != story.author and not request.user.is_staff :
         return HttpResponseRedirect('/')        
 
     if request.method == 'POST':
