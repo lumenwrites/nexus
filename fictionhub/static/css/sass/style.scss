@@ -265,9 +265,13 @@ header {
 /* ================ Subnav ================ */
 
 .subnav {
-  padding: 10px;
+  /* padding: 10px; */
   margin: 10px;
   background-color: rgba(0,0,0,0.02);
+}
+
+.subnav .row .columns {
+    padding: 10px;
 }
 
 .subnav a, .subnav span {
