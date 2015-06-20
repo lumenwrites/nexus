@@ -26,7 +26,7 @@ from django.template.defaultfilters import slugify
 # utility functions
 from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
-from .ffnet import Munger, FPAdapter
+from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm
 from comments.forms import CommentForm
@@ -834,6 +834,7 @@ def fp_import(request):
             title = imported_chapter.title.split(".",1)[1].strip()
             # title = story.title + "| Chapter " + str(story.children.count()+1)
             contents = imported_chapter.contents
+            
             contents = html2text(str(contents))
     
             try:
