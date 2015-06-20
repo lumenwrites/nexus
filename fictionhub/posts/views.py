@@ -183,9 +183,15 @@ def search(request, rankby="top", timespan="all-time"):
 
         query = request.POST.get('query')
         if query:
-            posts = posts.filter(Q(title__icontains=query, published=True) | \
-                                 Q(body__icontains=query, published=True) | \
-                                 Q(author__username__icontains=query, published=True))
+            posts = posts.filter(Q(title__icontains=query,
+                                   published=True,
+                                   rational = rational) |
+                                 Q(body__icontains=query,
+                                   published=True,
+                                   rational = rational) |
+                                 Q(author__username__icontains=query,
+                                   published=True,
+                                   rational = rational))
         else:
             posts = posts.filter(published=True, rational = rational)
     else:
