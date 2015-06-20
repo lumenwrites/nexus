@@ -1,4 +1,5 @@
-    <div class="post-footer-signup panel padding-10">
+<div class="post-footer-signup panel padding-10">
+  <div class="margin-10 left">
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
 		     margin-right:10px;">
@@ -20,6 +21,8 @@
       {% for hub in post.hubs.all %}
       <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
       {% endfor %}
+  </div>
+
 	<div class="author">
 	  {% if post.author.external_url and post.author.website %}
 	  <a href="{{post.author.website}}">{{post.author}}</a></span>	    
