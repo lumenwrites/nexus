@@ -44,20 +44,22 @@
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
 	{% if userprofile.website %}
-	<a href="{{userprofile.website}}"> Website </a>
+	<a href="{{userprofile.website}}" style="margin: 10px 0;"> Website </a>
 	{% endif %}
 	{% if userprofile.about %}
-	<a href="/user/{{userprofile.username}}/about"> About </a>
+	<a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> About </a>
 	{% endif %}
 
 	{% if user.is_authenticated %}	
 	  {% if not userprofile == user %}
 	    {% if userprofile not in subscribed_to %}	
-	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;
+							 padding: 5px;margin: 4px 10px;"
 	       href="/user/{{userprofile.username}}/subscribe">
 	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	    {% else %}
-	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
+	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;
+								     padding: 5px;margin: 4px 10px;"
 	       href="/user/{{userprofile.username}}/unsubscribe">
 	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	    {% endif %}
@@ -65,13 +67,14 @@
 	      <!-- Subscribers: {{userprofile.subscribers.count}} -->
 	  {% endif %}
         {% else %} <!-- if not authenticated -->
-	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
+	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;
+						     padding: 5px;margin: 4px 10px;"
 	   href="/login/?next={{request.path}}">
 	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	{% endif %}
 
-	<b> {{userprofile.username}} </b>
-	<span class="userkarma">{{userprofile.karma}}</span>
+	  <b style="margin:10px 0;"> {{userprofile.username}} </b>
+	  <span style="margin:10px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
     {% else %}
@@ -83,9 +86,9 @@
 	<form action="/search/" method="post">{% csrf_token %}
 	  <i class="fi-magnifying-glass right"
 	     style="position: relative;
-		    right: 24px;
+		    right: 28px;
 		    width: 0;
-		    top: 1px;
+		    top: 12px;
 		    color: #cccccc;"></i>
 	<input type="text" class="right searchbar" name="query">
 	</form>
@@ -95,7 +98,7 @@
       <div class="right">
 	<!-- Dropdown link -->
 	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}	
-	<a data-dropdown="hubs-dropdown"
+	<a data-dropdown="hubs-dropdown" class="hubs-dropdown"
 	   aria-controls="hubs-dropdown" aria-expanded="false">Hub</a>
 	{% endif %}	  
 	<!-- Dropdown hidden -->

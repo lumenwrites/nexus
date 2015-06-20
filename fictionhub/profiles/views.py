@@ -40,7 +40,8 @@ def about(request, username):
     subscribed_to = request.user.subscribed_to.all()
     return render(request, 'profiles/about.html',{
         'userprofile':userprofile,
-        'subscribed_to':subscribed_to
+        'subscribed_to':subscribed_to,
+        'filterurl': "/user/"+request.user.username
     })
 
 @login_required

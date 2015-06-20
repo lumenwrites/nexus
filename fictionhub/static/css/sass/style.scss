@@ -271,7 +271,7 @@ header {
 }
 
 .subnav .row .columns {
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .subnav a, .subnav span {
@@ -282,6 +282,10 @@ header {
     font-size: 18px;
     font-weight: 400;
     margin-right: 20px;
+}
+
+.rank-types {
+    margin:10px 0;
 }
 
 .rank-types .bold {
@@ -329,22 +333,28 @@ header {
 .unsubscribe {
     background: rgba(187, 187, 187, 0.8)!important;
 }
+
 .subscribers {
-    background: white;
-    padding: 4px;
-    border-radius: 4px;
-    margin-right: 0!important;
+  background: white;
+  padding: 4px 5px;
+  border-radius: 4px;
+  margin-right: 0 !important;
+  margin: 0 5px;
 }
 
 .profile.rank-types {
   margin-top: 10px!important;
 }
 
+.hubs-dropdown {
+    margin: 10px;
+}
 .subnav .searchbar {
     background: none;
     width:50%;
     height:40px;
-    margin: -6px 0;    
+    /* margin: -6px 0;     */
+    margin: 4px;
 }
 
 .subnav .searchbar:focus {
