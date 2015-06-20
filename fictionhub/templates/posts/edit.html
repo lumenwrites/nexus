@@ -44,7 +44,8 @@
       -->
 
       <!-- Story Edit Form -->
-      {{form.errors}}
+      <!-- {{form.errors}} -->
+      {{form.non_field_errors}}
       {% if action = "story_edit" %}
       <form action="/story/{{story.slug}}/edit" method="post">
       {% elif action = "chapter_create" %}

@@ -445,7 +445,7 @@ def post_create(request, story="", challenge=""):
         rational = True
     
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, parentslug=story)
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             post.author = request.user

@@ -76,5 +76,5 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('number',)
-        unique_together = ["parent", "slug", "number"]
+        unique_together = ["parent", "slug"]
         
