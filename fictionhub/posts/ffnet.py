@@ -272,7 +272,7 @@ class Munger:
     def DownloadStory(self):
         chapter1 = self.DownloadChapter(1)
         title = self.adapter.Title(chapter1)
-        print(title)
+        # print(title)
         author = self.adapter.Author(chapter1)
         chapter_count = self.adapter.ChapterCount(chapter1)
         if chapter_count > self.max_chapters:
@@ -301,7 +301,7 @@ class Munger:
 
     def CreateEbook(self, story):
         html = story.ToHtml()
-        print('writing story to %s.html' % story.Filename('html'))
+        # print('writing story to %s.html' % story.Filename('html'))
         filename = self.filename or story.Filename('html')
         if not filename.endswith(".html"):
           filename = filename + ".html"
@@ -337,7 +337,7 @@ class Munger:
             self._cleaner.Clean(p)
 
     def DownloadChapter(self, chapter):
-        print('retrieving chapter %s' % chapter)
+        # print('retrieving chapter %s' % chapter)
         url = self.adapter.ChapterUrl(self.story_url, chapter)
         buf = io.BytesIO()
         c = pycurl.Curl()
