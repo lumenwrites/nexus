@@ -184,11 +184,12 @@ def search(request, rankby="top", timespan="all-time"):
         query = request.POST.get('query')
         if query:
             posts = posts.filter(Q(title__icontains=query, published=True) | \
-                                 Q(body__icontains=query, published=True))
+                                 Q(body__icontains=query, published=True) | \
+                                 Q(author__username__icontains=query, published=True))
         else:
-            posts = posts.filter(published=True, rational = rational)
+            posts = posts.filter(published=True, rational = rational, published=True)
     else:
-        posts = Post.objects.filter(published=True, rational = rational)
+        posts = Post.objects.filter(published=True, rational = rational, published=True)
         filterhubs = []
 
 
