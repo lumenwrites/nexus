@@ -667,9 +667,10 @@ article header {
 /* Center in container */
 .br-wrapper-b {
   width: 410px;
-  position: absolute;
+  /* position: absolute; */
   margin: 0px 0 0 -168px;
-  left: 50%;
+  /* left: 50%; */
+  float: left;
   }
 
 
