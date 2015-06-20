@@ -414,8 +414,10 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         filterby = "/comments"
 
     # Increment views counter. Do clever memcache laters.
-    post.views +=1
-    post.save()
+    if not request.user.is_staff:
+        post.views +=1
+        post.save()
+
     return render(request, 'posts/post.html',{
         'post': post,
         'first_chapter':first_chapter,
