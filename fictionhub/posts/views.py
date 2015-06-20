@@ -445,7 +445,7 @@ def post_create(request, story="", challenge=""):
         rational = True
     
     if request.method == 'POST':
-        form = PostForm(request.POST, parentslug=story)
+        form = PostForm(request.POST, storyslug=story)
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             post.author = request.user
@@ -523,9 +523,9 @@ def post_edit(request, story, chapter=""):
 
     if request.method == 'POST':
         if chapter:
-            form = PostForm(request.POST,instance=chapter)            
+            form = PostForm(request.POST,instance=chapter, storyslug=story.slug)            
         else:
-            form = PostForm(request.POST,instance=story)
+            form = PostForm(request.POST,instance=story, storyslug=story.slug)
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             post.post_type = "story"
@@ -548,9 +548,9 @@ def post_edit(request, story, chapter=""):
                 return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         if chapter:
-            form = PostForm(instance=chapter)            
+            form = PostForm(instance=chapter, storyslug=story.slug)    
         else:
-            form = PostForm(instance=story)
+            form = PostForm(instance=story, storyslug=story.slug)
         form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')        
 
     return render(request, 'posts/edit.html', {
