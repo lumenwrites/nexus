@@ -92,70 +92,9 @@
       <!-- Follow -->
 <div class="row">
   <div class="large-12 columns">
-    <div class="post-footer-signup panel">
-	<span class="fi-arrow-up"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.upvoters.count}}	  
-	</span>	
-	<span class="fi-arrow-down"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.downvoters.count}}
-	</span>
-	
-	<span class="fi-eye"
-	      style="font-size: 20px;
-		     margin-right:10px;n">
-	  {{post.views}}
-	</span>
-
-
-      {% for hub in hubs %}
-      <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
-      {% endfor %}
-	<!-- 
-	<span class="hub-tag">Writing Prompts</span>
-	<span class="hub-tag">Comedy</span>
-	<span class="hub-tag">Flash Fiction</span>
-	-->
-	<div class="author">
-	  {% if post.author.external_url and post.author.website %}
-	  <a href="{{post.author.website}}">{{post.author}}</a></span>	    
-	  {% else %}
-	  <a href="/user/{{post.author.username}}">{{post.author}}</a></span>
-	  {% endif %}	  
-	<span class="userkarma">{{post.author.karma}}</span>
-
-	<!-- Subscribe/unsubscribe button -->
-	{% if user.is_authenticated %}
-	  {% if not user == post.author %} <!-- if it's not my story' -->
-	    {% if post.author not in user.subscribed_to.all %} <!-- if not subscribed -->
-	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	       href="/user/{{post.author.username}}/subscribe">
-	      Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	    </a>
-	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
-	    {% else %} <!-- if subscribed then unsubscribe -->
-	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
-	       href="/user/{{post.author.username}}/unsubscribe">
-	      Ubsubscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	    </a>
-	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
-	    {% endif %}
-          {% endif %}
-        {% else %} <!-- if not authenticated then send to login -->
-	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	   href="/login/?next={{request.path}}">
-	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	</a>
-	<span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>
-	{% endif %}
-        </div> <!-- End Author -->
-	<div class="clearfix"></div>
-      </div>
-    </div>
+    {% include "posts/post-footer.html" %}
   </div>
+</div>
 
 {% include "comments/comments.html" %}
 
