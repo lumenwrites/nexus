@@ -219,12 +219,12 @@ def search(request, rankby="top", timespan="all-time"):
     return render(request, 'posts/search.html',{
         'posts':posts,
         'rankby': rankby,
-        'filterby': "search",
+        'filterurl': "/search",
         'timespan': timespan,
         'query':query,
         'hubs': hubs,
         'filterhubs':filterhubs,
-        'test': filterhubs
+        'test': request.POST
     })
 
 # Voting
