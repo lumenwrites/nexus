@@ -7,11 +7,11 @@
     
 <div id="page"  class="posts-page">
 
-  {% include "posts/subnav.html" %}
-
+  {% include "posts/subnav-search.html" %}
 
 <div class="row">
-  <div class="large-8 columns">
+
+  <div class="large-12 columns">
     <!-- {{test}} -->
     {% for post in posts %}
     <article>
@@ -21,11 +21,11 @@
 	  {{post.title}}
 	</a>
 	<div class="clearfix"></div>
-	<div style="padding:5px 0;">
-      	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
-      	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
-      	{% endfor %}
-	</div>
+	<!-- <div style="padding:5px 0;"> -->
+      	<!-- {% for hub in post.hubs.all %} <\!-- Different between post and posts -\-> -->
+      	<!-- <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a> -->
+      	<!-- {% endfor %} -->
+	<!-- </div> -->
       </header>
       <!-- Post Body -->
       {{post.body | firstparagraph | safe }}
@@ -45,6 +45,11 @@
 	      style="font-size: 20px;">
 	  {{post.comments.count}}
 	</span>
+
+      	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      	{% endfor %}
+
 	<div class="right">
 	  by
 	  {% if post.author.external_url %}
@@ -78,7 +83,7 @@
 
 </div> <!-- End 8 columns -->
 
-<div class="large-4 columns">
+<div class="large-4 columns" style="display:none;"> <!-- style="display:none;" -->
   <br/>
 
   <form action="" method="post">{% csrf_token %}
@@ -99,11 +104,14 @@
         <option value="{{hub.slug}}"
 		{% if hub in filterhubs %}selected{% endif %}>
 	  {{hub.title}}</option> <!-- selected -->
-      {% endfor %}
+	{% endfor %}
     </select>
+    <div class="clearfix"></div>
+    <br/>
   </form>
 
 </div> <!-- End 4 columns -->
+
 
 </div>	 <!-- End row -->
 </div>	 <!-- end page -->
@@ -147,8 +155,8 @@ $(document).ready(function(){
 	event.preventDefault();
 	event.stopPropagation();
     	var link = $(this).attr('href');
-    	$("form").get(0).setAttribute('action', link)
-    	$("form").submit();
+    	$("#subnav-form").get(0).setAttribute('action', link)
+    	$("#subnav-form").submit();
     });
     
 })

@@ -1,58 +1,70 @@
 <!-- Subnav -->
 <div class="subnav">  
   <div class="row">
-    <div class="large-12 columns">
-	<input placeholder="Search" type="text" class="left"
-	       style="width:50%; margin:0;">
-	<a class="button small left fi-magnifying-glass right"
-	   style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"></a>
-	<!-- <input placeholder="Hubs" type="text" class="right" id="hubs" -->
-	<!--        style="width:75%; margin:0;"> -->
-	<select multiple="multiple" id="hubs" name="hubs">
-	  <option value="1">Short Stories</option>
-	  <option value="2">Writing Prompts</option>
-	  <option value="3">Sci Fi</option>
-	  <option value="4">Fantasy</option>
-	  <option value="5">Comedy</option>
-	  <option value="6">Rational</option>
-	  <option value="7">Essay</option>
-	  <option value="14">Forum | General</option>
-	  <option value="15">Forum | Writing</option>
-	  <option value="16">Forum | Reading</option>
-	  <option value="17">Forum | Meta</option>
-	  <option value="18">Books | Harry Potter</option>
-	  <option value="19">Books | HPMOR</option>
-	  <option value="20">Books | The Lord of the Rings</option>
-	  <option value="21">Movies | Star Wars</option>
-	  <option value="22">Movies | Avengers</option>
-	  <option value="23">TV Shows | Community</option>
-	  <option value="24">TV Shows | Sherlock</option>
-	  <option value="25">TV Shows | Rick and Morty</option>
-	  <option value="26">Books | Test</option>
-	</select>
-	
+    <div class="large-5 columns">
+
+    {% if not challenge %}    
+      <div class="{% if userprofile %}profile{% endif %} rank-types">
+	<a href="{{filterurl}}/hot/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
+
+	<a href="{{filterurl}}/top/all-time/">
+	  <span>Top{% if rankby == "top" %}:{% endif %}</span></a>
+	{% if rankby == "top" and not userprofile %}
+	<a href="{{filterurl}}/top/all-time/">
+	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
+	<a href="{{filterurl}}/top/year/">
+	  <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
+	<a href="{{filterurl}}/top/month/">
+	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
+	<!-- While website is not being updated that often.
+	<a href="{{filterurl}}/top/day">
+	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
+	 -->
+	{% endif %} <!-- end rankby top, showing timespans -->
+	{% else %}	    <!-- if it's a challenge -->
+	Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>
+     {% endif %}    <!-- end if not challengestate -->
+
       </div>
     </div>
+
+    <!--  
+    <div class="large-4 columns">
+      <input type="text" class="right searchbar" name="query"
+	     placeholder="Hubs">
+    </div>
+    -->
+    <div class="large-3 columns">
+	<!-- <a class="button small left fi-magnifying-glass right" -->
+	<!--    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"></a> -->
+
+	{% if filterurl != "/user" and filterurl != "/subscriptions" and not challenge %}	
+	<form action="/search/" method="post" id="subnav-form">{% csrf_token %}
+	  <i class="fi-magnifying-glass right"
+	     style="position: relative;right: 24px;width: 0;top: 1px;color: #cccccc;"></i>
+	  <input type="text"
+		 class="right searchbar"
+		 name="query"
+		 placeholder="Search"
+		 value="{{query}}">
+	</form>
+	{% endif %}	  	  
+    </div>
+
+
   </div>
 </div>
 
-<!-- Select2 -->
-<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" /> -->
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script> -->
-
-<!-- 
-<script>
-$(document).ready(function(){
-    // Multiselect
-    $("#hubs").select2({
-	placeholder: "Select hubs",
-	allowClear: true,
-	maximumSelectionLength: 4    
-    })
-})
-</script>
- -->
-
 <style>
+  
+.subnav .searchbar {
+width:100%;
+background:white;
+}
+
+.subnav a, .subnav span {
+  margin-right: 10px;
+}
 
 </style>
