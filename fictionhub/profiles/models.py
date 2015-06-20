@@ -7,7 +7,7 @@ from comments.models import Comment
 class User(AbstractUser):  
     about = models.TextField(max_length=512, blank=True)
     external_url = models.BooleanField(default=False)
-    website = models.CharField(max_length=32, blank=True)
+    website = models.CharField(max_length=64, blank=True)
     rss_feed = models.CharField(max_length=128, blank=True, null=True, default="")
     categories_to_import = models.CharField(max_length=128, blank=True, null=True, default="")
     karma = models.IntegerField(default=0)
