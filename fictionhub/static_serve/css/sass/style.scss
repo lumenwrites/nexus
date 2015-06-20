@@ -336,6 +336,17 @@ header {
   margin-top: 10px!important;
 }
 
+.subnav .searchbar {
+    background: none;
+    width:50%;
+    height:40px;
+    margin: -6px 0;    
+}
+
+.subnav .searchbar:focus {
+    background: white;
+}
+
 
 /* ================ Log in ================ */
 .helptext {
