@@ -87,20 +87,18 @@
 		    width: 0;
 		    top: 1px;
 		    color: #cccccc;"></i>
-	<input type="text" class="right" name="query"
-	       style="width:50%;
-		      height:40px;
-		      margin: -6px 0;">
+	<input type="text" class="right searchbar" name="query">
 	</form>
 	{% endif %}	  	  
 
+      <!-- Dropdown -->
       <div class="right">
-	<!-- 
+	<!-- Dropdown link -->
 	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}	
 	<a data-dropdown="hubs-dropdown"
 	   aria-controls="hubs-dropdown" aria-expanded="false">Hub</a>
-	{% endif %}	  	   -->
-	<!-- Dropdown -->
+	{% endif %}	  
+	<!-- Dropdown hidden -->
 	<ul id="hubs-dropdown" class="f-dropdown small" data-dropdown-content
 	    aria-hidden="true" tabindex="-1">
 	  {% for hub in hubs %}
@@ -125,7 +123,8 @@
 	    {% endif %}	  	  
 	  {% endfor %}
 	</ul>
-      </div>
+      </div> <!-- end right -->
+
     </div>
     {% endif %}
   </div>
