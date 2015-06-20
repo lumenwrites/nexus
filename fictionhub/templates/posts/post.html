@@ -67,10 +67,10 @@
 						
 	<!-- Button rad prev -->
 	{% if prev_chapter %}
-	<a class="button small previous-chapter"
+	<a class="button small previous-chapter left"
 	   href="{{prev_chapter.get_absolute_url}}">< Previous</a>
 	{% elif chapter %} <!-- If this is a chapter - go back to story -->
-	<a class="button small previous-chapter"
+	<a class="button small previous-chapter left"
 	   href="{{post.parent.get_absolute_url}}">< Story</a>
 	{% endif %}								
 	

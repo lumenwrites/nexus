@@ -12,8 +12,7 @@
   <ul class="featured-orbit" data-orbit>
   <li class="featured-image">
     <a href="/story/welcome">
-      <img style="margin-top: -140px;"
-	   src="http://pre10.deviantart.net/6112/th/pre/f/2013/155/6/6/the_valley_world_of_fiction_by_booom-d67t8fd.jpg"
+      <img src="http://pre10.deviantart.net/6112/th/pre/f/2013/155/6/6/the_valley_world_of_fiction_by_booom-d67t8fd.jpg"
 	   />
       <div class="orbit-caption">
 	Featured post: Welcome!
@@ -207,6 +206,27 @@ margin: 10px 0px;
 
 .featured-image {
 height: 320px;
+}
+
+.featured-image a img {
+margin-top: -140px;
+}
+
+@media screen and (max-width: 1000px) {
+    .featured-image {
+    height: 240px;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .featured-image a img {
+    margin-top: 0;
+    }
+    .featured-image {
+    height: 240px;
+    }
+
 }
 
 .hub-tag {

@@ -2,9 +2,9 @@
 <div class="subnav">  
   <div class="row">
     {% if userprofile %}
-    <div class="large-6 columns">
+    <div class="large-6 small-6 columns">
     {% else %}
-    <div class="large-7 columns">
+    <div class="large-7 small-7 columns">
     {% endif %}            
 
     {% if not challenge %}    
@@ -40,7 +40,7 @@
     </div>
 
     {% if userprofile %}    
-    <div class="large-6 columns">
+    <div class="large-6 small-6 columns">
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
 	{% if userprofile.website %}
@@ -78,7 +78,7 @@
       </div>
     </div> <!-- end 5 columns -->
     {% else %}
-    <div class="large-5 columns">
+    <div class="large-5 small-5 columns">
 	<!-- <a class="button small left fi-magnifying-glass right" -->
 	<!--    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"></a> -->
 
