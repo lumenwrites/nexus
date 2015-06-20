@@ -77,7 +77,7 @@ def posts(request, rankby="hot", timespan="all-time",
         userprofile = get_object_or_404(User, username=username)
         if request.user == userprofile:
             # If it's my profile - display all the posts, even unpublished.
-            posts = Post.objects.filter(author=userprofile)
+            posts = Post.objects.filter(author=userprofile, rational=rational)
         else:
             posts = Post.objects.filter(author=userprofile, published=True, rational = rational)
         filterurl="/user/"+username # to add to href  in subnav
