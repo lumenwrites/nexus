@@ -19,7 +19,11 @@ def firstparagraph(text):
     # styles = ['float','font-weight', 'width']
     
     # clean_html = bleach.clean(linkify_html, styles=styles, tags=tags, attributes=attributes, strip=True)
-    return BeautifulSoup(html).find('p').text #clean_html
+    try:
+        firstparagraph = BeautifulSoup(html).find('p').text #clean_html
+    except:
+        firstparagraph = ""
+    return firstparagraph
 
 
  

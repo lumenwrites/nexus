@@ -54,7 +54,8 @@ def posts(request, rankby="hot", timespan="all-time",
         challenge = []
 
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
     if not request.user.is_anonymous():
@@ -148,7 +149,8 @@ def posts(request, rankby="hot", timespan="all-time",
 
 def search(request, rankby="top", timespan="all-time"):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
     # Filter by hubs
@@ -297,7 +299,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
     # If chapter
     if chapter:
-        chapter = Post.objects.get(slug=chapter)
+        chapter = Post.objects.get(parent=story,slug=chapter)
         first_chapter = []  # empty first chapter to show the right button in post template
         try:
             prev_chapter = Post.objects.get(parent=story, number=chapter.number-1)
@@ -438,7 +440,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
 def post_create(request, story="", challenge=""):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
     
     if request.method == 'POST':
@@ -506,11 +509,12 @@ def post_edit(request, story, chapter=""):
     story = Post.objects.get(slug=story)
     action = "story_edit"
     if chapter:
-        chapter = Post.objects.get(slug=chapter)
+        chapter = Post.objects.get(parent=story,slug=chapter)
         action="chapter_edit"
 
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
     # throw him out if he's not an author
@@ -558,7 +562,7 @@ def post_edit(request, story, chapter=""):
 
 def chapter_up(request, story, chapter):
     story = Post.objects.get(slug=story)
-    chapter = Post.objects.get(slug=chapter) # add post=post, to not confuse with others!
+    chapter = Post.objects.get(parent=story,slug=chapter) # add post=post, to not confuse with others!
 
     # throw him out if he's not an author
     if request.user != story.author:
@@ -578,7 +582,7 @@ def chapter_up(request, story, chapter):
 
 def chapter_down(request, story, chapter):
     story = Post.objects.get(slug=story)
-    chapter = Post.objects.get(slug=chapter) # add post=post, to not confuse with others!
+    chapter = Post.objects.get(parent=story,slug=chapter) # add post=post, to not confuse with others!
 
     # throw him out if he's not an author
     if request.user != story.author:
@@ -600,7 +604,7 @@ def chapter_down(request, story, chapter):
 def post_delete(request, story, chapter=""):
     story = Post.objects.get(slug=story)
     if chapter:
-        post = Post.objects.get(slug=chapter)
+        post = Post.objects.get(parent=story,slug=chapter)
     else:
         post = story
 
@@ -789,7 +793,7 @@ def ffnet_import(request):
             contents = html2text(str(contents))
     
             try:
-                chapter = Post.objects.get(slug=slugify(title))
+                chapter = Post.objects.get(parent=story, slug=slugify(title))
             except:
                 chapter = Post()
             chapter.title = title
