@@ -31,7 +31,7 @@
       {{post.body | firstparagraph | safe }}
       <div class="clearfix"></div>
       <!-- Post Footer -->
-      <div class="panel" style="padding:8px;">
+      <div class="panel" style="padding:8px;margin-top: 4px;">
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;">
 	  {{post.score}}
@@ -83,10 +83,16 @@
 
   <form action="" method="post">{% csrf_token %}
     <input placeholder="Search" type="text" name="query" class="left" value="{{query}}"
-	   style="width:88%;">
+	   type="submit">
+	  <i class="fi-magnifying-glass right"
+	     style="position: relative;
+		    right: 26px;
+		    width: 0;
+		    top: 9px;
+		    color: #cccccc;"></i>
     <button class="button small left fi-magnifying-glass right"
-	    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"
-	    type="submit"></button>
+    	    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0; display:none;"
+    	    type="submit"></button>
 
     <select multiple="multiple" id="hubs" name="selectedhubs">
       {% for hub in hubs %} <!-- Different between post and posts -->

@@ -76,11 +76,30 @@
     </div> <!-- end 5 columns -->
     {% else %}
     <div class="large-5 columns">
-      <div class="right">
-	{% if filterby != "subscriptions" and filterby != "search" and not challenge %}	
-	<a data-dropdown="hubs-dropdown"
-	   aria-controls="hubs-dropdown" aria-expanded="false">Hubs </a>
+	<!-- <a class="button small left fi-magnifying-glass right" -->
+	<!--    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"></a> -->
+
+	{% if filterurl != "/search" and filterurl != "/user" and filterurl != "/subscriptions" and not challenge %}	
+	<form action="/search/" method="post">{% csrf_token %}
+	  <i class="fi-magnifying-glass right"
+	     style="position: relative;
+		    right: 24px;
+		    width: 0;
+		    top: 1px;
+		    color: #cccccc;"></i>
+	<input type="text" class="right" name="query"
+	       style="width:50%;
+		      height:40px;
+		      margin: -6px 0;">
+	</form>
 	{% endif %}	  	  
+
+      <div class="right">
+	<!-- 
+	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}	
+	<a data-dropdown="hubs-dropdown"
+	   aria-controls="hubs-dropdown" aria-expanded="false">Hub</a>
+	{% endif %}	  	   -->
 	<!-- Dropdown -->
 	<ul id="hubs-dropdown" class="f-dropdown small" data-dropdown-content
 	    aria-hidden="true" tabindex="-1">
