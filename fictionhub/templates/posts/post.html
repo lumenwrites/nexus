@@ -17,7 +17,7 @@
 	{% include "posts/vote.html" %}
 	<!-- Post Header -->
 	<header class="post-header">
-	  {% if user == post.author %}
+	  {% if user == post.author or user.is_staff %}
 	  <a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
 	  {% endif %}
 	  <h1> {{post.title}} </h1>	    

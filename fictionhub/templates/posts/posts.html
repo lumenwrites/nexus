@@ -25,7 +25,7 @@
 	<a href="{{post.get_absolute_url}}">
 	  <h1 class="left"> {{post.title}} </h1>
 	</a>
-	{% if user == post.author %}
+	{% if user == post.author or user.is_staff %}
 	<a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
 	{% endif %}
 	{% if not post.published %}

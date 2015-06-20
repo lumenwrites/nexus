@@ -414,7 +414,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         filterby = "/comments"
 
     # Increment views counter. Do clever memcache laters.
-    if not request.user.is_staff:
+    if not request.user.is_staff and request.user != post.author:
         post.views +=1
         post.save()
 
@@ -514,7 +514,7 @@ def post_edit(request, story, chapter=""):
         rational = True
 
     # throw him out if he's not an author
-    if request.user != story.author:
+    if request.user != story.author and not user.is_staff :
         return HttpResponseRedirect('/')        
 
     if request.method == 'POST':
