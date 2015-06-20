@@ -93,6 +93,23 @@
 <div class="row">
   <div class="large-12 columns">
     <div class="post-footer-signup panel">
+	<span class="fi-arrow-up"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.upvoters.count}}	  
+	</span>	
+	<span class="fi-arrow-down"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.downvoters.count}}
+	</span>
+	
+	<span class="fi-eye"
+	      style="font-size: 20px;
+		     margin-right:10px;n">
+	  {{post.views}}
+	</span>
+
 
       {% for hub in hubs %}
       <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>

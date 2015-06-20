@@ -16,6 +16,7 @@ class Post(models.Model):
 
     hubs = models.ManyToManyField('hubs.Hub', related_name="posts", blank=True)
     score = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
     imported = models.BooleanField(default=False)
     rational = models.BooleanField(default=False)    

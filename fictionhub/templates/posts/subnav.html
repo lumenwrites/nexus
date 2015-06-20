@@ -13,7 +13,7 @@
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
-	  <span {% if rankby == "top" %}class="bold"{% endif %}>Top</span></a>
+	  <span>Top {% if rankby == "top" %}:{% endif %}</span></a>
 	{% if rankby == "top" and not userprofile %}
 	<a href="{{filterurl}}/top/all-time/">
 	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
@@ -73,8 +73,8 @@
 	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
 	{% endif %}
 
-	  <b style="margin:10px 0;"> {{userprofile.username}} </b>
-	  <span style="margin:10px 0;" class="userkarma">{{userprofile.karma}}</span>
+	  <b style="margin:6px 0;"> {{userprofile.username}} </b>
+	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
     {% else %}
