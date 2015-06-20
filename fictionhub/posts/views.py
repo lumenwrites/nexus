@@ -187,9 +187,9 @@ def search(request, rankby="top", timespan="all-time"):
                                  Q(body__icontains=query, published=True) | \
                                  Q(author__username__icontains=query, published=True))
         else:
-            posts = posts.filter(published=True, rational = rational, published=True)
+            posts = posts.filter(published=True, rational = rational)
     else:
-        posts = Post.objects.filter(published=True, rational = rational, published=True)
+        posts = Post.objects.filter(published=True, rational = rational)
         filterhubs = []
 
 
