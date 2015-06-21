@@ -10,8 +10,10 @@ def home(request):
     if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
 
-    posts = Post.objects.filter(published=True, rational=rational)    
+    posts = Post.objects.filter(published=True, rational=rational)
+    timespan="all-time"
     hot_posts = rank_hot(posts, top=32)[:10]
+    top_posts = rank_top(posts, timespan = timespan)
     new_posts = posts.order_by('-pub_date')[:10]
     hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
     return render(request, 'home.html', {

@@ -1,4 +1,5 @@
 import datetime
+from django.utils.timezone import utc
 
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -13,6 +14,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=256, default="")
     published = models.BooleanField(default=False, blank=True)
     pub_date = models.DateTimeField(default=datetime.datetime.now, null=True, blank=True)
+    # datetime.datetime.utcnow().replace(tzinfo=utc)
     # modified = models.DateTimeField()
     body = models.TextField(default="", null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts", default="")
