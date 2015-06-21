@@ -837,7 +837,7 @@ def post_json(request, slug):
 #     })
 
 def ffnet_import(request):
-    author = request.user
+    author = User.objects.get(username=Util.objects.get(pk=1).username_import)
 
     url = Util.objects.get(pk=1).ffnet_url
     
