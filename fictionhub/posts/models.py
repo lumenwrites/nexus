@@ -61,7 +61,7 @@ class Post(models.Model):
             self.slug = slugify(self.title)
 
         if not self.id:
-            self.pub_date = datetime.datetime.today()
+            self.pub_date = datetime.datetime.now()
         # self.modified = datetime.datetime.today()
 
         return super(Post, self).save(*args, **kwargs)

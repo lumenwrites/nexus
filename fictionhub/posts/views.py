@@ -855,7 +855,7 @@ def ffnet_import(request):
     story.post_type = "story"
     story.imported = True
     story.rational = True    
-    story.published = True
+    story.published = False
 
 
     if imported_story.chapters[0].title:
