@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdownify %}
+
+{% block content %}
+    
+<div id="page"  class="posts-page">
+
+{% include "posts/subnav.html" %}
+
+<div class="row">
+  <div class="large-12 columns">
+    {% for post in posts %}
+    <article>
+      {% include "posts/vote.html" %}
+      <a href="post.get_absolute_url" style="black bold">
+	{{post.body | markdownify:"True" | safe }}
+      </a>
+      <div class="right">
+	{% if post.children.all %}	
+	<a href="{{post.get_absolute_url}}/submissions"
+	   class="prompt-button button small">View Replies</a>
+	{% endif %}	
+	<a href="{{post.get_absolute_url}}/reply"
+	   class="button small prompt-button">Reply</a>
+      </div>
+      <div class="clearfix"></div>
+      
+      <hr/>
+    </article>
+    {% endfor %}
+
+<!-- Pagination -->
+<div class="pagination">
+  <span class="step-links">
+    {% if posts.has_previous %}
+    <a href="?page={{ posts.previous_page_number }}"><</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ posts.number }}
+      <!-- of {{ posts.paginator.num_pages }} -->
+    </span>
+
+    {% if posts.has_next %}
+    <a href="?page={{ posts.next_page_number }}">></a>
+    {% endif %}
+  </span>
+</div>
+
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- end page -->
+
+<style>
+  p {
+  margin-bottom: 0;
+  }
+
+  .prompt-button {
+  padding: 5px 10px !important;
+  margin:5px 0 !important;
+  background-color: gray !important;
+  }
+  
+</style>
+{% endblock content %}
+
+

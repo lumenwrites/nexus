@@ -7,33 +7,17 @@
 <div class="row">
   <div class="large-12 columns">
     <br/>
-    {% if prompt %}
-    <p>{{prompt.body}}</p>
-    {% endif %}    
-    {{test}}
-    {{form.errors}}
+    <!-- {{form.errors}}  -->
     {{form.non_field_errors}}
     <!-- Submit Form -->
 
-    <form
-       {% if challenge %}
-       action="{{challenge.get_absolute_url}}/submit-story"       
-       {% elif prompt %}
-       action="{{prompt.get_absolute_url}}/reply"       
-       {% else %}
-       action="/story/add"
-       {% endif %}       
-       method="post">{% csrf_token %}
-      {{form.title}}
+    <form action="/prompt/add" method="post">{% csrf_token %}
       <div class="editor">
       	{{form.body}}
       </div>
       <div class='markdown-preview'></div>
 
       <br/>
-      <div class="set-hubs">
-	{{form.hubs}}
-      </div>
       
       <button class="button small right" type="submit">Create</button>
 
@@ -43,8 +27,6 @@
     <!-- End Submit Form -->
   </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
-
-{% include "posts/editor.html" %}
 
 {% endblock content %}
 

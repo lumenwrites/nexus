@@ -330,18 +330,19 @@ $(document).ready(function(){
 </script>
 
 <!-- dropdown fix -->
-    <script type="text/javascript">
-      $(function() {
-          var isIPad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
-          if (isIPad) {
-            $('body').on('click.fndtn.dropdown touchstart.fndtn.dropdown', '.dropdown a', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-                window.location.href = this;
-                return false;
-            });
-          }
-      });
-    </script>
+<script type="text/javascript">
+  $(function() {
+      var isIPad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
+      if (isIPad) {
+        $('body').on('click.fndtn.dropdown touchstart.fndtn.dropdown', '.dropdown a', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            window.location.href = this;
+            return false;
+        });
+      }
+  });
+</script>
+
 </body>
 </html>

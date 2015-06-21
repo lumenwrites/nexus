@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.conf import settings
@@ -10,7 +12,8 @@ class Post(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, default="")
     published = models.BooleanField(default=False, blank=True)
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(default=datetime.datetime.now, null=True, blank=True)
+    # modified = models.DateTimeField()
     body = models.TextField(default="", null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts", default="")
 
@@ -56,7 +59,12 @@ class Post(models.Model):
             self.slug = slug            
         else:
             self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+
+        if not self.id:
+            self.pub_date = datetime.datetime.today()
+        # self.modified = datetime.datetime.today()
+
+        return super(Post, self).save(*args, **kwargs)
     
     @permalink
     def get_absolute_url(self):

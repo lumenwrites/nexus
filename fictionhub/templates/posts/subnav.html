@@ -7,7 +7,9 @@
     <div class="large-7 small-7 columns">
     {% endif %}            
 
-    {% if not challenge %}    
+    {% if challenge %}
+    Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>    
+    {% else %}    
       <div class="{% if userprofile %}profile{% endif %} rank-types">
 	<a href="{{filterurl}}/hot/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
@@ -26,8 +28,6 @@
 	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
 	 -->
 	{% endif %} <!-- end rankby top, showing timespans -->
-	{% else %}	    <!-- if it's a challenge -->
-	Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>
      {% endif %}    <!-- end if not challengestate -->
 
 

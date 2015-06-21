@@ -15,8 +15,14 @@
 	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.
 	  Come back here next wednesday when voting will begin =)</p>
       </div>
-    
-{% else %}    
+{% else %}  
+  
+      {% if prompt %}
+      <div class="panel">
+	Prompt: <b>{{prompt.body}}</b>
+      </div>
+      {% endif %}      
+   
     {% for post in posts %}
     <article>
       {% include "posts/vote.html" %}

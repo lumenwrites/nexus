@@ -3,6 +3,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # Prompt add
+    url(r'^prompt/add$', views.prompt_create),
+    url(r'^prompt/(?P<prompt>[^\.]+)/reply$', views.post_create),    
     # Post
     url(r'^post/(?P<story>[^\.]+)$', views.post, name='view_post'),
 
@@ -13,8 +16,8 @@ urlpatterns = [
     # Submissions list
     url(r'^challenge/(?P<challenge>[^\.]+)/submissions$', views.posts,
         {'filterby':'challenge'}),
-    url(r'^prompt/(?P<challenge>[^\.]+)/submissions$', views.posts,
-        {'filterby':'challenge'}),                
+    url(r'^prompt/(?P<prompt>[^\.]+)/submissions$', views.posts,
+        {'filterby':'prompt'}),                
 
     # Challenge
     url(r'^challenge/(?P<challenge>[^\.]+)/submit-story$', views.post_create),            
@@ -37,7 +40,7 @@ urlpatterns = [
     url(r'^ffnetimport/$', views.ffnet_import),
     url(r'^fpimport/$', views.fp_import),    
 
-    url(r'^prompts/$', views.prompts),
+    url(r'^writing-prompts/$', views.writing_prompts),
     url(r'^prompt/$', views.prompt),
 
     url(r'^prompt-import/$', views.prompt_import),            
@@ -138,6 +141,12 @@ urlpatterns = [
     url(r'^stories/(?P<rankby>[^\.]+)/$', views.posts),    
     # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
 
+    # No filter, just rank.
+    url(r'^prompts/$', views.prompts),
+    url(r'^prompts/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.prompts),    
+    url(r'^prompts/(?P<rankby>[^\.]+)/$', views.prompts),    
+    # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
+    
     # Search
     url(r'^search/$', views.search),
     url(r'^search/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.search),    

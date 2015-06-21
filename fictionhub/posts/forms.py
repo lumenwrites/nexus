@@ -53,3 +53,17 @@ class PostForm(ModelForm):
 
         }
 
+
+
+class PromptForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['body']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title'}),
+            'body': forms.Textarea(attrs={'class': 'markdown',
+                                                 'id': 'markdown'}),            
+
+        }
+
+        

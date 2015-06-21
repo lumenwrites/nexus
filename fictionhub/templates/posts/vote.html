@@ -22,6 +22,7 @@
 	  </div>
 	  {% endif %} <!-- end if not challenges -->
 	  <!-- Comments  -->
+	  {% if filterurl != "/prompts"%}	  
 	  <div class="post-comments">
 	    <span class="fi-comment">
 	      <a href="{{post.get_absolute_url}}#comments">
@@ -29,4 +30,5 @@
 	      </a>
 	    </span>			      
 	  </div>
+	  {% endif %}
 	</div>

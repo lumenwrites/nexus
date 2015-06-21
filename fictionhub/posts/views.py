@@ -28,7 +28,7 @@ from comments.utils import get_comment_list
 from .utils import rank_hot, rank_top
 from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
-from .forms import PostForm
+from .forms import PostForm, PromptForm
 from comments.forms import CommentForm
 from hubs.forms import HubForm
 # Models
@@ -46,12 +46,14 @@ from markdown import Markdown
 
 
 def posts(request, rankby="hot", timespan="all-time",
-            filterby="", hubslug="", username="", challenge=""):
+            filterby="", hubslug="", username="", challenge="", prompt=""):
     # for user profile navbar
     userprofile = []
     filterurl = ""
     if not challenge:
         challenge = []
+    if not prompt:
+        prompt = []
 
     rational = False
     if request.META['HTTP_HOST'] == "rationalfiction.io" or \
@@ -92,6 +94,10 @@ def posts(request, rankby="hot", timespan="all-time",
         elif challenge.state == "completed":            
             rankby = "top"
         posts = Post.objects.filter(parent=challenge, published=True, rational = rational)
+    elif filterby == "prompt":
+        prompt = Post.objects.get(slug=prompt)
+        posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational)
+        rankby = "hot"
     else:
         posts = Post.objects.filter(published=True, rational = rational)
         filterurl="/stories"
@@ -143,8 +149,77 @@ def posts(request, rankby="hot", timespan="all-time",
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
         'hubs': hubs,
-        'challenge':challenge
+        'challenge':challenge,
+        'prompt':prompt        
     })
+
+def prompts(request, rankby="hot", timespan="all-time"):
+    filterurl = "/prompts"
+    
+    posts = Post.objects.filter(post_type="prompt")
+
+    if rankby == "hot":
+        post_list = rank_hot(posts, top=32)
+    elif rankby == "top":
+        post_list = rank_top(posts, timespan = timespan)
+    elif rankby == "new":
+        post_list = posts.order_by('-pub_date')
+    else:
+        post_list = []
+
+
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    # Disable upvoted/downvoted
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
+
+    
+    # if not posts:
+    #     return HttpResponseRedirect('/404')
+
+    hubs = Hub.objects.all().order_by('id')
+
+    return render(request, 'posts/prompts.html',{
+        'posts':posts,
+        'upvoted': upvoted,
+        'downvoted': downvoted,
+        'filterurl': filterurl,                
+        'rankby': rankby,
+        'timespan': timespan,
+        'hubs': hubs,
+    })
+
+def prompt_create(request):
+    if request.method == 'POST':
+        form = PromptForm(request.POST)
+        if form.is_valid():
+            prompt = form.save(commit=False) # return post but don't save it to db just yet
+            prompt.author = request.user
+            prompt.title = form.cleaned_data['body'][:64]
+            prompt.post_type = "prompt"
+            prompt.save()
+            return HttpResponseRedirect('/prompts/new/')
+    else:
+        form = PromptForm()
+    return render(request, 'posts/create-prompt.html', {
+        'form':form,
+    })
+
 
 
 def search(request, rankby="top", timespan="all-time"):
@@ -438,7 +513,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'filterby':filterby
     })
 
-def post_create(request, story="", challenge=""):
+def post_create(request, story="", challenge="", prompt=""):
     rational = False
     if request.META['HTTP_HOST'] == "rationalfiction.io" or \
        request.META['HTTP_HOST'] == "localhost:8000":
@@ -460,6 +535,8 @@ def post_create(request, story="", challenge=""):
                 post.number = number_of_chapters + 1
             if challenge:
                 post.parent = Post.objects.get(slug=challenge)
+            if prompt:
+                post.parent = Post.objects.get(slug=prompt)
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
@@ -487,6 +564,10 @@ def post_create(request, story="", challenge=""):
             challenge = Post.objects.get(slug=challenge)
         else:
             challenge =[]
+        if prompt:
+            prompt = Post.objects.get(slug=prompt)
+        else:
+            prompt =[]            
 
     if story:
         story = Post.objects.get(slug=story)
@@ -494,14 +575,16 @@ def post_create(request, story="", challenge=""):
             'story':story,        
             'form':form,
             'action':'chapter_create',
-            'challenge':challenge
-            
+            'challenge':challenge,
+            'prompt':prompt            
         })
     else:
         return render(request, 'posts/create.html', {
             'form':form,
             'hubs':Hub.objects.all(),
-            'challenge':challenge            
+            'challenge':challenge,
+            'prompt':prompt,            
+            'test': ""
         })
 
 
@@ -1024,7 +1107,7 @@ def age(timestamp):
 
 
 
-def prompts(request):
+def writing_prompts(request):
     import praw
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')
@@ -1046,7 +1129,7 @@ def prompts(request):
     prompts.sort(key=lambda p: p.score, reverse=True)
             
         
-    return render(request, 'posts/prompt.html', {
+    return render(request, 'posts/writing-prompts.html', {
         'prompts': prompts[:8],
         'max_age': max_age,        
     })
