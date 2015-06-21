@@ -17,7 +17,7 @@ def home(request):
     new_posts = posts.order_by('-pub_date')[:10]
     hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
     return render(request, 'home.html', {
-        'hot_posts':hot_posts,
+        'hot_posts': top_posts, # hot_posts,
         'new_posts':new_posts,
         'hubs':hubs
     })
