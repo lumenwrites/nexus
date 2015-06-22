@@ -559,7 +559,7 @@ def post_create(request, story="", challenge="", prompt=""):
                 return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         form = PostForm()
-        form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')
+        form.fields["hubs"].queryset = Hub.objects.all() # Hub.objects.filter(children=None).order_by('id')
         if challenge:
             challenge = Post.objects.get(slug=challenge)
         else:
@@ -634,7 +634,7 @@ def post_edit(request, story, chapter=""):
             form = PostForm(instance=chapter, storyslug=story.slug)    
         else:
             form = PostForm(instance=story, storyslug=story.slug)
-        form.fields["hubs"].queryset = Hub.objects.filter(children=None).order_by('id')        
+        form.fields["hubs"].queryset = Hub.objects.all() # filter(children=None).order_by('id')
 
     return render(request, 'posts/edit.html', {
         'story':story,
