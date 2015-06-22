@@ -12,11 +12,12 @@ class Hub(models.Model):
     description = models.TextField(max_length=512, blank=True)
 
     def __str__(self):
-        try:
-            parent_title = self.parent.title + " | "
-        except:
-            parent_title = ""
-        return parent_title  + self.title
+        # try:
+        #     parent_title = self.parent.title + " | "
+        # except:
+        #     parent_title = ""
+        # return parent_title  + self.title
+        return self.title        
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
