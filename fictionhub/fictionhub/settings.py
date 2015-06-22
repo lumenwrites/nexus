@@ -149,3 +149,5 @@ FIXTURE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
+
+USE_TZ = True
