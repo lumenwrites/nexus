@@ -10,7 +10,7 @@ def home(request):
     if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
 
-    posts = Post.objects.filter(published=True, rational=rational)
+    posts = Post.objects.filter(published=True, rational=rational, post_type="story")
     timespan="all-time"
     hot_posts = rank_hot(posts, top=32)[:10]
     top_posts = rank_top(posts, timespan = timespan)[:10]
