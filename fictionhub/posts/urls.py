@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^prompt/(?P<prompt>[^\.]+)/reply$', views.post_create),    
     # Post
     url(r'^post/(?P<story>[^\.]+)$', views.post, name='view_post'),
+    url(r'^wiki/(?P<story>[^\.]+)$', views.post, name='view_wiki'),    
 
     # Challenges list
     url(r'^challenges/$', views.posts,

@@ -73,18 +73,20 @@ class Post(models.Model):
     @permalink
     def get_absolute_url(self):
         if self.post_type == "post":
-            return ('view_post', None, { 'slug': self.slug })
+            return ('view_post', None, {'slug': self.slug })
         elif self.post_type == "story":
-            return ('view_story', None, { 'story': self.slug })
+            return ('view_story', None, {'story': self.slug })
         elif self.post_type == "chapter":
-            return ('view_chapter', None, { 'chapter': self.slug,
+            return ('view_chapter', None, {'chapter': self.slug,
                                             'story': self.parent.slug})            
         elif self.post_type == "challenge":
-            return ('view_challenge', None, { 'story': self.slug })            
+            return ('view_challenge', None, {'story': self.slug })            
         elif self.post_type == "prompt":
-            return ('view_prompt', None, { 'story': self.slug })
+            return ('view_prompt', None, {'story': self.slug })
+        elif self.post_type == "wiki":
+            return ('view_wiki', None, {'story': self.slug })
         else:
-            return ('view_post', None, { 'story': self.slug })            
+            return ('view_post', None, {'story': self.slug })            
 
     class Meta:
         ordering = ('number',)
