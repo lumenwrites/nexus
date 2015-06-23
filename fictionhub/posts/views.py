@@ -105,7 +105,7 @@ def posts(request, rankby="hot", timespan="all-time",
         posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational)
         rankby = "hot"
     else:
-        posts = Post.objects.filter(published=True, rational = rational)
+        posts = Post.objects.filter(published=True, rational = rational, post_type="story")
         filterurl="/stories"
 
     if rankby == "hot":
