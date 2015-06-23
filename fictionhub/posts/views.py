@@ -75,7 +75,7 @@ def posts(request, rankby="hot", timespan="all-time",
         # Show posts from all the children hubs? Don't know how to sort.
         # children = Hub.objects.filter(parent=hub)
         # hubs = []
-        if hubslug="wiki":
+        if hubslug == "wiki":
             posts = Post.objects.filter(hubs=hub, published=True,
                                         rational = rational, post_type = "wiki")  
         else:
