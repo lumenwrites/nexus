@@ -33,7 +33,7 @@
 	<a href="{{post.get_absolute_url}}">
 	  <h1 class="left"> {{post.title}} </h1>
 	</a>
-	{% if user == post.author or user.is_staff %}
+	{% if user == post.author or user.is_staff or post.post_type == "wiki" %}
 	<a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
 	{% endif %}
 	{% if not post.published %}
@@ -46,13 +46,15 @@
 	  {% endfor %}
 	</div>
 	<span class="post-tagline"><!-- submitted 14 days ago -->
-	  by
-	  {% if post.author.external_url %}
-	  <a href="{{post.author.website}}">{{post.author}}</a>
-	  {% else %}
-	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
-	  {% endif %}
-	</span>	
+	  {% if post_type != "wiki" %}
+    	    by
+    	    {% if post.author.external_url %}
+	    <a href="{{post.author.website}}">{{post.author}}</a>
+    	    {% else %}
+            <a href="/user/{{post.author.username}}">{{post.author}}</a>
+     	    {% endif %}
+     	  {% endif %}	    
+     	</span>	
 	<hr />
       </header>
       <!-- Post Body -->
