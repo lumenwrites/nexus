@@ -3,6 +3,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+
+    # edit wiki
+    url(r'^wiki/(?P<story>[^\.]+)/edit$', views.post_edit),    
+    
     # Prompt add
     url(r'^prompt/add$', views.prompt_create),
     url(r'^prompt/(?P<prompt>[^\.]+)/reply$', views.post_create),    
