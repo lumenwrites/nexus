@@ -51,6 +51,7 @@ def posts(request, rankby="hot", timespan="all-time",
     # for user profile navbar
     userprofile = []
     filterurl = ""
+    post_type = "story"
     if not challenge:
         challenge = []
     if not prompt:
@@ -77,7 +78,8 @@ def posts(request, rankby="hot", timespan="all-time",
         # hubs = []
         if hubslug == "wiki":
             posts = Post.objects.filter(hubs=hub, published=True,
-                                        rational = rational, post_type = "wiki")  
+                                        rational = rational, post_type = "wiki")
+            post_type = "wiki"
         else:
             posts = Post.objects.filter(hubs=hub, published=True,
                                         rational = rational, post_type = "story")
@@ -151,14 +153,15 @@ def posts(request, rankby="hot", timespan="all-time",
         'upvoted': upvoted,
         'downvoted': downvoted,
         'filterby':filterby,
-        'filterurl': filterurl,                
+        'filterurl': filterurl,
+        'post_type':post_type,
         'rankby': rankby,
         'timespan': timespan,
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
         'hubs': hubs,
         'challenge':challenge,
-        'prompt':prompt        
+        'prompt':prompt
     })
 
 def prompts(request, rankby="hot", timespan="all-time"):
@@ -609,7 +612,7 @@ def post_edit(request, story, chapter=""):
         rational = True
 
     # throw him out if he's not an author
-    if request.user != story.author and not request.user.is_staff :
+    if request.user != story.author and not request.user.is_staff and story.post_type != "wiki":
         return HttpResponseRedirect('/')        
 
     if request.method == 'POST':

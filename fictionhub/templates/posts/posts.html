@@ -25,7 +25,9 @@
    
     {% for post in posts %}
     <article>
+      {% if post_type != "wiki"  %}
       {% include "posts/vote.html" %}
+      {% endif %}      
       <!-- Header -->
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
