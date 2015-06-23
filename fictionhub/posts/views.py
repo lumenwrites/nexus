@@ -611,7 +611,7 @@ def post_edit(request, story, chapter=""):
             form = PostForm(request.POST,instance=story, storyslug=story.slug)
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
-            post.post_type = "story"
+            # post.post_type = "story"
             post.rational = rational
             if chapter:
                 post.post_type = "chapter"

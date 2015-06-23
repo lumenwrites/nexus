@@ -45,7 +45,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         exclude = ['author', 'slug', 'score','published',
-                   'number','state', 'posttype', 'reddit_url', 'views']
+                   'number','state', 'posttype', 'reddit_url', 'views', 'post_type']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'}),
             'body': forms.Textarea(attrs={'class': 'markdown',

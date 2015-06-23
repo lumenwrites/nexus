@@ -36,6 +36,7 @@ class Post(models.Model):
         ("thread", "Thread"), # no children
         ("prompt", "Prompt"), # children are other posts/stories        
         ("challenge", "Challenge"), # children are other posts/stories
+        ("wiki", "Wiki"), # children are other posts/stories        
     )
     post_type = models.CharField(default="story", max_length=64, choices=POST_TYPES, blank=True)
 

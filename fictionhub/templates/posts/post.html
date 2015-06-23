@@ -14,14 +14,17 @@
 	  <!--     {{post.parent.title}}</a> </h1> -->
 	  <!-- {% endif %}       -->
       <article>
+	{% if post.post_type != "wiki"  %}
 	{% include "posts/vote.html" %}
+	{% endif %}
 	<!-- Post Header -->
 	<header class="post-header">
-	  {% if user == post.author or user.is_staff %}
+	  {% if user == post.author or user.is_staff or post.post_type == "wiki"  %}
 	  <a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
 	  {% endif %}
 	  <h1> {{post.title}} </h1>	    
 	    
+	  {% if post.post_type != "wiki" and post.children.all %}		    
 	  <span class="post-tagline"><!-- submitted 14 days ago -->
 	    by <a {% if post.author.website and post.author.external_url %}	  
 		  href="{{post.author.website}}"
@@ -30,6 +33,8 @@
 		  {% endif %}>
 	      {{post.author}}</a>
 	  </span>
+	  {% endif %}	
+	  
 	    <hr />
 	</header>
 	<!-- Post Body -->
