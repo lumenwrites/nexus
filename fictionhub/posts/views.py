@@ -78,7 +78,7 @@ def posts(request, rankby="hot", timespan="all-time",
         # hubs = []
         if hubslug == "wiki":
             posts = Post.objects.filter(hubs=hub, published=True,
-                                        rational = rational, post_type = "wiki")
+                                        post_type = "wiki")
             post_type = "wiki"
         else:
             posts = Post.objects.filter(hubs=hub, published=True,
