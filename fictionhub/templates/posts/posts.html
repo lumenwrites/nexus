@@ -46,7 +46,7 @@
 	  {% endfor %}
 	</div>
 	<span class="post-tagline"><!-- submitted 14 days ago -->
-	  {% if post_type != "wiki" %}
+	  {% if post.post_type != "wiki" %}
     	    by
     	    {% if post.author.external_url %}
 	    <a href="{{post.author.website}}">{{post.author}}</a>
