@@ -146,7 +146,7 @@ def posts(request, rankby="hot", timespan="all-time",
     # if not posts:
     #     return HttpResponseRedirect('/404')
 
-    hubs = Hub.objects.filter(hub_type="hub").order_by('id')
+    hubs = Hub.objects.all().order_by('id')
 
     return render(request, 'posts/posts.html',{
         'posts':posts,
