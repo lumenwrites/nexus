@@ -7,7 +7,8 @@ from hubs.models import Hub
 
 def home(request):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
     posts = Post.objects.filter(published=True, rational=rational, post_type="story")
