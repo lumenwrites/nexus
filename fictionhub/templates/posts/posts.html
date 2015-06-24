@@ -73,39 +73,41 @@
 
 
       <div class="panel" style="padding:8px;margin-top: 4px;">
-	<div class="large-8 small-8 columns">
-	<!--
-	<span class="fi-arrow-up"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.upvoters.count}}
-	</span>	
-	
-	<span class="fi-arrow-down"
-	      style="font-size: 20px;">
-	  {{post.downvoters.count}}
-	</span>
-	-->
+	<!-- <div class="large-8 small-8 columns"> -->
+	  <div class="stats left">
+	    <!--
+		<span class="fi-arrow-up"
+		      style="font-size: 20px;
+			     margin-right:10px;">
+		  {{post.upvoters.count}}
+		</span>	
+		
+		<span class="fi-arrow-down"
+		      style="font-size: 20px;">
+		  {{post.downvoters.count}}
+		</span>
+		-->
 
-	<span class="fi-eye"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.views}}
-	</span>
+	    <span class="fi-eye"
+		  style="font-size: 20px;
+		  margin-right:10px;">
+	      {{post.views}}
+	    </span>
 
-	<!-- 
-	<span class="fi-comment"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.comments.count}}
-	</span>
-	-->
+	    <!-- 
+		 <span class="fi-comment"
+		       style="font-size: 20px;
+			      margin-right:10px;">
+		   {{post.comments.count}}
+		 </span>
+		 -->
+	  </div>
       	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
       	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
       	{% endfor %}
-	</div> <!-- end columns -->
+	<!-- </div> <\!-- end columns -\-> -->
 
-	<div class="large-4 small-4 columns">
+	<!-- <div class="large-4 small-4 columns"> -->
 	<div class="right">
 	  <!-- {{post.pub_date|age}} -->
 	  by
@@ -115,7 +117,7 @@
 	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
 	  {% endif %}
 	</div>
-	</div> <!-- end columns -->
+	<!-- </div> <\!-- end columns -\-> -->
 	<div class="clearfix"></div>
       </div>
     </article>
@@ -178,6 +180,12 @@
   })
 </script>
 <style>
+
+.hub-tag {
+display:block;
+float:left;
+margin-right: 5px;
+}  
 .second-lvl .hub-tag {
 display:block;
 }
