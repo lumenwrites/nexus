@@ -1,0 +1,176 @@
+{% load numberofstories %}
+{% load sortbypostcount %}
+
+<div class="hubs">
+  <div class="top-lvl-hub">
+    {% for hub in hubs|sortbypostcount:request %}
+
+    {% if not hub.parent %}
+    {% if hub.posts.all %}
+    {% endif %}
+
+    {% if hub.children.all %}
+    </div>			  <!-- Close 6 rows -->
+    <div class=""> <!-- New column -->
+    {% endif %}
+
+    <div  class="hub-tag top-lvl container">
+      <!-- Expand/collapse -->
+      {% if hub.children.all %}
+      <span class="expand fi-minus expanded"></span>  
+      {% endif %}
+
+      <a href="/hub/{{hub.slug}}/">{{hub}}
+      {% if hub.hub_type == "hub" %}	
+	<span class="number-of-stories">{% numberofstories hub %}</span></a>
+      <!-- hub.posts.all|length -->
+      {% endif %}
+    
+      {% if hub.children.all %}
+        <div  class="padding-10 children">      
+        {% for child in hub.children.all|sortbypostcount:request %}
+          {% if child.posts.all %}
+          {% endif %}
+            <div  class="hub-tag second-lvl container">
+	      <!-- Expand/collapse -->
+	      {% if child.children.all %}
+	      <span class="expand fi-plus"></span>  
+	      {% endif %}
+
+              <a href="/hub/{{child.slug}}/"> {{child.title}}
+			<span class="number-of-stories">{% numberofstories child %}</span></a>
+
+                  {% if child.children.all %}
+                    <div  class="padding-10 children">      
+                    {% for child in child.children.all|sortbypostcount:request %}
+                      {% if child.posts.all %}
+                      {% endif %}
+                        <span  class="hub-tag">
+                          <a href="/hub/{{child.slug}}/"> {{child.title}}
+			    <span class="number-of-stories">{% numberofstories child %}</span></a>
+            	        </span>
+                    {% endfor %}
+		    <div class="clearfix"></div>
+                    </div> <!-- close inner div -->
+                  </div> <!-- close hub-tag -->
+                  {% else %}
+                  </div> <!-- close parent hub-tag -->
+                  {% endif %}
+
+        {% endfor %}
+        </div>
+      </div> <!-- close hub-tag -->
+      {% else %}
+      </div> <!-- close hub-tag -->
+      {% endif %}
+    <!-- end Children -->
+    
+    {% endif %}	<!-- End not hub parent -->
+
+    {% endfor %}
+
+</div> <!-- close  columns -->
+  
+  <!-- 
+  {% for hub in hubs %}
+  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub}}</a>	  
+  {% endfor %}
+   -->
+  <!-- 
+  <div class="large-4 columns">
+    {% for hub in hubs %}
+
+    {% if hub.children.all %}
+    </div>
+    <div class="large-4 columns">
+    {% endif %}
+    
+    {% if not hub.parent %}
+    {% if hub.stories.all %}
+    {% endif %}
+    <li>
+      <a href="/hub/{{hub.slug}}/"> <b> {{hub}} </b></a>
+    </li>
+
+
+    {% if hub.children.all %}
+      {% for child in hub.children.all %}
+        {% if child.stories.all %}
+        {% endif %}
+          <li class="dropdown-subitems">
+            <a href="/hub/{{child.slug}}/"> <b> {{child.title}} </b> </a>
+          </li>
+      {% endfor %}
+    {% endif %}
+
+
+    {% endif %}
+    {% endfor %}
+  </div>
+     -->
+</div>  <!-- Close row -->
+
+<style>
+
+.hub-tag {
+margin-left: 0;
+}
+<!-- lighter background
+  rgba(0, 0, 0, 0.02)-->
+
+.second-lvl .hub-tag {
+display:block;
+float:left;
+}
+
+.hubs .hub-tag {
+  line-height: 40px;
+padding: 5px;
+margin: 4px;
+}
+
+.hubs .hub-tag a {
+color: #3d454b;
+}
+
+.top-lvl {
+}
+
+.third-lvl {
+float: left;
+}
+
+.number-of-stories {
+background: rgba(255, 255, 255, 0.6);
+background: rgba(119, 119, 119, 0.2);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.expand {
+cursor: pointer;
+}
+</style>
+
+<script>
+  $(document).ready(function() {
+  //$(".hubs").find(".top-lvl").children(".children").toggle()
+
+      $(".hubs").find(".expand").click(function(event){
+  	  if (this == event.target) {
+	      if ($(this).hasClass("expanded")) {
+  		  $(this).addClass("fi-plus");
+  		  $(this).removeClass("fi-minus");
+	      } else {
+  		  $(this).addClass("fi-minus");
+  		  $(this).removeClass("fi-plus");
+	      }
+  	      $(this).toggleClass('expanded');	      
+  	      $(this).parent().children(".children").toggle('fast');
+  	  }
+      });
+// $(".hubs").find(".expand").parent().children(".children").hide();
+  $(".second-lvl").find(".expand").parent().children(".children").hide();
+
+  });
+</script>

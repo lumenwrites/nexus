@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<div id="page"  class="posts-page">
+  <div class="row">
+    <div class="large-8 columns">
+      <h2>Browse</h2>
+      {% include "hubs/hubs-list.html" %}
+    </div>    
+</div> <!-- End 4 columns -->
+
+  </div>
+</div>
+<style>
+.second-lvl .hub-tag {
+display:block;
+float: left;
+}  
+</style>
+
+
+{% endblock content %}

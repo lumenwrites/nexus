@@ -322,6 +322,96 @@ def search(request, rankby="top", timespan="all-time"):
         'test': request.POST
     })
 
+def browse(request, rankby="top", timespan="all-time"):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        rational = True
+
+    # Filter by hubs
+    # hub = Hub.objects.get(slug=hubslug)
+    # posts = Post.objects.filter(hubs=hub, published=True, rational = rational)
+
+
+
+    query = ""
+    selectedhubs = ""
+    filterhubs = []
+    if request.method == 'POST':
+        selectedhubs = request.POST.getlist('selectedhubs')
+        filterhubs = []
+        if selectedhubs:
+            for hubslug in selectedhubs:
+                filterhubs.append(Hub.objects.get(slug=hubslug))
+
+            # Either
+            # filterhubs_qs = Q()
+            # for hub in filterhubs:
+            #     filterhubs_qs = filterhubs_qs | Q(hubs=hub)
+            # posts = Post.objects.filter(filterhubs_qs)
+            # # posts = Post.objects.filter(hubs__in=filterhubs)
+
+            # Both
+            posts = Post.objects.all()
+            for hub in filterhubs:
+                posts = posts.filter(hubs=hub)
+        else:
+            posts = Post.objects.all()            
+
+        query = request.POST.get('query')
+        if query:
+            posts = posts.filter(Q(title__icontains=query,
+                                   published=True,
+                                   rational = rational) |
+                                 Q(body__icontains=query,
+                                   published=True,
+                                   rational = rational) |
+                                 Q(author__username__icontains=query,
+                                   published=True,
+                                   rational = rational))
+        else:
+            posts = posts.filter(published=True, rational = rational)
+    else:
+        posts = Post.objects.filter(published=True, rational = rational)
+        filterhubs = []
+
+
+    # Ranking
+    if rankby == "hot":
+        post_list = rank_hot(posts, top=32)
+    elif rankby == "top":
+        post_list = rank_top(posts, timespan = timespan)
+    elif rankby == "new":
+        post_list = posts.order_by('-pub_date')
+    else:
+        post_list = []
+
+
+    # Pagination
+    paginator = Paginator(post_list, 25)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)    
+
+    hubs = Hub.objects.all().order_by('id')
+    return render(request, 'posts/browse.html',{
+        'posts':posts,
+        'rankby': rankby,
+        'filterurl': "/browse",
+        'timespan': timespan,
+        'query':query,
+        'hubs': hubs,
+        'filterhubs':filterhubs,
+        'test': request.POST
+    })
+
+
 # Voting
 def upvote(request):
     post = get_object_or_404(Post, id=request.POST.get('post-id'))

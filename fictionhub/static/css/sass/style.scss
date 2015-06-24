@@ -100,6 +100,10 @@ li p {
 
 /* Helpers */
 
+.hidden {
+    display:none;
+}
+
 .bold {
     font-weight:bold;
 }
@@ -212,7 +216,9 @@ header {
   margin-right: -4px;  
 }
 
-.logo:hover {
+.logo:hover,
+.logo:focus,
+.logo:visited{
     color: $black;
 }
 

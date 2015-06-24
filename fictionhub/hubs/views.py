@@ -32,3 +32,16 @@ def hub_create(request):
         'form':form,
         'nextpage':nextpage
     })
+
+
+def hubs(request):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        rational = True
+
+    hubs = Hub.objects.all()
+
+    return render(request, 'hubs/hubs.html', {
+        'hubs':hubs
+    })

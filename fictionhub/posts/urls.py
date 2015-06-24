@@ -156,6 +156,10 @@ urlpatterns = [
     url(r'^search/$', views.search),
     url(r'^search/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.search),    
     url(r'^search/(?P<rankby>[^\.]+)/$', views.search),    
+
+    url(r'^browse/$', views.browse),
+    url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
+    url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
     
 ]
 

@@ -77,58 +77,6 @@
 	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
-    {% else %}
-    <div class="large-5 small-5 columns">
-	<!-- <a class="button small left fi-magnifying-glass right" -->
-	<!--    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0;"></a> -->
-
-	{% if filterurl != "/browse" and filterurl != "/user" and filterurl != "/subscriptions" and not challenge %}	
-	<form action="/browse/" method="post">{% csrf_token %}
-	  <i class="fi-magnifying-glass right"
-	     style="position: relative;
-		    right: 28px;
-		    width: 0;
-		    top: 12px;
-		    color: #cccccc;"></i>
-	<input type="text" class="right searchbar" name="query">
-	</form>
-	{% endif %}	  	  
-
-      <!-- Dropdown -->
-      <div class="right">
-	<!-- Dropdown link -->
-	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}	
-	<a data-dropdown="hubs-dropdown" class="hubs-dropdown"
-	   aria-controls="hubs-dropdown" aria-expanded="false">Hub</a>
-	{% endif %}	  
-	<!-- Dropdown hidden -->
-	<ul id="hubs-dropdown" class="f-dropdown small" data-dropdown-content
-	    aria-hidden="true" tabindex="-1">
-	  {% for hub in hubs %}
-	    {% if not hub.parent %}
-	      {% if hub.posts.all %}
-	        <li>
-		  <a href="/hub/{{hub.slug}}/"> {{hub.title}}</a>
- 	        </li>
-	      {% endif %}
-
-	      {% if hub.children.all %}
-	        {% for child in hub.children.all %}
-	          {% if child.posts.all %}
-	          <ul>
-	            <li class="dropdown-subitems">
-	              <a href="/hub/{{child.slug}}/"> {{child.title}}</a>
-	            </li>
-	          </ul>
-	          {% endif %}
-	        {% endfor %}
-	      {% endif %}
-	    {% endif %}	  	  
-	  {% endfor %}
-	</ul>
-      </div> <!-- end right -->
-
-    </div>
     {% endif %}
   </div>
 </div>
