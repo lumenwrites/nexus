@@ -25,7 +25,7 @@
    
     {% for post in posts %}
     <article>
-      {% if post_type != "wiki"  %}
+      {% if post.post_type != "wiki"  %}
       {% include "posts/vote.html" %}
       {% endif %}      
       <!-- Header -->
