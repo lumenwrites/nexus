@@ -11,7 +11,7 @@
 
 <div class="row">
 
-  <div class="large-9 columns">
+  <div class="large-9 small-9 columns">
     <!-- {{test}} -->
     {% for post in posts %}
     <article>
@@ -97,7 +97,7 @@
 
 </div> <!-- End 8 columns -->
 
-<div class="large-3 columns sidebar" style=""> <!-- style="display:none;" -->
+<div class="large-3 small-3 columns sidebar" style=""> <!-- style="display:none;" -->
   <br/>
 
   <form id="search-form" action="" method="post">{% csrf_token %}
@@ -131,7 +131,6 @@
 
 
     <div id="search-hubs">
-      <div class="hub-tag">Books</div>
     </div>
     <!-- 
     <div class="right">
@@ -173,7 +172,7 @@
 	// Delete
 	$('#search-hubs').find("i").click(function(){
 	    $('#hubs-multiselect option[value=' + $(this).attr('id') + ']').attr('selected', false);
-	    refreshHubs();
+	    //refreshHubs();
 	    $("#search-form").submit();	
 	});
 	
@@ -192,7 +191,7 @@ $(document).ready(function(){
 	var hub = $(this).attr('id');
 	console.log("select " + hub);
 	$('#hubs-multiselect option[value=' + hub + ']').attr('selected', true);
-	refreshHubs();
+	//refreshHubs();
     	$("#search-form").submit();	
     });
 
