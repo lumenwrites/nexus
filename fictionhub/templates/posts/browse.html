@@ -18,14 +18,20 @@
       <!-- Header -->
       <div style="position:absolute;">
       {% if post.post_type != "wiki"  %}
-      {# {% include "posts/vote.html" % } #}
+      {# {% include "posts/vote.html" %} #}
       {% endif %}
       </div>
       
       <header class="post-header" style="float:none;">
-	<h4><a href="{{post.get_absolute_url}}" class="bold black">
-	  {{post.title}}
-	</a></h4>
+	<a href="{{post.get_absolute_url}}">
+	  <h1 class="left"> {{post.title}} </h1>
+	</a>
+	
+
+	<!-- <h4><a href="{{post.get_absolute_url}}" class="bold black"> -->
+	<!--   {{post.title}} -->
+	<!-- </a></h4> -->
+	<hr/>
 	<div class="clearfix"></div>
 	<!-- <div style="padding:5px 0;"> -->
       	<!-- {% for hub in post.hubs.all %} <\!-- Different between post and posts -\-> -->
@@ -73,7 +79,7 @@
 	  {% endif %}
 	</div>
       </div>
-      <hr/>
+      <!-- <hr/> -->
     </article>
     {% endfor %}
 
@@ -214,6 +220,7 @@ $(document).ready(function(){
 </script>
 
 
+<!-- 
 <style>
 .hub-tag {
   margin-left: 0;
@@ -234,6 +241,27 @@ display:block;
   border: 0;  
 }  
   
+</style>
+ -->
+<style>
+.second-lvl .hub-tag {
+display:block;
+}
+
+.sidebar .hub-tag {
+  background: rgba(119, 119, 119, 0.1);
+}
+
+.sidebar .hub-tag .number-of-stories {
+position: absolute;
+right: 48px;
+line-height: 30px;
+margin-top: 6px;
+}
+
+.children {
+padding: 0px;
+}
 </style>
 
 {% endblock content %}
