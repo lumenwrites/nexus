@@ -10,7 +10,7 @@
 {% include "posts/subnav.html" %}
 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 columns posts">
 {% if challenge.state = "open" %}
       <div class="panel">
 	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.
@@ -70,7 +70,10 @@
       </div>
       -->
       <!-- Post Footer -->
+
+
       <div class="panel" style="padding:8px;margin-top: 4px;">
+	<!--
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
 		     margin-right:10px;">
@@ -81,6 +84,8 @@
 	      style="font-size: 20px;">
 	  {{post.downvoters.count}}
 	</span>
+	-->
+
 	<span class="fi-eye"
 	      style="font-size: 20px;
 		     margin-right:10px;">
