@@ -43,7 +43,7 @@
       <!-- Post Footer -->
       <br/>
       <div class="panel" style="padding:8px;margin-top: 4px;">
-
+	<div class="stats left">
 	<!-- 
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
@@ -86,7 +86,7 @@
 	  {{post.comments.count}}
 	</span>
 	-->
-
+	</div> <!-- end stats left -->
       	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
       	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
       	{% endfor %}
