@@ -10,7 +10,7 @@
 {% include "posts/subnav.html" %}
 
 <div class="row">
-  <div class="large-12 columns posts">
+  <div class="large-12 small-12 columns posts">
 {% if challenge.state = "open" %}
       <div class="panel">
 	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.
@@ -135,8 +135,49 @@
 </div>
 {% endif %} <!-- End if not an open challenge -->
 </div> <!-- End 12 columns -->
+
+<div class="large-3 small-3 columns sidebar" style="display:none;">
+  <br/>
+  <!-- <h4>Hubs</h4> -->
+  {% include "hubs/hubs-list.html" %}
+</div>    
+
 </div>	 <!-- End row -->
 </div>	 <!-- end page -->
+
+<script>
+  $(function() {
+      $("#toggle-hubs").bind('click',function(event){
+	  event.preventDefault();
+	  event.stopPropagation();
+	  console.log("Ey!");
+	  if ($(this).hasClass("expanded")) {
+	      $(".posts").removeClass("large-9");
+	      $(".posts").removeClass("small-9");	      
+	      $(".posts").addClass("large-12");
+	      $(".posts").addClass("small-12");  	      
+	      $(".sidebar").hide();
+	      $(this).removeClass("expanded");
+	  } else {
+	      $(".posts").removeClass("large-12");
+	      $(".posts").removeClass("small-12");  	      
+	      $(".posts").addClass("large-9");
+	      $(".posts").addClass("small-9");	      
+	      $(".sidebar").show();
+	      $(this).addClass("expanded");
+	  }
+
+      });
+
+
+  })
+</script>
+<style>
+.second-lvl .hub-tag {
+display:block;
+float: left;
+}  
+</style>
 {% endblock content %}
 
 

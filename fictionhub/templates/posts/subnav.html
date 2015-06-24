@@ -97,9 +97,13 @@
       <!-- Dropdown -->
       <div class="right">
 	<!-- Dropdown link -->
-	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}	
+	{% if filterby != "subscriptions" and filterurl != "/search" and not challenge %}
+	<a class="hubs-dropdown" id="toggle-hubs">Hubs</a>
+
+	<!-- 
 	<a data-dropdown="hubs-dropdown" class="hubs-dropdown"
 	   aria-controls="hubs-dropdown" aria-expanded="false">Hub</a>
+	-->
 	{% endif %}	  
 	<!-- Dropdown hidden -->
 	<ul id="hubs-dropdown" class="f-dropdown small" data-dropdown-content
