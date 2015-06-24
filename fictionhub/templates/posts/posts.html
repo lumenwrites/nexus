@@ -73,6 +73,7 @@
 
 
       <div class="panel" style="padding:8px;margin-top: 4px;">
+	<div class="large-8 columns">
 	<!--
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
@@ -102,7 +103,9 @@
       	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
       	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
       	{% endfor %}
+	</div> <!-- end columns -->
 
+	<div class="large-4 columns">
 	<div class="right">
 	  <!-- {{post.pub_date|age}} -->
 	  by
@@ -112,6 +115,8 @@
 	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
 	  {% endif %}
 	</div>
+	</div> <!-- end columns -->
+	<div class="clearfix"></div>
       </div>
     </article>
     {% endfor %}
