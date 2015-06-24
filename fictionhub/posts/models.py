@@ -56,7 +56,12 @@ class Post(models.Model):
     reddit_url = models.URLField(max_length=256, blank=True, null=True, default="")
 
     def __str__(self):
-        return self.title
+        if self.post_type == "chapter" and self.parent:
+            parent_title = self.parent.title + " | "
+        else:
+            parent_title = ""
+
+        return parent_title + self.title
 
     def save(self, slug="", *args, **kwargs):
         if (self.imported == True or self.post_type == "prompt") and slug != "":
@@ -68,6 +73,11 @@ class Post(models.Model):
             self.pub_date = datetime.datetime.now()
         # self.modified = datetime.datetime.today()
 
+        try:
+            if self.post_type == "chapter" and self.parent:
+                self.author = self.parent.author
+        except:
+            pass
         return super(Post, self).save(*args, **kwargs)
     
     @permalink
