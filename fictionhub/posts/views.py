@@ -1,5 +1,6 @@
 # standard library imports
 import re, praw
+from string import punctuation
 from xml.etree.ElementTree import Element, SubElement, tostring # for rss
 import json # for temporary post api. Replace with REST.
 import feedparser
@@ -148,6 +149,20 @@ def posts(request, rankby="hot", timespan="all-time",
 
     hubs = Hub.objects.all().order_by('id')
 
+    # Count words
+    r = re.compile(r'[{}]'.format(punctuation))
+    for post in posts:
+        wordcount = 0
+        text = r.sub(' ',post.body)
+        wordcount += len(text.split())
+        if post.children:
+            for child in post.children.all():
+                text = r.sub(' ',child.body)
+                wordcount += len(text.split())
+        if wordcount > 1000:
+            wordcount = str(int(wordcount/1000)) + "K"
+        post.wordcount = wordcount
+        
     return render(request, 'posts/posts.html',{
         'posts':posts,
         'upvoted': upvoted,

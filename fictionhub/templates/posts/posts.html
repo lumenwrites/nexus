@@ -90,10 +90,27 @@
 
 	    <span class="fi-eye"
 		  style="font-size: 20px;
-		  margin-right:10px;">
+		  margin-right:10px;"
+		  title="Views">
 	      {{post.views}}
 	    </span>
 
+	    {% if post.children.all %}
+	    <span class="fi-page-multiple"
+		  style="font-size: 20px;
+		  margin-right:10px;"
+		  title="Number of chapters">
+	      {{post.children.all|length}}
+	    </span>
+	    {% endif %}	    
+
+	    <span class="fi-background-color"
+		  style="font-size: 20px;
+		  margin-right:10px;"
+		  title="Number of words">
+	      {{post.wordcount}}
+	    </span>
+	    
 	    <!-- 
 		 <span class="fi-comment"
 		       style="font-size: 20px;
