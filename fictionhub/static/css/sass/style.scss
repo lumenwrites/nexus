@@ -364,7 +364,7 @@ header {
 }
 .subnav .searchbar {
     background: none;
-    width:50%;
+    width: calc(100% - 76px);
     height:40px;
     /* margin: -6px 0;     */
     margin: 4px;
