@@ -15,14 +15,12 @@
     <!-- {{test}} -->
     {% for post in posts %}
     <article>
-      <!-- Header -->
-      <div style="position:absolute;">
       {% if post.post_type != "wiki"  %}
       {% include "posts/vote.html" %}
       {% endif %}
-      </div>
       
-      <header class="post-header" style="float:none;">
+      <!-- Header -->
+      <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
 	  <h1 class="left"> {{post.title}} </h1>
 	</a>
