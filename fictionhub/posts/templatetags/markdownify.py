@@ -7,14 +7,19 @@ import bleach
 register = template.Library()
  
 @register.filter
-def markdownify(text, short = "False"):
+def markdownify(post, short = "False"):
+    text = post.body
     if short == "True":
         try:
             text = text.split("<!-- more -->")[0].strip()
         except:
             pass
         text = text[:1024]
+
     html = markdown.markdown(text)
+
+    if short == "True":    
+        html += "<a href='"+post.get_absolute_url()+"' class='right'> read more >>>> </a>"
 
     # linkify_html = bleach.linkify(html)
     # tags = ['img', 'p', 'em', 'strong', 'a', 'span', 'b', 'i', 'blockquote', 'hr'] # bleach.ALLOWED_TAGS
@@ -27,4 +32,3 @@ def markdownify(text, short = "False"):
     
     # clean_html = bleach.clean(linkify_html, styles=styles, tags=tags, attributes=attributes, strip=True)
     return html #clean_html
-
