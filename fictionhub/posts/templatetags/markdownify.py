@@ -19,7 +19,7 @@ def markdownify(post, short = "False"):
     html = markdown.markdown(text)
 
     if short == "True":    
-        html += "<a href='"+post.get_absolute_url()+"' class='right'> read more >>>> </a>"
+        html += "<div class='clearfix'></div><a href='"+post.get_absolute_url()+"' class='right'> read more >>>> </a>"
 
     # linkify_html = bleach.linkify(html)
     # tags = ['img', 'p', 'em', 'strong', 'a', 'span', 'b', 'i', 'blockquote', 'hr'] # bleach.ALLOWED_TAGS
