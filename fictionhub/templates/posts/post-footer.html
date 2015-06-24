@@ -18,6 +18,23 @@
 	</span>
 
 
+	{% if post.children.all %}
+	<span class="fi-page-multiple"
+	      style="font-size: 20px;
+		     margin-right:10px;"
+	      title="Number of chapters">
+	  {{post.children.all|length}}
+	</span>
+	{% endif %}	    
+
+	<span class="fi-background-color"
+	      style="font-size: 20px;
+		     margin-right:10px;"
+	      title="Number of words">
+	  {{post.wordcount}}
+	</span>
+	
+
       {% for hub in post.hubs.all %}
       <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
       {% endfor %}
