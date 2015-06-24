@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load markdownify %}
+{% load age %}
 
 {% block content %}
     
@@ -40,12 +41,13 @@
 	<span class="hub-tag right margins-side-20">Not published</span>
 	{% endif %}	
 	<div class="clearfix"></div>
+	<!--
 	<div class="right" style="/*margin-top: 16px;*/">
-	  {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+	  {% for hub in post.hubs.all %}
 	  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
 	  {% endfor %}
 	</div>
-	<span class="post-tagline"><!-- submitted 14 days ago -->
+	<span class="post-tagline">
 	  {% if post.post_type != "wiki" %}
     	    by
     	    {% if post.author.external_url %}
@@ -53,16 +55,58 @@
     	    {% else %}
             <a href="/user/{{post.author.username}}">{{post.author}}</a>
      	    {% endif %}
-     	  {% endif %}	    
-     	</span>	
+     	    {% endif %}
+     	</span>
+	-->
 	<hr />
       </header>
       <!-- Post Body -->
       {{post.body | markdownify:"True" | safe }}
       <div class="clearfix"></div>
+      <!-- 
       <div class="readmore">
 	<a href="{{post.get_absolute_url }}" class="right"> read more >>>> </a>
 	<div class="clearfix"></div>
+      </div>
+      -->
+      <!-- Post Footer -->
+      <div class="panel" style="padding:8px;margin-top: 4px;">
+	<span class="fi-arrow-up"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.upvoters.count}}
+	</span>	
+	
+	<span class="fi-arrow-down"
+	      style="font-size: 20px;">
+	  {{post.downvoters.count}}
+	</span>
+	<span class="fi-eye"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.views}}
+	</span>
+
+	<!-- 
+	<span class="fi-comment"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.comments.count}}
+	</span>
+	-->
+      	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      	{% endfor %}
+
+	<div class="right">
+	  {{post.pub_date|age}}
+	  by
+	  {% if post.author.external_url %}
+	  <a href="{{post.author.website}}">{{post.author}}</a>
+	  {% else %}
+	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
+	  {% endif %}
+	</div>
       </div>
     </article>
     {% endfor %}

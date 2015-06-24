@@ -7,8 +7,9 @@ register = template.Library()
 @register.filter
 def age(timestamp):
     now = datetime.utcnow().replace(tzinfo=utc)
-    created_at = datetime.fromtimestamp(timestamp).replace(tzinfo=utc)
-    
+    # created_at = datetime.fromtimestamp(timestamp).replace(tzinfo=utc)
+    created_at = timestamp
+
     age_in_minutes = int((now-created_at).total_seconds())/60
 
     if age_in_minutes < 60:
