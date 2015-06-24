@@ -77,6 +77,23 @@
 	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
+    {% else %}
+	{% if filterurl != "/user" and filterurl != "/subscriptions" and not challenge %}	
+    <div class="large-3 small-3 columns">
+	  <i class="fi-magnifying-glass right"
+	     style="position: relative;
+		    right: 28px;
+		    width: 0;
+		    top: 12px;
+		    color: #cccccc;"
+	     ></i>
+	  <input placeholder="" name="query" value="{{query}}"
+		 type="text" class="right searchbar" form="search-form"
+		 id="search-input">
+	<a class="hubs-dropdown right" id="toggle-hubs">Hubs</a>
+    </div>
+    {% endif %}
+
     {% endif %}
   </div>
 </div>

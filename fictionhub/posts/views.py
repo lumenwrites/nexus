@@ -337,7 +337,7 @@ def search(request, rankby="top", timespan="all-time"):
         'test': request.POST
     })
 
-def browse(request, rankby="top", timespan="all-time"):
+def browse(request, rankby="hot", timespan="all-time"):
     rational = False
     if request.META['HTTP_HOST'] == "rationalfiction.io" or \
        request.META['HTTP_HOST'] == "localhost:8000":
@@ -347,7 +347,7 @@ def browse(request, rankby="top", timespan="all-time"):
     # hub = Hub.objects.get(slug=hubslug)
     # posts = Post.objects.filter(hubs=hub, published=True, rational = rational)
 
-
+    post_type = "story"
 
     query = ""
     selectedhubs = ""
@@ -376,18 +376,18 @@ def browse(request, rankby="top", timespan="all-time"):
         query = request.POST.get('query')
         if query:
             posts = posts.filter(Q(title__icontains=query,
-                                   published=True,
+                                   published=True, post_type=post_type,
                                    rational = rational) |
                                  Q(body__icontains=query,
-                                   published=True,
+                                   published=True, post_type=post_type,
                                    rational = rational) |
                                  Q(author__username__icontains=query,
-                                   published=True,
+                                   published=True, post_type=post_type,
                                    rational = rational))
         else:
-            posts = posts.filter(published=True, rational = rational)
+            posts = posts.filter(published=True, rational = rational, post_type=post_type)
     else:
-        posts = Post.objects.filter(published=True, rational = rational)
+        posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
         filterhubs = []
 
 
@@ -415,10 +415,35 @@ def browse(request, rankby="top", timespan="all-time"):
         posts = paginator.page(paginator.num_pages)    
 
     hubs = Hub.objects.all().order_by('id')
+
+    # Disable upvoted/downvoted
+    if request.user.is_authenticated():
+        upvoted = request.user.upvoted.all()
+        downvoted = request.user.downvoted.all()                
+    else:
+        upvoted = []
+        downvoted = []        
+
+    # Count words
+    r = re.compile(r'[{}]'.format(punctuation))
+    for post in posts:
+        wordcount = 0
+        text = r.sub(' ',post.body)
+        wordcount += len(text.split())
+        if post.children:
+            for child in post.children.all():
+                text = r.sub(' ',child.body)
+                wordcount += len(text.split())
+        if wordcount > 1000:
+            wordcount = str(int(wordcount/1000)) + "K"
+        post.wordcount = wordcount
+    
     return render(request, 'posts/browse.html',{
         'posts':posts,
         'rankby': rankby,
         'filterurl': "/browse",
+        'upvoted': upvoted,
+        'downvoted': downvoted,
         'timespan': timespan,
         'query':query,
         'hubs': hubs,

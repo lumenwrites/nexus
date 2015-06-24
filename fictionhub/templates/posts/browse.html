@@ -11,14 +11,14 @@
 
 <div class="row">
 
-  <div class="large-9 small-9 columns">
+  <div class="large-12 small-12 columns posts">
     <!-- {{test}} -->
     {% for post in posts %}
     <article>
       <!-- Header -->
       <div style="position:absolute;">
       {% if post.post_type != "wiki"  %}
-      {# {% include "posts/vote.html" %} #}
+      {% include "posts/vote.html" %}
       {% endif %}
       </div>
       
@@ -43,28 +43,51 @@
       {{post.body | firstparagraph | safe }}
       <div class="clearfix"></div>
       <!-- Post Footer -->
+      <br/>
       <div class="panel" style="padding:8px;margin-top: 4px;">
+
+	<!-- 
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
 		     margin-right:10px;">
 	  {{post.upvoters.count}}
 	</span>	
-	
+
 	<span class="fi-arrow-down"
 	      style="font-size: 20px;">
 	  {{post.downvoters.count}}
 	</span>
+	-->
+
 	<span class="fi-eye"
 	      style="font-size: 20px;
 		     margin-right:10px;">
 	  {{post.views}}
 	</span>
+
+	{% if post.children.all %}
+	<span class="fi-page-multiple"
+	      style="font-size: 20px;
+		     margin-right:10px;"
+	      title="Number of chapters">
+	  {{post.children.all|length}}
+	</span>
+	{% endif %}	    
+
+	<span class="fi-background-color"
+	      style="font-size: 20px;
+		     margin-right:10px;"
+	      title="Number of words">
+	  {{post.wordcount}}
+	</span>
 	
+	<!-- 
 	<span class="fi-comment"
 	      style="font-size: 20px;
 		     margin-right:10px;">
 	  {{post.comments.count}}
 	</span>
+	-->
 
       	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
       	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
@@ -78,6 +101,7 @@
 	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
 	  {% endif %}
 	</div>
+	<div class="clearfix"></div>
       </div>
       <!-- <hr/> -->
     </article>
@@ -103,10 +127,11 @@
 
 </div> <!-- End 8 columns -->
 
-<div class="large-3 small-3 columns sidebar" style=""> <!-- style="display:none;" -->
-  <br/>
+<div class="large-3 small-3 columns sidebar" style="display:none;"> <!-- style="display:none;" -->
+  <!-- <br/> -->
 
   <form id="search-form" action="" method="post">{% csrf_token %}
+    <!-- 
     <input placeholder="Search" type="text" name="query" class="left" value="{{query}}"
 	   type="submit">
 	  <i class="fi-magnifying-glass right"
@@ -114,7 +139,7 @@
 		    right: 26px;
 		    width: 0;
 		    top: 9px;
-		    color: #cccccc;"></i>
+		    color: #cccccc;"></i> -->
 	  <!-- 
     <button class="button small left fi-magnifying-glass right"
     	    style="border-radius:0;padding:13px;background:#bbbbbb;margin:0; display:none;"
@@ -129,7 +154,7 @@
 
     <select multiple="multiple" id="hubs-multiselect" name="selectedhubs" class="hidden" >
       {% for hub in hubs %} <!-- Different between post and posts -->
-        <option value="{{hub.slug}}"
+        <option value="{{hub.slug}}" id="{{hub.slug}}"
     		{% if hub in filterhubs %}selected{% endif %}>
     	  {{hub.title}}</option> <!-- selected -->
     	{% endfor %}
@@ -168,9 +193,11 @@
 	    if (!selectedHubs) {
 		selectedHubs = [];
 	    }
+
 	    for (var i = 0; i < selectedHubs.length; i++) {
 		hub = selectedHubs[i];
-		el = $("<div class='hub-tag'>"+hub+"<i class='fi-x right' id='"+hub+"'></i></div>");
+		title = $('select#hubs-multiselect').children('option#'+hub).text()
+		el = $("<div class='hub-tag'>"+title+"<i class='fi-x right' id='"+hub+"'></i></div>");
 		$('#search-hubs').append(el);
 	    }
 	});
@@ -189,6 +216,17 @@ $(document).ready(function(){
     // Multiselec
     refreshHubs();
 
+    // open sidebar if there are some hubs selected
+    if ($('select#hubs-multiselect').val()){
+	$(".posts").removeClass("large-12");
+	$(".posts").removeClass("small-12");  	      
+	$(".posts").addClass("large-9");
+	$(".posts").addClass("small-9");	      
+	$(".sidebar").show();
+	$("#toggle-hubs").addClass("expanded");
+    }
+	
+    
     var selector = $('select#hubs-multiselect');
 
     $(".hubs").find(".hub-link").bind('click',function(event){
@@ -202,7 +240,46 @@ $(document).ready(function(){
     });
 
 })
+
+document.onkeydown=function(){
+    if(window.event.keyCode=='13'){
+	if ($("#search-input").attr("value").length === 0) {
+	    $("#search-form").get(0).setAttribute('action', "/browse/top/all-time/");
+	}
+    }
+}
 </script>
+
+<script>
+  $(function() {
+      $("#toggle-hubs").bind('click',function(event){
+	  event.preventDefault();
+	  event.stopPropagation();
+	  console.log("Ey!");
+	  if ($(this).hasClass("expanded")) {
+	      $(".posts").removeClass("large-9");
+	      $(".posts").removeClass("small-9");	      
+	      $(".posts").addClass("large-12");
+	      $(".posts").addClass("small-12");  	      
+	      $(".sidebar").hide();
+	      $(this).removeClass("expanded");
+	      $("#hubs-multiselect option:selected").removeAttr("selected");
+	      $('#search-hubs').empty();
+	  } else {
+	      $(".posts").removeClass("large-12");
+	      $(".posts").removeClass("small-12");  	      
+	      $(".posts").addClass("large-9");
+	      $(".posts").addClass("small-9");	      
+	      $(".sidebar").show();
+	      $(this).addClass("expanded");
+	  }
+
+      });
+
+
+  })
+</script>
+
 
 <script>
 $(document).ready(function(){
@@ -215,7 +292,6 @@ $(document).ready(function(){
     	$("#search-form").get(0).setAttribute('action', link)
     	$("#search-form").submit();
     });
-    
 })
 </script>
 
@@ -244,6 +320,15 @@ display:block;
 </style>
  -->
 <style>
+
+  #search-hubs .hub-tag {
+  padding:10px;
+  margin:10px 0;
+  }
+
+  #search-hubs .hub-tag i{
+  cursor:pointer;
+  }    
 .second-lvl .hub-tag {
 display:block;
 }
