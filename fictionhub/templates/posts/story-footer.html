@@ -24,7 +24,7 @@
 	    {% else %} <!-- if subscribed then unsubscribe -->
 	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
 	       href="/user/{{story.author.username}}/unsubscribe">
-	      Ubsubscribe <span class="subscribers">{{story.author.subscribers.count}}</span>
+	      Unsubscribe <span class="subscribers">{{story.author.subscribers.count}}</span>
 	    </a>
 	    <span class="rss-icon"><a href="/story/{{story.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
 	    {% endif %}
