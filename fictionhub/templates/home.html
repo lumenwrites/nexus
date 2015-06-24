@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% load firstparagraph %}
+{% load numberofstories %}
+{% load sortbypostcount %}
 
 {% block head_extra %}
 {% endblock %}
@@ -87,7 +89,7 @@
 <div class="row padding-20 hubs">
   <h2>Hubs</h2>
   <div class="top-lvl-hub">
-    {% for hub in hubs %}
+    {% for hub in hubs|sortbypostcount:request %}
 
     {% if not hub.parent %}
     {% if hub.posts.all %}
@@ -101,15 +103,18 @@
     <div  class="hub-tag top-lvl container">
       <!-- Expand/collapse -->
       {% if hub.children.all %}
-      <span class="expand fi-plus"></span>  
+      <span class="expand fi-minus expanded"></span>  
       {% endif %}
 
       <a href="/hub/{{hub.slug}}/">{{hub}}
-	<span class="number-of-stories">{{hub.posts.all|length}}</span></a> 
+      {% if hub.hub_type == "hub" %}	
+	<span class="number-of-stories">{% numberofstories hub %}</span></a>
+      <!-- hub.posts.all|length -->
+      {% endif %}
     
       {% if hub.children.all %}
         <div  class="padding-10 children">      
-        {% for child in hub.children.all %}
+        {% for child in hub.children.all|sortbypostcount:request %}
           {% if child.posts.all %}
           {% endif %}
             <div  class="hub-tag second-lvl container">
@@ -119,16 +124,16 @@
 	      {% endif %}
 
               <a href="/hub/{{child.slug}}/"> {{child.title}}
-			<span class="number-of-stories">{{child.posts.all|length}}</span></a>
+			<span class="number-of-stories">{% numberofstories child %}</span></a>
 
                   {% if child.children.all %}
                     <div  class="padding-10 children">      
-                    {% for child in child.children.all %}
+                    {% for child in child.children.all|sortbypostcount:request %}
                       {% if child.posts.all %}
                       {% endif %}
                         <span  class="hub-tag">
                           <a href="/hub/{{child.slug}}/"> {{child.title}}
-			    <span class="number-of-stories">{{child.posts.all|length}}</span></a>
+			    <span class="number-of-stories">{% numberofstories child %}</span></a>
             	        </span>
                     {% endfor %}
 		    <div class="clearfix"></div>
@@ -284,7 +289,8 @@ cursor: pointer;
   	      $(this).parent().children(".children").toggle('fast');
   	  }
       });
-      $(".hubs").find(".expand").parent().children(".children").hide();
+// $(".hubs").find(".expand").parent().children(".children").hide();
+  $(".second-lvl").find(".expand").parent().children(".children").hide();
 
   });
 </script>

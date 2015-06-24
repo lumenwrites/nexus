@@ -11,6 +11,12 @@ class Hub(models.Model):
     users_can_create_children = models.BooleanField(default=False)    
     description = models.TextField(max_length=512, blank=True)
 
+    HUB_TYPES = (
+        ("hub", "Hub"),
+        ("folder", "Folder"),
+    )
+    hub_type = models.CharField(default="hub", max_length=64, choices=HUB_TYPES, blank=True)
+    
     def __str__(self):
         # try:
         #     parent_title = self.parent.title + " | "

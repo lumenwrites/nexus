@@ -146,7 +146,7 @@ def posts(request, rankby="hot", timespan="all-time",
     # if not posts:
     #     return HttpResponseRedirect('/404')
 
-    hubs = Hub.objects.all().order_by('id')
+    hubs = Hub.objects.filter(hub_type="hub").order_by('id')
 
     return render(request, 'posts/posts.html',{
         'posts':posts,
@@ -553,9 +553,9 @@ def post_create(request, story="", challenge="", prompt=""):
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
             for hub in hubs:
-                if hub.parent:
+                if hub.parent and hub.parent.hub_type != "folder":
                     post.hubs.add(hub.parent)
-                    if hub.parent.parent:
+                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
                         post.hubs.add(hub.parent.parent)
 
             # Hacky way to 
@@ -570,7 +570,8 @@ def post_create(request, story="", challenge="", prompt=""):
                 return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         form = PostForm()
-        form.fields["hubs"].queryset = Hub.objects.all() # Hub.objects.filter(children=None).order_by('id')
+        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
+        # Hub.objects.filter(children=None).order_by('id')
         if challenge:
             challenge = Post.objects.get(slug=challenge)
         else:
@@ -632,9 +633,9 @@ def post_edit(request, story, chapter=""):
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
             for hub in hubs:
-                if hub.parent:
+                if hub.parent and hub.parent.hub_type != "folder":
                     post.hubs.add(hub.parent)
-                    if hub.parent.parent:
+                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
                         post.hubs.add(hub.parent.parent)
             if chapter:
                 return HttpResponseRedirect('/story/'+story.slug+'/'+post.slug+'/edit')
@@ -645,7 +646,8 @@ def post_edit(request, story, chapter=""):
             form = PostForm(instance=chapter, storyslug=story.slug)    
         else:
             form = PostForm(instance=story, storyslug=story.slug)
-        form.fields["hubs"].queryset = Hub.objects.all() # filter(children=None).order_by('id')
+        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
+        # filter(children=None).order_by('id')
 
     if story.post_type == "wiki":
         return render(request, 'posts/edit-post.html', {

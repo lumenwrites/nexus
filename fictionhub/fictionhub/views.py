@@ -15,7 +15,24 @@ def home(request):
     hot_posts = rank_hot(posts, top=32)[:10]
     top_posts = rank_top(posts, timespan = timespan)[:10]
     new_posts = posts.order_by('-pub_date')[:10]
-    hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
+    # hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
+    hubs = Hub.objects.all()
+
+
+    # Add attribute:
+    # for hub in hubs:
+    #     stories = hub.posts.filter(published = True, rational = rational)
+    #     hub.storycount = stories.count()
+    # hubs_storycount = []
+    # for hub in hubs:
+    #     stories = hub.posts.filter(published = True, rational = rational)
+    #     hub.storycount = stories.count()
+    #     hubs_storycount.append(hub)
+
+    # hubs = 
+    # hubs = hubs_storycount.order_by('storycount')
+    
+ 
     return render(request, 'home.html', {
         'hot_posts': top_posts, # hot_posts,
         'new_posts':new_posts,
