@@ -15,7 +15,7 @@ def sortbypostcount(children,request):
 
     children_postcount = []
     for child in children:
-        child.postcount = child.posts.filter(published=True,rational=rational).count()
+        child.postcount = child.posts.filter(published=True,rational=rational).count() + child.order
         children_postcount.append(child)
 
     children_postcount.sort(key=lambda x: x.postcount, reverse = True)

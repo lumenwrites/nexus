@@ -224,7 +224,6 @@ $(document).ready(function(){
 	$("#toggle-hubs").addClass("expanded");
     }
 	
-    
     var selector = $('select#hubs-multiselect');
 
     $(".hubs").find(".hub-link").bind('click',function(event){
@@ -237,6 +236,13 @@ $(document).ready(function(){
     	$("#search-form").submit();	
     });
 
+    // Open sidebar by default
+    $(".posts").removeClass("large-12");
+    $(".posts").removeClass("small-12");  	      
+    $(".posts").addClass("large-9");
+    $(".posts").addClass("small-9");	      
+    $(".sidebar").show();
+    $("#toggle-hubs").addClass("expanded");
 })
 
 document.onkeydown=function(){

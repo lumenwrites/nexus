@@ -16,6 +16,7 @@ class Hub(models.Model):
         ("folder", "Folder"),
     )
     hub_type = models.CharField(default="hub", max_length=64, choices=HUB_TYPES, blank=True)
+    order = models.IntegerField(default=0)
     
     def __str__(self):
         # try:
