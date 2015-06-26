@@ -72,7 +72,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - Search
   - Superior search engine.
 	(now just using query to find matching text)
-  - Filtering by hubs - union/intersection options.
+  - Filtering by hubs - union/intersection/exclude options.
 	(search for stories containing all the hubs or any one of the hubs)
 	with circle icons.
   - By author/date/length/rating/etc.
