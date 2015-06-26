@@ -27,9 +27,6 @@ The most basic features are done, now - refactoring and cleaning the code accord
 # Upcoming Features
 
 - [Minor improvements](https://gist.github.com/raymestalez/890f98d47401431defbc)
-
-&nbsp;
-
 - PMs
 - Notifications(when someone comments, messages, etc)
   - Email updates on stories.
@@ -39,25 +36,20 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - RSS
   - Proper rss/atom feed for a story.
   - RSS of all stories.
-
-&nbsp;
-
-- Import RSS feeds
-  - Full text import from wordpress feeds?
-  - convert html to markdown
-- Import from fanfiction.net
-  - Regularly update some stories.
-- Dropbox import:
-    - Convenient way to authorize dropbox from preferences.
-    - Look into directories, search within, directory name = hub
-    - Changing titles
-    - Deleting deleted files.  
-      when slug doesn't exit?
-- Convenient manual import?
-  - Paste preformatted text?
-
-&nbsp;
-
+- Import
+  - Import RSS feeds
+    - Full text import from wordpress feeds?
+    - convert html to markdown
+  - Import from fanfiction.net
+    - Regularly update some stories.
+  - Dropbox import:
+      - Convenient way to authorize dropbox from preferences.
+      - Look into directories, search within, directory name = hub
+      - Changing titles
+      - Deleting deleted files.  
+        when slug doesn't exit?
+  - Convenient manual import?
+    - Paste preformatted text?
 - REST API
 
 &nbsp;
@@ -68,17 +60,12 @@ The most basic features are done, now - refactoring and cleaning the code accord
   html and markdown too?
 - Wiki
   Edit history.
-
-&nbsp;
-
 - Writing Prompts
   - with reddit reposting?
 - Challenges
   - with reddit reposting? to /r/rational weekly challenges.
 
-&nbsp;
-
-- [Content](https://gist.github.com/raymestalez/4f27da8e0e03e52e1885)
+[Content](https://gist.github.com/raymestalez/4f27da8e0e03e52e1885)
 
 ## Future
 
