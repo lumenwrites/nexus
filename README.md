@@ -37,6 +37,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - RSS
   - Proper rss/atom feed for a story.
   - RSS of all stories.
+
 - Import RSS feeds
   - Full text import from wordpress feeds?
   - convert html to markdown
@@ -46,7 +47,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
     - Convenient way to authorize dropbox from preferences.
     - Look into directories, search within, directory name = hub
     - Changing titles
-    - Deleting deleted files.
+    - Deleting deleted files.  
       when slug doesn't exit?
 - Convenient manual import?
   - Paste preformatted text?
