@@ -28,6 +28,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
 
 - [Minor improvements](https://gist.github.com/raymestalez/890f98d47401431defbc)
 &nbsp;
+
 - PMs
 - Notifications(when someone comments, messages, etc)
   - Email updates on stories.
