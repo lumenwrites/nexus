@@ -80,6 +80,8 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - Superior editor - especially on mobile.
 - Recommendation engine.
     - top-rated stories by all users that gave 5 stars to a particular story?
+
+<!--
 - Store
   - Brainstorm and discuss with community, decide on the best model, profitable to authors, convenient to readers:
 	- Monthly subscription to all paid stories like on apple music?
@@ -90,6 +92,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
 	- Ebook store?
     - Patreon kind of model?
     - What else?
+-->
 
 &nbsp;
 
