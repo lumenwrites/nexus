@@ -93,9 +93,11 @@
       <div class="edit-buttons">
 	<br/>
 	<!-- Hub multiselect -->
+	{% if action != "chapter_create" and action != "chapter_edit" %}
 	<div class="set-hubs">
 	  {{form.hubs}}
 	</div>
+	{% endif %}
 
 	<!-- View/Publish/Save buttons -->
 	{% if action = "story_edit" %}	  
