@@ -76,6 +76,8 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - Challenges
   - with reddit reposting? to /r/rational weekly challenges.
 
+&nbsp;
+
 - [Content](https://gist.github.com/raymestalez/4f27da8e0e03e52e1885)
 
 ## Future
