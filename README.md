@@ -37,7 +37,6 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - RSS
   - Proper rss/atom feed for a story.
   - RSS of all stories.
-
 - Import RSS feeds
   - Full text import from wordpress feeds?
   - convert html to markdown
