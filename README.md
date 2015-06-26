@@ -20,8 +20,10 @@ If you want to contribute to this project and make it more awesome, here's what 
 
 # To-Do
 
-- Major cleanup.  
-  The most basic features are done, now - refactoring and cleaning the code according to PEP8 and 2 Scoops of Django.
+Major cleanup.  
+The most basic features are done, now - refactoring and cleaning the code according to PEP8 and 2 Scoops of Django.
+
+- [ ] test
 
 # Upcoming Features
 
