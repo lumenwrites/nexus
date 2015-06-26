@@ -83,9 +83,10 @@ The most basic features are done, now - refactoring and cleaning the code accord
 
 <!--
 - Store
-  - Brainstorm and discuss with community, decide on the best model, profitable to authors, convenient to readers:
-	- Monthly subscription to all paid stories like on apple music?
-	  readers get access to everything for ~$10/mo,
+  Brainstorm and discuss with community,
+  decide on the best model, profitable to authors, convenient to readers:
+	- Monthly subscription to all paid stories like on apple music?  
+	  readers get access to everything for ~$10/mo,  
 	  authors get rewarded in proportion to how much their stories have been read?
 	- "Paid channels", subscribe to all author's updates?
 	- Micropayments?
