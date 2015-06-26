@@ -30,7 +30,7 @@ class Post(models.Model):
     parent = models.ForeignKey('Post', related_name="children",default=None, null=True, blank=True)
 
     POST_TYPES = (
-        # ("post", "Post"), # no children
+        ("post", "Post"), # no children
         ("story", "Story"), # children are chapters
         ("chapter", "Chapter"), # no children
         ("thread", "Thread"), # no children

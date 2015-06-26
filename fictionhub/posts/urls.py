@@ -11,9 +11,20 @@ urlpatterns = [
     url(r'^prompt/add$', views.prompt_create),
     url(r'^prompt/(?P<prompt>[^\.]+)/reply$', views.post_create),    
     # Post
+    url(r'^post/add$', views.post_create,
+        {'posttype':'post'}),
+
+    # Forum
+    url(r'^post/(?P<hubslug>[^\.]+)/add$', views.post_create,
+        {'posttype':'thread'}),
+
+    # Post edit
+    url(r'^post/(?P<story>[^\.]+)/edit$', views.post_edit),    
     url(r'^post/(?P<story>[^\.]+)$', views.post, name='view_post'),
     url(r'^wiki/(?P<story>[^\.]+)$', views.post, name='view_wiki'),    
 
+
+    
     # Challenges list
     url(r'^challenges/$', views.posts,
         {'filterby':'challenges'}),                

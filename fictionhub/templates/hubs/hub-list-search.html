@@ -20,9 +20,14 @@
       <span class="expand fi-minus expanded"></span>  
       {% endif %}
 
-      <a href="/hub/{{hub.slug}}/" class="hub-link" id="{{hub.slug}}">{{hub}}
+      {% if hub.hub_type = "hub" %}      
+      <a href="/hub/{{hub.slug}}/" class="hub-link" id="{{hub.slug}}">{{hub}}</a>
+      {% else %}
+      {{hub}}
+      {% endif %}	
+
       {% if hub.hub_type == "hub" %}	
-	<span class="number-of-stories">{% numberofstories hub %}</span></a>
+	<span class="number-of-stories">{% numberofstories hub %}</span>
       <!-- hub.posts.all|length -->
       {% endif %}
     
@@ -37,8 +42,8 @@
 	      <span class="expand fi-plus"></span>  
 	      {% endif %}
 
-              <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}"> {{child.title}}
-			<span class="number-of-stories">{% numberofstories child %}</span></a>
+              <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}"> {{child.title}}</a>
+			<span class="number-of-stories">{% numberofstories child %}</span>
 
                   {% if child.children.all %}
                     <div  class="padding-10 children">      
@@ -46,8 +51,9 @@
                       {% if child.posts.all %}
                       {% endif %}
                         <span  class="hub-tag">
-                          <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}"> {{child.title}}
-			    <span class="number-of-stories">{% numberofstories child %}</span></a>
+                          <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}">
+			    {{child.title}}</a>
+			    <span class="number-of-stories">{% numberofstories child %}</span>
             	        </span>
                     {% endfor %}
 		    <div class="clearfix"></div>

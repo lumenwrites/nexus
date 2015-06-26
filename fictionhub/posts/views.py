@@ -169,6 +169,7 @@ def posts(request, rankby="hot", timespan="all-time",
         'downvoted': downvoted,
         'filterby':filterby,
         'filterurl': filterurl,
+        'hubslug': hubslug,        
         'post_type':post_type,
         'rankby': rankby,
         'timespan': timespan,
@@ -670,7 +671,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'filterby':filterby
     })
 
-def post_create(request, story="", challenge="", prompt=""):
+def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
     rational = False
     if request.META['HTTP_HOST'] == "rationalfiction.io" or \
        request.META['HTTP_HOST'] == "localhost:8000":
@@ -694,10 +695,16 @@ def post_create(request, story="", challenge="", prompt=""):
                 post.parent = Post.objects.get(slug=challenge)
             if prompt:
                 post.parent = Post.objects.get(slug=prompt)
+            if posttype == "post":
+                post.post_type = "post"                    
+            if posttype == "thread":
+                post.post_type = "post"
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
+            if posttype == "thread":
+                post.hubs.add(Hub.objects.get(slug=hubslug))
             for hub in hubs:
                 if hub.parent and hub.parent.hub_type != "folder":
                     post.hubs.add(hub.parent)
@@ -712,6 +719,8 @@ def post_create(request, story="", challenge="", prompt=""):
             #             post.hubs.add(hub.parent.parent)
             if story:
                 return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'/edit')
+            elif posttype == "post":
+                return HttpResponseRedirect('/post/'+post.slug+'/edit')
             else:
                 return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
@@ -734,6 +743,8 @@ def post_create(request, story="", challenge="", prompt=""):
             'form':form,
             'action':'chapter_create',
             'challenge':challenge,
+            'posttype':posttype,
+            'hubslug':hubslug,                        
             'prompt':prompt            
         })
     else:
@@ -741,7 +752,9 @@ def post_create(request, story="", challenge="", prompt=""):
             'form':form,
             'hubs':Hub.objects.all(),
             'challenge':challenge,
-            'prompt':prompt,            
+            'prompt':prompt,
+            'posttype':posttype,
+            'hubslug':hubslug,                                    
             'test': ""
         })
 
@@ -795,7 +808,7 @@ def post_edit(request, story, chapter=""):
         form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
         # filter(children=None).order_by('id')
 
-    if story.post_type == "wiki":
+    if story.post_type == "wiki" or story.post_type == "post":
         return render(request, 'posts/edit-post.html', {
             'story':story,
             'chapter':chapter,            

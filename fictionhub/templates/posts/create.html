@@ -19,7 +19,7 @@
        {% if challenge %}
        action="{{challenge.get_absolute_url}}/submit-story"       
        {% elif prompt %}
-       action="{{prompt.get_absolute_url}}/reply"       
+       action="{{prompt.get_absolute_url}}/reply"
        {% else %}
        action="/story/add"
        {% endif %}       
@@ -48,3 +48,9 @@
 
 {% endblock content %}
 
+<!-- Create posts and forum threads -->
+<!-- Temporarily disabed, implement laters. -->
+       {% elif hubslug %}
+       action="/post/{{hubslug}}/add"       
+       {% elif posttype == "post" %}
+       action="/post/add"       

@@ -56,12 +56,12 @@
 	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;
 							 padding: 5px;margin: 4px 10px;"
 	       href="/user/{{userprofile.username}}/subscribe">
-	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a>
 	    {% else %}
 	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;
 								     padding: 5px;margin: 4px 10px;"
 	       href="/user/{{userprofile.username}}/unsubscribe">
-	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a>
 	    {% endif %}
           {% else %} <!-- if it's myself -->
 	      <!-- Subscribers: {{userprofile.subscribers.count}} -->
@@ -70,7 +70,7 @@
 	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;
 						     padding: 5px;margin: 4px 10px;"
 	   href="/login/?next={{request.path}}">
-	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a></button>
+	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a>
 	{% endif %}
 
 	  <b style="margin:6px 0;"> {{userprofile.username}} </b>
