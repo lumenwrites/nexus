@@ -7,7 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
+# CBVs
+from django.views.generic import CreateView
 # Forms
 from hubs.forms import HubForm
 
@@ -32,6 +33,13 @@ def hub_create(request):
         'form':form,
         'nextpage':nextpage
     })
+
+class HubCreate(CreateView):
+    model = Hub
+    form_class = HubForm
+    success_url="/browse/"
+    template_name = "hubs/hub-create.html"    
+
 
 
 def hubs(request):
