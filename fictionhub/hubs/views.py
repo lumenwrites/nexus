@@ -37,7 +37,8 @@ def hub_create(request):
 class HubCreate(CreateView):
     model = Hub
     form_class = HubForm
-    success_url="/browse/"
+    # nextpage = self.request.GET.get('next', '/')
+    success_url="/"
     template_name = "hubs/hub-create.html"    
 
 

@@ -3,11 +3,11 @@
 
 <div id="page"  class="postPage">
   <div class="row">
-    <div class="large-5 columns">
+    <div class="large-4 large-centered columns center-vertically">
       <h2> Create Hub </h2>
       <form method="post" action="/hub/add/?next={{nextpage}}"> {% csrf_token %}
 	{{form}}
-	<input type="submit" class="button small" value="Create" />
+	<input type="submit" class="button small right" value="Create" />
       </form>
     </div>
     <div class="clearfix"></div>
