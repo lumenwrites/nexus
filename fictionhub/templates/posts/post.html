@@ -43,7 +43,7 @@
 	<div class="clearfix"></div>
 	<br/>
 	{% if post.post_type == "story" and post.children.all %}	
-	<div class="panel">
+	<div class="panel" id="toc">
 	  {% for chapter in post.children.all %}	  
 	  <ul>
 	    <li><a href="{{chapter.get_absolute_url}}">{{chapter.title}}</a></li>
