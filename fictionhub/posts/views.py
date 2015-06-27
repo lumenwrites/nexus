@@ -22,6 +22,7 @@ from django.utils.timezone import utc
 from time import mktime
 # slugify dropbox title
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 # My own stuff
 # utility functions
@@ -124,7 +125,7 @@ def posts(request, rankby="hot", timespan="all-time",
 
 
     # Pagination
-    paginator = Paginator(post_list, 25)
+    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -196,7 +197,7 @@ def prompts(request, rankby="hot", timespan="all-time"):
 
 
     # Pagination
-    paginator = Paginator(post_list, 25)
+    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -315,7 +316,7 @@ def search(request, rankby="top", timespan="all-time"):
 
 
     # Pagination
-    paginator = Paginator(post_list, 25)
+    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -406,7 +407,7 @@ def browse(request, rankby="hot", timespan="all-time"):
 
 
     # Pagination
-    paginator = Paginator(post_list, 25)
+    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
