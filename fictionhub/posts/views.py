@@ -354,8 +354,9 @@ def browse(request, rankby="hot", timespan="all-time"):
     query = ""
     selectedhubs = ""
     filterhubs = []
-    if request.method == 'POST':
-        selectedhubs = request.POST.getlist('selectedhubs')
+    if request.method == 'GET':
+        selectedhubs = request.GET.getlist('hubs')
+        # selectedhubs = request.GET['hubs'].split(",")
         filterhubs = []
         if selectedhubs:
             for hubslug in selectedhubs:
@@ -377,7 +378,7 @@ def browse(request, rankby="hot", timespan="all-time"):
         else:
             posts = Post.objects.all()            
 
-        query = request.POST.get('query')
+        query = request.GET.get('query')
         if query:
             posts = posts.filter(Q(title__icontains=query,
                                    published=True, post_type=post_type,

@@ -128,7 +128,7 @@
 <div class="large-3 small-3 columns sidebar" style="display:none;"> <!-- style="display:none;" -->
   <!-- <br/> -->
 
-  <form id="search-form" action="" method="post">{% csrf_token %}
+  <form id="search-form" action="" method="get"> {# {% csrf_token %} #}
     <!-- 
     <input placeholder="Search" type="text" name="query" class="left" value="{{query}}"
 	   type="submit">
@@ -150,9 +150,9 @@
 	   -->
     <div class="clearfix"></div>	  
 
-    <select multiple="multiple" id="hubs-multiselect" name="selectedhubs" class="hidden" >
+    <select multiple="multiple" id="hubs-multiselect" name="hubs" class="hidden" >
       {% for hub in hubs %} <!-- Different between post and posts -->
-        <option value="{{hub.slug}}" id="{{hub.slug}}"
+        <option value="{{hub.slug}}" id="{{hub.slug}}" name="hub"
     		{% if hub in filterhubs %}selected{% endif %}>
     	  {{hub.title}}</option> <!-- selected -->
     	{% endfor %}
@@ -209,6 +209,26 @@
 	
     }    
 
+
+// $('#search-form').submit(function(event)
+// {
+//     event.preventDefault();
+//     event.stopPropagation();
+
+//     var values = [];
+//     $('#hubs-multiselect').children('option:selected').each(function()
+//     {
+//         values.push(this.value);
+//     });
+
+//     var query = $('#search-input').attr("value");
+//     if (values){
+// 	var hubs = '&hubs=' + values.join(',');
+//     } else {
+// 	var hubs = ""
+//     }
+//     window.location = '?query=' + query + hubs;
+// });
 
 $(document).ready(function(){
     // Multiselec
