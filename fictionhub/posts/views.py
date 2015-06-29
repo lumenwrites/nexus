@@ -442,7 +442,9 @@ def browse(request, rankby="hot", timespan="all-time"):
         if wordcount > 1000:
             wordcount = str(int(wordcount/1000)) + "K"
         post.wordcount = wordcount
-    
+
+    if not query:
+        query = ""
     return render(request, 'posts/browse.html',{
         'posts':posts,
         'rankby': rankby,
