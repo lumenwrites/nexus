@@ -88,10 +88,10 @@ The most basic features are done, now - refactoring and cleaning the code accord
 	- Monthly subscription to all paid stories like on apple music?  
 	  readers get access to everything for ~$10/mo,  
 	  authors get rewarded in proportion to how much their stories have been read?
-	- "Paid channels", subscribe to all author's updates?
-	- Micropayments?
+	- "Paid channels", subscribe to all author's updates? - meh
+	- Micropayments? - meh
 	- Ebook store?
-    - Patreon kind of model?
+    - Patreon kind of model? - meh
     - What else?
 -->
 
