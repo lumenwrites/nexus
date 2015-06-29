@@ -33,7 +33,7 @@
 	<div class="clearfix"></div>
 	<!-- <div style="padding:5px 0;"> -->
       	<!-- {% for hub in post.hubs.all %} <\!-- Different between post and posts -\-> -->
-      	<!-- <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a> -->
+      	<!-- <a href="/hub/{{hub.slug}}" class="hub-tag">{{hub.title}}</a> -->
       	<!-- {% endfor %} -->
 	<!-- </div> -->
       </header>
@@ -88,7 +88,7 @@
 	-->
 	</div> <!-- end stats left -->
       	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
-      	<a href="/hub/{{hub.slug}}"class="hub-tag">{{hub.title}}</a>
+      	<a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">{{hub.title}}</a>
       	{% endfor %}
 
 	<div class="right">
@@ -296,6 +296,19 @@ $(document).ready(function(){
     	$("#search-form").submit();	
     });
 
+    // Select hubs when clicking on one in a post footer
+    var selector = $('select#hubs-multiselect');
+    $(".posts").find(".hub-tag").bind('click',function(event){
+	event.preventDefault();
+	event.stopPropagation();
+	var hub = $(this).attr('id');
+	console.log("select " + hub);
+	$("#hubs-multiselect option:selected").removeAttr("selected");
+	$('#hubs-multiselect option[value=' + hub + ']').attr('selected', true);
+	//refreshHubs();
+    	$("#search-form").submit();	
+    });
+    
     // open sidebar if there are some hubs selected
     // if ($('select#hubs-multiselect').val()){
     // 	$(".posts").removeClass("large-12");
