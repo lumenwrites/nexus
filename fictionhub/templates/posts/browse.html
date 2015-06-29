@@ -183,6 +183,8 @@
 
 
 <script>
+
+$(document).ready(function(){
     function refreshHubs() {
 	$('select#hubs-multiselect').each(function(){
 	    var selectedHubs = $(this).val();
@@ -208,10 +210,8 @@
 	});
 	
     }    
+    
 
-
-
-$(document).ready(function(){
     // Multiselect
     refreshHubs();
 
@@ -326,6 +326,13 @@ $(document).ready(function(){
     $(".posts").addClass("small-9");	      
     $(".sidebar").show();
     $("#toggle-hubs").addClass("expanded");
+
+    // If there's search input, search field is white
+    if ($('#search-input').val().length > 0){
+    	// $('#search-input').style.background="white";
+    	// $('#search-input').css("backround","white");
+	$('#search-input').addClass("white-bg");
+    }
 })
 
 document.onkeydown=function(){
@@ -414,7 +421,10 @@ margin-top: 6px;
 .children {
 padding: 0px;
 }
-  
+
+.white-bg {
+    background: white!important;
+}
 </style>
 
 {% endblock content %}

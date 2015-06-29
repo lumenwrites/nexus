@@ -381,6 +381,8 @@ header {
 .subnav .searchbar {
     background: none;
     width: calc(100% - 76px);
+    /* remove hubs toggle */
+    width: calc(100% - 5px);
     height:40px;
     /* margin: -6px 0;     */
     margin: 4px;
