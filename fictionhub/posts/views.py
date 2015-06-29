@@ -355,8 +355,11 @@ def browse(request, rankby="hot", timespan="all-time"):
     selectedhubs = ""
     filterhubs = []
     if request.method == 'GET':
-        selectedhubs = request.GET.getlist('hubs')
-        # selectedhubs = request.GET['hubs'].split(",")
+        # selectedhubs = request.GET.getlist('hubs')
+        try:
+            selectedhubs = request.GET['hubs'].split(",")
+        except:
+            electedhubs = []
         filterhubs = []
         if selectedhubs:
             for hubslug in selectedhubs:
