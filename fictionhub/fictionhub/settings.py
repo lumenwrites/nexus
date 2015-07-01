@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7-pwxu4=a0th_s$)8)#z5f-^jlsn_^rg@l+r6$b0)!yfji6m13'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -157,56 +157,56 @@ PAGINATION_NUMBER_OF_PAGES = 25
 
 
 # Email Server
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Host for sending e-mail.
-# EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 
 # Port for sending e-mail.
-# EMAIL_PORT = 587 # 465 #
+EMAIL_PORT = 587
 
 # Optional SMTP authentication information for EMAIL_HOST.
-# EMAIL_HOST_USER = 'raymestalez@gmail.com'
-# EMAIL_HOST_PASSWORD = os.environ["PASS"]
-# EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'raymestalez@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ["PASS"]
+EMAIL_USE_TLS = True
 
-# SERVER_EMAIL = 'raymestalez@gmail.com'
+SERVER_EMAIL = 'raymestalez@gmail.com'
 
 
 # Admins
-# ADMINS = (
-#   ('Ray Alez', 'raymestalez@gmail.com'),
-# )
+ADMINS = (
+  ('Ray Alez', 'raymestalez@gmail.com'),
+)
 
-# MANAGERS = ADMINS
+MANAGERS = ADMINS
 
 
 # Email me on error
-# SEND_BROKEN_LINK_EMAILS=True
+SEND_BROKEN_LINK_EMAILS=True
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_false': {
-#             '()': 'django.utils.log.RequireDebugFalse'
-#         }
-#     },
-#     'handlers': {
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'filters': ['require_debug_false'],
-#             'class': 'django.utils.log.AdminEmailHandler'
-#         }
-#     },
-#     'loggers': {
-#         'django.request': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
 
 
 # Turn off Debug
