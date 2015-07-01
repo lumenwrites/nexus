@@ -13,8 +13,8 @@
     {% for post in posts %}
     <article>
       {% include "posts/vote.html" %}
-      <a href="post.get_absolute_url" style="black bold">
-	{{post.body | markdownify:"True" | safe }}
+      <a href="{{post.get_absolute_url}}" style="black bold">
+	{{post | markdownify | safe }}
       </a>
       <div class="right">
 	{% if post.children.all %}	
