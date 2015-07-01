@@ -1424,7 +1424,6 @@ def prompt_repost(request, story):
     
     
 def email(request):
-    asdfs
     send_mail('My awesome email', 'Oh hell yeah..', 'raymestalez@gmail.com', ['raymestalez@gmail.com'], fail_silently=False)
     return HttpResponse("Yes!")
 
