@@ -171,6 +171,9 @@ urlpatterns = [
     url(r'^browse/$', views.browse),
     url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
     url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
+
+    # Email
+    url(r'^email/$', views.email),
     
 ]
 

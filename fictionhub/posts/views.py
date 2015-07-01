@@ -13,6 +13,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import * # for rss
+from django.core.mail import send_mail # for email
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -1422,6 +1423,10 @@ def prompt_repost(request, story):
 
     
     
+def email(request):
+    asdfs
+    send_mail('My awesome email', 'Oh hell yeah..', 'raymestalez@gmail.com', ['raymestalez@gmail.com'], fail_silently=False)
+    return HttpResponse("Yes!")
 
 
 # TODO: replace with CBVs
