@@ -85,7 +85,7 @@
 	<!-- 2 hours ago -->
       </div>
       <div class="comment-body">      
-	{{comment.body | markdownify | safe }}
+	{{comment | markdownify | safe }}
       </div>
       <div class="comment-footer">
 	{% if user.is_authenticated %}      
