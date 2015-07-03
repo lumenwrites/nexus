@@ -130,6 +130,11 @@ def authenticate_user(request):
 
 # Only sign up
 def register(request):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        rational = True
+
     if request.method == 'POST':
         # form = UserCreationForm(request.POST)
         form = RegistrationForm(request.POST)
@@ -137,6 +142,7 @@ def register(request):
             # new_user = form.save()
             user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['password1'])
             user.email = form.cleaned_data['email']
+            user.rational = rational
             user.save()
 
             # log user in after signig up

@@ -20,4 +20,5 @@ class User(AbstractUser):
 
     comments_upvoted = models.ManyToManyField('comments.Comment', related_name="upvoters", blank=True)
     comments_downvoted = models.ManyToManyField('comments.Comment', related_name="downvoters", blank=True)    
-    
+
+    rational = models.BooleanField(default=True)    
