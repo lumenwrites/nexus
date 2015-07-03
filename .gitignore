@@ -79,3 +79,5 @@ local_settings.py
 # secret
 secret
 config/secret
+config/#secret#
+config/.#secret#
