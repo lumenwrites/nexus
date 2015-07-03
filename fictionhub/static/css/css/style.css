@@ -1037,3 +1037,8 @@ footer h4 {
   font-size: medium;
   font-weight: normal;
 }
+
+/* line 945, ../sass/style.scss */
+.white-bg {
+  background: white !important;
+}
