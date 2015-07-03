@@ -14,6 +14,7 @@
   <div class="large-12 small-12 columns posts">
     <!-- {{test}} -->
     {% for post in posts %}
+    {% if not post.author.shadowban or post.author = user %}    
     <article>
       {% if post.post_type != "wiki"  %}
       {% include "posts/vote.html" %}
@@ -103,6 +104,7 @@
       </div>
       <!-- <hr/> -->
     </article>
+    {% endif %}	<!-- endif shadowban -->
     {% endfor %}
 
 <!-- Pagination -->
