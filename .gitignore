@@ -73,3 +73,8 @@ local_settings.py
 
 # Emacs autosave
 \#*#
+\.#*
+
+
+# secret
+config/secret
