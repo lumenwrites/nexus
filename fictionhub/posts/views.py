@@ -387,19 +387,33 @@ def browse(request, rankby="hot", timespan="all-time"):
 
         query = request.GET.get('query')
         if query:
-            posts = posts.filter(Q(title__icontains=query,
-                                   published=True, post_type=post_type,
-                                   rational = rational) |
-                                 Q(body__icontains=query,
-                                   published=True, post_type=post_type,
-                                   rational = rational) |
-                                 Q(author__username__icontains=query,
-                                   published=True, post_type=post_type,
-                                   rational = rational))
+            if rational:
+                posts = posts.filter(Q(title__icontains=query,
+                                       published=True, post_type=post_type,
+                                       rational = rational) |
+                                     Q(body__icontains=query,
+                                       published=True, post_type=post_type,
+                                       rational = rational) |
+                                     Q(author__username__icontains=query,
+                                       published=True, post_type=post_type,
+                                       rational = rational))
+            else:
+                posts = posts.filter(Q(title__icontains=query,
+                                       published=True, post_type=post_type) |
+                                     Q(body__icontains=query,
+                                       published=True, post_type=post_type) |
+                                     Q(author__username__icontains=query,
+                                       published=True, post_type=post_type))
         else:
-            posts = posts.filter(published=True, rational = rational, post_type=post_type)
+            if rational:
+                posts = posts.filter(published=True, rational = rational, post_type=post_type)
+            else:
+                posts = posts.filter(published=True, post_type=post_type)                
     else:
-        posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+        if rational:
+            posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+        else:
+            posts = Post.objects.filter(published=True,post_type=post_type)            
         filterhubs = []
 
 
