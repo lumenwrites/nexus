@@ -106,7 +106,9 @@
 		aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}">
 		  <b>{{user.username}}</b> ({{user.karma}})</a></li>
+	      {% if user.approved %}	  	  
 	      <li><a href="/story/add"> Submit </a></li> <!-- Create Story -->
+	      {% endif %}	  	  	      
 	      <li><a href="/hub/add"> Create Hub </a></li> <!-- Create Story -->
 	      <li><a href="/preferences/"> Preferences </a></li>	      
 	      <li>

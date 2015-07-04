@@ -23,4 +23,6 @@ class User(AbstractUser):
 
     rational = models.BooleanField(default=True)
 
-    shadowban = models.BooleanField(default=False)        
+    shadowban = models.BooleanField(default=False)
+
+    approved = models.BooleanField(default=False)            
