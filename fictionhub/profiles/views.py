@@ -143,6 +143,8 @@ def register(request):
             user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['password1'])
             user.email = form.cleaned_data['email']
             user.rational = rational
+            if rational:
+                user.approved = True
             user.save()
 
             # log user in after signig up
