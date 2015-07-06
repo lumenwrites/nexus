@@ -128,9 +128,13 @@
 </div>  
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
-<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
-<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css"> -->
+<!-- <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script> -->
+<!-- <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script> -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
 <!-- Comments js -->
 <script>
@@ -323,15 +327,22 @@ $(document).ready(function(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
 
     //Editor
-    if(!isMobile){
-  	$('textarea').each(function( index ) {
-  	    var editor = new Editor({
-  		element: this
-  	    });
-  	    editor.render();
-  	})
-    }
+    // if(!isMobile){
+    // 	$('textarea').each(function( index ) {
+    // 	    var editor = new Editor({
+    // 		element: this
+    // 	    });
+    // 	    editor.render();
+    // 	})
+    // }
 
+    $('textarea').each(function() {
+    	var simplemde = new SimpleMDE({
+	    element: this,
+	});
+    	simplemde.render();	
+    })
+	
 
     //Toggle reply
     $('.show-reply').click(function () {
@@ -361,7 +372,7 @@ $(document).ready(function(){
 
     $('.br-wrapper-b').css("display", "none")    
     $('#id_comment_type').change(function(){
-	if (this.value == 1) {
+	if (this.value == "comment") {
 	    $('.br-wrapper-b').css("display", "none")
 	} else {
 	    $('.br-wrapper-b').css("display", "inline")	    

@@ -3,6 +3,31 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # wiki comments
+    
+    # Rank comments
+    url(r'^wiki/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
+        views.post, name='view_chapter'), 
+    url(r'^wiki/(?P<story>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
+        views.post, name='view_story'),
+
+    # Reviews
+    url(r'^wiki/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/reviews$',
+        views.post, 
+        {'filterby': 'reviews'},
+        name='view_chapter'), 
+    url(r'^wiki/(?P<story>[^\.]+)/reviews$',
+        views.post, 
+        {'filterby': 'reviews'},
+        name='view_story'),
+    url(r'^wiki/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/reviews/(?P<rankby>[^\.]+)$',
+        views.post, 
+        {'filterby': 'reviews'},
+        name='view_chapter'), 
+    url(r'^wiki/(?P<story>[^\.]+)/reviews/(?P<rankby>[^\.]+)$',
+        views.post, 
+        {'filterby': 'reviews'},
+        name='view_story'),
 
     # edit wiki
     url(r'^wiki/(?P<story>[^\.]+)/edit$', views.post_edit),    
@@ -61,29 +86,6 @@ urlpatterns = [
 
     url(r'^prompt-import/$', views.prompt_import),            
 
-    # Edit story
-    url(r'^story/add$', views.post_create),
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.post_edit),    
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/up$', views.chapter_up),
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/down$', views.chapter_down),
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.post_delete),        
-    
-    url(r'^story/(?P<story>[^\.]+)/edit$', views.post_edit),
-    url(r'^story/(?P<story>[^\.]+)/delete$', views.post_delete),
-    url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),
-    url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
-    url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
-
-
-    
-    # Rss
-    url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),        
-
-    # JSON
-    url(r'^story/(?P<slug>[^\.]+)/json$', views.post_json),        
-
-
-    url(r'^404/', views.page_404),
     
     # Rank comments
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
@@ -108,6 +110,33 @@ urlpatterns = [
         views.post, 
         {'filterby': 'reviews'},
         name='view_story'),
+
+
+    
+    
+    # Edit story
+    url(r'^story/add$', views.post_create),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.post_edit),    
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/up$', views.chapter_up),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/down$', views.chapter_down),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.post_delete),        
+    
+    url(r'^story/(?P<story>[^\.]+)/edit$', views.post_edit),
+    url(r'^story/(?P<story>[^\.]+)/delete$', views.post_delete),
+    url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),
+    url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
+    url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
+
+
+    
+    # Rss
+    url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),        
+
+    # JSON
+    url(r'^story/(?P<slug>[^\.]+)/json$', views.post_json),        
+
+
+    url(r'^404/', views.page_404),
 
 
     # View story/chapter

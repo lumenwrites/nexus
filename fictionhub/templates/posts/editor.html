@@ -1,8 +1,12 @@
 {% load staticfiles %}
 <!-- Editor -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
-<script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
-<script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css"> -->
+<!-- <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script> -->
+<!-- <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script> -->
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
 <!-- Select2 -->
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
@@ -23,14 +27,16 @@ $(document).ready(function(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
     
     //Editor
-    if(!isMobile){
-	// Desktop editor
-	var editor = new Editor();
-	editor.render();
-    } else {
-	// Mobie editor
-	//$('.markdown').markdownify();  
-    }
+    // if(!isMobile){
+    // 	// Desktop editor
+    // 	var editor = new Editor();
+    // 	editor.render();
+    // } else {
+    // 	// Mobie editor
+    // 	//$('.markdown').markdownify();  
+    // }
+    var simplemde = new SimpleMDE();
+    simplemde.render();    
 
     // Multiselect
     $("#id_hubs").select2({
