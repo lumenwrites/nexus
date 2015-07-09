@@ -15,7 +15,8 @@
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
-	  <span>Top {% if rankby == "top" %}:{% endif %}</span></a>
+	  <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}>
+	    Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a>
 	{% if rankby == "top" and not userprofile %}
 	<a href="{{filterurl}}/top/all-time/">
 	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
