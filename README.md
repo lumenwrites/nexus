@@ -10,12 +10,12 @@ Project is in active development. This is a very early version, not even alpha y
 
 ![fictionhub](https://raw.githubusercontent.com/raymestalez/fictionhub/master/fictionhub/static/img/fictionhub.png)
 
-# To Contributors
-If you want to contribute to this project and make it more awesome, here's what you can do:
+<!-- # To Contributors -->
+<!-- If you want to contribute to this project and make it more awesome, here's what you can do: -->
 
-- First and foremost - feedback, ideas, and bug reports.
-  At this point I'm actively refactoring code, so it will be hard to make a meaningful contribution on the backend, but you can use the website and write me your thoughts about it or suggest new features to raymestalez@gmail.com - I will be very grateful =)
-- If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work well on mobile.
+<!-- - First and foremost - feedback, ideas, and bug reports. -->
+<!--   At this point I'm actively refactoring code, so it will be hard to make a meaningful contribution on the backend, but you can use the website and write me your thoughts about it or suggest new features to raymestalez@gmail.com - I will be very grateful =) -->
+<!-- - If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work well on mobile. -->
 
 
 # To-Do
