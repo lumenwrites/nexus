@@ -12,10 +12,13 @@ def numberofstories(context, hub):
        request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
-    if rational:
-        stories = hub.posts.filter(published = True, rational=rational) # , rational = True
-    else:
-        stories = hub.posts.filter(published = True) # , rational = True        
+    # fictionhub includes rational                
+    # if rational:
+    #     stories = hub.posts.filter(published = True, rational=rational)
+    # else:
+    #     stories = hub.posts.filter(published = True)
+
+    stories = hub.posts.filter(published = True, rational=rational)
     number = stories.count()
     return number
  
