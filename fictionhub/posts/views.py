@@ -112,10 +112,12 @@ def posts(request, rankby="hot", timespan="all-time",
         posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational)
         rankby = "hot"
     else:
-        if rational:
-            posts = Post.objects.filter(published=True, rational = rational, post_type="story")
-        else:
-            posts = Post.objects.filter(published=True, post_type="story")  
+        # fictionhub includes rational        
+        # if rational:
+        #     posts = Post.objects.filter(published=True, rational = rational, post_type="story")
+        # else:
+        #     posts = Post.objects.filter(published=True, post_type="story")
+        posts = Post.objects.filter(published=True, rational = rational, post_type="story")      
         filterurl="/stories"
 
     if rankby == "hot":
@@ -387,33 +389,49 @@ def browse(request, rankby="hot", timespan="all-time"):
 
         query = request.GET.get('query')
         if query:
-            if rational:
-                posts = posts.filter(Q(title__icontains=query,
+            # fictionhub includes rational
+            # if rational:
+            #     posts = posts.filter(Q(title__icontains=query,
+            #                            published=True, post_type=post_type,
+            #                            rational = rational) |
+            #                          Q(body__icontains=query,
+            #                            published=True, post_type=post_type,
+            #                            rational = rational) |
+            #                          Q(author__username__icontains=query,
+            #                            published=True, post_type=post_type,
+            #                            rational = rational))
+            # else:
+            #     posts = posts.filter(Q(title__icontains=query,
+            #                            published=True, post_type=post_type) |
+            #                          Q(body__icontains=query,
+            #                            published=True, post_type=post_type) |
+            #                          Q(author__username__icontains=query,
+            #                            published=True, post_type=post_type))
+
+            posts = posts.filter(Q(title__icontains=query,
                                        published=True, post_type=post_type,
-                                       rational = rational) |
-                                     Q(body__icontains=query,
-                                       published=True, post_type=post_type,
-                                       rational = rational) |
-                                     Q(author__username__icontains=query,
-                                       published=True, post_type=post_type,
-                                       rational = rational))
-            else:
-                posts = posts.filter(Q(title__icontains=query,
-                                       published=True, post_type=post_type) |
-                                     Q(body__icontains=query,
-                                       published=True, post_type=post_type) |
-                                     Q(author__username__icontains=query,
-                                       published=True, post_type=post_type))
+                                   rational = rational) |
+                                 Q(body__icontains=query,
+                                   published=True, post_type=post_type,
+                                   rational = rational) |
+                                 Q(author__username__icontains=query,
+                                   published=True, post_type=post_type,
+                                   rational = rational))
+            
         else:
-            if rational:
-                posts = posts.filter(published=True, rational = rational, post_type=post_type)
-            else:
-                posts = posts.filter(published=True, post_type=post_type)                
+            # fictionhub includes rational            
+            # if rational:
+            #     posts = posts.filter(published=True, rational = rational, post_type=post_type)
+            # else:
+            #     posts = posts.filter(published=True, post_type=post_type)
+            posts = posts.filter(published=True, rational = rational, post_type=post_type)                
     else:
-        if rational:
-            posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
-        else:
-            posts = Post.objects.filter(published=True,post_type=post_type)            
+        # fictionhub includes rational        
+        # if rational:
+        #     posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+        # else:
+        #     posts = Post.objects.filter(published=True,post_type=post_type)
+        posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)     
         filterhubs = []
 
 

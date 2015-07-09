@@ -19,8 +19,20 @@
 	{% endif %}
 	<!-- Post Header -->
 	<header class="post-header">
+	<!-- chapters				     				
+	{% if post.post_type == "chapter" %}						     
+	<select style="width:auto; padding-right: 20px; margin-top: 5px; float:right;
+		       line-height: 22px;
+">
+	  <option value="{{post.parent.get_absolute_url}}">{{post.parent.title}}</option>
+	  {% for child in post.parent.children.all %}
+	  <option value="{{child.get_absolute_url}}">{{child.title}}</option>
+	  {% endfor %}	  
+	</select>
+	{% endif %} -->
+
 	  {% if user == post.author or user.is_staff or post.post_type == "wiki"  %}
-	  <a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
+	  <a class="edit-post" style="margin:14px;" href="{{post.get_absolute_url}}/edit">Edit</a>
 	  {% endif %}
 	  <h1> {{post.title}} </h1>	    
 	    
@@ -33,8 +45,8 @@
 		  {% endif %}>
 	      {{post.author}}</a>
 	  </span>
-	  {% endif %}	
-	  
+	  {% endif %}		  
+
 	    <hr />
 	</header>
 	<!-- Post Body -->
@@ -70,15 +82,29 @@
 	    {% endif %}				    
 	{% endif %}			
 						
-	<!-- Button rad prev -->
+	<!-- Button read prev -->
 	{% if prev_chapter %}
-	<a class="button small previous-chapter left"
+	<a class="button small previous-chapter left" style="z-index: 2;"
 	   href="{{prev_chapter.get_absolute_url}}">< Previous</a>
 	{% elif chapter %} <!-- If this is a chapter - go back to story -->
-	<a class="button small previous-chapter left"
+	<a class="button small previous-chapter left" style="z-index: 2;"
 	   href="{{post.parent.get_absolute_url}}">< Story</a>
-	{% endif %}								
+	{% endif %}
 	
+	<!-- chapters				     				
+        <div style="text-align: center;
+		    width: 100%;
+		    position: absolute;">
+	{% if post.post_type == "chapter" %}						     
+	<select style="width:auto; padding-right: 20px; margin-top: 5px; line-height: 22px;
+">
+	  <option value="{{post.parent.get_absolute_url}}">{{post.parent.title}}</option>
+	  {% for child in post.parent.children.all %}
+	  <option value="{{child.get_absolute_url}}">{{child.title}}</option>
+	  {% endfor %}	  
+	</select>
+	{% endif %}
+	</div> -->
 	<!-- Button read next -->
 	{% if first_chapter and post.post_type != "challenge" %}
 	<a class="button small next-chapter"
@@ -104,5 +130,12 @@
 {% include "comments/comments.html" %}
 
 </div>	 <!-- end page -->
+
+<script>
+  $('option[value="{{post.get_absolute_url}}"]').prop('selected', true)
+  $('select').change(function() {
+  window.location.replace($(this).val());
+  });
+</script>
 {% endblock content %}
 
