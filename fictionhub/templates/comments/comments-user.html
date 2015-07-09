@@ -3,7 +3,7 @@
 {% block content %}
     
 <div id="page"  class="postPage profile">
-  {% include "stories/subnav.html" %}
+  {% include "posts/subnav.html" %}
 
 <!-- Comments -->
 <div class="row">
@@ -46,7 +46,7 @@
 	<!-- 2 hours ago -->
       </div>
       <div class="comment-body">      
-	{{comment.body | markdownify | safe }}
+	{{comment | markdownify | safe }}
       </div>
       <div class="comment-footer">
 
