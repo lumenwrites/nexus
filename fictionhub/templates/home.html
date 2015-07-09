@@ -49,6 +49,7 @@
     <a href="/stories/hot/"><h3>Hot</h3></a>
     <ul>    
     {% for post in hot_posts %}
+      {% if not post.author.shadowban or post.author = user %}    
       <li>
 	<a href="{{post.get_absolute_url}}"><b>{{post.title}} </b></a> <br/>
 	{% if post.hubs.all %}
@@ -60,7 +61,8 @@
 	{{post.body | firstparagraph | safe }}
 	<hr/>
       </li>
-      {% endfor%}
+      {% endif %}      
+    {% endfor%}
     </ul>
   </div>
 
