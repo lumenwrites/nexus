@@ -41,7 +41,9 @@ class Comment(models.Model):
         try:
             string_name = self.body # self.story.title + self.body
         except:
-            string_name = self.body # self.chapter.title + self.body  
+            string_name = "comment" #self.body # self.chapter.title + self.body
+        if len(string_name) > 64:
+            string_name = string_name[:64] + "..."
         return string_name
     
 
