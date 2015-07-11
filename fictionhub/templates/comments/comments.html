@@ -77,7 +77,9 @@
 
       <div class="comment-header">
 	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
-	<span class="bold"> {{comment.author}} </span>
+	<span class="bold">
+	  <a class="black" href="/user/{{comment.author.username}}">{{comment.author}}</a>
+	</span>
 	{% if comment.rating %}
 	<div class="comment-rating" id="{{comment.rating}}"></div>
 	{% endif %}        	
