@@ -36,7 +36,7 @@
 	  {% endif %}
 	  <h1> {{post.title}} </h1>	    
 	    
-	  {% if post.post_type != "wiki" and post.children.all %}		    
+	  {% if post.post_type != "wiki" and post.post_type != "chapter" %}		    
 	  <span class="post-tagline"><!-- submitted 14 days ago -->
 	    by <a {% if post.author.website and post.author.external_url %}	  
 		  href="{{post.author.website}}"
