@@ -1331,7 +1331,6 @@ def age(timestamp):
 
 
 def writing_prompts(request):
-    import praw
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')
     prompts = subreddit.get_new(limit=64)
