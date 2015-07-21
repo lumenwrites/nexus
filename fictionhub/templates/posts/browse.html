@@ -128,7 +128,21 @@
 </div> <!-- End 8 columns -->
 
 <div class="large-3 small-3 columns sidebar" style="display:none;"> <!-- style="display:none;" -->
-  <!-- <br/> -->
+  <!-- <br/> -->  
+
+  <!-- 
+  <button class="button small right gray"
+	  style="margin-right:0;margin-left:5px;"
+    	  type="submit">Limbo</button>
+  -->
+  <!-- 
+  <button class="button small right"
+	  style="margin-right:0;margin-left:5px;"	  
+    	  type="submit">U</button>
+  <button class="button small right gray"
+	  style="margin-right:0;margin-left:5px;"	  
+    	  type="submit">I</button>
+ -->
 
   <form id="search-form" action="" method="get"> {# {% csrf_token %} #}
     <!-- 
@@ -159,7 +173,6 @@
     	  {{hub.title}}</option> <!-- selected -->
     	{% endfor %}
     </select>
-
 
     <div id="search-hubs">
     </div>
@@ -288,7 +301,17 @@ $(document).ready(function(){
 
     // Select hubs when clicking on one in a sidebar
     var selector = $('select#hubs-multiselect');
-    $(".hubs").find(".hub-link").bind('click',function(event){
+    // $(".hubs").find(".hub-link").bind('click',function(event){
+    // 	event.preventDefault();
+    // 	event.stopPropagation();
+    // 	var hub = $(this).attr('id');
+    // 	console.log("select " + hub);
+    // 	$('#hubs-multiselect option[value=' + hub + ']').attr('selected', true);
+    // 	//refreshHubs();
+    // 	$("#search-form").submit();	
+    // });
+
+    $(".hubs").find(".hub-filter").bind('click',function(event){
 	event.preventDefault();
 	event.stopPropagation();
 	var hub = $(this).attr('id');
@@ -297,6 +320,7 @@ $(document).ready(function(){
 	//refreshHubs();
     	$("#search-form").submit();	
     });
+    
 
     // Select hubs when clicking on one in a post footer
     var selector = $('select#hubs-multiselect');
@@ -322,12 +346,15 @@ $(document).ready(function(){
     // }
 
     // Open sidebar by default
+    {% if not solohub %}
     $(".posts").removeClass("large-12");
     $(".posts").removeClass("small-12");  	      
     $(".posts").addClass("large-9");
     $(".posts").addClass("small-9");	      
     $(".sidebar").show();
     $("#toggle-hubs").addClass("expanded");
+    {% endif %}	    
+    
 
     // If there's search input, search field is white
     if ($('#search-input').val().length > 0){
@@ -395,7 +422,7 @@ right: 48px;
 line-height: 30px;
 margin-top: 6px;
 }
-
+  
 .children {
 padding: 0px;
   }
@@ -419,7 +446,7 @@ right: 48px;
 line-height: 30px;
 margin-top: 6px;
 }
-
+  
 .children {
 padding: 0px;
 }

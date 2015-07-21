@@ -170,7 +170,12 @@ def posts(request, rankby="hot", timespan="all-time",
         if wordcount > 1000:
             wordcount = str(int(wordcount/1000)) + "K"
         post.wordcount = wordcount
-        
+
+    solohub = False
+    hubtitle = ""
+    if filterby == "hub":
+        hubtitle = hub.title
+        solohub = True
     return render(request, 'posts/posts.html',{
         'posts':posts,
         'upvoted': upvoted,
@@ -185,7 +190,9 @@ def posts(request, rankby="hot", timespan="all-time",
         'subscribed_to': subscribed_to,
         'hubs': hubs,
         'challenge':challenge,
-        'prompt':prompt
+        'prompt':prompt,
+        'solohub':solohub,
+        'hubtitle':hubtitle
     })
 
 def prompts(request, rankby="hot", timespan="all-time"):
@@ -485,6 +492,10 @@ def browse(request, rankby="hot", timespan="all-time"):
 
     if not query:
         query = ""
+
+    solohub = False
+    # if len(filterhubs) == 1:
+    #     solohub=True
     return render(request, 'posts/browse.html',{
         'posts':posts,
         'rankby': rankby,
@@ -495,6 +506,7 @@ def browse(request, rankby="hot", timespan="all-time"):
         'query':query,
         'hubs': hubs,
         'filterhubs':filterhubs,
+        'solohub':solohub,
         'test': request.POST
     })
 

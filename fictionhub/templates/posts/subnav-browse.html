@@ -1,10 +1,38 @@
 <!-- Subnav -->
+<div style="background:url(/static/img/bg.jpg);
+	    background-position-y: -320px;
+	    display:none;
+	    {% if solohub %}
+	    display:block;
+	    {% endif %}	    
+	    ">
+<div class="row">
+  <div class="large-12 padding-20">
+    <h1 style="color:#172630;font-weight:normal;" class="left"> {{hubtitle}} </h1>
+    <!-- <h2 style="color:#172630"> Subtitle </h1> -->
+    <!-- 
+    <button class="button small right"
+	    style="margin-right:0px;
+		   background: rgba(47, 51, 51, 0.9);"		   
+    	    type="submit">Submit</button>
+    <button class="button small right"
+	    style="margin-right:10px;
+		   background: rgba(47, 51, 51, 0.9);"
+    	    type="submit">Subscribe</button>
+     -->
+    <br/>
+    <br/>    
+  </div>    
+</div>
+</div>
 <div class="subnav">  
   <div class="row">
     {% if userprofile %}
     <div class="large-6 small-6 columns">
-    {% else %}
-    <div class="large-7 small-7 columns">
+    {% elif solohub %}
+    <div class="large-12 small-12 columns">
+    {% else %}      
+    <div class="large-9 small-9 columns"> <!-- large-7 -->
     {% endif %}            
 
     {% if challenge %}
@@ -30,14 +58,20 @@
 	{% endif %} <!-- end rankby top, showing timespans -->
      {% endif %}    <!-- end if not challengestate -->
 
-
-
 	{% if userprofile and userprofile.comments.all %}
 	<a href="/user/{{userprofile.username}}/comments">
 	  <span {% if filterby = "comments_user" %}class="bold"{% endif %}>Comments</span></a>
+	{% endif %}
+
+	{% if not userprofile and filterby != "subscriptions" %}
+	<!-- 
+	<a href="" class="right" style="margin:0;">
+	  <span style="margin:0;" class="">Limbo</span></a>
+	 -->
 	{% endif %}	
       </div>
     </div>
+    
 
     {% if userprofile %}    
     <div class="large-6 small-6 columns">
@@ -77,8 +111,8 @@
 	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
-    {% else %}
-	{% if filterurl != "/user" and filterurl != "/subscriptions" and not challenge %}	
+    {% else %}    
+	{% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}	
     <div class="large-3 small-3 columns">
 	  <i class="fi-magnifying-glass right"
 	     style="position: relative;

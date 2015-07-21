@@ -28,7 +28,16 @@
 
       {% if hub.hub_type == "hub" %}	
 	<span class="number-of-stories">{% numberofstories hub %}</span>
-      <!-- hub.posts.all|length -->
+	<!-- hub.posts.all|length -->
+	<!-- 
+	<button class="button small fi-filter left filterhub"
+		style="margin-top:8px;margin-left:0px;
+		       padding: 5px 5px 2px 5px;
+		       background: rgba(119, 119, 119, 0.2);
+		       color:#3d454b;"	  
+    		type="submit"
+		id="{{hub.slug}}"></button>
+	-->	
       {% endif %}
     
       {% if hub.children.all %}
@@ -45,6 +54,19 @@
               <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}"> {{child.title}}</a>
 			<span class="number-of-stories">{% numberofstories child %}</span>
 
+			<button class="button small fi-filter left hub-filter"
+				style="margin-top:8px;margin-left:0px;
+				       padding: 5px 5px 2px 5px;
+				       background: rgba(119, 119, 119, 0.2);
+				       color:#3d454b;"	  
+    				type="submit"
+				id="{{child.slug}}"></button>
+			<!-- 
+			<button class="button small right gray fi-check"
+				style="margin-right:0;margin-left:5px;padding: 10px 15px;"	  
+    				type="submit"></button>
+			-->
+
                   {% if child.children.all %}
                     <div  class="padding-10 children">      
                     {% for child in child.children.all|sortbypostcount:request %}
@@ -53,7 +75,14 @@
                         <span  class="hub-tag">
                           <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}">
 			    {{child.title}}</a>
-			    <span class="number-of-stories">{% numberofstories child %}</span>
+			  <span class="number-of-stories">{% numberofstories child %}</span>
+			  <button class="button small fi-filter left hub-filter"
+				  style="margin-top:8px;margin-left:0px;
+					 padding: 5px 5px 2px 5px;
+					 background: rgba(119, 119, 119, 0.2);
+					 color:#3d454b;"	  
+    				  type="submit"
+				  id="{{child.slug}}"></button>
             	        </span>
                     {% endfor %}
 		    <div class="clearfix"></div>
