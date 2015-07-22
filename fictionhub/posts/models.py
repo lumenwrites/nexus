@@ -55,6 +55,8 @@ class Post(models.Model):
     # reddit url
     reddit_url = models.URLField(max_length=256, blank=True, null=True, default="")
 
+    approved = models.BooleanField(default=False)            
+
     def __str__(self):
         if self.post_type == "chapter" and self.parent:
             parent_title = self.parent.title + " | "

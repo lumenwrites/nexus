@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 from posts.models import Post
 from comments.models import Comment
+from hubs.models import Hub
 
 class User(AbstractUser):  
     about = models.TextField(max_length=512, blank=True)
@@ -14,6 +15,7 @@ class User(AbstractUser):
     created = models.DateTimeField(auto_now_add=True)
 
     subscribed_to = models.ManyToManyField('User', related_name="subscribers", blank=True)
+    subscribed_to_hubs = models.ManyToManyField('hubs.Hub', related_name="subscribers", blank=True)
 
     upvoted = models.ManyToManyField('posts.Post', related_name="upvoters", blank=True)
     downvoted = models.ManyToManyField('posts.Post', related_name="downvoters", blank=True)   

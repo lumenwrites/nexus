@@ -25,6 +25,7 @@
   <!-- Import css and scripts  -->
   <link rel="stylesheet" href="{% static "/static/foundation/css/foundation.css" %}" />
   <link rel="stylesheet" href="{% static "/static/foundation/css/foundation-icons/foundation-icons.css" %}" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <link rel="shortcut icon" href="http://fictionhub.io/static/img/favicon.ico"/>
 
@@ -114,7 +115,9 @@
 	      <li><a href="/story/add"> Submit </a></li> <!-- Create Story -->
 	      <li><a href="/hub/add"> Create Hub </a></li> <!-- Create Story -->
 	      {% endif %}	  	  	      
-	      <li><a href="/preferences/"> Preferences </a></li>	      
+	      <li><a href="/preferences/"> Preferences </a></li>
+	      <!-- <li><a href="/preferences/"> Dark Mode </a></li>	       -->
+	      
 	      <li>
 		<a href="/logout/?next={{request.path}}">
 		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
