@@ -1480,7 +1480,7 @@ def prompt(request):
 
     prompt = prompts[0]
 
-    promptslist = [p.title + "\n" for p in prompts]
+    promptslist = ["\n" + p.title for p in prompts]
     return HttpResponse(promptslist) #prompt.title
     
 
