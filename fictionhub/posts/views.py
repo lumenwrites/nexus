@@ -9,7 +9,7 @@ from html2text import html2text
 from django.db.models import Q
 
 # core django components
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import * # for rss
@@ -558,6 +558,9 @@ def undownvote(request):
     return HttpResponse()
             
 def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
+    if request.path[-1] == '/':
+        return redirect(request.path[:-1])
+
     try:
         story = Post.objects.get(slug=story)
     except:
