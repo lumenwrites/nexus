@@ -141,8 +141,8 @@ urlpatterns = [
 
 
     # View story/chapter
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)$', views.post, name='view_chapter'), 
-    url(r'^story/(?P<story>[^\.]+)$', views.post, name='view_story'),
+    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/?$', views.post, name='view_chapter'), 
+    url(r'^story/(?P<story>[^\.]+)/?$', views.post, name='view_story'),
 
     url(r'^upvote/$', views.upvote),
     url(r'^downvote/$', views.downvote),
