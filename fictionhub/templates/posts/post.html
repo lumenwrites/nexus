@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% load markdownify %}
+{% load firstparagraph %}
 
 {% block title %}
     {{post.title}}
+{% endblock %}
+
+{% block head_extra %}
+<meta name="description" content="{{post.body | firstparagraph | safe }}">
 {% endblock %}
 
 {% block content %}
