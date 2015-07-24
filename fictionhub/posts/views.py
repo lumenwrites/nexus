@@ -1459,7 +1459,7 @@ def prompts_repost(request):
                     
     
 def wordpress_repost(request):
-    stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:10]
+    stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:5]
 
     teststring = ""
     for story in stories:
@@ -1517,33 +1517,33 @@ def wordpress_repost(request):
             teststring += "Edited: " + post.title + "<br/>"
 
         ##### WP com
-        wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
-        post.content = firstparagraph +\
-                       ".... <br/> <a href='http://fictionhub.io/story/"+\
-                       post.slug +\
-                       "'> Read Story >>>> </a>"
-        def find_id(title):
-            offset = 0
-            increment = 20
-            while True:
-                filter = { 'offset' : offset }
-                p = wpcom.call(GetPosts(filter))
-                if len(p) == 0:
-                    break # no more posts returned
-                for post in p:
-                    if post.title == title:
-                        return(post.id)
-                    offset = offset + increment
-            return(False)
+        # wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
+        # post.content = firstparagraph +\
+        #                ".... <br/> <a href='http://fictionhub.io/story/"+\
+        #                post.slug +\
+        #                "'> Read Story >>>> </a>"
+        # def find_id(title):
+        #     offset = 0
+        #     increment = 20
+        #     while True:
+        #         filter = { 'offset' : offset }
+        #         p = wpcom.call(GetPosts(filter))
+        #         if len(p) == 0:
+        #             break # no more posts returned
+        #         for post in p:
+        #             if post.title == title:
+        #                 return(post.id)
+        #             offset = offset + increment
+        #     return(False)
         
-        post_id = find_id(post.title)
+        # post_id = find_id(post.title)
         
-        if not post_id:
-            wpcom.call(NewPost(post))
-            teststring += "WP.com Imported: " + post.title + "<br/>"
-        else:
-            wpcom.call(EditPost(post_id, post))
-            teststring += "WP.com Edited: " + post.title + "<br/>"
+        # if not post_id:
+        #     wpcom.call(NewPost(post))
+        #     teststring += "WP.com Imported: " + post.title + "<br/>"
+        # else:
+        #     wpcom.call(EditPost(post_id, post))
+        #     teststring += "WP.com Edited: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
