@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from . import views
+from .views import MainFeed
 
 urlpatterns = [
     # wiki comments
@@ -131,6 +132,7 @@ urlpatterns = [
 
     
     # Rss
+    url(r'^feed/$', MainFeed()),            
     url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),        
 
     # JSON

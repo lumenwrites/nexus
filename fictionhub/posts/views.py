@@ -1,7 +1,14 @@
 # standard library imports
 import re, praw
 from string import punctuation
-from xml.etree.ElementTree import Element, SubElement, tostring # for rss
+
+# for rss
+from xml.etree.ElementTree import Element, SubElement, tostring 
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Atom1Feed
+from django.core.urlresolvers import reverse
+
+
 import json # for temporary post api. Replace with REST.
 import feedparser
 from bs4 import BeautifulSoup # to parse prompt
@@ -974,6 +981,24 @@ def page_404(request):
     return response
 
 
+class MainFeed(Feed):
+    title = "fictionhub"
+    link = "/feed/"
+    description = "fictionhub"
+
+    def items(self):
+        return Post.objects.order_by('-pub_date')[:25]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.body
+
+    # item_link is only needed if NewsItem has no get_absolute_url method.
+    def item_link(self, item):
+        return item.get_absolute_url()
+    
 def post_feed(request, story):
     story = Post.objects.get(slug=story)
     rss = Element('rss')
