@@ -1459,7 +1459,7 @@ def prompts_repost(request):
                     
     
 def wordpress_repost(request):
-    stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:5]
+    stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
 
     teststring = ""
     for story in stories:
