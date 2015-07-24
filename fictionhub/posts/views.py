@@ -1462,7 +1462,7 @@ def wordpress_repost(request):
     stories = Post.objects.filter(post_type="story", published=True, rational=False)
 
     teststring = ""
-    for story in stories[]:
+    for story in stories:
         wp = Client('http://orangemind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
         post = WordPressPost()
