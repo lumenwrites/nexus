@@ -1245,7 +1245,7 @@ def dropbox_import(request):
             metadata = {}
             for name, value in md.Meta.items():
                 metadata[name] = value[0]
-                teststring += name + ": " + value[0] + "<br/>"
+                # teststring += name + ": " + value[0] + "<br/>"
     
             # teststring += "Title: " + metadata['title'] + "\n" + \
             #               "Date: " + metadata['date'] + \
