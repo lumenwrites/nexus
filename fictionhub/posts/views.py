@@ -1238,9 +1238,10 @@ def dropbox_import(request):
             f, metadata = client.get_file_and_metadata(path)
             text = f.read()
             text = text.decode("utf-8")
-
             md = Markdown(extensions = ['meta', 'codehilite'])
             content = md.convert(text)
+
+            # Grab metadata
             metadata = {}
             for name, value in md.Meta.items():
                 metadata[name] = value[0]
@@ -1249,17 +1250,24 @@ def dropbox_import(request):
             # teststring += "Title: " + metadata['title'] + "\n" + \
             #               "Date: " + metadata['date'] + \
             #               "Content: " + content
-    
+
+            # Grab tags
             try:
                 tags = metadata["tags"].split(",")
                 tags = [tag.strip() for tag in tags]
             except:
                 tags = []
+
+
+            # import only if Publish: True and fictionhub is in tags
             import_entry = False
-            # Check if post has "fictionhub" in it's tags
-            for tag in tags:
-                if tag == "fictionhub":
-                    import_entry = True
+            try:
+                if metadata['publish'].strip() == "True":
+                    for tag in tags:
+                        if tag == "fictionhub":
+                            import_entry = True
+            except:
+                pass
     
             if import_entry:
                 title = metadata["title"]
@@ -1396,7 +1404,7 @@ def prompts_repost(request):
     
             publish = False
             try:
-                if metadata['published'].strip() == "True":
+                if metadata['publish'].strip() == "True":
                     publish = True
             except:
                 pass
