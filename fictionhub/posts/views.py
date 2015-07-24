@@ -987,7 +987,7 @@ class MainFeed(Feed):
     description = "fictionhub"
 
     def items(self):
-        return Post.objects.order_by('-pub_date')[:25]
+        return Post.objects.filter(published=True,post_type="story").order_by('-pub_date')[:25]
 
     def item_title(self, item):
         return item.title
