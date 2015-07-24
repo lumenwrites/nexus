@@ -10,3 +10,5 @@ dropbox
 html2text
 
 pycurl
+
+python-wordpress-xmlrpc

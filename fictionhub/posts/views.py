@@ -54,6 +54,10 @@ import dropbox
 from markdown import Markdown
 import time
 
+# wordpress
+from wordpress_xmlrpc import Client, WordPressPost
+from wordpress_xmlrpc.methods.posts import GetPosts, NewPost, EditPost, GetPost
+from wordpress_xmlrpc.methods.users import GetUserInfo
 
 
 def posts(request, rankby="hot", timespan="all-time",
@@ -1454,8 +1458,69 @@ def prompts_repost(request):
     })
                     
     
-        
+def wordpress_repost(request):
+    stories = Post.objects.filter(post_type="story", published=True, rational=False)
 
+    teststring = ""
+    for story in stories[:3]:
+        wp = Client('http://orangemind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
+        
+        post = WordPressPost()
+        post.title = story.title # + " by " + story.author.username
+        post.slug = story.slug
+        post.name = story.slug        
+        post.link = "http://fictionhub.io/story/" + post.slug
+        md = Markdown()
+        bodyhtml = md.convert(story.body)
+        try:
+            firstparagraph = BeautifulSoup(bodyhtml).find('p').text #clean_html
+            firstparagraph = re.sub('<br/s*?>', ' ', firstparagraph)
+            firstparagraph = re.sub(r'[\t\r\n]', ' ', firstparagraph)
+        except:
+            firstparagraph = ""
+
+        post.content = firstparagraph + "<br/><!--more-->"
+
+        post.terms_names = {
+            'post_tag': ['scifi', 'fiction', 'writingprompts', 'comedy', 'fictionhub'],
+            'category': ['fictionhub']
+        }
+        post.custom_fields = []
+        post.custom_fields.append({
+                'key': 'gdd_spr_url',
+                'value': post.link
+        })
+        post.post_status = 'publish'
+        
+        # Check if post exists
+        def find_id(title):
+            offset = 0
+            increment = 20
+            while True:
+                filter = { 'offset' : offset }
+                p = wp.call(GetPosts(filter))
+                if len(p) == 0:
+                    break # no more posts returned
+                for post in p:
+                    if post.title == title:
+                        return(post.id)
+                    offset = offset + increment
+            return(False)
+        
+        post_id = find_id(post.title)
+        
+        if not post_id:
+            wp.call(NewPost(post))
+            teststring += "Imported: " + post.title + "<br/>"
+        else:
+            wp.call(EditPost(post_id, post))
+            teststring += "Edited: " + post.title + "<br/>"
+            
+        
+            
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
+    })
 
 
 def age(timestamp):
