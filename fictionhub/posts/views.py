@@ -993,7 +993,8 @@ class MainFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return item.body
+        md = Markdown()
+        return md.convert(item.body)
 
     # item_link is only needed if NewsItem has no get_absolute_url method.
     def item_link(self, item):
