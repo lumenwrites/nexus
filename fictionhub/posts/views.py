@@ -1201,7 +1201,7 @@ def dropbox_import(request):
     
     access_token = os.environ["ACCESS_TOKEN"]
     client = dropbox.client.DropboxClient(access_token)
-    folder_metadata = client.metadata('/')
+    folder_metadata = client.metadata('/prompts/')
 
     teststring = ""
     imported = ""
@@ -1212,7 +1212,7 @@ def dropbox_import(request):
             f, metadata = client.get_file_and_metadata(path)
             text = f.read()
             text = text.decode("utf-8")
-    
+
             md = Markdown(extensions = ['meta', 'codehilite'])
             content = md.convert(text)
             metadata = {}
