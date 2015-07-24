@@ -1493,7 +1493,7 @@ def wordpress_repost(request):
         post.post_status = 'publish'
         
         # Check if post exists
-        def find_id(title):
+        def find_id(slug):
             offset = 0
             increment = 20
             while True:
@@ -1502,12 +1502,12 @@ def wordpress_repost(request):
                 if len(p) == 0:
                     break # no more posts returned
                 for post in p:
-                    if post.title == title:
+                    if post.slug == slug:
                         return(post.id)
                     offset = offset + increment
             return(False)
         
-        post_id = find_id(post.title)
+        post_id = find_id(post.slug)
         
         if not post_id:
             wp.call(NewPost(post))
