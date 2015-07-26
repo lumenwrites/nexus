@@ -3,7 +3,7 @@
 {% block content %}
     
 <div id="page"  class="postPage profile">
-  {% include "posts/subnav.html" %}
+  {% include "posts/subnav-browse.html" %}
 
   <div class="row">
     <div class="large-12 columns">
@@ -12,7 +12,7 @@
 	  <h1> About </h1>
 	  <hr />
 	</header>
-	{{userprofile.about | markdownify | safe }}
+	{{userprofile.about| safe }}
 	<br/>
 	<div>
       </article>
@@ -21,6 +21,12 @@
   </div>
 </div>
 
+<style>
+  .about {
+  font-weight:bold!important;
+  color:#3d454b!important;
+  }
+</style>
 {% endblock content %}
 
 

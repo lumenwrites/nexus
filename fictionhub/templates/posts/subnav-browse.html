@@ -28,11 +28,12 @@
     <br/>
     <br/>    
 
-    {% elif userprofile.username == "rayalez" %}	    
+    {% elif userprofile.username == "rayalez" %}
+    <a href="/user/rayalez">
     <img src="{% static "/static/img/signature.png" %}"
 	 class="avatar"/>
-
-    <h1 class="left"> Ray Alez</h1>
+    </a>
+    <a href="/user/rayalez"><h1 class="left"> Ray Alez</h1></a>
     
     <br/>
 
@@ -198,56 +199,26 @@
     
 
     {% if userprofile %}
-    <div class="large-3 small-3 columns hidden">
-          <div style="margin-top:8px; margin-left:10px; float:right;">
-    <span class="fi-graph-bar"
-	  style="font-size: 20px;
-		 margin-right:10px;">
-    </span>
-
-    <span class="fi-arrow-up"
-	  style="font-size: 20px;
-		 margin-right:10px;">
-      {{userprofile.karma|add:"124"}}
-    </span>
-
-    <span class="fi-torsos-all"
-	  style="font-size: 20px;
-		 margin-right:10px;">
-      17
-    </span>    
-
-    <span class="fi-eye"
-	  style="font-size: 20px;
-		 margin-right:10px;">
-      316
-    </span>
-    <!-- 
-    <span class="fi-page-multiple"
-	  style="font-size: 20px;
-		 margin-right:10px;
-		 color: rgba(255, 255, 255, 0.64);">
-      23
-    </span>
-
-    <span class="fi-background-color"
-	  style="font-size: 20px;
-		 margin-right:10px;
-		 color: rgba(255, 255, 255, 0.64);">
-      316
-    </span>
-    -->
-    </div>
-    </div>
     <div class="large-6 small-6 columns">
       <div class="right">
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> About </a> -->
-    <!-- <i class="fa fa-envelope-o"style="font-size: 20px; color:#bbbbbb;"></i> -->
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->	
+    <!-- <span class="fi-graph-bar stats-icon"></span> -->
+    <!-- <span class="fi-arrow-up stats-icon">{{userprofile.karma|add:"124"}}</span> -->
+    <!-- <span class="fi-torsos-all stats-icon">17</span>     -->
+    <!-- <span class="fi-eye stats-icon">8.1K+ <\!-- K -\-><\!-- M -\-></span> -->
+    <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
+    <!-- <span class="fi-background-color stats-icon">316</span> -->
+	
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Patreon </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Store </a> -->
+
+    {% if userprofile.about %}
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;" class="about">About</a> -->
+    {% endif %}
+    
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Hubs </a> -->
+    <!-- <i class="fa fa-envelope-o"style="font-size: 20px; color:#bbbbbb;"></i> -->
 
       </div>
     </div>
