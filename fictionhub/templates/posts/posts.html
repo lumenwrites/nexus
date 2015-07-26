@@ -35,11 +35,13 @@
 	  <h1 class="left"> {{post.title}} </h1>
 	</a>
 	{% if user == post.author or user.is_staff or post.post_type == "wiki" %}
-	<a class="edit-post" href="{{post.get_absolute_url}}/edit">Edit</a>
+	<a class="edit-post" href="{{post.get_absolute_url}}/edit" style="margin-top: 20px;">
+	  Edit</a>
 	{% endif %}
 	{% if not post.published %}
 	<span class="hub-tag right margins-side-20">Not published</span>
-	{% endif %}	
+	{% endif %}
+	<!-- <span class="hub-tag right margins-side-20 bold" style="margin-top: 20px;">$</span> -->
 	<div class="clearfix"></div>
 	<!--
 	<div class="right" style="/*margin-top: 16px;*/">
@@ -63,6 +65,7 @@
       <!-- Post Body -->
       {{post | markdownify:"True" | safe }}
       <div class="clearfix"></div>
+      
       <!-- 
       <div class="readmore">
 	<a href="{{post.get_absolute_url }}" class="right"> read more >>>> </a>

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load markdownify %}
+{% block content %}
+    
+<div id="page"  class="postPage profile">
+  {% include "posts/subnav-browse.html" %}
+
+  <div class="row">
+    <div class="large-12 small-12 columns">
+	<article>
+	  <header class="post-header">
+	    <span class="hub-tag right margins-side-20 bold" style="margin-top: 20px;">$</span>
+	    <h1> Self-Study Machine Learning </h1>
+	    <hr />
+	  </header>
+	  <div class="large-9 small-9 columns">
+	  <h2>Structure your machine learning journey with this self-study&nbsp;roadmap</h2>
+
+
+	  <p>You can self-study machine learning. You are not alone, but it is hard. There is so much material. You could jump from a course for absolute beginners to a blog post written for machine learning academics. It’s hard to know what to learn and when.</p>
+	  <p>You need a structured approach. A framework for self-studying machine learning will focus your time on very specific outcomes. A structured approach can rapidly accelerate what you can achieve with machine learning.</p>
+	  <p>I have created a self-study guide designed for programmers, engineers and students comprised of 4 competency levels:&nbsp;<em><strong>The Self-Study Guide to Machine Learning</strong></em></p>
+	  <p>If you want a structured approach to learning and applying machine learning, then this guide is for you!</p>
+	  <!-- 
+	  <div class="panel" style="padding:8px;margin-top: 4px;">
+	    <div class="left">
+	      <p style="margin:0;">To read the rest of the story and get access to all premium content purchase subscription</p>
+	      <p style="margin:0;"><strike>$25/mo</strike> $15/yr discount for early adopters</p>
+	    </div>
+	    <button class="button small right" style="border-radius:0;">Start free 30-day trial</button>
+	    <div class="clearfix"></div>
+	  </div>
+	  -->
+
+      </div>
+
+      <div class="large-3 small-3 columns">
+	<!-- <br/><br/><br/> -->
+	<img src="https://machinelearningmastery.com/wp-content/uploads/2014/05/self_study_guide-211x300.png" width="211" height="300" style="width:100%;">
+	<br/>	<br/>
+	
+	<button class="button small"
+		style="width:100%; border-radius:0;">Read this story $10</button>
+
+	<!-- Subscription 
+	or get a subscription and access all premium content for <strike>$25/mo</strike> $15/yr (discount for early adopters)
+	<button class="button small"
+		style="width:100%; border-radius:0;">Start free 30-day trial</button>
+	 -->
+      </div>
+
+      <br/>
+      <div>
+      </article>
+      </div> <!-- End 12 columns -->
+    </div> <!-- End row -->
+  </div>
+</div>
+
+<style>
+  .about {
+  font-weight:bold!important;
+  color:#3d454b!important;
+  }
+</style>
+{% endblock content %}
+
+

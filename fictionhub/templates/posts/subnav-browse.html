@@ -211,7 +211,10 @@
 	
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Patreon </a> -->
+
+    {% if userprofile.username == "rayalez" %}    
+    <a href="https://www.patreon.com/rayalez" style="margin: 10px 0;"> Patreon </a>
+    {% endif %}    
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Store </a> -->
 
     {% if userprofile.about %}

@@ -1692,6 +1692,12 @@ def email(request):
     send_mail('My awesome email', 'Oh hell yeah..', 'raymestalez@gmail.com', ['raymestalez@gmail.com'], fail_silently=False)
     return HttpResponse("Yes!")
 
+def item(request):
+    test=""
+    return render(request, 'store/single-item.html', {
+        'test':test,
+})
+
 
 # TODO: replace with CBVs
 # from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView
@@ -1778,3 +1784,5 @@ def email(request):
 #     user.save()
 
 #     return HttpResponse()
+
+

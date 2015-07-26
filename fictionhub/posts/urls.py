@@ -4,6 +4,10 @@ from . import views
 from .views import MainFeed
 
 urlpatterns = [
+    # Store
+    url(r'^user/rayalez/store/$', views.item),
+    
+    
     # wiki comments
     
     # Rank comments
@@ -207,7 +211,7 @@ urlpatterns = [
 
     # Email
     url(r'^email/$', views.email),
-    
+
 ]
 
 
