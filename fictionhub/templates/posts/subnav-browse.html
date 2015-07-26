@@ -33,8 +33,9 @@
 		float:left;
 		margin-top: -8px;"/>
 
-    <!-- <h1 style="color:#172630;font-weight:normal;" class="left"> Ray Alez </h1> -->
-    <img src="http://i.imgur.com/m6B4evF.png" style="float:left;margin: 4px 8px"/>
+    <h1 style="color:#172630;font-weight:bold;color:white;margin-left:8px;margin-top: 2px;
+	       text-shadow: 1px 1px 2px black;" class="left"> Ray Alez </h1>
+    <!-- <img src="http://i.imgur.com/m6B4evF.png" style="float:left;margin: 4px 8px"/> -->
 
 	{% if user.is_authenticated %}	
 	    {% if userprofile not in subscribed_to %}	
@@ -90,7 +91,7 @@
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
-	  <span {% if rankby == "top" and userprofile  %}class="bold"{% endif %}>
+	  <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}>
 	    Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a>
 	{% if rankby == "top" and not userprofile %}
 	<a href="{{filterurl}}/top/all-time/">
