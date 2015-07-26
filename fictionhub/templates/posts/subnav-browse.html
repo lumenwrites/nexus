@@ -1,13 +1,15 @@
+{% load staticfiles %}
 <!-- Subnav -->
 <div style="background:url(/static/img/bg.jpg);
 	    background-position-y: -320px;
 	    display:none;
-	    {% if solohub %}
+	    {% if solohub or userprofile.username == "rayalez" %}
 	    display:block;
 	    {% endif %}	    
 	    ">
 <div class="row">
   <div class="large-12 padding-20">
+    {% if solohub %}
     <h1 style="color:#172630;font-weight:normal;" class="left"> {{hubtitle}} </h1>
     <!-- <h2 style="color:#172630"> Subtitle </h1> -->
     <!-- 
@@ -21,9 +23,52 @@
 	    style="margin-right:10px;
 		   background: rgba(47, 51, 51, 0.9);"
     	    type="submit">Subscribe</button>
-     -->
+    -->
     <br/>
     <br/>    
+    {% elif userprofile.username == "rayalez" %}	    
+    <img src="{% static "/static/img/signature.png" %}"
+	 style="width:64px;
+		border-radius: 4px;
+		float:left;
+		margin-top: -8px;"/>
+
+    <!-- <h1 style="color:#172630;font-weight:normal;" class="left"> Ray Alez </h1> -->
+    <img src="http://i.imgur.com/m6B4evF.png" style="float:left;margin: 4px 8px"/>
+
+	{% if user.is_authenticated %}	
+	    {% if userprofile not in subscribed_to %}	
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/subscribe">
+              Subscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
+    	    {% else %}
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/unsubscribe">
+              Unsubscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
+	    {% endif %}
+        {% else %} <!-- if not authenticated -->
+            <a class="button small right subscribers-button"
+               href="/login/?next={{request.path}}">
+              Subscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
+	{% endif %}    
+    <br/>
+    <div style="height:22px;width:100%;"></div>
+    <style>
+      .subscribers {
+      background: rgba(255, 255, 255, 0.86);
+      padding: 0px 8px;
+      float: right;
+      margin-top: -2px;
+      margin-bottom: -4px;
+      }
+      .subscribers-button {
+      margin-right:0px;
+      background: rgba(47, 51, 51, 0.9)!important;
+      padding: 17px 14px!important;
+      }
+    </style>
+
+    {% endif %}    
   </div>    
 </div>
 </div>
@@ -45,7 +90,8 @@
 	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
-	  <span>Top {% if rankby == "top" %}:{% endif %}</span></a>
+	  <span {% if rankby == "top" and userprofile  %}class="bold"{% endif %}>
+	    Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a>
 	{% if rankby == "top" and not userprofile %}
 	<a href="{{filterurl}}/top/all-time/">
 	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
@@ -75,7 +121,8 @@
     </div>
     
 
-    {% if userprofile %}    
+    {% if userprofile %}
+    {% if userprofile.username != "rayalez" %}
     <div class="large-6 small-6 columns">
       <div style="float:right;">
 	<!-- <a> Store </a>	 -->
@@ -113,7 +160,8 @@
 	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
       </div>
     </div> <!-- end 5 columns -->
-    {% else %}    
+    {% endif %}    <!-- endif rayalez profile -->
+    {% else %}     <!-- endif userprofile -->
 	{% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}	
     <div class="large-3 small-3 columns">
 	  <i class="fi-magnifying-glass right"
