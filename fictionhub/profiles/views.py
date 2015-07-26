@@ -36,8 +36,11 @@ def unsubscribe(request, username):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
 
 def about(request, username):
-    userprofile = get_object_or_404(User, username=username)    
-    subscribed_to = request.user.subscribed_to.all()
+    userprofile = get_object_or_404(User, username=username)
+    try:
+        subscribed_to = request.user.subscribed_to.all()
+    except:
+        subscribed_to = []
     return render(request, 'profiles/about.html',{
         'userprofile':userprofile,
         'subscribed_to':subscribed_to,
