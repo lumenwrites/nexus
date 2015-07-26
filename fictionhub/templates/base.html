@@ -70,6 +70,9 @@
 			background: black;"
 		 src="http://i.imgur.com/7S2KYdJ.png"/>
 	    -->
+	    {% elif request.META.HTTP_HOST == "vhub.io" %}	    	    
+	    video<span class="bold">hub</span>
+	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
 	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>

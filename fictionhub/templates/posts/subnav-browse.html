@@ -8,7 +8,7 @@
 	    {% endif %}	    
 	    ">
 <div class="row">
-  <div class="large-12 small-12 columns" style="padding-top:20px;padding-bottom: 14px;">
+  <div class="large-12 small-12 columns subheader" style="padding-top:20px;padding-bottom: 14px;">
     {% if solohub %}
     <h1 style="color:#172630;font-weight:bold;color:white;margin-left:0px;margin-top: 2px;
 	       text-shadow: 1px 1px 2px black;" class="left"> {{hubtitle}} </h1>
@@ -27,33 +27,84 @@
     -->
     <br/>
     <br/>    
+
     {% elif userprofile.username == "rayalez" %}	    
     <img src="{% static "/static/img/signature.png" %}"
-	 style="width:64px;
-		border-radius: 4px;
-		float:left;
-		margin-top: -8px;"/>
+	 class="avatar"/>
 
-    <h1 style="color:#172630;font-weight:bold;color:white;margin-left:10px;margin-top: 2px;
-	       text-shadow: 1px 1px 2px black;" class="left"> Ray Alez </h1>
-    <!-- <img src="http://i.imgur.com/m6B4evF.png" style="float:left;margin: 4px 8px"/> -->
+    <h1 class="left"> Ray Alez</h1>
+    
+    <br/>
 
+    <div style="margin-top:16px; margin-left:10px; float:left;
+		margin:4px 0 -10px 14px; display:none;">
+    <!-- <span class="fi-graph-bar stats-icon"></span> -->
+    <span class="fi-arrow-up stats-icon">{{userprofile.karma|add:"124"}}</span>
+    <span class="fi-torsos-all stats-icon">17</span>    
+    <span class="fi-eye stats-icon">8.1K+ <!-- K --><!-- M --></span>
+    <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
+    <!-- <span class="fi-background-color stats-icon">316</span> -->
+      
+
+    <!--  
+    </div>
+    
+    <div style="margin-top:16px; margin-left:10px; float:right;
+		margin:4px 0 -10px 14px;
+		/*position: absolute;right: 120px;top: 13px;*/
+		/*text-align: right;*/
+		margin-top:0px;float:left;">
+    -->
+
+      <!-- <span class="subtitle">Entrepreneur and blogger.</span> -->
+
+      <!-- <i class="fa fa-envelope-o subheader-link"></i> -->
+      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">About </a> -->
+      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Patreon </a> -->
+      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Store </a> -->
+    </div>
+    
+    <!-- Subscribe button -->
 	{% if user.is_authenticated %}	
 	    {% if userprofile not in subscribed_to %}	
             <a class="button small right subscribers-button"
                href="/user/{{userprofile.username}}/subscribe">
-              Subscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
+              Subscribe
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
     	    {% else %}
             <a class="button small right subscribers-button"
                href="/user/{{userprofile.username}}/unsubscribe">
-              Unsubscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
+              Unsubscribe
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
 	    {% endif %}
         {% else %} <!-- if not authenticated -->
             <a class="button small right subscribers-button"
                href="/login/?next={{request.path}}">
-              Subscribe<span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span></a>
-	{% endif %}    
+              Subscribe
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
+	{% endif %}   
+ 
     <style>
+      .subheader h1 {
+      color:#172630;
+      font-weight:bold;
+      color:white;
+      margin: 2px 0 0 10px;
+      text-shadow: 1px 1px 2px black;
+      /*margin: -12px 0 -12px 10px;*/
+      }
+      .avatar {
+      width:64px;
+      border-radius: 4px;
+      float:left;
+      margin-top: -8px;
+      margin-bottom: -6px;
+      /*width: 90px;*/
+      /*width: 124px;*/
+      }
       .subscribers {
       background: rgba(255, 255, 255, 0.86);
       padding: 0px 8px;
@@ -65,7 +116,29 @@
       margin-right:0px;
       background: rgba(47, 51, 51, 0.9)!important;
       padding: 17px 14px!important;
+      position: absolute!important;
+      right: 15px!important;
+      top: 20px!important;
       }
+      
+      .subheader-link {
+      font-size: 20px;
+      margin-right:10px;
+      color: rgba(255, 255, 255, 0.64);
+      color: white;
+      }
+      .subtitle {
+      float:left;font-size:20px;
+      color: rgba(255, 255, 255, 0.64);
+      color:white;
+      }
+      .stats-icon {
+      font-size: 20px;
+      margin-right:10px;
+      color: rgba(255, 255, 255, 0.80);
+      /*color:white;*/
+      }
+      
     </style>
 
     {% endif %}    
@@ -122,6 +195,59 @@
     
 
     {% if userprofile %}
+    <div class="large-3 small-3 columns hidden">
+          <div style="margin-top:8px; margin-left:10px; float:right;">
+    <span class="fi-graph-bar"
+	  style="font-size: 20px;
+		 margin-right:10px;">
+    </span>
+
+    <span class="fi-arrow-up"
+	  style="font-size: 20px;
+		 margin-right:10px;">
+      {{userprofile.karma|add:"124"}}
+    </span>
+
+    <span class="fi-torsos-all"
+	  style="font-size: 20px;
+		 margin-right:10px;">
+      17
+    </span>    
+
+    <span class="fi-eye"
+	  style="font-size: 20px;
+		 margin-right:10px;">
+      316
+    </span>
+    <!-- 
+    <span class="fi-page-multiple"
+	  style="font-size: 20px;
+		 margin-right:10px;
+		 color: rgba(255, 255, 255, 0.64);">
+      23
+    </span>
+
+    <span class="fi-background-color"
+	  style="font-size: 20px;
+		 margin-right:10px;
+		 color: rgba(255, 255, 255, 0.64);">
+      316
+    </span>
+    -->
+    </div>
+    </div>
+    <div class="large-6 small-6 columns">
+      <div class="right">
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> About </a> -->
+    <!-- <i class="fa fa-envelope-o"style="font-size: 20px; color:#bbbbbb;"></i> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->	
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Patreon </a> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Store </a> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Hubs </a> -->
+
+      </div>
+    </div>
     {% if userprofile.username != "rayalez" %}
     <div class="large-6 small-6 columns">
       <div style="float:right;">
