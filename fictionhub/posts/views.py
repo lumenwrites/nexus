@@ -1519,8 +1519,9 @@ def wordpress_repost(request, story=""):
             wp.call(NewPost(post))
             teststring += "OM New Post: " + post.title + "<br/>"
         else:
-            wp.call(EditPost(post_id, post))
-            teststring += "OM Edit Post: " + post.title + "<br/>"
+            # wp.call(EditPost(post_id, post))
+            # teststring += "OM Edit Post: " + post.title + "<br/>"
+            teststring += "Already Exists: " + post.title + "<br/>"            
 
         ##### WP com
         wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
@@ -1548,8 +1549,9 @@ def wordpress_repost(request, story=""):
             wpcom.call(NewPost(post))
             teststring += "WP New Post: " + post.title + "<br/>"
         else:
-            wpcom.call(EditPost(post_id, post))
-            teststring += "WP Edit Post: " + post.title + "<br/>"
+            # wpcom.call(EditPost(post_id, post))
+            # teststring += "WP Edit Post: " + post.title + "<br/>"
+            teststring += "Already Exists: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
