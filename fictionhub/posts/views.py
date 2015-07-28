@@ -1510,10 +1510,10 @@ def wordpress_repost(request):
         post_id = find_id(post.slug)
         
         if not post_id:
-            # wp.call(NewPost(post))
+            wp.call(NewPost(post))
             teststring += "OM New Post: " + post.title + "<br/>"
         else:
-            # wp.call(EditPost(post_id, post))
+            wp.call(EditPost(post_id, post))
             teststring += "OM Edit Post: " + post.title + "<br/>"
 
         ##### WP com
@@ -1539,10 +1539,10 @@ def wordpress_repost(request):
         post_id = find_id(post.slug)
         
         if not post_id:
-            # wpcom.call(NewPost(post))
+            wpcom.call(NewPost(post))
             teststring += "WP New Post: " + post.title + "<br/>"
         else:
-            # wpcom.call(EditPost(post_id, post))
+            wpcom.call(EditPost(post_id, post))
             teststring += "WP Edit Post: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
