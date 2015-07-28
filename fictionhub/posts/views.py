@@ -1510,11 +1510,11 @@ def wordpress_repost(request):
         post_id = find_id(post.slug)
         
         if not post_id:
-            wp.call(NewPost(post))
-            teststring += "Imported: " + post.title + "<br/>"
+            # wp.call(NewPost(post))
+            teststring += "OM New Post: " + post.title + "<br/>"
         else:
-            wp.call(EditPost(post_id, post))
-            teststring += "Edited: " + post.title + "<br/>"
+            # wp.call(EditPost(post_id, post))
+            teststring += "OM Edit Post: " + post.title + "<br/>"
 
         ##### WP com
         wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
@@ -1539,11 +1539,11 @@ def wordpress_repost(request):
         post_id = find_id(post.slug)
         
         if not post_id:
-            wpcom.call(NewPost(post))
-            teststring += "WP.com Imported: " + post.title + "<br/>"
+            # wpcom.call(NewPost(post))
+            teststring += "WP New Post: " + post.title + "<br/>"
         else:
-            wpcom.call(EditPost(post_id, post))
-            teststring += "WP.com Edited: " + post.title + "<br/>"
+            # wpcom.call(EditPost(post_id, post))
+            teststring += "WP Edit Post: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
