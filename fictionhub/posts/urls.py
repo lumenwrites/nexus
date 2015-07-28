@@ -7,7 +7,6 @@ urlpatterns = [
     # Store
     url(r'^user/rayalez/store/$', views.item),
     
-    
     # wiki comments
     
     # Rank comments
@@ -83,7 +82,8 @@ urlpatterns = [
     # import feed
     url(r'^dropboximport/$', views.dropbox_import),
     url(r'^promptsrepost/$', views.prompts_repost),
-    url(r'^wordpressrepost/$', views.wordpress_repost),        
+    url(r'^wordpressrepost/$', views.wordpress_repost),
+    url(r'^story/(?P<story>[^\.]+)/wprepost$', views.wordpress_repost),    
     # url(r'^feedimport/$', views.feed_import),
     url(r'^ffnetimport/$', views.ffnet_import),
     url(r'^fpimport/$', views.fp_import),    

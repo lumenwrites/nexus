@@ -1436,8 +1436,9 @@ def prompts_repost(request):
                 #     thread = r.submit('/r/WritingPrompts', title, text=' ')
                 #     print("Thread created " + title)
     
-                comments = praw.helpers.flatten_tree(thread.comments)
+
                 edited = False
+                comments = praw.helpers.flatten_tree(thread.comments)
                 for comment in comments:
                     try:
                         if comment.author.name == "raymestalez":
@@ -1458,11 +1459,16 @@ def prompts_repost(request):
     })
                     
     
-def wordpress_repost(request):
-    stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
-
+def wordpress_repost(request, story=""):
+    # stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
+    story = Post.objects.get(slug=story)
     teststring = ""
-    for story in stories:
+
+
+    stories = []
+    teststring += story.slug + "<br/>"
+    # for story in stories:
+    if True:
         wp = Client('http://orangemind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
         post = WordPressPost()
