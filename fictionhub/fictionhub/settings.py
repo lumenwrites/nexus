@@ -97,8 +97,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':"fictionhub",
-        'USER':"fictionhub_user",
-        'PASSWORD':"1234",
+        'USER':os.environ["PG_USERNAME"],
+        'PASSWORD':os.environ["PG_PASS"],
         'HOST': 'localhost',
         'PORT': '',
     }
