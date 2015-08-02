@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>
+    Error
+  </title>
+
+  <!-- Import css and scripts  -->
+  <link rel="stylesheet" href="/static/foundation/css/foundation.css"/>
+  <link rel="stylesheet" href="/static/foundation/css/foundation-icons/foundation-icons.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <link rel="shortcut icon" href="http://fictionhub.io/static/img/favicon.ico"/>
+
+  <!-- Main Stylesheet -->
+  <!-- <link rel="stylesheet" href="{% static "/static/css/main.css" %}" /> -->
+  <link rel="stylesheet" href="/static/css/css/style.css" />
+  <!-- <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" /> -->
+
+</head>
+
+<body>
+<div id="orange-line"></div>
+  <header>
+    <div class="row" >
+      <!-- Logo -->      
+        <div class="large-7 small-7 columns" >
+          <a href="/" class="logo">
+	    fiction<span class="bold">hub</span>
+	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+	  </a>
+        </div>
+  </header>
+
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+	<h1>Something went wrong</h1>
+	<p>
+	  Whoops, that's embarrassing, we have some kind of error. <br/>
+	  Our website is still in beta, so that happens. I will fix it in a few hours, so come back soon! <br/> 
+	  You can send me an email to raymestalez@gmail.com to let me know about it.
+	</p>
+      <p> So that you wouldn't come here for nothing - watch a funny video:
+	<iframe width="640" height="360" src="https://www.youtube.com/embed/ykwqXuMPsoc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      </p>
+
+
+
+	
+      </p>
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- End page -->
+
+  <footer>
+  </footer>
+
+<script>
+</script>
+
+</body>
+</html>
+
