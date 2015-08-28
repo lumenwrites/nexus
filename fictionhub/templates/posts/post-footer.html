@@ -1,7 +1,33 @@
 <div class="post-footer-signup panel padding-10">
   <!-- Orangemind -->
-  <span class="orangemind" style="float:left"><p>Liked this post? Subscribe to updates!</p></span>
+  {% if request.META.HTTP_HOST == "orangemind.io" %}
+      <!-- Follow orangemind -->
+    <span style="float:left"><p>Liked this post? Subscribe to updates!</p></span>
+    <div id="mc_embed_signup" style="/* margin-left:60; float: right;*/">
+      <form action="//orangemind.us7.list-manage.com/subscribe/post?u=0f23c7984541d915d1108a16e&amp;id=6b00e5a9f8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div class="mc-field-group">
+	  
+	  <!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	     -->
 
+          <input class="small button"
+                 id="subscribeButton"
+                 name="subscribe"
+                 type="submit"
+                 value="Subscribe"/>
+          <input class="required email"
+                 id="mce-EMAIL"
+                 name="EMAIL"
+                 placeholder="Enter your email"
+                 type="email"
+                 value=""/>
+        </div>
+
+        <div class="clear" id="mce-responses">
+          <div class="response" id="mce-error-response" style="display:none">&nbsp;</div>
+          <div class="response" id="mce-success-response" style="display:none">&nbsp;</div>
+        </div>
+      </form>
+  {% else %} <!-- if not orangemind -->
   <div class="left stats" style="margin: 6px;">
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
@@ -79,4 +105,5 @@
 	{% endif %}
         </div> <!-- End Author -->
 	<div class="clearfix"></div>
+	{% endif %} <!-- endif orangemind -->
       </div>

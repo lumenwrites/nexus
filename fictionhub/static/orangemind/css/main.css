@@ -303,7 +303,9 @@ article header hr {
 	/* font-size: 16; */
 
 	/* padding: 0; */
-	/* border-radius: 0; */
+    /* border-radius: 0; */
+padding: 10px;
+  margin-right: 10px;    
 }
 
 #rss-icon {
