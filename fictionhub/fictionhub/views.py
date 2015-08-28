@@ -12,11 +12,12 @@ def home(request):
         rational = True
 
     # fictionhub includes rational        
-    # if rational:
-    #     posts = Post.objects.filter(published=True, rational=rational, post_type="story")
-    # else:
-    #     posts = Post.objects.filter(published=True, post_type="story")
-    posts = Post.objects.filter(published=True, rational=rational, post_type="story")    
+    if rational:
+        posts = Post.objects.filter(published=True, rational=rational, post_type="story")
+    else:
+        posts = Post.objects.filter(published=True, post_type="story")
+    # fictionhub doesn't include rational
+    # posts = Post.objects.filter(published=True, rational=rational, post_type="story")    
     timespan="all-time"
     hot_posts = rank_hot(posts, top=32)[:10]
     top_posts = rank_top(posts, timespan = timespan)[:10]
