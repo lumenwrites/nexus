@@ -1,5 +1,8 @@
 <div class="post-footer-signup panel padding-10">
-  <div class="left" style="margin: 6px;">
+  <!-- Orangemind -->
+  <span class="orangemind" style="float:left"><p>Liked this post? Subscribe to updates!</p></span>
+
+  <div class="left stats" style="margin: 6px;">
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
 		     margin-right:10px;">
@@ -41,7 +44,7 @@
   </div>
 
 	<div class="author">
-	  <div style="margin: 6px;float:left;">
+	  <div style="margin: 6px;float:left;" class="post-footer-username">
 	    {% if post.author.external_url and post.author.website %}
 	    <a href="{{post.author.website}}">{{post.author}}</a>
 	    {% else %}

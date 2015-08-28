@@ -10,10 +10,26 @@
 <meta name="description" content="{{post.body | firstparagraph | safe }}">
 {% endblock %}
 
+
+<!-- orangemind -->
+{% block main_header %}
+  {% if request.META.HTTP_HOST == "orangemind.io" %}
+  <!-- nothing -->
+  {% else %}
+  {{ block.super }}
+  {% endif %}
+{% endblock main_header %}
+
+
 {% block content %}
 <div id="page"  class="postPage">
-  <div class="row">
-    <div class="large-12 columns">
+  <div class="row" id="posts">
+    <div class="large-12 columns post-columns">
+
+      {% if request.META.HTTP_HOST == "orangemind.io" %}      
+      {% include "posts/orangemind-header.html" %}
+      {% endif %}      
+
 	  <!-- {% if post.parent.post_type == "story" %} -->
 	  <!-- <h1> <a class="black" href="{{post.parent.get_absolute_url}}"> -->
 	  <!--     {{post.parent.title}}</a> </h1> -->
@@ -122,17 +138,23 @@
 	<div style="width:100%; height: 20px"></div>	
       </article>
       
-</div> <!-- End 12 columns -->
-</div>	 <!-- End row -->
 
 <!-- Follow -->
-<div class="row">
-  <div class="large-12 columns">
-    {% include "posts/post-footer.html" %}
-  </div>
-</div>
+{% include "posts/post-footer.html" %}
 
+<!-- Comments -->
 {% include "comments/comments.html" %}
+
+
+<!-- orangemind -->
+{% if request.META.HTTP_HOST == "orangemind.io" %}      
+<div class="clearfix"></div>	
+<br/>
+<footer class="orangemind orangemind-footer"></footer>
+{% endif %}      
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
 
 </div>	 <!-- end page -->
 

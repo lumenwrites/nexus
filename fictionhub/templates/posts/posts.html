@@ -3,14 +3,27 @@
 {% load markdownify %}
 {% load age %}
 
+{% block main_header %}
+  {% if request.META.HTTP_HOST == "orangemind.io" %}
+  <!-- nothing -->
+  {% else %}
+  {{ block.super }}
+  {% endif %}
+{% endblock main_header %}
+
 {% block content %}
-    
-<div id="page"  class="posts-page">
+<div id="page" class="posts-page">
 
 {% include "posts/subnav-browse.html" %}
 
-<div class="row">
+<div class="row" id="posts">
   <div class="large-12 small-12 columns posts">
+
+    <!-- orangemind -->
+    {% if request.META.HTTP_HOST == "orangemind.io" %}    
+    {% include "posts/orangemind-header.html" %}
+    {% endif %}        
+    
 {% if challenge.state = "open" %}
       <div class="panel">
 	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.
@@ -32,7 +45,7 @@
       <!-- Header -->
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
-	  <h1 class="left"> {{post.title}} </h1>
+	  <h1> {{post.title}} </h1>
 	</a>
 	{% if user == post.author or user.is_staff or post.post_type == "wiki" %}
 	<a class="edit-post" href="{{post.get_absolute_url}}/edit" style="margin-top: 20px;">
@@ -75,7 +88,7 @@
       <!-- Post Footer -->
 
 
-      <div class="panel" style="padding:8px;margin-top: 4px;">
+      <div class="panel post-footer" style="padding:8px;margin-top: 4px;">
 	<!-- <div class="large-8 small-8 columns"> -->
 	  <div class="stats left">
 	    <!--
@@ -161,6 +174,13 @@
   </span>
 </div>
 {% endif %} <!-- End if not an open challenge -->
+
+
+{% if request.META.HTTP_HOST == "orangemind.io" %}
+<!-- orangemind -->
+<footer class="orangemind-footer"></footer>
+{% endif %}
+
 </div> <!-- End 12 columns -->
 
 <div class="large-3 small-3 columns sidebar" style="display:none;">
