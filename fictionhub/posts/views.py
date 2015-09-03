@@ -103,11 +103,22 @@ def posts(request, rankby="hot", timespan="all-time",
         userprofile = get_object_or_404(User, username=username)
         if request.user == userprofile:
             # If it's my profile - display all the posts, even unpublished.
-            posts = Post.objects.filter(author=userprofile,
-                                        rational=rational).exclude(post_type="chapter")
+            # fictionhub includes rational        
+            if rational:
+                posts = Post.objects.filter(author=userprofile,
+                                            rational=rational).exclude(post_type="chapter")
+            else:
+                posts = Post.objects.filter(author=userprofile).exclude(post_type="chapter")
             # , post_type="story")
         else:
-            posts = Post.objects.filter(author=userprofile, published=True, rational = rational)
+            # fictionhub includes rational        
+            if rational:
+                posts = Post.objects.filter(author=userprofile,
+                                            rational=rational,
+                                            published=True).exclude(post_type="chapter")
+            else:
+                posts = Post.objects.filter(author=userprofile,
+                                            published=True)
         filterurl="/user/"+username # to add to href  in subnav
     elif filterby == "challenges":
         posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational)
@@ -188,6 +199,13 @@ def posts(request, rankby="hot", timespan="all-time",
     if filterby == "hub":
         hubtitle = hub.title
         solohub = True
+
+    # orangemind
+    orangemind = False
+    if request.META['HTTP_HOST'] == "orangemind.io":
+        orangemind = True
+    
+        
     return render(request, 'posts/posts.html',{
         'posts':posts,
         'upvoted': upvoted,
@@ -204,7 +222,8 @@ def posts(request, rankby="hot", timespan="all-time",
         'challenge':challenge,
         'prompt':prompt,
         'solohub':solohub,
-        'hubtitle':hubtitle
+        'hubtitle':hubtitle,
+        'orangemind':orangemind
     })
 
 def prompts(request, rankby="hot", timespan="all-time"):
@@ -727,6 +746,11 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     if wordcount > 1000:
         wordcount = str(int(wordcount/1000)) + "K"
     post.wordcount = wordcount
+
+    # orangemind
+    orangemind = False
+    if request.META['HTTP_HOST'] == "orangemind.io":
+        orangemind = True
         
     return render(request, 'posts/post.html',{
         'post': post,
@@ -743,7 +767,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'form': form,
         'hubs':hubs,
         'subscribed_to':subscribed_to,
-        'filterby':filterby
+        'filterby':filterby,
+        'orangemind':orangemind
     })
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):

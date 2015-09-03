@@ -13,7 +13,7 @@
 
 <!-- orangemind -->
 {% block main_header %}
-  {% if request.META.HTTP_HOST == "orangemind.io" %}
+  {% if orangemind %}
   <!-- nothing -->
   {% else %}
   {{ block.super }}
@@ -26,7 +26,7 @@
   <div class="row" id="posts">
     <div class="large-12 columns post-columns">
 
-      {% if request.META.HTTP_HOST == "orangemind.io" %}      
+      {% if orangemind %}      
       {% include "posts/orangemind-header.html" %}
       {% endif %}      
 
@@ -147,7 +147,7 @@
 
 
 <!-- orangemind -->
-{% if request.META.HTTP_HOST == "orangemind.io" %}      
+{% if orangemind %}      
 <div class="clearfix"></div>	
 <br/>
 <footer class="orangemind orangemind-footer"></footer>

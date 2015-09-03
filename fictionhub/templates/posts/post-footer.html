@@ -1,6 +1,6 @@
 <div class="post-footer-signup panel padding-10">
   <!-- Orangemind -->
-  {% if request.META.HTTP_HOST == "orangemind.io" %}
+  {% if orangemind %}
       <!-- Follow orangemind -->
     <span style="float:left"><p>Liked this post? Subscribe to updates!</p></span>
     <div id="mc_embed_signup" style="/* margin-left:60; float: right;*/">
@@ -27,6 +27,7 @@
           <div class="response" id="mce-success-response" style="display:none">&nbsp;</div>
         </div>
       </form>
+    </div>
   {% else %} <!-- if not orangemind -->
   <div class="left stats" style="margin: 6px;">
 	<span class="fi-arrow-up"

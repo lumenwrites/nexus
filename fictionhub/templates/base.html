@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="{% static "/static/css/css/style.css" %}" />
   <!-- <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" /> -->
 
-  {% if request.META.HTTP_HOST == "orangemind.io" %}
+  {% if orangemind %}
   <link rel="stylesheet" href="{% static "/static/orangemind/css/main.css" %}" />
   {% endif %}  
 

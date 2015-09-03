@@ -171,7 +171,7 @@ article header hr {
     margin: 0px -10px;
 }
 
-#readmore {
+.readmore {
     float:right;
     /* font-style: italic; */
     color: black;
@@ -464,3 +464,6 @@ blockquote strong {
 /*     text-align:center!important; */
 /*     float: none!important; */
 /* } */
+.post-header {
+    width: 100%;
+}

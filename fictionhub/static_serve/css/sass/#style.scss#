@@ -22,6 +22,7 @@ $cream: #f6f3ea;
     color: $black;
 }
 
+
 html {
     font-size: 19px;
 }
@@ -61,7 +62,7 @@ h3 {
 h4 {
     font-size: 21px;
     margin-top:10px;
-    color: black;
+    /* color: black; */
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -84,7 +85,9 @@ blockquote strong {
 
 
 
-
+#page {
+    min-height:82vh;
+}
 
 
 #page li {
@@ -96,6 +99,10 @@ li p {
 }
 
 /* Helpers */
+
+.hidden {
+    display:none;
+}
 
 .bold {
     font-weight:bold;
@@ -112,6 +119,9 @@ li p {
     float:left;
 }
 
+.black {
+    color: $black;
+}
 .gray {
     background: gray!important;
 }
@@ -129,7 +139,7 @@ li p {
 }
 
 .padding-10 {
-    padding: 20px;    
+    padding: 10px;    
 }
 
 .padding-20 {
@@ -138,6 +148,22 @@ li p {
 
 .grey {
     color: #bbbbbb;
+}
+
+.center-vertically {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    /*
+    *  Where the magic happens
+    *  Centering method from CSS Tricks
+    *  http://css-tricks.com/centering-percentage-widthheight-elements/
+    */
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 /* Elements */
@@ -206,7 +232,9 @@ header {
   margin-right: -4px;  
 }
 
-.logo:hover {
+.logo:hover,
+.logo:focus,
+.logo:visited{
     color: $black;
 }
 
@@ -259,9 +287,13 @@ header {
 /* ================ Subnav ================ */
 
 .subnav {
-  padding: 10px;
-  margin: 10px;
+  /* padding: 10px; */
+  /* margin: 10px; */
   background-color: rgba(0,0,0,0.02);
+}
+
+.subnav .row .columns {
+    /* padding: 10px; */
 }
 
 .subnav a, .subnav span {
@@ -272,6 +304,17 @@ header {
     font-size: 18px;
     font-weight: 400;
     margin-right: 20px;
+}
+
+/* smaller space between links */
+.subnav a, .subnav span {
+  margin-right: 10px;
+}
+
+
+
+.rank-types {
+    margin:10px 0;
 }
 
 .rank-types .bold {
@@ -319,15 +362,34 @@ header {
 .unsubscribe {
     background: rgba(187, 187, 187, 0.8)!important;
 }
+
 .subscribers {
-    background: white;
-    padding: 4px;
-    border-radius: 4px;
-    margin-right: 0!important;
+  background: white;
+  padding: 4px 5px;
+  border-radius: 4px;
+  margin-right: 0 !important;
+  margin: 0 5px;
 }
 
 .profile.rank-types {
   margin-top: 10px!important;
+}
+
+.hubs-dropdown {
+    margin: 10px;
+}
+.subnav .searchbar {
+    background: none;
+    width: calc(100% - 76px);
+    /* remove hubs toggle */
+    width: calc(100% - 5px);
+    height:40px;
+    /* margin: -6px 0;     */
+    margin: 4px;
+}
+
+.subnav .searchbar:focus {
+    background: white;
 }
 
 
@@ -368,6 +430,7 @@ article {
 @media screen and (max-width: 1300px) {
     .vote-column {    
         margin: 10px;
+	margin-bottom: -12px;
     }
 }
 
@@ -385,9 +448,9 @@ article {
 }
 
 /* Defaut state */
-.fi-arrow-up, .fi-arrow-down,
-.fi-arrow-up:active, .fi-arrow-down:active,
-.fi-arrow-up:visited, .fi-arrow-down:visited{
+.arrow,
+.arrow:active,
+.arrow:visited,{
     display: block;
     transform:scale(1.8,1);
     float:left;
@@ -395,6 +458,17 @@ article {
     text-align: center;
     color: $black;
 }
+
+/* .fi-arrow-up, .fi-arrow-down, */
+/* .fi-arrow-up:active, .fi-arrow-down:active, */
+/* .fi-arrow-up:visited, .fi-arrow-down:visited{ */
+/*     display: block; */
+/*     transform:scale(1.8,1); */
+/*     float:left; */
+/*     width: 100%; */
+/*     text-align: center; */
+/*     color: $black; */
+/* } */
 
 /* Upvote hover is orange */
 .upvote:hover {
@@ -476,7 +550,6 @@ article header {
     float: left;
     padding: 0;
     width: 100%;
-
 }
 
 @media screen and (max-width: 1300px) {
@@ -618,9 +691,10 @@ article header {
 /* Center in container */
 .br-wrapper-b {
   width: 410px;
-  position: absolute;
+  /* position: absolute; */
   margin: 0px 0 0 -168px;
-  left: 50%;
+  /* left: 50%; */
+  float: left;
   }
 
 
@@ -867,3 +941,7 @@ footer h4 {
 
 
 
+
+.white-bg {
+    background: white!important;
+}
