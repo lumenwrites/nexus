@@ -467,3 +467,7 @@ blockquote strong {
 .post-header {
     width: 100%;
 }
+
+.post-header h1 {
+    float: none;
+}
