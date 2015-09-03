@@ -468,6 +468,6 @@ blockquote strong {
     width: 100%;
 }
 
-/* .post-header h1 { */
-/*     float: none; */
-/* } */
+.posts-page .post-header h1 {
+    float:none;
+}

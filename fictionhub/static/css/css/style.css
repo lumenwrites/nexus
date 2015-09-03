@@ -465,9 +465,11 @@ article {
   /* margin-bottom: 80px; */
 }
 
-/* .post-header h1 { */
-/*     float:left; */
-/* } */
+/* line 422, ../sass/style.scss */
+.posts-page .post-header h1 {
+  float: left;
+}
+
 /* Votes */
 /* line 428, ../sass/style.scss */
 .vote-column {
