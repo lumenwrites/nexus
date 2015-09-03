@@ -45,7 +45,7 @@
       <!-- Header -->
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
-	  <h1> {{post.title}} </h1>
+	  <h1 class="left"> {{post.title}} </h1>
 	</a>
 	{% if user == post.author or user.is_staff or post.post_type == "wiki" %}
 	<a class="edit-post" href="{{post.get_absolute_url}}/edit" style="margin-top: 20px;">
