@@ -1492,14 +1492,13 @@ def prompts_repost(request):
 def wordpress_repost(request, story=""):
     # stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
     # story = Post.objects.get(slug=story)
-    stories = Post.objects.filter(post_type="story", published=True).order_by('-pub_date')[:5]    
+    stories = Post.objects.filter(post_type="story", published=True).order_by('-pub_date')#[:5]    
     teststring = ""
 
-
-    stories = []
+    # stories = []
     # teststring += story.slug + "<br/>"
-    for story in stories: # if True:
-        wp = Client('http://ormind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
+    for story in stories:
+        wp = Client('http://ormind.co/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
         post = WordPressPost()
         post.title = story.title # + " by " + story.author.username
@@ -1544,21 +1543,21 @@ def wordpress_repost(request, story=""):
         #     return(False)
         
         # post_id = find_id(post.slug)
-        
-        if not post_id:
-            wp.call(NewPost(post))
-            teststring += "OM New Post: " + post.title + "<br/>"
-        else:
-            # wp.call(EditPost(post_id, post))
-            # teststring += "OM Edit Post: " + post.title + "<br/>"
-            teststring += "Already Exists: " + post.title + "<br/>"            
+
+        # if not post_id:
+        wp.call(NewPost(post))
+        teststring += "OM New Post: " + post.title + "<br/>"
+        # else:
+        #     # wp.call(EditPost(post_id, post))
+        #     # teststring += "OM Edit Post: " + post.title + "<br/>"
+        #     teststring += "Already Exists: " + post.title + "<br/>"            
 
         ##### WP com
-        # wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
-        # post.content = firstparagraph +\
-        #                ".... <br/> <a href='http://fictionhub.io/story/"+\
-        #                post.slug +\
-        #                "'> Read Story >>>> </a>"
+        wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
+        post.content = firstparagraph +\
+                       ".... <br/> <a href='http://fictionhub.io/story/"+\
+                       post.slug +\
+                       "'> Read Story >>>> </a>"
         # def find_id(slug):
         #     offset = 0
         #     increment = 20
@@ -1575,13 +1574,13 @@ def wordpress_repost(request, story=""):
         
         # post_id = find_id(post.slug)
         
-        # if not post_id:
-        #     wpcom.call(NewPost(post))
-        #     teststring += "WP New Post: " + post.title + "<br/>"
-        # else:
-        #     # wpcom.call(EditPost(post_id, post))
-        #     # teststring += "WP Edit Post: " + post.title + "<br/>"
-        #     teststring += "Already Exists: " + post.title + "<br/>"
+        if not post_id:
+            wpcom.call(NewPost(post))
+            teststring += "WP New Post: " + post.title + "<br/>"
+        else:
+            # wpcom.call(EditPost(post_id, post))
+            # teststring += "WP Edit Post: " + post.title + "<br/>"
+            teststring += "Already Exists: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
