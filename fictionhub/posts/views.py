@@ -1497,7 +1497,7 @@ def wordpress_repost(request, story=""):
 
 
     stories = []
-    teststring += story.slug + "<br/>"
+    # teststring += story.slug + "<br/>"
     for story in stories: # if True:
         wp = Client('http://ormind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
