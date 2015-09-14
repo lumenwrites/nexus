@@ -1574,13 +1574,13 @@ def wordpress_repost(request, story=""):
         
         # post_id = find_id(post.slug)
         
-        if not post_id:
-            wpcom.call(NewPost(post))
-            teststring += "WP New Post: " + post.title + "<br/>"
-        else:
-            # wpcom.call(EditPost(post_id, post))
-            # teststring += "WP Edit Post: " + post.title + "<br/>"
-            teststring += "Already Exists: " + post.title + "<br/>"
+        # if not post_id:
+        wpcom.call(NewPost(post))
+        teststring += "WP New Post: " + post.title + "<br/>"
+        # else:
+        #     # wpcom.call(EditPost(post_id, post))
+        #     # teststring += "WP Edit Post: " + post.title + "<br/>"
+        #     teststring += "Already Exists: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
