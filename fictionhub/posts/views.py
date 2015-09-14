@@ -1554,34 +1554,34 @@ def wordpress_repost(request, story=""):
             teststring += "Already Exists: " + post.title + "<br/>"            
 
         ##### WP com
-        wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
-        post.content = firstparagraph +\
-                       ".... <br/> <a href='http://fictionhub.io/story/"+\
-                       post.slug +\
-                       "'> Read Story >>>> </a>"
-        def find_id(slug):
-            offset = 0
-            increment = 20
-            while True:
-                filter = { 'offset' : offset }
-                p = wpcom.call(GetPosts(filter))
-                if len(p) == 0:
-                    break # no more posts returned
-                for post in p:
-                    if post.slug == slug:
-                        return(post.id)
-                    offset = offset + increment
-            return(False)
+        # wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
+        # post.content = firstparagraph +\
+        #                ".... <br/> <a href='http://fictionhub.io/story/"+\
+        #                post.slug +\
+        #                "'> Read Story >>>> </a>"
+        # def find_id(slug):
+        #     offset = 0
+        #     increment = 20
+        #     while True:
+        #         filter = { 'offset' : offset }
+        #         p = wpcom.call(GetPosts(filter))
+        #         if len(p) == 0:
+        #             break # no more posts returned
+        #         for post in p:
+        #             if post.slug == slug:
+        #                 return(post.id)
+        #             offset = offset + increment
+        #     return(False)
         
-        post_id = find_id(post.slug)
+        # post_id = find_id(post.slug)
         
-        if not post_id:
-            wpcom.call(NewPost(post))
-            teststring += "WP New Post: " + post.title + "<br/>"
-        else:
-            # wpcom.call(EditPost(post_id, post))
-            # teststring += "WP Edit Post: " + post.title + "<br/>"
-            teststring += "Already Exists: " + post.title + "<br/>"
+        # if not post_id:
+        #     wpcom.call(NewPost(post))
+        #     teststring += "WP New Post: " + post.title + "<br/>"
+        # else:
+        #     # wpcom.call(EditPost(post_id, post))
+        #     # teststring += "WP Edit Post: " + post.title + "<br/>"
+        #     teststring += "Already Exists: " + post.title + "<br/>"
             
     return render(request, 'posts/test.html', {
         'teststring': teststring,
