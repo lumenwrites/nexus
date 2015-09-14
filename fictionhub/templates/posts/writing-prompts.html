@@ -28,12 +28,17 @@
 	  <div class="vote">
 	    <div class="score"> <b> {{prompt.score}} </b> </div>
 	  </div>
-	</div>
+	</div>	
 	<a href="{{prompt.permalink}}" class="bold black">{{prompt.title}}</a>
 	<br/>
 	<!-- <button class="button small" style="padding: 5px 10px;margin:5px;" type="submit">Reply</button> -->
-	
-	Replies: <b>{{prompt.num_comments}}</b> &nbsp; 
+
+	<!-- Score: {{prompt.score}} &nbsp; 	 -->
+	<!-- Replies: {{prompt.num_comments}} &nbsp; -->
+	<!-- Age: {{prompt.age}} hours &nbsp; 	 -->
+	{{prompt.num_comments}} replies &nbsp;
+	{{prompt.age}} hours &nbsp; 	
+
 
 	<!-- Score: <b>{{prompt.score}}</b> -->
 	<!-- submitted {# {{prompt.created_utc | age}} #} -->

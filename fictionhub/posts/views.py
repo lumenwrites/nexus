@@ -1491,15 +1491,15 @@ def prompts_repost(request):
     
 def wordpress_repost(request, story=""):
     # stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
-    story = Post.objects.get(slug=story)
+    # story = Post.objects.get(slug=story)
+    stories = Post.objects.filter(post_type="story", published=True).order_by('-pub_date')[:5]    
     teststring = ""
 
 
     stories = []
     teststring += story.slug + "<br/>"
-    # for story in stories:
-    if True:
-        wp = Client('http://orangemind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
+    for story in stories: # if True:
+        wp = Client('http://ormind.io/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
         post = WordPressPost()
         post.title = story.title # + " by " + story.author.username
@@ -1529,21 +1529,21 @@ def wordpress_repost(request, story=""):
         post.post_status = 'publish'
         
         # Check if post exists
-        def find_id(slug):
-            offset = 0
-            increment = 20
-            while True:
-                filter = { 'offset' : offset }
-                p = wp.call(GetPosts(filter))
-                if len(p) == 0:
-                    break # no more posts returned
-                for post in p:
-                    if post.slug == slug:
-                        return(post.id)
-                    offset = offset + increment
-            return(False)
+        # def find_id(slug):
+        #     offset = 0
+        #     increment = 20
+        #     while True:
+        #         filter = { 'offset' : offset }
+        #         p = wp.call(GetPosts(filter))
+        #         if len(p) == 0:
+        #             break # no more posts returned
+        #         for post in p:
+        #             if post.slug == slug:
+        #                 return(post.id)
+        #             offset = offset + increment
+        #     return(False)
         
-        post_id = find_id(post.slug)
+        # post_id = find_id(post.slug)
         
         if not post_id:
             wp.call(NewPost(post))
@@ -1601,18 +1601,20 @@ def age(timestamp):
 def writing_prompts(request):
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')
-    prompts = subreddit.get_new(limit=64)
+    prompts = subreddit.get_new(limit=128)
     new_prompts = list(prompts)
     prompts = []
 
-    max_age = 2*60
+    max_age = 5*60
     # less than 5 replies, more than 1 upvote and less than 60 minutes old
     for prompt in new_prompts:
+        # 1 4 5*60
         if (prompt.score > 1) \
-        and ((prompt.num_comments-2) < 5) \
+        and ((prompt.num_comments-2) < 2) \
         and (age(prompt.created_utc) < max_age):
             if prompt.num_comments > 0:
                 prompt.num_comments -= 2 # remove 2 fake replies
+            prompt.age = round(age(prompt.created_utc)/60,1)
             prompts.append(prompt)
 
     # sort by score
