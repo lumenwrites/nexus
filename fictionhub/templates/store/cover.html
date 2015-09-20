@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+<!-- orangemind -->
+{% block main_header %}
+  {% if orangemind %}
+  <!-- nothing -->
+  {% else %}
+  {{ block.super }}
+  {% endif %}
+{% endblock main_header %}
+
+
+
+{% block content %}
+
+	<div style="width: 1800px;
+		    height: 2360px;
+		    background: #1d1d1d url('/static/orangemind/img/bg-no-frame.png') no-repeat;
+		    background-size: 4800px 2700px;
+		    background-position-x: -2740px;
+		    position:relative;
+		    padding:20px;
+		    overflow:hidden;
+		    ">
+
+	  <div style="width:100%;
+		      height:8px;
+		      position: absolute;		      
+		      top:0;
+		      left:0;
+		      background:#f76300;
+		      "></div>
+	  
+	  <div style="width:100%;
+		      height:160px;
+		      position: absolute;		      
+		      top:8px;
+		      left:0;
+		      background:rgba(11, 13, 19, 0.63);
+		      text-align:center;
+		      padding:10px;">
+	  </div>
+
+	  <img src="/static/orangemind/img/logo2.png" width="2110" height="3000"
+	       style="position: absolute;
+		      z-index: 10;
+		      top: 27px;
+		      left: -320px;
+		      width: 95%;"/>
+	  
+	  <img src="/static/orangemind/img/brain.png" width="211" height="300"
+	       style="  max-width: 5000px;
+		      width: 2610px;
+		      position: absolute;
+		      top: 200px;
+		      left: -240px;
+		      opacity: 0.15;"/>
+
+	  <div style="  width: 100%;
+		      height: 360px;
+		      position: absolute;
+		      bottom: 0;
+		      left: 0;
+		      background: rgba(11, 13, 19, 0.63);
+		      padding: 60px;
+		      text-align: center;">
+	    <span style="  color: #f76300;
+			 font-size: 180px;
+			 text-transform: uppercase;
+			 font-family: 'Titillium Web';
+			 font-weight: 200;">Orange Mind</span>
+	    <!-- 
+	    <span style="color: #A4A4A4;
+			 font-size: 12px;
+			 margin-top: 53px;
+			 padding-top: -10px;
+			 top: 0;
+			 bottom: 50px;
+			 position: absolute;
+			 left: 95px;">http://orangemind.io</span>
+
+	  </div>
+	</div> -->
+{% endblock content %}
+
+

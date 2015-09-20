@@ -77,7 +77,9 @@ urlpatterns = [
     #     {'filterby': 'challenges'}),    
     # url(r'^challenges/$', views.posts,
     #     {'filterby': 'challenges'}),    
-    
+
+    #book
+    url(r'^book/$', views.book),
 
     # import feed
     url(r'^dropboximport/$', views.dropbox_import),

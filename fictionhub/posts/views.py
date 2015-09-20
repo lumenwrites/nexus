@@ -1614,6 +1614,8 @@ def writing_prompts(request):
             if prompt.num_comments > 0:
                 prompt.num_comments -= 2 # remove 2 fake replies
             prompt.age = round(age(prompt.created_utc)/60,1)
+            prompt.permalink = prompt.permalink.replace("www", "zn")
+            prompt.sort = prompt.score * (1-(prompt.age/5))
             prompts.append(prompt)
 
     # sort by score
@@ -1621,7 +1623,7 @@ def writing_prompts(request):
             
         
     return render(request, 'posts/writing-prompts.html', {
-        'prompts': prompts[:8],
+        'prompts': prompts[:16],
         'max_age': max_age,        
     })
 
@@ -1731,11 +1733,17 @@ def email(request):
     send_mail('My awesome email', 'Oh hell yeah..', 'raymestalez@gmail.com', ['raymestalez@gmail.com'], fail_silently=False)
     return HttpResponse("Yes!")
 
+
 def item(request):
     test=""
     return render(request, 'store/single-item.html', {
         'test':test,
 })
+
+def book(request):
+    return render(request, 'store/om-book.html', {
+        'orangemind': True,
+    })
 
 
 # TODO: replace with CBVs

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+<!-- orangemind -->
+{% block main_header %}
+  {% if orangemind %}
+  <!-- nothing -->
+  {% else %}
+  {{ block.super }}
+  {% endif %}
+{% endblock main_header %}
+
+
+
+{% block content %}
+<div id="page"  class="postPage">
+
+  <div class="row" id="posts">
+    <div class="large-12 small-12 columns post-columns">
+
+      {% if orangemind %}      
+      {% include "posts/orangemind-header.html" %}
+      {% endif %}      
+      
+	<article>
+	  <header class="post-header">
+	    <h1> Orange Mind book </h1>
+	    <hr />
+	  </header>
+	  <div style="width:60%; float:left;padding:20px;">
+	  <!-- <h2>Structure your machine learning journey with this self-study&nbsp;roadmap</h2> -->
+
+	  <p>This is the collection of the best stories I have written for /r/writingprompts.
+	    All of them are available for free on this blog, but you can buy the book if you prefer to read them in epub/PDF format, or just want to support me as a writer.</p>
+
+	  <p>The book is updated every 2 months to include my best and most recent stories, and of course you get access to all of the updates.</p>
+	  <!-- 
+	  <div class="panel" style="padding:8px;margin-top: 4px;">
+	    <div class="left">
+	      <p style="margin:0;">To read the rest of the story and get access to all premium content purchase subscription</p>
+	      <p style="margin:0;"><strike>$25/mo</strike> $15/yr discount for early adopters</p>
+	    </div>
+	    <button class="button small right" style="border-radius:0;">Start free 30-day trial</button>
+	    <div class="clearfix"></div>
+	  </div>
+	  -->
+      </div>
+
+      <div style="width:40%; float:right;padding:20px;">
+	<!-- <br/><br/><br/> -->
+	<img src="/static/orangemind/img/orangemind-book.png" width="211" height="300" style="width:100%;">
+
+
+	
+	<!-- 
+	<div style="width: 100%;
+		    height: 400px;
+		    background: #1d1d1d url('/static/orangemind/img/bg-no-frame.png');
+		    background-size: 800px 450px;
+		    background-position-x: -460px;
+		    position:relative;
+		    padding:20px;
+		    overflow:hidden;
+		    ">
+
+	  <div style="width:100%;
+		      height:2px;
+		      position: absolute;		      
+		      top:0;
+		      left:0;
+		      background:#f76300;
+		      "></div>
+	  
+	  <div style="width:100%;
+		      height:10px;
+		      position: absolute;		      
+		      top:2px;
+		      left:0;
+		      background:rgba(11, 13, 19, 0.63);
+		      text-align:center;
+		      padding:10px;">
+	  </div>
+
+	  <img src="/static/orangemind/img/logo2.png" width="2110" height="3000"
+	       style="position:absolute;
+		      z-index: 10;
+		      top:10px;
+		      left:-40px;
+		      width:90%;
+		      "/>
+	  
+	  <img src="/static/orangemind/img/brain.png" width="211" height="300"
+	       style="max-width: 500px;
+		      width: 419px;
+		      position: absolute;
+		      top: 50px;
+		      left: -30px;
+		      opacity: 0.15;
+		      "/>
+
+	  <div style="width:100%;
+		      height:80px;
+		      position: absolute;
+		      bottom:0;
+		      left:0;
+		      background:rgba(11, 13, 19, 0.63);
+		      padding:20px;
+		      text-align:center;">
+	    <span style="color:#f76300;font-size:26px;
+			   text-transform: uppercase;
+			   font-family: 'Titillium Web';
+			   font-weight: 200;">Orange Mind</span>
+	    <!-- 
+	    <span style="color: #A4A4A4;
+			 font-size: 12px;
+			 margin-top: 53px;
+			 padding-top: -10px;
+			 top: 0;
+			 bottom: 50px;
+			 position: absolute;
+			 left: 95px;">http://orangemind.io</span>
+
+	  </div>
+	</div> -->
+	<br/><br/>
+
+	
+	
+	<button class="button small"
+		style="width:100%; border-radius:0;">Buy this book $10</button>
+
+	<!-- Subscription 
+	or get a subscription and access all premium content for <strike>$25/mo</strike> $15/yr (discount for early adopters)
+	<button class="button small"
+		style="width:100%; border-radius:0;">Start free 30-day trial</button>
+	 -->
+      </div>
+      <div class="clearfix"></div>	
+      <br/>
+      <div>
+	</article>
+
+
+<!-- orangemind -->
+{% if orangemind %}      
+<div class="clearfix"></div>	
+<footer class="orangemind orangemind-footer"></footer>
+{% endif %}      
+	
+
+
+      </div> <!-- End 12 columns -->
+    </div> <!-- End row -->
+  </div>
+</div>
+
+<style>
+  .about {
+  font-weight:bold!important;
+  color:#3d454b!important;
+  }
+</style>
+{% endblock content %}
+
+
