@@ -1492,7 +1492,8 @@ def prompts_repost(request):
 def wordpress_repost(request, story=""):
     # stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
     # story = Post.objects.get(slug=story)
-    stories = Post.objects.filter(post_type="story", published=True).order_by('-pub_date')#[:5]    
+    rayalez = User.objects.get(username="rayalez")
+    stories = Post.objects.filter(post_type="story", published=True, author=rayalez).order_by('-pub_date')#[:5]    
     teststring = ""
 
     # stories = []
@@ -1504,7 +1505,7 @@ def wordpress_repost(request, story=""):
         post.title = story.title # + " by " + story.author.username
         post.slug = story.slug
         post.name = story.slug        
-        post.link = "http://fictionhub.io/story/" + post.slug
+        post.link = "http://orangemind.io/story/" + post.slug
         md = Markdown()
         bodyhtml = md.convert(story.body)
         try:
@@ -1539,7 +1540,7 @@ def wordpress_repost(request, story=""):
         #         for post in p:
         #             if post.slug == slug:
         #                 return(post.id)
-        #             offset = offset + increment
+        #           p  offset = offset + increment
         #     return(False)
         
         # post_id = find_id(post.slug)
@@ -1555,7 +1556,7 @@ def wordpress_repost(request, story=""):
         ##### WP com
         wpcom = Client('https://rayalez.wordpress.com/xmlrpc.php', os.environ["WPCOM_USERNAME"], os.environ["WPCOM_PASS"])
         post.content = firstparagraph +\
-                       ".... <br/> <a href='http://fictionhub.io/story/"+\
+                       ".... <br/> <a href='http://orangemind.io/story/"+\
                        post.slug +\
                        "'> Read Story >>>> </a>"
         # def find_id(slug):
