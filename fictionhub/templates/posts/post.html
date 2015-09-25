@@ -53,7 +53,8 @@
 	{% endif %} -->
 
 	  {% if user == post.author or user.is_staff or post.post_type == "wiki"  %}
-	  <a class="edit-post" style="margin:14px;" href="{{post.get_absolute_url}}/edit">Edit</a>
+	<a class="edit-post" style="margin:14px;" href="{{post.get_absolute_url}}/edit">
+	  <i class="fa fa-pencil"></i><!-- Edit --></a>
 	  {% endif %}
 	  <h1> {{post.title}} </h1>	    
 	    

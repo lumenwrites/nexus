@@ -20,7 +20,7 @@
 	    <a href="{{chapter.get_absolute_url}}/edit">{{chapter.number}} : {{chapter.title}}</a>
 	  </li>
 	</div>
-	<div class="chapter-arrows">
+	<div class="chapter-arrows"> 
 	  <a href="{{chapter.get_absolute_url}}/down"
 	     class="chapter-button chapter-arrow">&#9650;</a>
 	  <a href="{{chapter.get_absolute_url}}/up"
@@ -58,7 +58,15 @@
       <div class="editor">
 	{{form.body}}
       </div>
-      <br/>	
+      <br/>
+
+      <!-- Hub multiselect -->
+      {% if action != "chapter_create" and action != "chapter_edit" %}
+      <div class="set-hubs">
+	{{form.hubs}}
+      </div>
+      {% endif %}
+      <br/>
 
       <!-- Buttons -->
       <!-- Delete Story/Chapter Buttons -->
@@ -92,12 +100,6 @@
 	
       <div class="edit-buttons">
 	<br/>
-	<!-- Hub multiselect -->
-	{% if action != "chapter_create" and action != "chapter_edit" %}
-	<div class="set-hubs">
-	  {{form.hubs}}
-	</div>
-	{% endif %}
 
 	<!-- View/Publish/Save buttons -->
 	{% if action = "story_edit" %}	  
@@ -108,7 +110,7 @@
 	    {% else %}
 	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
 	    {% endif %}
-	  {% else %}
+	  {% else %} <!-- If not approved -->
 	    <!-- 
 	    {% if not story.published %}	  
 	    <a href="/story/{{story.slug}}/publish" class="button small">Submit to Limbo</a>
@@ -116,6 +118,23 @@
 	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Ubsubmit</a>
 	    {% endif %}
 	    -->
+	    {% if not story.published %}	  
+	    <a href="/story/{{story.slug}}/publish" class="button small">Publish to my blog</a>
+	    <i class="fa fa-question-circle"
+	       style="font-size:22px;margin-right:10px;"
+	       data-dropdown="drop2" aria-controls="drop1" aria-expanded="false"
+	       data-options="align:top; is_hover:true; hover_timeout:5000"></i>
+	    <div id="drop2" data-dropdown-content class="f-dropdown large"
+		 aria-hidden="true" tabindex="-1">
+	      <p>Your story will be published to your
+		<a href="/user/{{user.username}}">blog</a>.<br/>
+		Once you gain 20+ karma, or receive an invite,<br/>
+		your posts will be displayed on the main site.<br/>
+		Every day invites are granted to authors of the best stories.</p>
+	    </div>
+	    {% else %}
+	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
+	    {% endif %}	    
 	  {% endif %}	    	    
 	{% elif action = "chapter_edit" %}
 	<a href="/story/{{story.slug}}/{{chapter.slug}}"

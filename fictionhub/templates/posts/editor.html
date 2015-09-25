@@ -40,7 +40,7 @@ $(document).ready(function(){
 
     // Multiselect
     $("#id_hubs").select2({
-	placeholder: "Select hubs",
+	placeholder: "Select hubs", // (maximum 4)
 	allowClear: true,
 	maximumSelectionLength: 4    
     })
@@ -53,6 +53,7 @@ $(document).ready(function(){
 .set-hubs {
     width: calc(100% - 120px);
     width: 200px;
+    width: 100%;    
     float:left;
     margin-right: 420px;    
 }
@@ -83,12 +84,14 @@ $(document).ready(function(){
 #id_hubs {
     list-style-type: none;
     width:600px;
+    width:100%;    
     padding: 0px;
 }
 @media screen and (max-width: 1300px) {
     #id_hubs {
 	list-style-type: none;
 	width:400px;
+	width:100%;
     }
 }
 
@@ -104,6 +107,10 @@ $(document).ready(function(){
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     border-radius: 0px;
     border: none;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+  box-shadow: none;
 }
 
 </style>

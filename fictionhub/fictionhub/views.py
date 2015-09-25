@@ -16,6 +16,10 @@ def home(request):
         posts = Post.objects.filter(published=True, rational=rational, post_type="story")
     else:
         posts = Post.objects.filter(published=True, post_type="story")
+
+    # Approved only
+    posts = posts.filter(author__approved=True)
+        
     # fictionhub doesn't include rational
     # posts = Post.objects.filter(published=True, rational=rational, post_type="story")    
     timespan="all-time"

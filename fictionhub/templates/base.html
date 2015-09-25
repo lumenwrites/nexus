@@ -137,10 +137,10 @@
 		aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}">
 		  <b>{{user.username}}</b> ({{user.karma}})</a></li>
-	      {% if user.approved %}	  	  
-	      <li><a href="/story/add"> Submit </a></li> <!-- Create Story -->
-	      <li><a href="/hub/add"> Create Hub </a></li> <!-- Create Story -->
-	      {% endif %}	  	  	      
+	      {# {% if user.approved %} #}
+	      <li><a href="/story/add"> Create Story </a></li> <!-- Submit --> 
+	      <!-- <li><a href="/hub/add"> Create Hub </a></li> -->
+	      {# {% endif %} #}
 	      <li><a href="/preferences/"> Preferences </a></li>
 	      <!-- <li><a href="/preferences/"> Dark Mode </a></li>	       -->
 	      
@@ -174,8 +174,12 @@
   <script src="  {% static "/static/js/foundation/foundation.dropdown.js" %}"></script>
   <script src="  {% static "/static/js/foundation/foundation.offcanvas.js" %}"></script>
   <script src="  {% static "/static/js/foundation/foundation.reveal.js" %}"></script>
-  <script src="  {% static "/static/js/foundation/foundation.orbit.js" %}"></script>  
+  <script src="  {% static "/static/js/foundation/foundation.orbit.js" %}"></script>
 
+  <!-- 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script src="  {% static "/static/js/foundation/foundation.tooltip.js" %}"></script>  
+  -->
 <script>
   $(document).foundation();
 </script>

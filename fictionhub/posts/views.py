@@ -426,6 +426,9 @@ def browse(request, rankby="hot", timespan="all-time"):
         else:
             posts = Post.objects.all()            
 
+        # Approved only
+        posts = posts.filter(author__approved=True)
+
         query = request.GET.get('query')
         if query:
             # fictionhub includes rational
