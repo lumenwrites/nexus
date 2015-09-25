@@ -1742,7 +1742,7 @@ def item(request):
 })
 
 def book(request):
-    return render(request, 'store/om-book.html', {
+    return render(request, 'store/cover.html', {
         'orangemind': True,
     })
 
