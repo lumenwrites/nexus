@@ -65,7 +65,7 @@
       <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Patreon </a> -->
       <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Store </a> -->
     </div>
-    
+
     <!-- Subscribe button -->
 	{% if user.is_authenticated %}	
 	    {% if userprofile not in subscribed_to %}	
@@ -88,6 +88,25 @@
 	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
 	    </a>
 	{% endif %}   
+
+	    <!-- Other buttons -->
+	    <!-- 
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/store">
+	      Store
+	    </a>
+	    -->
+            <a class="button small right subscribers-button"
+               href="https://www.patreon.com/rayalez">
+	      Patreon
+	    </a>
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/about">
+	      About
+	    </a>
+
+
+	    
  
     <style>
       .subheader {
@@ -121,9 +140,12 @@
       margin-right:0px;
       background: rgba(47, 51, 51, 0.9)!important;
       padding: 17px 14px!important;
-      position: absolute!important;
-      right: 15px!important;
-      top: 20px!important;
+      /* position: absolute!important; */
+      /* right: 15px!important; */
+      /* top: 20px!important; */
+      border-radius:0;
+      margin-top: -27px;
+      margin-left:10px;
       }
       
       .subheader-link {
@@ -208,16 +230,18 @@
     <!-- <span class="fi-eye stats-icon">8.1K+ <\!-- K -\-><\!-- M -\-></span> -->
     <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
     <!-- <span class="fi-background-color stats-icon">316</span> -->
-	
+
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
 
-    {% if userprofile.username == "rayalez" %}    
-    <a href="https://www.patreon.com/rayalez" style="margin: 10px 0;"> Patreon </a>
+    {% if userprofile.username == "rayalez" %}
+    <!-- <a href="http://orangemind.io/" style="margin: 10px 0;"> Website </a> -->
+    <!-- <a href="http://orangemind.io/book/" style="margin: 10px 0;" class="store"> Store </a>     -->
+    <!-- <a href="https://www.patreon.com/rayalez" style="margin: 10px 0;"> Patreon </a> -->
     {% endif %}    
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Store </a> -->
 
-    {% if userprofile.about %}
+    {% if userprofile.about and not userprofile.username == "rayalez"  %}
     <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;" class="about">About</a>
     {% endif %}
     

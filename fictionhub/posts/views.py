@@ -1742,10 +1742,11 @@ def item(request):
     test=""
     return render(request, 'store/single-item.html', {
         'test':test,
+        'userprofile': User.objects.get(username="rayalez"),
 })
 
 def book(request):
-    return render(request, 'store/cover.html', {
+    return render(request, 'store/om-book.html', {
         'orangemind': True,
     })
 
