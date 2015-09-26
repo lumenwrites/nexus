@@ -34,8 +34,11 @@
   <!-- Main Stylesheet -->
   <!-- <link rel="stylesheet" href="{% static "/static/css/main.css" %}" /> -->
   <link rel="stylesheet" href="{% static "/static/css/css/style.css" %}" />
-  <!-- <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" /> -->
 
+  {% if user.enable_dark_interface %}  
+  <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" />
+  {% endif %}  
+  
   {% if orangemind %}
   <link rel="stylesheet" href="{% static "/static/orangemind/css/main.css" %}" />
 
