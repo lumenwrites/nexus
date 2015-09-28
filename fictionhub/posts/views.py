@@ -96,8 +96,7 @@ def posts(request, rankby="hot", timespan="all-time",
                                         post_type = "wiki")
             post_type = "wiki"
         else:
-            posts = Post.objects.filter(hubs=hub, published=True,
-                                        rational = rational, post_type = "story")
+            posts = Post.objects.filter(hubs=hub, published=True, post_type = "story") #  rational = rational, 
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
         userprofile = get_object_or_404(User, username=username)
