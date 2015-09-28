@@ -646,19 +646,19 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
                 comment.post = story
             comment.save()
             # Send Email
-            if comment.post.author.email_comments:
-                commentauthor = comment.author.username
-                topic = commentauthor + " has commented on your story "
-                body = commentauthor + " has left a comment on your story\n" +\
-                       "http://fictionhub.io"+comment.post.get_absolute_url()+ "\n" +\
-                       "'" + comment.body[:64] + "...'"
-                body += "\n\nYou can manage your email notifications in preferences:\n" +\
-                        "http://fictionhub.io/preferences/"
-                try:
-                    email = comment.post.author.email            
-                    send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
-                except:
-                    pass
+            # if comment.post.author.email_comments:
+            #     commentauthor = comment.author.username
+            #     topic = commentauthor + " has commented on your story "
+            #     body = commentauthor + " has left a comment on your story\n" +\
+            #            "http://fictionhub.io"+comment.post.get_absolute_url()+ "\n" +\
+            #            "'" + comment.body[:64] + "...'"
+            #     body += "\n\nYou can manage your email notifications in preferences:\n" +\
+            #             "http://fictionhub.io/preferences/"
+            #     try:
+            #         email = comment.post.author.email            
+            #         send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
+            #     except:
+            #         pass
 
             if comment.comment_type == "comment":
                 if chapter:
@@ -1012,24 +1012,24 @@ def post_publish(request, story):
     post.save()
 
     # Send Email
-    author = post.author
-    subscribers = author.subscribers.all()
-    emails = []
-    for subscriber in subscribers:
-        if subscribers.email_subscriptions:
-            try:
-                email = subscriber.email
-                emails.append(email)
-            except:
-                pass
-    topic = author.username + " has published a new story to fictionhub"
-    body = "Hi! You are receiving this email because you have subscribed to updates about new stories written by " + author.username + " at fictionhub.io \n\n"
-    body += author.username + " has published a new story:\n'" + post.title + \
-            "'\nYou can read it here:\n" + "http://fictionhub.io" + post.get_absolute_url()
-    body += "\n\nYou can manage your email notifications in preferences:\n" +\
-            "http://fictionhub.io/preferences/"
-    body += "\n\n P.S. \n fictionhub, including email notifications, is still in beta. If you have any questions or suggestions - feel free to reply to this message, I welcome any feedback."
-    send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
+    # author = post.author
+    # subscribers = author.subscribers.all()
+    # emails = []
+    # for subscriber in subscribers:
+    #     if subscribers.email_subscriptions:
+    #         try:
+    #             email = subscriber.email
+    #             emails.append(email)
+    #         except:
+    #             pass
+    # topic = author.username + " has published a new story to fictionhub"
+    # body = "Hi! You are receiving this email because you have subscribed to updates about new stories written by " + author.username + " at fictionhub.io \n\n"
+    # body += author.username + " has published a new story:\n'" + post.title + \
+    #         "'\nYou can read it here:\n" + "http://fictionhub.io" + post.get_absolute_url()
+    # body += "\n\nYou can manage your email notifications in preferences:\n" +\
+    #         "http://fictionhub.io/preferences/"
+    # body += "\n\n P.S. \n fictionhub, including email notifications, is still in beta. If you have any questions or suggestions - feel free to reply to this message, I welcome any feedback."
+    # send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
 
     return HttpResponseRedirect('/story/'+post.slug+'/edit')
 

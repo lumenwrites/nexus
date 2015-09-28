@@ -35,7 +35,7 @@ def comment_submit(request, comment_id):
             comment.post = comment.parent.post
             comment.save()
             # Send Email
-            send_comment_email_notification(comment)
+            # send_comment_email_notification(comment)
             # if comment.parent.author.email_comments:
             #     commentauthor = comment.author.username
             #     topic = commentauthor + " has replied to your comment"
