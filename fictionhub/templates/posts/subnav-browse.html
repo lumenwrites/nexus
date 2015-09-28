@@ -34,16 +34,19 @@
     <img src="{% static "/static/img/signature.png" %}"
 	 class="avatar"/>
     </a>
-    <a href="/u/rayalez"><h1 class="left"> Ray Alez</h1></a>
+    <a href="/u/rayalez">
+      <h1 class="left"
+	  style="/*margin-bottom: -20px;margin-top: -10px;*/"> Ray Alez</h1>
+    </a>
     
     <br/>
 
     <div style="margin-top:16px; margin-left:10px; float:left;
-		margin:4px 0 -10px 14px; display:none;">
-    <!-- <span class="fi-graph-bar stats-icon"></span> -->
-    <span class="fi-arrow-up stats-icon">{{userprofile.karma|add:"124"}}</span>
-    <span class="fi-torsos-all stats-icon">17</span>    
-    <span class="fi-eye stats-icon">8.1K+ <!-- K --><!-- M --></span>
+		margin:6px 0 -10px 14px;display:none;">
+    <span class="fi-graph-bar stats-icon"></span>
+    <span class="fi-arrow-up stats-icon">{{userprofile.karma}}</span>
+    <span class="fi-torsos-all stats-icon">{{userprofile.subscribers.count}}</span>    
+    <span class="fi-eye stats-icon">2.1K<!-- + --> <!-- K --><!-- M --></span>
     <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
     <!-- <span class="fi-background-color stats-icon">316</span> -->
       
@@ -160,7 +163,7 @@
       color:white;
       }
       .stats-icon {
-      font-size: 20px;
+      font-size: 16px;
       margin-right:10px;
       color: rgba(255, 255, 255, 0.80);
       /*color:white;*/

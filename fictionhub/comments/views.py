@@ -21,6 +21,8 @@ from profiles.models import User
 from hubs.models import Hub
 from posts.models import Post
 from comments.models import Comment
+#utils
+from .utils import send_comment_email_notification
 
 
 def comment_submit(request, comment_id):
@@ -33,6 +35,7 @@ def comment_submit(request, comment_id):
             comment.post = comment.parent.post
             comment.save()
             # Send Email
+            send_comment_email_notification(comment)
             # if comment.parent.author.email_comments:
             #     commentauthor = comment.author.username
             #     topic = commentauthor + " has replied to your comment"
