@@ -44,7 +44,7 @@ def about(request, username):
     return render(request, 'profiles/about.html',{
         'userprofile':userprofile,
         'subscribed_to':subscribed_to,
-        'filterurl': "/user/"+request.user.username
+        'filterurl': "/user/"+userprofile.username
     })
 
 @login_required
