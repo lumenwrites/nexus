@@ -115,7 +115,7 @@ def posts(request, rankby="hot", timespan="all-time",
             else:
                 posts = Post.objects.filter(author=userprofile,
                                             published=True)
-        filterurl="/user/"+username # to add to href  in subnav
+        filterurl="/user/"+userprofile.username # to add to href  in subnav
     elif filterby == "challenges":
         posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational)
         rankby = "new"
