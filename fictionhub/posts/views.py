@@ -35,7 +35,7 @@ from django.conf import settings
 # My own stuff
 # utility functions
 from comments.utils import get_comment_list
-from .utils import rank_hot, rank_top
+from .utils import rank_hot, rank_top, check_if_rational
 from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm, PromptForm
@@ -72,10 +72,7 @@ def posts(request, rankby="hot", timespan="all-time",
     if not prompt:
         prompt = []
 
-    rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
-        rational = True
+    rational = check_if_rational(request)
 
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
@@ -295,10 +292,7 @@ def prompt_create(request):
 
 
 def search(request, rankby="top", timespan="all-time"):
-    rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
-        rational = True
+    rational = check_if_rational(request)
 
     # Filter by hubs
     # hub = Hub.objects.get(slug=hubslug)
@@ -384,10 +378,7 @@ def search(request, rankby="top", timespan="all-time"):
     })
 
 def browse(request, rankby="hot", timespan="all-time"):
-    rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
-        rational = True
+    rational = check_if_rational(request)
 
     # Filter by hubs
     # hub = Hub.objects.get(slug=hubslug)
@@ -1010,6 +1001,9 @@ def post_publish(request, story):
     post.published = True
     post.save()
 
+    if request.user.username == "rayalez":
+        return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
+
     # Send Email
     # author = post.author
     # subscribers = author.subscribers.all()
@@ -1530,14 +1524,17 @@ def prompts_repost(request):
     
 def wordpress_repost(request, story=""):
     # stories = Post.objects.filter(post_type="story", published=True, rational=False).order_by('-pub_date')[:25]
-    # story = Post.objects.get(slug=story)
-    rayalez = User.objects.get(username="rayalez")
-    stories = Post.objects.filter(post_type="story", published=True, author=rayalez).order_by('-pub_date')#[:5]    
+    story = Post.objects.get(slug=story)
+
+    # rayalez = User.objects.get(username="rayalez")
+    # stories = Post.objects.filter(post_type="story", published=True, author=rayalez).order_by('-pub_date')#[:5]
+    # stories = Post.objects.filter(post_type="story", published=True).order_by('-pub_date')#[:5]        
     teststring = ""
 
     # stories = []
     # teststring += story.slug + "<br/>"
-    for story in stories:
+    # for story in stories:
+    if True:
         wp = Client('http://ormind.co/xmlrpc.php', os.environ["WP_USERNAME"], os.environ["WP_PASS"])
         
         post = WordPressPost()

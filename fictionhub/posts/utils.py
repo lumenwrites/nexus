@@ -37,3 +37,10 @@ def rank_top(stories, timespan = None):
 
 
 
+def check_if_rational(request):
+    rational = False
+    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        rational = True
+    return rational
+
