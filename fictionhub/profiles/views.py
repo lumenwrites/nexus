@@ -14,6 +14,7 @@ from .models import User
 from .forms import RegistrationForm, UserForm
 
 from posts.models import Post
+from notifications.models import Message
 
 # import praw
 # import webbrowser
@@ -24,6 +25,14 @@ def subscribe(request, username):
         user = request.user
         user.subscribed_to.add(userprofile)
         user.save()
+        # Notification
+        message = Message(from_user=user,
+                          to_user=userprofile,
+                          message_type="subscriber")
+        message.save()
+        userprofile.new_notifications = True
+        userprofile.save()
+        
         return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
     else:
         return HttpResponseRedirect('/login/')    
