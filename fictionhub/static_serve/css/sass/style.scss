@@ -870,6 +870,10 @@ textarea[rows] {
 	float:left;
 	margin-bottom: 10px; 	/*for mobile*/
     }
+
+    #id_hubs {
+	width: 100%!important;
+    }
 }
  
 .select2-container--default .select2-selection--multiple {
@@ -949,4 +953,8 @@ footer h4 {
 
 .white-bg {
     background: white!important;
+}
+
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment) {
+  background: none!important;
 }

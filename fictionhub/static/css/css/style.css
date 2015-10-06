@@ -958,23 +958,28 @@ textarea[rows] {
     margin-bottom: 10px;
     /*for mobile*/
   }
+
+  /* line 874, ../sass/style.scss */
+  #id_hubs {
+    width: 100% !important;
+  }
 }
-/* line 875, ../sass/style.scss */
+/* line 879, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple {
   height: 50px;
 }
 
-/* line 879, ../sass/style.scss */
+/* line 883, ../sass/style.scss */
 .set-hubs input {
   margin-top: -7px !important;
 }
 
-/* line 883, ../sass/style.scss */
+/* line 887, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: 10px;
 }
 
-/* line 887, ../sass/style.scss */
+/* line 891, ../sass/style.scss */
 #id_hubs {
   list-style-type: none;
   width: 400px;
@@ -982,7 +987,7 @@ textarea[rows] {
 }
 
 /* Story Editor */
-/* line 894, ../sass/style.scss */
+/* line 898, ../sass/style.scss */
 .editor {
   background-color: #FFFFFF;
   border-style: solid;
@@ -991,12 +996,12 @@ textarea[rows] {
 }
 
 /* border on mobile  */
-/* line 902, ../sass/style.scss */
+/* line 906, ../sass/style.scss */
 * {
   outline: none;
 }
 
-/* line 906, ../sass/style.scss */
+/* line 910, ../sass/style.scss */
 .delete-chapter {
   padding: 10px !important;
   background: grey !important;
@@ -1004,39 +1009,39 @@ textarea[rows] {
   margin: 30px 0;
 }
 
-/* line 912, ../sass/style.scss */
+/* line 916, ../sass/style.scss */
 .confirm-delete {
   background: red !important;
 }
 
-/* line 916, ../sass/style.scss */
+/* line 920, ../sass/style.scss */
 .view {
   background: gray !important;
 }
 
-/* line 920, ../sass/style.scss */
+/* line 924, ../sass/style.scss */
 .edit-buttons {
   float: right;
 }
 
 /* Footer */
-/* line 926, ../sass/style.scss */
+/* line 930, ../sass/style.scss */
 footer {
   height: 40px;
 }
 
-/* line 930, ../sass/style.scss */
+/* line 934, ../sass/style.scss */
 footer, footer li, footer p {
   background-color: #333a42;
   color: #babfc2;
 }
 
-/* line 935, ../sass/style.scss */
+/* line 939, ../sass/style.scss */
 footer a {
   color: #babfc2;
 }
 
-/* line 939, ../sass/style.scss */
+/* line 943, ../sass/style.scss */
 footer h4 {
   color: #babfc2;
   text-transform: uppercase;
@@ -1044,7 +1049,12 @@ footer h4 {
   font-weight: normal;
 }
 
-/* line 950, ../sass/style.scss */
+/* line 954, ../sass/style.scss */
 .white-bg {
   background: white !important;
+}
+
+/* line 958, ../sass/style.scss */
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment) {
+  background: none !important;
 }

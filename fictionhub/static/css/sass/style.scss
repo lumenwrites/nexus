@@ -954,3 +954,7 @@ footer h4 {
 .white-bg {
     background: white!important;
 }
+
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment) {
+  background: none!important;
+}
