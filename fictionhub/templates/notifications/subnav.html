@@ -3,13 +3,21 @@
 <div class="row">
   <div class="large-12 columns">
     <div class="rank-types">
-      <a href="/"><span class="bold">All</span></a>
+      {% if notificationtype == "unread" %}
+      <span class="bold">Unread</span>
+      <a href="/notifications/all/"><span>All</span></a>            
+      {% else %}
+      <span class="bold">All</span>
+      {% endif %}      
+      <a href="/"><span>Comments</span></a>      
+      <!-- <a href="/"><span>Messages</span></a> -->
+      <!-- <a href="/"><span>Sent</span></a>             -->
+
+
       <!-- <a href="/"><span>Unread</span></a> -->
       <!-- <a href="/"><span>Post replies</span></a> -->
       <!-- <a href="/"><span>Comment replies</span></a> -->
-      <a href="/"><span>Comments</span></a>      
-      <a href="/"><span>Messages</span></a>
-      <a href="/"><span>Sent</span></a>            
+
       <!-- <a href="/"><span>Username mentions</span></a>                         -->
       <!-- <span>Notifications</span> -->
       <!-- <a href="/"><span>Comments</span></a> -->

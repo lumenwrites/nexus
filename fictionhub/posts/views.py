@@ -47,6 +47,7 @@ from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
+from notifications.models import Message
 
 #dropbox
 import os
@@ -549,6 +550,15 @@ def upvote(request):
     user = request.user
     user.upvoted.add(post)
     user.save()
+
+    # Notification
+    message = Message(from_user=request.user,
+                      to_user=post.author,
+                      story=post,
+                      message_type="upvote")
+    message.save()
+    post.author.new_notifications = True
+    post.author.save()
     return HttpResponse()
 
 def downvote(request):
@@ -649,6 +659,16 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
             #         send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
             #     except:
             #         pass
+            # Notification
+            message = Message(from_user=request.user,
+                              to_user=comment.post.author,
+                              story=comment.post,
+                              comment=comment,
+                              message_type="comment")
+            message.save()
+            comment.post.author.new_notifications = True
+            comment.post.author.save()
+            
 
             if comment.comment_type == "comment":
                 if chapter:

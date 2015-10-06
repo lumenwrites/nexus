@@ -7,28 +7,74 @@
 
 {% block content %}
 <div id="page"  class="postPage">
-{% include "notifications/subnav.html" %}      
+{# {% include "notifications/subnav.html" %} #}
 <div class="row">
   <div class="large-12 columns">
 
-    <!-- In message -->
+    {% for message in messages %}
       <div class="comment-box"> <!-- Open Comment Box  -->    
-	<div class="comment-header">
-	  <i class="fa fa-envelope"></i>
-	  <a href="/" class="black bold">About your suggestion</a>
-	  message from <a href="/" class="black bold">lumenwrites</a>
+	  {% if message.message_type == "upvote" %}
+	  <!-- Upvote -->
+	  <div class="comment-header">
+	    <i class="fi-arrow-up"></i>
+	    <a href="/user/{{message.from_user.username}}"
+	       class="black bold">{{message.from_user.username}}</a>
+	    upvoted your story
+	    "<a href="{{message.story.get_absolute_url}}" class="black bold"
+		>{{message.story.title}}</a>"
+	  </div>
+	  {% elif message.message_type == "subscriber" %}
+	  <!-- New Subscriber -->
+	  <div class="comment-header">
+	    <i class="fi-torsos-all stats-icon"></i>
+	    <a href="/user/{{message.from_user.username}}"
+	       class="black bold">{{message.from_user.username}}</a>	  
+	    subscribed to your stories!
+	  </div>
+	  {% elif message.message_type == "comment" %}
+	  <!-- Comment -->
+	  <div class="comment-header">
+	    <i class="fi-comment" style="font-size:22px;"></i>
+	    <a class="bold black" href="{{message.comment.get_absolute_url}}"> comment </a>
+	    under a story
+	    "<a href="{{message.story.get_absolute_url}}" class="black bold"
+		>{{message.story.title}}</a>"
+	    from
+	    <a href="/user/{{message.from_user.username}}"
+	       class="black bold">{{message.from_user.username}}</span>
+	  </div>
+	  <div class="comment-body">      
+	    <p>Nice story! Welcome to fictionhub =)</p>
+	  </div>
+	  <div class="comment-footer">
+	    <!-- <a href="/" class="black bold">Comment thread</a> -->
+	    <!-- <a href="/" class="black bold">Reply</a>		 -->
+	  </div>
+	  {% endif %}
+	  <!-- <i class="fi-x right"></i> -->
       </div>
-      <div class="comment-body">      
-	<p>Nice story! Welcome to fictionhub =)</p>
-      </div>
-      <div class="comment-footer">
-	<!-- <a href="/" class="black bold">All messages</a> -->
-	<!-- <a href="/" class="black bold">Reply</a>		 -->
-      </div>
-      </div>
+    {% endfor %}
 
-      <!-- Out message -->
-      <div class="comment-box"> <!-- Open Comment Box  -->    
+
+
+    <!-- In message -->
+      <!-- <div class="comment-box"> <\!-- Open Comment Box  -\->     -->
+      <!-- 	<div class="comment-header"> -->
+      <!-- 	  <i class="fa fa-envelope"></i> -->
+      <!-- 	  <a href="/" class="black bold">About your suggestion</a> -->
+      <!-- 	  message from <a href="/" class="black bold">lumenwrites</a> -->
+      <!-- </div> -->
+      <!-- <div class="comment-body">       -->
+      <!-- 	<p>Nice story! Welcome to fictionhub =)</p> -->
+      <!-- </div> -->
+      <!-- <div class="comment-footer"> -->
+      <!-- 	<\!-- <a href="/" class="black bold">All messages</a> -\-> -->
+      <!-- 	<\!-- <a href="/" class="black bold">Reply</a>		 -\-> -->
+      <!-- </div> -->
+      <!-- </div> -->
+
+      <!-- Out message
+      <div class="comment-box">
 	<div class="comment-header">
 	  <i class="fa fa-envelope"></i>
 	  <a href="/" class="black bold">About your suggestion</a>
@@ -38,47 +84,8 @@
 	<p>Nice story! Welcome to fictionhub =)</p>
       </div>
       </div>
-    
+     -->
 
-      <!-- Upvote -->
-      <div class="comment-box"> <!-- Open Comment Box  -->    
-	<div class="comment-header">
-	  <i class="fi-arrow-up"></i>
-	  <a href="/" class="black bold">lumenwrites</a>
-	  upvoted your story "<a href="/" class="black bold">Metropolitan Man</a>"
-	  <!-- <i class="fi-x right"></i> -->
-      </div>
-      </div>
-
-
-      <!-- New Subscriber -->
-      <div class="comment-box"> <!-- Open Comment Box  -->    
-	<div class="comment-header">
-	  <i class="fi-torsos-all stats-icon"></i>
-	  <a href="/" class="black bold">lumenwrites</a>
-	  subscribed to your stories!
-      </div>
-      </div>
-
-
-      <!-- Comment -->
-      <div class="comment-box">
-	<div class="comment-header">
-	  <i class="fi-comment" style="font-size:22px;"></i>
-	  <span class="bold"> comment </span>
-	  under a story
-	  "<a href="/" class="black bold">Metropolitan Man</a>"
-	  from
-	  <span class="bold"> rayalez </span>
-      </div>
-      <div class="comment-body">      
-	<p>Nice story! Welcome to fictionhub =)</p>
-      </div>
-      <div class="comment-footer">
-	<!-- <a href="/" class="black bold">Comment thread</a> -->
-	<!-- <a href="/" class="black bold">Reply</a>		 -->
-      </div>      
-      </div>
 
       <!-- 
       <div class="comment-box">

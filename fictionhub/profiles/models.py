@@ -29,6 +29,8 @@ class User(AbstractUser):
 
     approved = models.BooleanField(default=False)
 
+    new_notifications = models.BooleanField(default=False)    
+
     # Email notifications
     email_subscriptions = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone I follow publishes a new story')
