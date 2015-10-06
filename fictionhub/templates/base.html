@@ -140,6 +140,8 @@
 	      <a href="/story/add">
 		<i class="fa fa-pencil-square-o"></i></a>
 	      <!-- <i class="fa fa-pencil"></i> -->
+
+	      {% if user.in_messages.count > 0 %}
 	      <a href="{% if user.new_notifications %}
 		 /notifications/unread/
 		 {% else %}
@@ -147,6 +149,8 @@
 		 {% endif %}">
 		<i class="fa fa-envelope-o
 		   {% if user.new_notifications %}new-notifications{% endif %}"></i></a>
+	      {% endif %}
+	      
 	      <a href="/preferences/">
 		<i class="fa fa-cog"></i></a>
 	      <a href="/logout/?next={{request.path}}">
