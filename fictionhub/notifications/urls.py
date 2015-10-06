@@ -6,7 +6,9 @@ from . import views
 urlpatterns = [
     url(r'^notifications/(?P<notificationtype>[^\.]+)/$', views.notifications),
     url(r'^notifications/', views.notifications),    
-    # url(r'^user/(?P<username>[^\.]+)/message$', views.send_message),
+    url(r'^message/(?P<username>[^\.]+)/$', views.send_message),
+    url(r'^subject/(?P<subject_pk>\d+)/$', views.subject),
+    url(r'^reply/(?P<subject_pk>\d+)/$', views.send_reply),        
     # url(r'^hub/add/$', views.hub_create),
     # url(r'^hub/add/$', HubCreate.as_view()),        
 ]

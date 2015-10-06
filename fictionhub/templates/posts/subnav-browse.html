@@ -102,13 +102,15 @@
 	{% endif %}   
 
 	    <!-- Other buttons -->
+
+	    {% if userprofile.username == "rayalez" %}
 	    <!-- 
             <a class="button small right subscribers-button"
                href="/user/{{userprofile.username}}/store">
 	      Store
 	    </a>
 	    -->
-	    {% if userprofile.username == "rayalez" %}
+
             <a class="button small right subscribers-button"
                href="https://www.patreon.com/rayalez">
 	      Patreon
@@ -127,15 +129,26 @@
                href="/user/{{userprofile.username}}/about">
 	      About
 	    </a>
-	    {% endif %}	    
-	    <!-- 
+	    {% endif %}
+
+	    {% if userprofile.username == "rayalez" %}
+	    {% if user.is_authenticated %}
             <a class="button small right subscribers-button"
-	       href="https://www.patreon.com/rayalez"
+	       href="/message/{{userprofile.username}}/"
 	       style="padding-bottom: 14px!important;">
 	      <i class="fa fa-envelope-o"
 		 style="font-size: 24px;color:white;margin-top:8px;line-height: 0px;"></i>
 	    </a>
-	     -->
+            {% else %} <!-- if not authenticated -->
+            <a class="button small right subscribers-button"
+	       href="/login/?next={{request.path}}"
+	       style="padding-bottom: 14px!important;">
+	      <i class="fa fa-envelope-o"
+		 style="font-size: 24px;color:white;margin-top:8px;line-height: 0px;"></i>
+	    </a>
+	    {% endif %}   
+
+	    {% endif %}	    
  
     <style>
       .subheader {
@@ -263,6 +276,9 @@
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
 
     {% if userprofile.username == "rayalez" %}
+    <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Fiction </a>
+    <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Essays </a>            
+    <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a>    
     <!-- <a href="http://orangemind.io/" style="margin: 10px 0;"> Website </a> -->
     <!-- <a href="http://orangemind.io/book/" style="margin: 10px 0;" class="store"> Store </a>     -->
     <!-- <a href="https://www.patreon.com/rayalez" style="margin: 10px 0;"> Patreon </a> -->

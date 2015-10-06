@@ -50,6 +50,20 @@
 	    <!-- <a href="/" class="black bold">Comment thread</a> -->
 	    <!-- <a href="/" class="black bold">Reply</a>		 -->
 	  </div>
+	  {% elif message.message_type == "message" %}
+      	  <div class="comment-header">
+      	    <i class="fa fa-envelope"></i>
+      	    <a href="/subject/{{message.subject.pk}}/" class="black bold">{{message.subject.title}}</a>
+      	    message from <a href="/" class="black bold">{{message.from_user.username}}</a>
+	  </div>
+	  <div class="comment-body">
+	    {{message.body}}
+	  </div>
+	  <div class="comment-footer">
+      	    <!-- <a href="/" class="black bold">All messages</a> -->
+      	    <!-- <a href="/" class="black bold">Reply</a> -->
+	  </div>
+	  
 	  {% endif %}
 	  <!-- <i class="fi-x right"></i> -->
       </div>
@@ -58,20 +72,6 @@
 
 
     <!-- In message -->
-      <!-- <div class="comment-box"> <\!-- Open Comment Box  -\->     -->
-      <!-- 	<div class="comment-header"> -->
-      <!-- 	  <i class="fa fa-envelope"></i> -->
-      <!-- 	  <a href="/" class="black bold">About your suggestion</a> -->
-      <!-- 	  message from <a href="/" class="black bold">lumenwrites</a> -->
-      <!-- </div> -->
-      <!-- <div class="comment-body">       -->
-      <!-- 	<p>Nice story! Welcome to fictionhub =)</p> -->
-      <!-- </div> -->
-      <!-- <div class="comment-footer"> -->
-      <!-- 	<\!-- <a href="/" class="black bold">All messages</a> -\-> -->
-      <!-- 	<\!-- <a href="/" class="black bold">Reply</a>		 -\-> -->
-      <!-- </div> -->
-      <!-- </div> -->
 
       <!-- Out message
       <div class="comment-box">

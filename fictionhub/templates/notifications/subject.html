@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>{{subject.title}}</h1>
+
+      {% for message in messages %}
+      <div class="comment-box">
+	<div class="comment-header">
+	  <a href="/user/{{message.from_user.username}}" class="black bold">{{message.from_user.username}}</a>
+      </div>
+      <div class="comment-body">      
+	{{message.body}}
+      </div>
+      </div>
+      {% endfor %}
+
+      <form action="/reply/{{subject.pk}}/" method="post">{% csrf_token %}
+	<textarea placeholder="Message" name="body"
+		  style="height: 300px; width:100%;"></textarea>
+
+	<button class="button small right"
+    		type="submit">Send</button>
+      </form>
+      <div class="clearfix"></div>	
+      <br/>
+      
+      
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- End page -->
+
+
+<style>
+  .comment-box{
+  margin:20px 0;
+  padding: 10px 10px 10px 10px;
+  }
+</style>
+
+{% endblock content %}
+

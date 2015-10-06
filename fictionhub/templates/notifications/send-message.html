@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <br/>
+      Sending message to <b>{{username}}</b>
+      <br/>
+      <form action="/message/{{username}}/" method="post">{% csrf_token %}
+	<input placeholder="Subject" type="text" name="title" class="left">
+	<textarea placeholder="Message" name="body"
+		  style="height: 300px; width:100%;"></textarea>
+
+	<button class="button small right"
+    		type="submit">Send</button>
+
+	
+      </form>
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- End page -->
+{% endblock content %}
+
