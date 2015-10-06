@@ -31,7 +31,7 @@
 	       class="black bold">{{message.from_user.username}}</a>	  
 	    subscribed to your stories!
 	  </div>
-	  {% elif message.message_type == "comment" %}
+	  {% elif message.message_type == "comment" or message.message_type == "reply" %}
 	  <!-- Comment -->
 	  <div class="comment-header">
 	    <i class="fi-comment" style="font-size:22px;"></i>
@@ -44,7 +44,7 @@
 	       class="black bold">{{message.from_user.username}}</span>
 	  </div>
 	  <div class="comment-body">      
-	    <p>Nice story! Welcome to fictionhub =)</p>
+	    {{message.comment | markdownify | safe }}
 	  </div>
 	  <div class="comment-footer">
 	    <!-- <a href="/" class="black bold">Comment thread</a> -->

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models import permalink
 
 from posts.models import Post
 from comments.models import Comment
@@ -42,3 +43,6 @@ class User(AbstractUser):
 
     enable_dark_interface = models.BooleanField(default=False)    
     
+    # @permalink
+    # def get_absolute_url(self):
+    #     return ('view_post', None, {'slug': self.slug })        
