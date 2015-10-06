@@ -3,7 +3,7 @@
 <div style="background:url(/static/img/bg.jpg);
 	    background-position-y: -320px;
 	    display:none;
-	    {% if solohub or userprofile.username == "rayalez" %}
+	    {% if solohub or userprofile %}
 	    display:block;
 	    {% endif %}	    
 	    ">
@@ -29,45 +29,54 @@
     <br/>
     <br/>    
 
-    {% elif userprofile.username == "rayalez" %}
+    {% elif userprofile %}
+
+    <!-- Avatar -->
+    {% if userprofile.username == "rayalez" %}
     <a href="/u/rayalez">
     <img src="{% static "/static/img/signature.png" %}"
 	 class="avatar"/>
     </a>
-    <a href="/u/rayalez">
+    <a href="/u/{{userprofile.username}}">
       <h1 class="left"
-	  style="/*margin-bottom: -20px;margin-top: -10px;*/"> Ray Alez</h1>
+	  style="margin-left:10px;"> Ray Alez </h1>
     </a>
+    {% else %}    
+    <a href="/u/{{userprofile.username}}">
+      <h1 class="left" style="margin-top:0px;" > {{userprofile.username}} </h1>
+      <!-- Change margin depending on avatar -->
+    </a>
+    {% endif %}
+    
     
     <br/>
 
-    <div style="margin-top:16px; margin-left:10px; float:left;
-		margin:6px 0 -10px 14px;display:none;">
-    <span class="fi-graph-bar stats-icon"></span>
-    <span class="fi-arrow-up stats-icon">{{userprofile.karma}}</span>
-    <span class="fi-torsos-all stats-icon">{{userprofile.subscribers.count}}</span>    
-    <span class="fi-eye stats-icon">2.1K<!-- + --> <!-- K --><!-- M --></span>
-    <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
-    <!-- <span class="fi-background-color stats-icon">316</span> -->
-      
-
-    <!--  
+    {% if userprofile.username != "rayalez" and False %}
+    <br/>
+    <div style="margin-left:4px; float:left;">
+      <i class="fi-graph-bar stats-icon"></i>
+      <span style="color:white;">
+	<i class="fi-arrow-up stats-icon"></i>
+	{{userprofile.karma}}
+      </span>
+      <span style="color:white;">
+	<i class="fi-torsos-all stats-icon"></i>
+	{{userprofile.subscribers.count}}
+      </span>
+      <span style="color:white;">
+	<i class="fi-eye stats-icon"></i>
+	2.1K
+      </span>
+      <!-- + --> <!-- K --><!-- M -->
+	<!-- <span class="fi-page-multiple  stats-icon">23</span> -->
+	<!-- <span class="fi-background-color stats-icon">316</span> -->
     </div>
-    
-    <div style="margin-top:16px; margin-left:10px; float:right;
-		margin:4px 0 -10px 14px;
-		/*position: absolute;right: 120px;top: 13px;*/
-		/*text-align: right;*/
-		margin-top:0px;float:left;">
-    -->
-
-      <!-- <span class="subtitle">Entrepreneur and blogger.</span> -->
-
-      <!-- <i class="fa fa-envelope-o subheader-link"></i> -->
-      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">About </a> -->
-      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Patreon </a> -->
-      <!-- <a href="/user/{{userprofile.username}}/about" class="subheader-link">Store </a> -->
-    </div>
+    <style>
+      .subheader .button.small {
+      margin-top: -40px;
+      }
+    </style>
+    {% endif %}    
 
     <!-- Subscribe button -->
 	{% if user.is_authenticated %}	
@@ -99,14 +108,26 @@
 	      Store
 	    </a>
 	    -->
+	    {% if userprofile.username == "rayalez" %}
             <a class="button small right subscribers-button"
                href="https://www.patreon.com/rayalez">
 	      Patreon
 	    </a>
+	    {% endif %}
+
+	    {% if userprofile.website %}
+            <a class="button small right subscribers-button"
+               href="{{userprofile.website}}">
+	      Website
+	    </a>
+	    {% endif %}
+
+	    {% if userprofile.about %}	    
             <a class="button small right subscribers-button"
                href="/user/{{userprofile.username}}/about">
 	      About
 	    </a>
+	    {% endif %}	    
 	    <!-- 
             <a class="button small right subscribers-button"
 	       href="https://www.patreon.com/rayalez"
@@ -124,7 +145,7 @@
       color:#172630;
       font-weight:bold;
       color:white;
-      margin: 2px 0 0 10px;
+      margin: 2px 0 0 0px;
       text-shadow: 1px 1px 2px black;
       /*margin: -12px 0 -12px 10px;*/
       }
@@ -169,7 +190,6 @@
       }
       .stats-icon {
       font-size: 16px;
-      margin-right:10px;
       color: rgba(255, 255, 255, 0.80);
       /*color:white;*/
       }
@@ -258,45 +278,6 @@
 
       </div>
     </div>
-    {% if userprofile.username != "rayalez" %}
-    <div class="large-6 small-6 columns">
-      <div style="float:right;">
-	<!-- <a> Store </a>	 -->
-	{% if userprofile.website %}
-	<a href="{{userprofile.website}}" style="margin: 10px 0;"> Website </a>
-	{% endif %}
-	{% if userprofile.about %}
-	<a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> About </a>
-	{% endif %}
-
-	{% if user.is_authenticated %}	
-	  {% if not userprofile == user %}
-	    {% if userprofile not in subscribed_to %}	
-	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;
-							 padding: 5px;margin: 4px 10px;"
-	       href="/user/{{userprofile.username}}/subscribe">
-	      Subscribe<span class="subscribers">{{userprofile.subscribers.count}}</a>
-	    {% else %}
-	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;
-								     padding: 5px;margin: 4px 10px;"
-	       href="/user/{{userprofile.username}}/unsubscribe">
-	      Ubsubscribe<span class="subscribers">{{userprofile.subscribers.count}}</a>
-	    {% endif %}
-          {% else %} <!-- if it's myself -->
-	      <!-- Subscribers: {{userprofile.subscribers.count}} -->
-	  {% endif %}
-        {% else %} <!-- if not authenticated -->
-	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;
-						     padding: 5px;margin: 4px 10px;"
-	   href="/login/?next={{request.path}}">
-	  Subscribe <span class="subscribers">{{userprofile.subscribers.count}}</a>
-	{% endif %}
-
-	  <b style="margin:6px 0;"> {{userprofile.username}} </b>
-	  <span style="margin:6px 0;" class="userkarma">{{userprofile.karma}}</span>
-      </div>
-    </div> <!-- end 5 columns -->
-    {% endif %}    <!-- endif rayalez profile -->
     {% else %}     <!-- endif userprofile -->
 	{% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}	
     <div class="large-3 small-3 columns">
