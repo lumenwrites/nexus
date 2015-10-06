@@ -129,28 +129,61 @@
 	      <!-- Avatar -->
 	      <!-- <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/> -->
 	      <!-- {{user.username}} -->
+	      <!-- 
 	      <i class="button small fi-torso"
 		 style="padding: 5px 10px;
 		 background-color: rgb(136, 136, 136);
-		 top: -2px;"></i>
+		 top: -2px;"></i> -->
+	      <a href="/user/{{user.username}}">
+		<!-- <i class="fi-torso"></i> -->
+		<i class="fa fa-home"></i></a>			    
+	      <a href="/story/add">
+		<i class="fa fa-pencil-square-o"></i></a>
+	      <!-- <i class="fa fa-pencil"></i> -->
+	      <a href="/notifications/">
+		<i class="fa fa-envelope-o new-notifications"></i></a>
+	      <a href="/preferences/">
+		<i class="fa fa-cog"></i></a>
+	      <a href="/logout/?next={{request.path}}">
+		<!-- &nbsp; --><i class="fa fa-power-off"></i></a>
+	      <!-- <i class="fa fa-plus"></i> -->
+	      
 	    </a>
-	    
+
+	    <style>
+	      #mainMenu {
+	      margin-top: 16px;
+	      }
+	      #mainMenu a {
+	      font-size: 20px;
+	      margin-left: 4px;
+	      }
+	      .new-notifications {
+	      color:#f66303;
+	      font-weight:bold;
+	      }
+	    </style>
 	    <!-- Dropdown -->
 	    <ul id="drop1" class="f-dropdown" data-dropdown-content
 		aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}">
-		  <b>{{user.username}}</b> ({{user.karma}})</a></li>
+		  <b>{{user.username}}</b> ({{user.karma}})
+		  <!-- <i class="fi-torso"></i> --></a></li>
 	      {# {% if user.approved %} #}
-	      <li><a href="/story/add"> Create Story </a></li> <!-- Submit --> 
+	      <li><a href="/story/add"> Create Story
+		  <!-- <i class="fa fa-pencil-square-o"></i> --> </a></li> <!-- Submit --> 
 	      <!-- <li><a href="/hub/add"> Create Hub </a></li> -->
 	      {# {% endif %} #}
-	      <li><a href="/preferences/"> Preferences </a></li>
+	      <li><a href="/notifications/"> Notifications (2)
+		  <!-- <i class="fa fa-envelope-o"></i> --></a></li>	      
+	      <li><a href="/preferences/"> Preferences
+		  <!-- <i class="fa fa-cog"></i> --></a></li>
 	      <!-- <li><a href="/preferences/"> Dark Mode </a></li>	       -->
-	      
 	      <li>
 		<a href="/logout/?next={{request.path}}">
 		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
 		  logout
+		  <!-- <i class="fa fa-power-off"></i> -->
 		</a>
 	      </li>
 	    </ul>

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block title %}
+    {{post.title}}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+{% include "notifications/subnav.html" %}      
+<div class="row">
+  <div class="large-12 columns">
+
+    <!-- In message -->
+      <div class="comment-box"> <!-- Open Comment Box  -->    
+	<div class="comment-header">
+	  <i class="fa fa-envelope"></i>
+	  <a href="/" class="black bold">About your suggestion</a>
+	  message from <a href="/" class="black bold">lumenwrites</a>
+      </div>
+      <div class="comment-body">      
+	<p>Nice story! Welcome to fictionhub =)</p>
+      </div>
+      <div class="comment-footer">
+	<!-- <a href="/" class="black bold">All messages</a> -->
+	<!-- <a href="/" class="black bold">Reply</a>		 -->
+      </div>
+      </div>
+
+      <!-- Out message -->
+      <div class="comment-box"> <!-- Open Comment Box  -->    
+	<div class="comment-header">
+	  <i class="fa fa-envelope"></i>
+	  <a href="/" class="black bold">About your suggestion</a>
+	  message to <a href="/" class="black bold">lumenwrites</a>
+      </div>
+      <div class="comment-body">      
+	<p>Nice story! Welcome to fictionhub =)</p>
+      </div>
+      </div>
+    
+
+      <!-- Upvote -->
+      <div class="comment-box"> <!-- Open Comment Box  -->    
+	<div class="comment-header">
+	  <i class="fi-arrow-up"></i>
+	  <a href="/" class="black bold">lumenwrites</a>
+	  upvoted your story "<a href="/" class="black bold">Metropolitan Man</a>"
+	  <!-- <i class="fi-x right"></i> -->
+      </div>
+      </div>
+
+
+      <!-- New Subscriber -->
+      <div class="comment-box"> <!-- Open Comment Box  -->    
+	<div class="comment-header">
+	  <i class="fi-torsos-all stats-icon"></i>
+	  <a href="/" class="black bold">lumenwrites</a>
+	  subscribed to your stories!
+      </div>
+      </div>
+
+
+      <!-- Comment -->
+      <div class="comment-box">
+	<div class="comment-header">
+	  <i class="fi-comment" style="font-size:22px;"></i>
+	  <span class="bold"> comment </span>
+	  under a story
+	  "<a href="/" class="black bold">Metropolitan Man</a>"
+	  from
+	  <span class="bold"> rayalez </span>
+      </div>
+      <div class="comment-body">      
+	<p>Nice story! Welcome to fictionhub =)</p>
+      </div>
+      <div class="comment-footer">
+	<!-- <a href="/" class="black bold">Comment thread</a> -->
+	<!-- <a href="/" class="black bold">Reply</a>		 -->
+      </div>      
+      </div>
+
+      <!-- 
+      <div class="comment-box">
+	<div class="comment-header">
+	  <i class="fi-comment" style="font-size:22px;"></i>
+	  <a href="/" class="black bold">reply</a>
+	  to your comment under a story
+	  "<a href="/" class="black bold">Metropolitan Man</a>"
+	  from
+	  <a href="/" class="black bold">alexanderwales</a>
+      </div>
+      <div class="comment-body">      
+	<p>Nice story! Welcome to fictionhub =)</p>
+      </div>
+      </div>
+      -->
+
+      <!-- Reply form 
+      <div class="comment-reply" style="display:none;">
+	<form action="/comment-submit/35?next=/user/rayalez/comments" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="0jNuzQA6mUFpU4ep5En58xLhKDZ2Pi6a">
+	  <div class="editor">
+	    <textarea cols="40" id="id_body" name="body" rows="10"></textarea>
+	  </div>
+	  <button class="button small" type="submit">Submit</button>
+	  <a class="button small cancel gray">Cancel</a>	  
+	  <div class="clearfix"></div>		    
+	</form>
+      </div>
+    </div>-->      
+
+</div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- End page -->
+
+<style>
+  .comment-box{
+  margin:20px 0;
+  padding: 10px 10px 10px 10px;
+  }
+</style>
+{% endblock content %}
+
