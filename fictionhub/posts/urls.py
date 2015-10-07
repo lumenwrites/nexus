@@ -214,6 +214,9 @@ urlpatterns = [
     # Email
     url(r'^email/$', views.email),
 
+    # Sandbox
+    url(r'^sandbox/$', views.sandbox),
+
 ]
 
 

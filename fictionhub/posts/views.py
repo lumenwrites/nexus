@@ -1803,6 +1803,14 @@ def book(request):
         'orangemind': True,
     })
 
+def sandbox(request):
+    posts = Post.objects.filter(published=True,author__approved=False).order_by('-pub_date')
+    return render(request, 'posts/posts.html',{
+        'posts':posts,
+        'hubs': [],        
+    })
+    
+    
 
 # TODO: replace with CBVs
 # from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView
