@@ -24,7 +24,7 @@ def send_notification_email(message):
         story_url = message.story.get_absolute_url()
         story_title = message.story.title
         
-        topic = from_username + " upvoted your story "  + story_title
+        topic = "fictionhub: " + from_username + " upvoted your story "  + story_title
         body = from_username + " upvoted your story\n" +\
                "http://fictionhub.io"+story_url
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
@@ -32,7 +32,7 @@ def send_notification_email(message):
     elif message.message_type == "subscriber"  and to_user.email_subscribers:
         send_email = True
 
-        topic = from_username + " subscribed to your stories!"
+        topic = "fictionhub: " + from_username + " subscribed to your stories!"
         body = from_username + " subscribed to your stories!"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
                 "http://fictionhub.io/preferences/"
@@ -41,7 +41,7 @@ def send_notification_email(message):
         story_url = message.story.get_absolute_url()
         comment_body = message.comment.body
 
-        topic = from_username + " has commented on your story "
+        topic = "fictionhub: " + from_username + " has commented on your story "
         body = from_username + " has left a comment on your story\n" +\
                "http://fictionhub.io"+story_url+ "\n" +\
                "'" + comment_body[:64] + "...'"

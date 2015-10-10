@@ -131,7 +131,7 @@
 	    </a>
 	    {% endif %}
 
-	    {% if userprofile.username == "rayalez" %}
+	    {% if userprofile.username != user.username %}
 	    {% if user.is_authenticated %}
             <a class="button small right subscribers-button"
 	       href="/message/{{userprofile.username}}/"
