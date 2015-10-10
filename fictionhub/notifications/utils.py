@@ -18,49 +18,62 @@ def send_notification_email(message):
     from_username = message.from_user.username
     to_user = message.to_user
     send_email = False
+    if to_user.rational:
+        base_url = "http://rationalfiction.io"
+    else:
+        base_url = "http://fictionhub.io"
+    if to_user.rational:
+        website_name = "rationalfiction"
+    else:
+        website_name = "fictionhub"
+
+
 
     if message.message_type == "upvote" and to_user.email_upvotes:
         send_email = True
         story_url = message.story.get_absolute_url()
         story_title = message.story.title
         
-        topic = "fictionhub: " + from_username + " upvoted your story "  + story_title
+        topic = website_name + ": " + from_username + " upvoted your story "  + story_title
         body = from_username + " upvoted your story\n" +\
-               "http://fictionhub.io"+story_url
+               base_url+story_url
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
-                "http://fictionhub.io/preferences/"
+                base_url + "/preferences/"
     elif message.message_type == "subscriber"  and to_user.email_subscribers:
         send_email = True
 
-        topic = "fictionhub: " + from_username + " subscribed to your stories!"
+        topic = website_name + ": " + from_username + " subscribed to your stories!"
         body = from_username + " subscribed to your stories!"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
-                "http://fictionhub.io/preferences/"
+                base_url+"/preferences/"
     elif message.message_type == "comment" and to_user.email_comments:
         send_email = True
         story_url = message.story.get_absolute_url()
         comment_body = message.comment.body
 
-        topic = "fictionhub: " + from_username + " has commented on your story "
+        topic = website_name+": " + from_username + " has commented on your story "
         body = from_username + " has left a comment on your story\n" +\
-               "http://fictionhub.io"+story_url+ "\n" +\
+               base_url+story_url+ "\n" +\
                "'" + comment_body[:64] + "...'"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
-                "http://fictionhub.io/preferences/"        
+                base_url+"/preferences/"        
     elif message.message_type == "message" and to_user.email_comments:
         send_email = True
 
-        topic = "fictionhub: " + from_username + " has sent you a message "
+        topic = website_name+ ": " + from_username + " has sent you a message "
         body = from_username + " has  sent you a message:\n" +\
                "'" + message.subject.title + "'\n" + \
                message.body + "\n" + \
-               "http://fictionhub.io/subject/" + str(message.subject.pk) + "/"
+               base_url+"/subject/" + str(message.subject.pk) + "/"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
-                "http://fictionhub.io/preferences/"        
+                base_url+"/preferences/"
+
+    body += "\n\n P.S. \n "+website_name+", including email notifications, is still in beta.\n If you have any comments, questions or suggestions - feel free to reply to this message, I welcome any feedback =)"
+        
 
     if send_email == True:
         try:
-            email = "raymestalez@gmail.com" # to_user.email
+            email = to_user.email # "raymestalez@gmail.com" 
             send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
         except:
             pass
