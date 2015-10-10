@@ -1686,6 +1686,7 @@ def writing_prompts(request):
 
 
 
+# Editorial
 def prompt(request):
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')

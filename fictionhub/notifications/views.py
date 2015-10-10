@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 
 from .models import Message, Subject
 from profiles.models import User
-# Create your views here.
+from .utils import send_email_notifications
 
 def notifications(request, notificationtype="all"):
     if notificationtype == "unread":
@@ -78,4 +78,11 @@ def subject(request, subject_pk=0):
     return render(request, 'notifications/subject.html', {
         'subject':subject,
         'messages':messages,
+    })    
+
+
+def send_emails(request):
+    teststring = send_email_notifications()    
+    return render(request, 'posts/test.html', {
+        'teststring': teststring,
     })    

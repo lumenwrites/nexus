@@ -30,9 +30,6 @@ The most basic features are done, now - refactoring and cleaning the code accord
 - PMs
 - Notifications(when someone comments, messages, etc)
   - Email updates on stories.
-  - "News" page?  
-	With comment replies, PMs, etc.
-  - Notification icon
 - RSS
   - Proper rss/atom feed for a story.
   - RSS of all stories.
@@ -77,7 +74,6 @@ The most basic features are done, now - refactoring and cleaning the code accord
 	with circle icons.
   - By author/date/length/rating/etc.
   - When there's too much hubs - search/filter hubs in the sidebar.
-- Superior editor - especially on mobile.
 - Recommendation engine.
     - top-rated stories by all users that gave 5 stars to a particular story?
 

@@ -28,7 +28,13 @@ class Message(models.Model):
     )
     message_type = models.CharField(default="message", max_length=64, choices=MESSAGE_TYPES, blank=True)
 
-    isread = models.BooleanField(default=False)                
+    isread = models.BooleanField(default=False)
+
+    email_sent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.message_type + " from " + str(self.from_user) + " to " + str(self.to_user)
+    
 
 class Subject(models.Model):    
     title = models.CharField(max_length=256)
