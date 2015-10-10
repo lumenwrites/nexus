@@ -1021,8 +1021,8 @@ def post_publish(request, story):
     post.published = True
     post.save()
 
-    # if request.user.username == "rayalez":
-    #     return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
+    if request.user.username == "rayalez":
+        return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
 
     # Send Email
     # author = post.author
