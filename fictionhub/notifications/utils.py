@@ -47,6 +47,16 @@ def send_notification_email(message):
                "'" + comment_body[:64] + "...'"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
                 "http://fictionhub.io/preferences/"        
+    elif message.message_type == "message" and to_user.email_comments:
+        send_email = True
+
+        topic = "fictionhub: " + from_username + " has sent you a message "
+        body = from_username + " has  sent you a message:\n" +\
+               "'" + message.subject.title + "'\n" + \
+               message.body + "\n" + \
+               "http://fictionhub.io/subject/" + str(message.subject.pk) + "/"
+        body += "\n\nYou can manage your email notifications in preferences:\n" +\
+                "http://fictionhub.io/preferences/"        
 
     if send_email == True:
         try:

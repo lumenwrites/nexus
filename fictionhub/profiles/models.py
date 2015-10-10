@@ -43,6 +43,9 @@ class User(AbstractUser):
     verbose_name='Send me email notifications when someone subscribes to my stories.')
     email_upvotes = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone upvotes my story.')
+    email_messages = models.BooleanField(default=True,
+    verbose_name='Send me email notifications when someone sends me a personal message.')
+    
     
     
     # email_messages = models.BooleanField(default=False)                            
