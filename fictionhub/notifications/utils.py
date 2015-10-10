@@ -64,6 +64,6 @@ def send_email_notifications():
     teststring = ""
     for message in messages:
         send_notification_email(message)
-        teststring += str(message) + "\n\n"
+        teststring += str(message) + "</br>"
 
     return teststring
