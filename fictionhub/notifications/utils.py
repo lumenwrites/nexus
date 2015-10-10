@@ -19,7 +19,7 @@ def send_notification_email(message):
     to_user = message.to_user
     send_email = False
 
-    if message.message_type == "upvote" and to_user.email_comments:
+    if message.message_type == "upvote" and to_user.email_upvotes:
         send_email = True
         story_url = message.story.get_absolute_url()
         story_title = message.story.title
@@ -29,7 +29,7 @@ def send_notification_email(message):
                "http://fictionhub.io"+story_url
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
                 "http://fictionhub.io/preferences/"
-    elif message.message_type == "subscriber"  and to_user.email_comments:
+    elif message.message_type == "subscriber"  and to_user.email_subscribers:
         send_email = True
 
         topic = from_username + " subscribed to your stories!"

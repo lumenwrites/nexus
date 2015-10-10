@@ -37,9 +37,15 @@ class User(AbstractUser):
     verbose_name='Send me email notifications when someone I follow publishes a new story')
     email_comments = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone replies to my story or comment')
-    # email_followers = models.BooleanField(default=False)
-    # email_upvotes = models.BooleanField(default=False)
-    # email_pms = models.BooleanField(default=False)                            
+    email_messages = models.BooleanField(default=True,
+    verbose_name='Send me email notifications when someone sends me a personal message.')
+    email_subscribers = models.BooleanField(default=True,
+    verbose_name='Send me email notifications when someone subscribes to my stories.')
+    email_upvotes = models.BooleanField(default=True,
+    verbose_name='Send me email notifications when someone upvotes my story.')
+    
+    
+    # email_messages = models.BooleanField(default=False)                            
 
     enable_dark_interface = models.BooleanField(default=False)    
     
