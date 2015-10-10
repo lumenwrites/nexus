@@ -54,7 +54,7 @@
       	  <div class="comment-header">
       	    <i class="fa fa-envelope"></i>
       	    <a href="/subject/{{message.subject.pk}}/" class="black bold">{{message.subject.title}}</a>
-      	    message from <a href="/" class="black bold">{{message.from_user.username}}</a>
+      	    message from <a href="/user/{{message.from_user.username}}" class="black bold">{{message.from_user.username}}</a>
 	  </div>
 	  <div class="comment-body">
 	    {{message.body}}
@@ -62,6 +62,16 @@
 	  <div class="comment-footer">
       	    <!-- <a href="/" class="black bold">All messages</a> -->
       	    <!-- <a href="/" class="black bold">Reply</a> -->
+	  </div>
+	  {% elif message.message_type == "newstory" %}
+	  <!-- New Subscriber -->
+	  <div class="comment-header">
+	    <i class="fi-torsos-all stats-icon"></i>
+	    <a href="/user/{{message.from_user.username}}"
+	       class="black bold">{{message.from_user.username}}</a>	  
+	    has published a new story
+	    <a href="{{message.story.get_absolute_url}}"
+	       class="black bold">{{message.story.title}}</a>	  
 	  </div>
 	  
 	  {% endif %}

@@ -56,6 +56,17 @@ def send_notification_email(message):
                base_url+story_url+ "\n" +\
                "'" + comment_body[:64] + "...'"
         body += "\n\nYou can manage your email notifications in preferences:\n" +\
+                base_url+"/preferences/"
+    elif message.message_type == "newstory" and to_user.email_subscriptions:
+        send_email = True
+        story_url = message.story.get_absolute_url()
+        story_title = message.story.title
+
+        topic = website_name+": " + from_username + " has published a story " + story_title
+        body = from_username + " has published a new story\n" +\
+               '"'+story_title+'"\n'+\
+               base_url+story_url+ "\n"
+        body += "\n\nYou can manage your email notifications in preferences:\n" +\
                 base_url+"/preferences/"        
     elif message.message_type == "message" and to_user.email_comments:
         send_email = True

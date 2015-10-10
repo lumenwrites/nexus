@@ -1021,8 +1021,8 @@ def post_publish(request, story):
     post.published = True
     post.save()
 
-    if request.user.username == "rayalez":
-        return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
+    # if request.user.username == "rayalez":
+    #     return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
 
     # Send Email
     # author = post.author
@@ -1043,6 +1043,17 @@ def post_publish(request, story):
     #         "http://fictionhub.io/preferences/"
     # body += "\n\n P.S. \n fictionhub, including email notifications, is still in beta. If you have any questions or suggestions - feel free to reply to this message, I welcome any feedback."
     # send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
+
+    # Notification
+    subscribers = post.author.subscribers.all()
+    for subscriber in subscribers:
+        message = Message(from_user=post.author,
+                          to_user=subscriber,
+                          story=post,
+                          message_type="newstory")
+        message.save()
+        subscriber.new_notifications = True
+        subscriber.save()
 
     return HttpResponseRedirect('/story/'+post.slug+'/edit')
 

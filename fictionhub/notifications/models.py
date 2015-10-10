@@ -25,6 +25,7 @@ class Message(models.Model):
         ("reply", "Reply"),
         ("subscriber", "Subscriber"),
         ("upvote", "Upvote"),
+        ("newstory", "New Story"),        
     )
     message_type = models.CharField(default="message", max_length=64, choices=MESSAGE_TYPES, blank=True)
 
