@@ -199,8 +199,8 @@ def posts(request, rankby="hot", timespan="all-time",
 
     # orangemind
     orangemind = False
-    if request.META['HTTP_HOST'] == "orangemind.io":
-        orangemind = True
+    # if request.META['HTTP_HOST'] == "orangemind.io":
+        # orangemind = True
     
         
     return render(request, 'posts/posts.html',{
@@ -777,8 +777,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
     # orangemind
     orangemind = False
-    if request.META['HTTP_HOST'] == "orangemind.io":
-        orangemind = True
+    # if request.META['HTTP_HOST'] == "orangemind.io":
+        # orangemind = True
         
     return render(request, 'posts/post.html',{
         'post': post,
