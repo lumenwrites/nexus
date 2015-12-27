@@ -40,7 +40,7 @@
     {% for post in posts %}
     <article>
       {% if post.post_type != "wiki"  %}
-      {# {% include "posts/vote.html" %} #}
+      {% include "posts/vote.html" %}
       {% endif %}      
       <!-- Header -->
       <header class="post-header">
