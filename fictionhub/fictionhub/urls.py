@@ -23,6 +23,8 @@ from posts import urls as posts_urls
 from comments import urls as comments_urls
 from notifications import urls as notifications_urls
 
+from quests import urls as quests_urls
+
 
 from . import views
 
@@ -38,6 +40,7 @@ urlpatterns = [
     url(r'', include(posts_urls)),
     url(r'', include(notifications_urls)),        
 
+    url(r'', include(quests_urls)),    
 
     url(r'^test/$', views.test),        
     

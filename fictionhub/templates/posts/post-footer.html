@@ -30,16 +30,40 @@
     </div>
   {% else %} <!-- if not orangemind -->
   <div class="left stats" style="margin: 6px;">
+    <div style="float: left;
+		margin-right: 8px;"> <!-- vote -->
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-up upvote arrow
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-upvote-{{post.id}}"></a>
+	    <span class="score"> {{post.score}} </span>
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-down downvote arrow
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-downvote-{{post.id}}"></a>
+	    
+    </div>
+
+    <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+      <span class="fi-comment"></span>		
+      <span style="float:left"> {{post.comments.count}} </span>
+    </a>
+    
+	    <!-- 
 	<span class="fi-arrow-up"
 	      style="font-size: 20px;
 		     margin-right:10px;">
 	  {{post.upvoters.count}}	  
-	</span>	
+	</span>
+	    
 	<span class="fi-arrow-down"
 	      style="font-size: 20px;
 		     margin-right:10px;">
 	  {{post.downvoters.count}}
 	</span>
+	-->
 	
 	<span class="fi-eye"
 	      style="font-size: 20px;
@@ -49,12 +73,14 @@
 
 
 	{% if post.children.all %}
+	<!-- 
 	<span class="fi-page-multiple"
 	      style="font-size: 20px;
 		     margin-right:10px;"
 	      title="Number of chapters">
 	  {{post.children.all|length}}
 	</span>
+	 -->
 	{% endif %}	    
 
 	<span class="fi-background-color"
@@ -88,13 +114,14 @@
 	       href="/user/{{post.author.username}}/subscribe">
 	      Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
 	    </a>
-	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    <!-- 
+	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    --> 
 	    {% else %} <!-- if subscribed then unsubscribe -->
 	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
 	       href="/user/{{post.author.username}}/unsubscribe">
 	      Unsubscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
 	    </a>
-	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    
+	    <!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	     -->
 	    {% endif %}
           {% endif %}
         {% else %} <!-- if not authenticated then send to login -->
@@ -102,7 +129,7 @@
 	   href="/login/?next={{request.path}}">
 	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
 	</a>
-	<span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>
+	<!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span> -->
 	{% endif %}
         </div> <!-- End Author -->
 	<div class="clearfix"></div>

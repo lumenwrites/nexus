@@ -40,7 +40,7 @@
     {% for post in posts %}
     <article>
       {% if post.post_type != "wiki"  %}
-      {% include "posts/vote.html" %}
+      {# {% include "posts/vote.html" %} #}
       {% endif %}      
       <!-- Header -->
       <header class="post-header">
@@ -90,7 +90,8 @@
 
       <div class="panel post-footer" style="padding:8px;margin-top: 4px;">
 	<!-- <div class="large-8 small-8 columns"> -->
-	  <div class="stats left">
+	<div class="stats left">
+	  
 	    <!--
 		<span class="fi-arrow-up"
 		      style="font-size: 20px;
@@ -104,6 +105,29 @@
 		</span>
 		-->
 
+
+    <div style="float: left;
+		margin-right: 8px;"> <!-- vote -->
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-up upvote arrow
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-upvote-{{post.id}}"></a>
+	    <span class="score"> {{post.score}} </span>
+	    <a href="/login/?next={{request.path}}"
+	       class="fi-arrow-down downvote arrow
+		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+	       id="post-downvote-{{post.id}}"></a>
+	    
+    </div>
+
+    <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+      <span class="fi-comment"></span>		
+      <span style="float:left"> {{post.comments.count}} </span>
+    </a>
+
+
 	    <span class="fi-eye"
 		  style="font-size: 20px;
 		  margin-right:10px;"
@@ -112,12 +136,14 @@
 	    </span>
 
 	    {% if post.children.all %}
+	    <!-- 
 	    <span class="fi-page-multiple"
 		  style="font-size: 20px;
 		  margin-right:10px;"
 		  title="Number of chapters">
 	      {{post.children.all|length}}
 	    </span>
+	     -->
 	    {% endif %}	    
 
 	    <span class="fi-background-color"
