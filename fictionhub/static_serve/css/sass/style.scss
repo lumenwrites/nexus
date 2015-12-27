@@ -27,6 +27,11 @@ html {
     font-size: 19px;
 }
 
+p {
+    font-size: 1.11rem; //21px
+}
+
+
 .row {
     max-width: 64em;
 }
@@ -957,4 +962,34 @@ footer h4 {
 
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment) {
   background: none!important;
+}
+
+
+/* votes in footer */
+.vote-column {
+    display: none;
+}
+.arrow,
+.arrow:active,
+.arrow:visited, {
+    width: 20px;
+    transform:scale(1.4,1);
+    float:left;
+}
+
+.score {
+    float:left;
+    width:auto;
+}
+
+article header {
+    width: 100%!important;
+}
+
+.fi-comment {
+    text-align: center;
+    float: left;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-right:2px;
 }
