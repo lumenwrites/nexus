@@ -15,7 +15,15 @@ def rank_hot(stories, top=180, consider=1000):
         rating = (post.score + 1)**0.8 # + number_of_comments
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         age = int((now - post.pub_date).total_seconds())/60
-        return rating/(age+timebase)**gravity
+        # temporary hack to not let score be below zero
+        try:
+            if float(rating) > 1:
+                scr = rating/(age+timebase)**gravity
+            else:
+                scr = 0
+        except:
+            scr = 0
+        return scr
 
     latest_stories = stories.order_by('-pub_date')#[:consider]
     #comprehension, stories with rating, sorted
