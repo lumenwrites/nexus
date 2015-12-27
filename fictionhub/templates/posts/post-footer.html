@@ -30,26 +30,27 @@
     </div>
   {% else %} <!-- if not orangemind -->
   <div class="left stats" style="margin: 6px;">
-    <div style="float: left;
-		margin-right: 8px;"> <!-- vote -->
-	    <a href="/login/?next={{request.path}}"
-	       class="fi-arrow-up upvote arrow
-		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-	       id="post-upvote-{{post.id}}"></a>
-	    <span class="score"> {{post.score}} </span>
-	    <a href="/login/?next={{request.path}}"
-	       class="fi-arrow-down downvote arrow
-		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-	       id="post-downvote-{{post.id}}"></a>
+	<!-- Vote in footer -->
+    <!-- <div style="float: left; -->
+    <!-- 		margin-right: 8px;"> <\!-- vote -\-> -->
+    <!-- 	    <a href="/login/?next={{request.path}}" -->
+    <!-- 	       class="fi-arrow-up upvote arrow -->
+    <!-- 		      {% if post in upvoted %}upvoted{% endif %} -->
+    <!--                   {% if post in downvoted %}downvoted{% endif %}" -->
+    <!-- 	       id="post-upvote-{{post.id}}"></a> -->
+    <!-- 	    <span class="score"> {{post.score}} </span> -->
+    <!-- 	    <a href="/login/?next={{request.path}}" -->
+    <!-- 	       class="fi-arrow-down downvote arrow -->
+    <!-- 		      {% if post in upvoted %}upvoted{% endif %} -->
+    <!--                   {% if post in downvoted %}downvoted{% endif %}" -->
+    <!-- 	       id="post-downvote-{{post.id}}"></a> -->
 	    
-    </div>
+    <!-- </div> -->
 
-    <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
-      <span class="fi-comment"></span>		
-      <span style="float:left"> {{post.comments.count}} </span>
-    </a>
+    <!-- <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;"> -->
+    <!--   <span class="fi-comment"></span>		 -->
+    <!--   <span style="float:left"> {{post.comments.count}} </span> -->
+    <!-- </a> -->
     
 	    <!-- 
 	<span class="fi-arrow-up"
