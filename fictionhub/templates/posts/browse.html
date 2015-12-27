@@ -57,9 +57,8 @@
 	  {{post.downvoters.count}}
 	</span>
 	-->
-
     <div style="float: left;
-		margin-right: 8px;"> <!-- vote -->
+		margin-right: 8px;" class=""> <!-- vote -->
 	    <a href="/login/?next={{request.path}}"
 	       class="fi-arrow-up upvote arrow
 		      {% if post in upvoted %}upvoted{% endif %}
