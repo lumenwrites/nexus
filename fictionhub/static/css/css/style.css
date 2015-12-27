@@ -1065,27 +1065,36 @@ footer h4 {
 }
 
 /* votes in footer */
-/* .vote-column { */
-/*     display: none; */
-/* } */
-/* .arrow, */
-/* .arrow:active, */
-/* .arrow:visited, { */
-/*     width: 20px; */
-/*     transform:scale(1.4,1); */
-/*     float:left; */
-/* } */
-/* .score { */
-/*     float:left; */
-/*     width:auto; */
-/* } */
-/* article header { */
-/*     width: 100%!important; */
-/* } */
-/* .fi-comment { */
-/*     text-align: center; */
-/*     float: left; */
-/*     font-size: 20px; */
-/*     margin-top: 0px; */
-/*     margin-right:2px; */
-/* } */
+/* line 969, ../sass/style.scss */
+.vote-column {
+  display: none;
+}
+
+/* line 973, ../sass/style.scss */
+.arrow,
+.arrow:active,
+.arrow:visited {
+  width: 20px;
+  transform: scale(1.4, 1);
+  float: left;
+}
+
+/* line 981, ../sass/style.scss */
+.score {
+  float: left;
+  width: auto;
+}
+
+/* line 986, ../sass/style.scss */
+article header {
+  width: 100% !important;
+}
+
+/* line 990, ../sass/style.scss */
+.fi-comment {
+  text-align: center;
+  float: left;
+  font-size: 20px;
+  margin-top: 0px;
+  margin-right: 2px;
+}
