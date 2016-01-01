@@ -35,15 +35,15 @@ def rank_hot(stories, top=180, consider=1000):
     return ranked_stories
 
 def rank_top(stories, timespan = None):
-    if timespan == "day":
-        day = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('day')
-        stories = stories.filter(pub_date__day = day)        
-    elif timespan == "month":
-        month = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('month')
-        stories = stories.filter(pub_date__month = month)        
-    elif timespan == "all-time":
-        year = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('year')
-        stories = stories.filter(pub_date__year = year)                
+    # if timespan == "day":
+    #     day = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('day')
+    #     stories = stories.filter(pub_date__day = day)        
+    # elif timespan == "month":
+    #     month = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('month')
+    #     stories = stories.filter(pub_date__month = month)        
+    # elif timespan == "all-time":
+    #     year = datetime.datetime.utcnow().replace(tzinfo=utc).__getattribute__('year')
+    #     stories = stories.filter(pub_date__year = year)                
     
     top_stories = stories.order_by('-score')
     return top_stories
