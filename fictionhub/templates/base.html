@@ -102,8 +102,35 @@
 	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+
 	    {% endif %}	    
 	  </a>
+	  <a data-dropdown="websites-dropdown" aria-controls="drop1" aria-expanded="false" data-options="align:left" >
+	    <img class="down-arrow" src="{% static "img/downArrow.png" %}" style="margin-top: -8px;"/>
+	  </a>
+	  <div id="websites-dropdown" class="f-dropdown bottom left">
+	    <a href="http://webcomics.io" class="logo" id="webcomics" style="z-index:1000;">
+	      web<span class="bold">comics</span>
+	    </a>
+	  </div>
+
+<style>
+#websites-dropdown {
+position: absolute;
+left: 10.15625px!important;
+top: 54px!important;
+}
+.f-dropdown.drop-left:before,
+.f-dropdown.drop-left:after{
+display:none;
+}
+</style>
+<script>
+$("#webcomics").click(function(){
+console.log("yes");
+})		
+  
+</script>
         </div>
 
 	<!-- Main Menu -->
