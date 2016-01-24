@@ -183,7 +183,7 @@ MANAGERS = ADMINS
 
 
 # Email me on error
-SEND_BROKEN_LINK_EMAILS=True
+# SEND_BROKEN_LINK_EMAILS=True
 
 LOGGING = {
     'version': 1,
