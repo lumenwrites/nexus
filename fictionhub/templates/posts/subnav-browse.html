@@ -113,6 +113,21 @@
 
 	    <!-- Other buttons -->
 
+	    {% if userprofile.website %}
+            <a class="button small right subscribers-button"
+               href="{{userprofile.website}}">
+	      Website
+	    </a>
+	    {% endif %}
+
+	    {% if userprofile.about %}	    
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/about">
+	      About
+	    </a>
+	    {% endif %}
+
+
 	    {% if userprofile.username == "rayalez" %}
 	    <!-- 
             <a class="button small right subscribers-button"
@@ -132,19 +147,7 @@
 	    <!-- </a> -->
 	    {% endif %}
 
-	    {% if userprofile.website %}
-            <a class="button small right subscribers-button"
-               href="{{userprofile.website}}">
-	      Website
-	    </a>
-	    {% endif %}
 
-	    {% if userprofile.about %}	    
-            <a class="button small right subscribers-button"
-               href="/user/{{userprofile.username}}/about">
-	      About
-	    </a>
-	    {% endif %}
 
 	    {% if userprofile.username != user.username %}
 	    {% if user.is_authenticated %}
