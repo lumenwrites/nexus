@@ -258,24 +258,6 @@
 	<!-- <a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>Limbo</span></a>	 -->
 
 
-	<!-- <a href="{{filterurl}}/hot/" style="float:right;"><span class="">Subscriptions</span></a> -->
-
-	<!-- <a href="/hubs/" style="float:right;"><span class="">Subscribed</span></a>	 -->
-	<!-- <a href="/hubs/" style="float:right;"><span class="">Hubs</span></a> -->
-	<!-- <a href="/series/" style="float:right;"><span class="">Series</span></a>	 -->
-	<!-- <a href="/" style="float:right;"><span class="">Posts</span></a>	 -->
-
-
-
-	<!-- <a href="/" style="float:right;"><span class="">Price: Free</span></a>			 -->
-	<!-- <a href="/" style="float:right;"><span class="">Hubs: All</span></a> -->
-	<!-- <a href="/" style="float:right;"><span class="">Browse: Series</span></a> -->
-
-
-	{% if userprofile and userprofile.comments.all %}
-	<a href="/user/{{userprofile.username}}/comments">
-	  <span {% if filterby = "comments_user" %}class="bold"{% endif %}>Comments</span></a>
-	{% endif %}
 
 	{% if not userprofile and filterby != "subscriptions" %}
 	<span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span>

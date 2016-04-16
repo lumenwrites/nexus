@@ -1,3 +1,8 @@
+
+# to count words(refactor)
+import re
+from string import punctuation
+
 from django.shortcuts import render
 from django.db.models import Count
 
@@ -20,6 +25,20 @@ def home(request):
     # Approved only
     posts = posts.filter(author__approved=True)
         
+    # Count words
+    r = re.compile(r'[{}]'.format(punctuation))
+    for post in posts:
+        wordcount = 0
+        text = r.sub(' ',post.body)
+        wordcount += len(text.split())
+        if post.children:
+            for child in post.children.all():
+                text = r.sub(' ',child.body)
+                wordcount += len(text.split())
+        if wordcount > 1000:
+            wordcount = str(int(wordcount/1000)) + "K"
+        post.wordcount = wordcount
+
     # fictionhub doesn't include rational
     # posts = Post.objects.filter(published=True, rational=rational, post_type="story")    
     timespan="all-time"
@@ -28,6 +47,7 @@ def home(request):
     new_posts = posts.order_by('-pub_date')[:10]
     # hubs = Hub.objects.all().annotate(number_of_posts=Count('posts')).order_by('-number_of_posts')
     hubs = Hub.objects.all()
+
 
 
     # Add attribute:
