@@ -49,6 +49,8 @@ from hubs.models import Hub
 from comments.models import Comment
 from notifications.models import Message
 
+
+
 #dropbox
 import os
 import dropbox
@@ -1911,3 +1913,184 @@ def sandbox(request):
 #     return HttpResponse()
 
 
+
+
+from django.views.generic.list import ListView
+
+class HubList(ListView):
+    model = Hub
+    template_name = "hubs/hubs.html"
+
+
+class SeriesList(ListView):
+    model = Post
+    template_name = "series/series.html"
+    paginate_by=15
+    
+
+
+
+    # network test
+
+# def browse(request, rankby="hot", timespan="all-time"):
+#     rational = check_if_rational(request)
+
+#     # Filter by hubs
+#     # hub = Hub.objects.get(slug=hubslug)
+#     # posts = Post.objects.filter(hubs=hub, published=True, rational = rational)
+
+#     post_type = "story"
+
+#     query = ""
+#     selectedhubs = ""
+#     filterhubs = []
+#     if request.method == 'GET':
+#         # selectedhubs = request.GET.getlist('hubs')
+#         try:
+#             selectedhubs = request.GET['hubs'].split(",")
+#         except:
+#             electedhubs = []
+#         filterhubs = []
+#         if selectedhubs:
+#             for hubslug in selectedhubs:
+#                 filterhubs.append(Hub.objects.get(slug=hubslug))
+#             if hubslug == "wiki":
+#                 post_type = "wiki"                
+                
+#             # Either
+#             # filterhubs_qs = Q()
+#             # for hub in filterhubs:
+#             #     filterhubs_qs = filterhubs_qs | Q(hubs=hub)
+#             # posts = Post.objects.filter(filterhubs_qs)
+#             # # posts = Post.objects.filter(hubs__in=filterhubs)
+
+#             # Both
+#             posts = Post.objects.all()
+#             for hub in filterhubs:
+#                 posts = posts.filter(hubs=hub)
+#         else:
+#             posts = Post.objects.all()            
+
+#         # Approved only
+#         posts = posts.filter(author__approved=True)
+
+#         query = request.GET.get('query')
+#         if query:
+#             # fictionhub includes rational
+#             if rational:
+#                 posts = posts.filter(Q(title__icontains=query,
+#                                        published=True, post_type=post_type,
+#                                        rational = rational) |
+#                                      Q(body__icontains=query,
+#                                        published=True, post_type=post_type,
+#                                        rational = rational) |
+#                                      Q(author__username__icontains=query,
+#                                        published=True, post_type=post_type,
+#                                        rational = rational))
+#             else:
+#                 posts = posts.filter(Q(title__icontains=query,
+#                                        published=True, post_type=post_type) |
+#                                      Q(body__icontains=query,
+#                                        published=True, post_type=post_type) |
+#                                      Q(author__username__icontains=query,
+#                                        published=True, post_type=post_type))
+#             # fictionhub doesn't include rational
+#             # posts = posts.filter(Q(title__icontains=query,
+#             #                            published=True, post_type=post_type,
+#             #                        rational = rational) |
+#             #                      Q(body__icontains=query,
+#             #                        published=True, post_type=post_type,
+#             #                        rational = rational) |
+#             #                      Q(author__username__icontains=query,
+#             #                        published=True, post_type=post_type,
+#             #                        rational = rational))
+            
+#         else:
+#             # fictionhub includes rational            
+#             if rational:
+#                 posts = posts.filter(published=True, rational = rational, post_type=post_type)
+#             else:
+#                 posts = posts.filter(published=True, post_type=post_type)
+#             # fictionhub doesn't include rational            
+#             # posts = posts.filter(published=True, rational = rational, post_type=post_type)
+            
+#     else:
+#         # fictionhub includes rational        
+#         if rational:
+#             posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+#         else:
+#             posts = Post.objects.filter(published=True,post_type=post_type)
+#         # fictionhub doesn't include rational                    
+#         # posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+        
+#         filterhubs = []
+
+
+#     # Ranking
+#     if rankby == "hot":
+#         post_list = rank_hot(posts, top=32)
+#     elif rankby == "top":
+#         post_list = rank_top(posts, timespan = timespan)
+#     elif rankby == "new":
+#         post_list = posts.order_by('-pub_date')
+#     else:
+#         post_list = []
+
+
+#     # Pagination
+#     paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
+#     page = request.GET.get('page')
+#     try:
+#         posts = paginator.page(page)
+#     except PageNotAnInteger:
+#         # If page is not an integer, deliver first page.
+#         posts = paginator.page(1)
+#     except EmptyPage:
+#         # If page is out of range (e.g. 9999), deliver last page of results.
+#         posts = paginator.page(paginator.num_pages)    
+
+#     hubs = Hub.objects.all().order_by('id')
+
+#     # Disable upvoted/downvoted
+#     if request.user.is_authenticated():
+#         upvoted = request.user.upvoted.all()
+#         downvoted = request.user.downvoted.all()                
+#     else:
+#         upvoted = []
+#         downvoted = []        
+
+#     # Count words
+#     r = re.compile(r'[{}]'.format(punctuation))
+#     for post in posts:
+#         wordcount = 0
+#         text = r.sub(' ',post.body)
+#         wordcount += len(text.split())
+#         if post.children:
+#             for child in post.children.all():
+#                 text = r.sub(' ',child.body)
+#                 wordcount += len(text.split())
+#         if wordcount > 1000:
+#             wordcount = str(int(wordcount/1000)) + "K"
+#         post.wordcount = wordcount
+
+#     if not query:
+#         query = ""
+
+#     solohub = False
+#     # if len(filterhubs) == 1:
+#     #     solohub=True
+#     return render(request, 'posts/network.html',{
+#         'posts':posts,
+#         'rankby': rankby,
+#         'filterurl': "/browse",
+#         'upvoted': upvoted,
+#         'downvoted': downvoted,
+#         'timespan': timespan,
+#         'query':query,
+#         'hubs': hubs,
+#         'filterhubs':filterhubs,
+#         'solohub':solohub,
+#         'test': request.POST
+#     })
+
+    

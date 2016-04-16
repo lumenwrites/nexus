@@ -181,6 +181,9 @@ urlpatterns = [
     url(r'^subscriptions/$', views.posts,
         {'filterby': 'subscriptions'}),    
 
+
+    url(r'^hubs/$', views.HubList.as_view()),
+    url(r'^series/$', views.SeriesList.as_view()),    
     # By hub
     url(r'^hub/(?P<hubslug>[^\.]+)/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
         {'filterby': 'hub'}),    
@@ -207,6 +210,7 @@ urlpatterns = [
     url(r'^search/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.search),    
     url(r'^search/(?P<rankby>[^\.]+)/$', views.search),    
 
+    # url(r'^$', views.browse),
     url(r'^browse/$', views.browse),
     url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
     url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    

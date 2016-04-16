@@ -1,176 +1,79 @@
 {% load numberofstories %}
 {% load sortbypostcount %}
 
-<div class="hubs">
-  <div class="top-lvl-hub">
-    {% for hub in hubs|sortbypostcount:request %}
-
-    {% if not hub.parent %}
-    {% if hub.posts.all %}
-    {% endif %}
-
-    {% if hub.children.all %}
-    </div>			  <!-- Close 6 rows -->
-    <div class=""> <!-- New column -->
-    {% endif %}
-
-    <div  class="hub-tag top-lvl container">
-      <!-- Expand/collapse -->
-      {% if hub.children.all %}
-      <span class="expand fi-minus expanded"></span>  
-      {% endif %}
-
-      <a href="/hub/{{hub.slug}}/">{{hub}}
-      {% if hub.hub_type == "hub" %}	
-	<span class="number-of-stories">{% numberofstories hub %}</span></a>
-      <!-- hub.posts.all|length -->
-      {% endif %}
-    
-      {% if hub.children.all %}
-        <div  class="padding-10 children">      
-        {% for child in hub.children.all|sortbypostcount:request %}
-          {% if child.posts.all %}
-          {% endif %}
-            <div  class="hub-tag second-lvl container">
-	      <!-- Expand/collapse -->
-	      {% if child.children.all %}
-	      <span class="expand fi-plus"></span>  
-	      {% endif %}
-
-              <a href="/hub/{{child.slug}}/"> {{child.title}}
-			<span class="number-of-stories">{% numberofstories child %}</span></a>
-
-                  {% if child.children.all %}
-                    <div  class="padding-10 children">      
-                    {% for child in child.children.all|sortbypostcount:request %}
-                      {% if child.posts.all %}
-                      {% endif %}
-                        <span  class="hub-tag">
-                          <a href="/hub/{{child.slug}}/"> {{child.title}}
-			    <span class="number-of-stories">{% numberofstories child %}</span></a>
-            	        </span>
-                    {% endfor %}
-		    <div class="clearfix"></div>
-                    </div> <!-- close inner div -->
-                  </div> <!-- close hub-tag -->
-                  {% else %}
-                  </div> <!-- close parent hub-tag -->
-                  {% endif %}
-
-        {% endfor %}
-        </div>
-      </div> <!-- close hub-tag -->
-      {% else %}
-      </div> <!-- close hub-tag -->
-      {% endif %}
-    <!-- end Children -->
-    
-    {% endif %}	<!-- End not hub parent -->
-
-    {% endfor %}
-
-</div> <!-- close  columns -->
-  
-  <!-- 
-  {% for hub in hubs %}
-  <a href="/hub/{{hub.slug}}"class="hub-tag">{{hub}}</a>	  
-  {% endfor %}
-   -->
-  <!-- 
-  <div class="large-4 columns">
+  <div class="large-12 small-12 columns posts">
     {% for hub in hubs %}
+    <article style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+		    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		    border: 1px solid rgba(0,0,0,.09);
+		    border-radius: 3px;">
+      
+      <!-- Header -->
+      <header class="post-header">
+	<a href="{{post.get_absolute_url}}">
+	  <b> {{hub.title}} </b>
+	</a>
+	<div class="clearfix"></div>
+      </header>
 
-    {% if hub.children.all %}
+      <!-- Post Body -->
+      {#{hub.description | safe }#} <!-- firstparagraph -->
+      <!-- ladisadida -->
+      <a class="small button" style="border-radius:0;width:100%;">Subscribe</a>
+      <div class="clearfix"></div>
+      <!-- Post Footer -->
+      <br/>
+	<div class="stats left">
+
+	<!-- Vote in footer -->
+    <div style="float: left;
+    		margin-right: 8px;" class=""> <!-- vote -->
+    	    <a href="/login/?next={{request.path}}"
+    	       class="fi-arrow-up upvote arrow
+    		      {% if post in upvoted %}upvoted{% endif %}
+                      {% if post in downvoted %}downvoted{% endif %}"
+    	       id="post-upvote-{{post.id}}"></a>
+    	    <span class="score"> {{post.score}} </span>
     </div>
-    <div class="large-4 columns">
-    {% endif %}
-    
-    {% if not hub.parent %}
-    {% if hub.stories.all %}
-    {% endif %}
-    <li>
-      <a href="/hub/{{hub.slug}}/"> <b> {{hub}} </b></a>
-    </li>
 
+    <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+      <span class="fi-comment"></span>
+      <span style="float:left"> {{post.comments.count}} </span>
+    </a>
 
-    {% if hub.children.all %}
-      {% for child in hub.children.all %}
-        {% if child.stories.all %}
-        {% endif %}
-          <li class="dropdown-subitems">
-            <a href="/hub/{{child.slug}}/"> <b> {{child.title}} </b> </a>
-          </li>
-      {% endfor %}
-    {% endif %}
+	<span class="fi-eye"
+	      style="font-size: 20px;
+		     margin-right:10px;">
+	  {{post.views}}
+	</span>
 
+	<span class="fi-background-color"
+	      style="font-size: 20px;
+		     margin-right:10px;"
+	      title="Number of words">
+	  {{post.wordcount}}
+	</span>
+	
+	</div> <!-- end stats left -->
 
-    {% endif %}
+      	{% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	<a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">{{hub.title}}</a>
+      	{% endfor %}
+
+	<div class="right">
+	</div>
+	<div class="clearfix"></div>
+      <!-- <hr/> -->
+    </article>
     {% endfor %}
-  </div>
-     -->
-</div>  <!-- Close row -->
 
-<style>
-
-.hub-tag {
-margin-left: 0;
+    <style>
+      article {
+    margin-top: 20px;
+    width: 28%;
+    float: left;
+    margin: 20px;
 }
-<!-- lighter background
-  rgba(0, 0, 0, 0.02)-->
-
-.second-lvl .hub-tag {
-display:block;
-float:left;
-}
-
-.hubs .hub-tag {
-  line-height: 40px;
-padding: 5px;
-margin: 4px;
-}
-
-.hubs .hub-tag a {
-color: #3d454b;
-}
-
-.top-lvl {
-}
-
-.third-lvl {
-float: left;
-}
-
-.number-of-stories {
-background: rgba(255, 255, 255, 0.6);
-background: rgba(119, 119, 119, 0.2);
-  padding: 0 4px;
-  border-radius: 4px;
-}
-
-.expand {
-cursor: pointer;
-}
-</style>
-
-<script>
-  $(document).ready(function() {
-  //$(".hubs").find(".top-lvl").children(".children").toggle()
-
-      $(".hubs").find(".expand").click(function(event){
-  	  if (this == event.target) {
-	      if ($(this).hasClass("expanded")) {
-  		  $(this).addClass("fi-plus");
-  		  $(this).removeClass("fi-minus");
-	      } else {
-  		  $(this).addClass("fi-minus");
-  		  $(this).removeClass("fi-plus");
-	      }
-  	      $(this).toggleClass('expanded');	      
-  	      $(this).parent().children(".children").toggle('fast');
-  	  }
-      });
-// $(".hubs").find(".expand").parent().children(".children").hide();
-  $(".second-lvl").find(".expand").parent().children(".children").hide();
-
-  });
-</script>
+.button.small {
+    background-color: #3D455B;}
+    </style>

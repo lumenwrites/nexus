@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load staticfiles %}
 {% load markdownify %}
 {% load firstparagraph %}
@@ -8,8 +9,6 @@
 <div id="page"  class="posts-page">
 
 {% include "posts/subnav-browse.html" %}
-
-
 
 <style>
   p {
@@ -34,64 +33,8 @@
 </style>
 <div class="row">
 
-
-  {% if request.path = "/" and not user.is_authenticated %}
-    <!-- Frontpage CTA -->
-    <div class="alert-box panel" data-alert  style="//margin-top:20px;//text-align:center;">
-      <img src="/static/img/valley_cropped.png"
-	   style="margin: -25px  -25px 0  -25px ;
-		  width: calc(100% + 50px)!important;
-		  max-width: inherit;" />
-      <h4>Fictionhub is the perfect place to publish, discover and discuss awesome fiction</h4>
-
-      <p>If you're a reader - This is a friendly and intelligent community, where readers can easy for readers to find discover great fiction, and easy for writers to find their audience and receive great feedback.</p>
-
-      
-      <!-- <p><b>Reader:</b> -->
-      <!-- 	Discover great fiction, find amazing authors, become a part of our friendly and intelligent community!</p> <\!-- read -\-> -->
-
-      <!-- <p><b>Writer:</b> -->
-      <!-- 	Find your audience, receive great feedback<\!-- , make money by selling your stories! -\-></p> -->
-      
-      <br/>
-
-
-      <div class="large-7 small-12 columns" style="//padding:0;//padding-right:10px; ">      
-	<!-- <a class="small button" style="border-radius:0;">Learn More</a> -->
-	<p>Subscribe to the monthly digest of our best stories:</p>
-	<input id="id_username" maxlength="254" name="email" type="text"
-	       placeholder="email"
-	       style="width: calc(100% - 180px);float: left;height:50px;">
-	<a class="small button" style="border-radius:0; height:50px;width:180px;">Subscribe</a>
-      </div>
-
-      <div class="large-5 small-12 columns" style="//padding:0;//padding-left:10px;">      
-	<p>Join our awesome community:</p>
-	<!-- Click here to signup, or click here to learn more. -->
-	<a href="/login/"class="small button" style="border-radius:0;width: 100%;">Join</a>
-      </div>
-
-      <a href="#" class="close" style="font-size: 41px; top: 20px;">&times;</a>
-
-      <div class="clearfix"></div>    
-    </div>
-  {% endif %}    
-
   <div class="large-12 small-12 columns posts">
-
-    
-
-    <!-- Subscribe to hubs. -->
-    <!-- 
-<div class="alert-box panel" data-alert  style="margin-top:20px;">
-  <h4>Choose the stuff you like.</h4>
-  <p>Subscribe to hubs you're interested in for personalized suggestions</p>
-  <a href="#" class="close">&times;</a>
-</div>
- -->
-
-
-    {% for post in posts %}
+    {% for post in object_list %}
     {% if not post.author.shadowban or post.author = user %}    
     <article style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
 		    box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -101,36 +44,16 @@
       <!-- Header -->
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
-	  <h1 class="left"> {{post.title}} </h1>
-
-	  <!-- 
-      	  <a href="/hub/{{hub.slug}}" id="{{hub.slug}}">
-	    <i class="fa fa-external-link"
-	       style="margin: 10px;
-		      font-size: 30px;
-		          //background: #DADADA;
-			  //padding: 10px;
-			  //border-radius: 4px;
-			  float:right;"
-	       aria-hidden="true"></i></a> -->
+	  <b> {{post.title}} </b>
 	</a>
-	<hr/>
 	<div class="clearfix"></div>
       </header>
-      
-      <!-- Post Body -->
-      
-      {{post | markdownify:"True" | firstparagraph | safe  }} <!-- firstparagraph -->
-      <div class="clearfix"></div>
 
+      <!-- Post Body -->
+      {{post | markdownify:"True" | safe | truncatechars:220 }} <!-- firstparagraph -->
+      <div class="clearfix"></div>
       <!-- Post Footer -->
       <br/>
-
-<!-- <div class="panel" style=""> -->
-<!--   <p><b>New Chapter:</b> "Trials and Tribulations"</p> -->
-<!-- </div>       -->
-      
-
       <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
 				margin-bottom: -11px;
 				margin-left: -11px;
@@ -179,9 +102,6 @@
 	  {% else %}
 	  <a href="/user/{{post.author.username}}">{{post.author}}</a>
 	  {% endif %}
-	  <!--
-	  in
-	  <a>Orange Mind</a>  --> <!-- series. -->
 	</div>
 	<div class="clearfix"></div>
       </div>
@@ -273,7 +193,6 @@
 
     <!-- <input placeholder="Select Hub" type="text" name="query" class="left" value="{{query}}" -->
     <!-- 	   type="submit"></input><br/><br/> -->
-  {% include "hubs/hub-list-search.html" %}  
 
 </div> <!-- End 4 columns -->
 
@@ -423,26 +342,24 @@ $(document).ready(function(){
     });
     
     // open sidebar if there are some hubs selected
-    if ($('select#hubs-multiselect').val()){
-    	$(".posts").removeClass("large-12");
-    	$(".posts").removeClass("small-12");  	      
-    	$(".posts").addClass("large-9");
-    	$(".posts").addClass("small-9");	      
-    	$(".sidebar").show();
-    	$("#toggle-hubs").addClass("expanded");
-    }
+    // if ($('select#hubs-multiselect').val()){
+    // 	$(".posts").removeClass("large-12");
+    // 	$(".posts").removeClass("small-12");  	      
+    // 	$(".posts").addClass("large-9");
+    // 	$(".posts").addClass("small-9");	      
+    // 	$(".sidebar").show();
+    // 	$("#toggle-hubs").addClass("expanded");
+    // }
 
     // Open sidebar by default
-  {% if request.path = "/" and False %}    
     {% if not solohub %}
-     $(".posts").removeClass("large-12");
-     $(".posts").removeClass("small-12");  	      
-     $(".posts").addClass("large-9");
-     $(".posts").addClass("small-9");	      
-     $(".sidebar").show();
-     $("#toggle-hubs").addClass("expanded");
-    {% endif %}
-  {% endif %}	        
+//    $(".posts").removeClass("large-12");
+//    $(".posts").removeClass("small-12");  	      
+//    $(".posts").addClass("large-9");
+//    $(".posts").addClass("small-9");	      
+//    $(".sidebar").show();
+//    $("#toggle-hubs").addClass("expanded");
+    {% endif %}	    
     
 
     // If there's search input, search field is white

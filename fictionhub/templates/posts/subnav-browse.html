@@ -42,15 +42,6 @@
 	  style="margin-left:10px;"> Ray Alez </h1>
     </a>
 
-    <style>
-      .vote-column {
-      display:none;
-      }
-
-      .post-header {
-      width:100%;
-      }
-    </style>
     {% else %}    
     <a href="/u/{{userprofile.username}}">
       <h1 class="left" style="margin-top:0px;" > {{userprofile.username}} </h1>
@@ -264,6 +255,22 @@
 	 -->
 	{% endif %} <!-- end rankby top, showing timespans -->
      {% endif %}    <!-- end if not challengestate -->
+	<!-- <a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>Limbo</span></a>	 -->
+
+
+	<!-- <a href="{{filterurl}}/hot/" style="float:right;"><span class="">Subscriptions</span></a> -->
+
+	<!-- <a href="/hubs/" style="float:right;"><span class="">Subscribed</span></a>	 -->
+	<!-- <a href="/hubs/" style="float:right;"><span class="">Hubs</span></a> -->
+	<!-- <a href="/series/" style="float:right;"><span class="">Series</span></a>	 -->
+	<!-- <a href="/" style="float:right;"><span class="">Posts</span></a>	 -->
+
+
+
+	<!-- <a href="/" style="float:right;"><span class="">Price: Free</span></a>			 -->
+	<!-- <a href="/" style="float:right;"><span class="">Hubs: All</span></a> -->
+	<!-- <a href="/" style="float:right;"><span class="">Browse: Series</span></a> -->
+
 
 	{% if userprofile and userprofile.comments.all %}
 	<a href="/user/{{userprofile.username}}/comments">
@@ -271,6 +278,8 @@
 	{% endif %}
 
 	{% if not userprofile and filterby != "subscriptions" %}
+	<span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span>
+	
 	<!-- 
 	<a href="" class="right" style="margin:0;">
 	  <span style="margin:0;" class="">Limbo</span></a>
@@ -310,17 +319,19 @@
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Hubs </a> -->
     <!-- <i class="fa fa-envelope-o"style="font-size: 20px; color:#bbbbbb;"></i> -->
 
+
       </div>
+      
     </div>
     {% else %}     <!-- endif userprofile -->
-	{% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}	
+    {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}    
     <div class="large-3 small-3 columns">
 	  <i class="fi-magnifying-glass right"
 	     style="position: relative;
-		    right: 28px;
-		    width: 0;
-		    top: 12px;
-		    color: #cccccc;"
+	  	    right: 28px;
+	  	    width: 0;
+	  	    top: 12px;
+	  	    color: #cccccc;"
 	     ></i>
 	  <input placeholder="" name="query" value="{{query}}"
 		 type="text" class="right searchbar" form="search-form"
@@ -334,6 +345,23 @@
 </div>
 
 
+
+    <style>
+      .vote-column {
+      display:none;
+      }
+
+      .post-header {
+      width:100%;
+      }
+
+      .hubs {
+      margin-top: -10px!important;
+      }
+      #search-hubs {
+      margin-top: 22px!important;
+      }
+    </style>    
 {% if userprofile.username == "rayalez" %}    
 <script>    
 function Scrolldown() {
@@ -343,3 +371,5 @@ function Scrolldown() {
 //window.onload = Scrolldown;
 </script>
 {% endif %}    
+
+

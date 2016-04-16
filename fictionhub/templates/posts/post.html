@@ -21,7 +21,24 @@
 {% endblock main_header %}
 
 
-{% block content %}
+  {% block content %}
+
+<style>
+  article {
+  
+  margin-top: 5px;
+  background: white;
+  padding: 40px;
+
+  background: rgba(255,255,255,0.8);
+//  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+//  border: 1px solid rgba(0,0,0,.09);
+//  border-radius: 3px;  
+}  
+</style>
+  
+
+
 <div id="page"  class="postPage">
   <div class="row" id="posts">
     <div class="large-12 columns post-columns">
@@ -168,5 +185,6 @@
   window.location.replace($(this).val());
   });
 </script>
+
 {% endblock content %}
 

@@ -21,13 +21,15 @@
       {% endif %}
 
       {% if hub.hub_type = "hub" %}      
-      <a href="/hub/{{hub.slug}}/" class="hub-link" id="{{hub.slug}}">{{hub}}</a>
+      <a href="/hub/{{hub.slug}}/" class="hub-filter" id="{{hub.slug}}">{{hub}}</a> <!-- hub-link -->
       {% else %}
       {{hub}}
       {% endif %}	
 
-      {% if hub.hub_type == "hub" %}	
-	<span class="number-of-stories">{% numberofstories hub %}</span>
+      {% if hub.hub_type == "hub" %}
+      <!-- Hide number of stories -->
+      <!-- <span class="number-of-stories">{% numberofstories hub %}</span> -->
+      
 	<!-- hub.posts.all|length -->
 	<!-- 
 	<button class="button small fi-filter left filterhub"
@@ -51,16 +53,21 @@
 	      <span class="expand fi-plus"></span>  
 	      {% endif %}
 
-              <a href="/hub/{{child.slug}}/" class="hub-link" id="{{child.slug}}"> {{child.title}}</a>
+              <a href="/hub/{{child.slug}}/"
+		 class="hub-link hub-filter "
+		 id="{{child.slug}}"
+		 style="margin-left: 10px!important;"> {{child.title}}</a>
 			<span class="number-of-stories">{% numberofstories child %}</span>
 
-			<button class="button small fi-filter left hub-filter"
-				style="margin-top:8px;margin-left:0px;
-				       padding: 5px 5px 2px 5px;
-				       background: rgba(119, 119, 119, 0.2);
-				       color:#3d454b;"	  
-    				type="submit"
-				id="{{child.slug}}"></button>
+
+			<!-- Filter icon -->
+			<!-- <button class="button small fi-filter left hub-filter" -->
+			<!-- 	style="margin-top:8px;margin-left:0px; -->
+			<!-- 	       padding: 5px 5px 2px 5px; -->
+			<!-- 	       background: rgba(119, 119, 119, 0.2); -->
+			<!-- 	       color:#3d454b;"	   -->
+    			<!-- 	type="submit" -->
+			<!-- 	id="{{child.slug}}"></button> -->
 			<!-- 
 			<button class="button small right gray fi-check"
 				style="margin-right:0;margin-left:5px;padding: 10px 15px;"	  
@@ -188,7 +195,8 @@ cursor: pointer;
 
 .hub-filter {
   margin-top: -4px!important;
-  margin-left: -4px!important;
+margin-left: -4px!important;
+  margin-left: 4px!important;
   height: 48px!important;
   border-radius: 0!important;
 }

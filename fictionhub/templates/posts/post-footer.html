@@ -39,11 +39,6 @@
                       {% if post in downvoted %}downvoted{% endif %}"
     	       id="post-upvote-{{post.id}}"></a>
     	    <span class="score"> {{post.score}} </span>
-    	    <a href="/login/?next={{request.path}}"
-    	       class="fi-arrow-down downvote arrow
-    		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-    	       id="post-downvote-{{post.id}}"></a>
 	    
     </div>
 
@@ -110,6 +105,7 @@
 	<!-- Subscribe/unsubscribe button -->
 	{% if user.is_authenticated %}
 	  {% if not user == post.author %} <!-- if it's not my story' -->
+
 	    {% if post.author not in user.subscribed_to.all %} <!-- if not subscribed -->
 	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
 	       href="/user/{{post.author.username}}/subscribe">
@@ -123,8 +119,16 @@
 	      Unsubscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
 	    </a>
 	    <!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	     -->
-	    {% endif %}
-          {% endif %}
+            {% endif %}
+          
+
+	  {% else %} 	<!-- user == post.author -->
+	  <button class="small button usersubscribe" style="padding:10px;margin:0 10px;background-color:gray;cursor:auto;">
+	    Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
+	  </button>	    
+	  {% endif %}	<!-- user == post.author -->
+
+
         {% else %} <!-- if not authenticated then send to login -->
 	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
 	   href="/login/?next={{request.path}}">

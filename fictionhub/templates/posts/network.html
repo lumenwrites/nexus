@@ -10,6 +10,16 @@
 {% include "posts/subnav-browse.html" %}
 
 
+<div class="row">
+  <div class="large-12 small-12 columns">      
+    <textarea></textarea>
+  </div>
+</div>
+
+{% include "posts/editor.html" %}
+
+
+
 
 <style>
   p {
@@ -102,17 +112,6 @@
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
 	  <h1 class="left"> {{post.title}} </h1>
-
-	  <!-- 
-      	  <a href="/hub/{{hub.slug}}" id="{{hub.slug}}">
-	    <i class="fa fa-external-link"
-	       style="margin: 10px;
-		      font-size: 30px;
-		          //background: #DADADA;
-			  //padding: 10px;
-			  //border-radius: 4px;
-			  float:right;"
-	       aria-hidden="true"></i></a> -->
 	</a>
 	<hr/>
 	<div class="clearfix"></div>

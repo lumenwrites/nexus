@@ -137,8 +137,7 @@ console.log("yes");
         <div class="large-6 small-6 columns" id="mainMenu">
 	  <div style="float:right;">
 
-	  <ul><a href="/browse/"> Stories </a></ul>
-	  <!-- <ul><a href="/challenges/"> Challenges </a></ul> -->
+	  <ul><a href="/browse/"> Browse </a></ul>
 
 	  {% if user.is_authenticated %}
 	  {% if user.subscribed_to.count > 0 %}	  
@@ -146,8 +145,6 @@ console.log("yes");
 	    <a href="/subscriptions/new/"> Subscriptions </a>
 	  </ul> 
 	  {% endif %}
-	  <!-- <ul><a href="/posts/"> Hubs </a></ul> -->
-	  <!-- <ul><a href="/prompt/"> Writing Prompt </a></ul> -->
 
 	  
 	  <!-- User -->
@@ -247,6 +244,10 @@ console.log("yes");
   <script src="  {% static "/static/js/foundation/foundation.offcanvas.js" %}"></script>
   <script src="  {% static "/static/js/foundation/foundation.reveal.js" %}"></script>
   <script src="  {% static "/static/js/foundation/foundation.orbit.js" %}"></script>
+  <script src="  {% static "/static/js/foundation/foundation.tab.js" %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+  <script src="  {% static "/static/js/foundation/foundation.alert.js" %}"></script>    
 
   <!-- 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>

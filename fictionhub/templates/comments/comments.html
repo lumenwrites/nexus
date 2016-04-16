@@ -14,8 +14,8 @@
       <div style="float:right;">
 	<br/>
 	<button class="button small right" type="submit">Submit</button>
-	<div class="right comment-type">{{form.comment_type}}</div>
-	<div class="right comment-type">{{form.rating}}</div>		
+	<!-- <div class="right comment-type">{{form.comment_type}}</div> -->
+	<!-- <div class="right comment-type">{{form.rating}}</div>	 -->	
       </div>
     </form>
     {% else %}
@@ -39,15 +39,6 @@
 {% endif %}  
 </div>
 
-<!-- Comments or reviews -->
-{% if post.comments.all %}
-<div class="right">
-  <a href="{{post.get_absolute_url}}/comments/top#comments">
-    <span {% if filterby = "/comments" or filterby = "" %}class="bold"{% endif %}>Comments</span></a>	
-  <a href="{{post.get_absolute_url}}/reviews/top#comments">
-    <span {% if filterby = "/reviews" %}class="bold"{% endif %}>Reviews</span></a>	
-</div>
-{% endif %} <!-- end if chapter -->
 
 <div class="clearfix"></div>	
 <div class="comments">   
@@ -86,7 +77,7 @@
 	<!-- {{comment.score}} points  -->
 	<!-- 2 hours ago -->
       </div>
-      <div class="comment-body">      
+      <div class="comment-body">
 	{{comment | markdownify | safe }}
       </div>
       <div class="comment-footer">
