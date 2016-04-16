@@ -27,7 +27,9 @@ p {
 
 /* line 35, ../sass/style.scss */
 .row {
-  max-width: 64em;
+    max-width: 64em;
+    max-width: 52rem!important;
+
 }
 
 /* line 39, ../sass/style.scss */
