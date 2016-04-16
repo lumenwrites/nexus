@@ -3,6 +3,8 @@
 import re
 from string import punctuation
 
+from django.http import HttpResponseRedirect, HttpResponse
+
 from django.shortcuts import render
 from django.db.models import Count
 
@@ -16,6 +18,9 @@ def home(request):
        request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/browse/')        
+        
     # fictionhub includes rational        
     if rational:
         posts = Post.objects.filter(published=True, rational=rational, post_type="story")

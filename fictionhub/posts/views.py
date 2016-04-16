@@ -66,6 +66,7 @@ from wordpress_xmlrpc.methods.users import GetUserInfo
 def posts(request, rankby="hot", timespan="all-time",
             filterby="", hubslug="", username="", challenge="",
           prompt=""):
+
     # for user profile navbar
     userprofile = []
     filterurl = ""
