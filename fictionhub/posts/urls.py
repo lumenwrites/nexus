@@ -103,6 +103,11 @@ urlpatterns = [
     # Sandbox
     url(r'^sandbox/$', views.sandbox),
 
+    # Prompts
+    url(r'^writing-prompts/$', views.writing_prompts),
+    # Editorial
+    url(r'^prompt/$', views.prompt),
+    url(r'^promptsrepost/$', views.prompts_repost),
 ]
 
 

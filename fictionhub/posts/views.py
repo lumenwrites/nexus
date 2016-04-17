@@ -1036,3 +1036,66 @@ class SeriesList(ListView):
     
 
     
+
+import praw    
+
+    # prompts
+def writing_prompts(request):
+    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+    subreddit = r.get_subreddit('writingprompts')
+    prompts = subreddit.get_new(limit=128)
+    new_prompts = list(prompts)
+    prompts = []
+
+    max_age = 5*60
+    # less than 5 replies, more than 1 upvote and less than 60 minutes old
+    for prompt in new_prompts:
+        # 1 4 5*60
+        if (prompt.score > 1) \
+        and ((prompt.num_comments-2) < 2) \
+        and (age(prompt.created_utc) < max_age):
+            if prompt.num_comments > 0:
+                prompt.num_comments -= 2 # remove 2 fake replies
+            prompt.age = round(age(prompt.created_utc)/60,1)
+            prompt.permalink = prompt.permalink.replace("www", "zn")
+            prompt.sort = prompt.score * (1-(prompt.age/5))
+            prompts.append(prompt)
+
+    # sort by score
+    prompts.sort(key=lambda p: p.score, reverse=True)
+            
+        
+    return render(request, 'posts/writing-prompts.html', {
+        'prompts': prompts[:16],
+        'max_age': max_age,        
+    })
+
+
+
+# Editorial
+def prompt(request):
+    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+    subreddit = r.get_subreddit('writingprompts')
+    prompts = subreddit.get_new(limit=64)
+    new_prompts = list(prompts)
+    prompts = []
+
+    # less than 5 replies, more than 1 upvote and less than 60 minutes old
+    for prompt in new_prompts:
+        if (prompt.score > 1) \
+        and ((prompt.num_comments-2) < 4) \
+        and (age(prompt.created_utc) < 5*60):
+            if prompt.num_comments > 0:
+                prompt.num_comments -= 2 # remove 2 fake replies
+            prompts.append(prompt)
+
+    # sort by score
+    prompts.sort(key=lambda p: p.score, reverse=True)
+
+    prompt = prompts[0]
+
+    promptslist = ["\n\n" + p.title for p in prompts]
+    return HttpResponse(promptslist) #prompt.title
+    
+
+    
