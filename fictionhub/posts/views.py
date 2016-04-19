@@ -1047,6 +1047,9 @@ def writing_prompts(request):
     new_prompts = list(prompts)
     prompts = []
 
+
+    hot_prompts = list(subreddit.get_hot(limit=50))
+    
     max_age = 5*60
     # less than 5 replies, more than 1 upvote and less than 60 minutes old
     for prompt in new_prompts:
@@ -1057,9 +1060,18 @@ def writing_prompts(request):
             if prompt.num_comments > 0:
                 prompt.num_comments -= 2 # remove 2 fake replies
             prompt.age = round(age(prompt.created_utc)/60,1)
-            prompt.permalink = prompt.permalink.replace("www", "zn")
+            # prompt.permalink = prompt.permalink.replace("www", "zn")
             prompt.sort = prompt.score * (1-(prompt.age/5))
+
+            # prompt position
+            for index, p in enumerate(hot_prompts):
+                if prompt.title == p.title:
+                    setattr(prompt, "position", index)
+                    # prompt.position == index
+
             prompts.append(prompt)
+                
+
 
     # sort by score
     prompts.sort(key=lambda p: p.score, reverse=True)

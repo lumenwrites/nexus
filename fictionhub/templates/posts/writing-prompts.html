@@ -7,51 +7,6 @@
 {% endblock %}
 
 {% block content %}
-<div id="page"  class="postPage">
-  <div class="row">
-    <div class="large-12 columns">
-      <!-- <h1> Prompts </h1> -->
-      <!-- 
-      <div class="panel">
-	<p>
-	  Prompts that are
-	  less than {{max_age}} minutes old,
-	  have more than one upvote,
-	  and less than 5 replies.
-	  Sorted by score.
-	</p>
-      </div>
-      -->
-      {% for prompt in prompts %}
-      <article>
-	<div class="vote-column">
-	  <div class="vote">
-	    <div class="score"> <b> {{prompt.score}} </b> </div>
-	  </div>
-	</div>	
-	<a href="{{prompt.permalink}}" class="bold black">{{prompt.title}}</a>
-	<br/>
-	<!-- <button class="button small" style="padding: 5px 10px;margin:5px;" type="submit">Reply</button> -->
-
-	<!-- Score: {{prompt.score}} &nbsp; 	 -->
-	<!-- Replies: {{prompt.num_comments}} &nbsp; -->
-	<!-- Age: {{prompt.age}} hours &nbsp; 	 -->
-	{{prompt.num_comments}} replies &nbsp;
-	{{prompt.age}} hours &nbsp; 	
-
-
-	<!-- Score: <b>{{prompt.score}}</b> -->
-	<!-- submitted {# {{prompt.created_utc | age}} #} -->
-	<!-- <span class="grey">Upvotes: {{prompt.ups}} -->
-	<!--   Downvotes:{{prompt.downs}}	</span> -->
-	<!-- <p>{{prompt.selftext}}</p> -->
-	<hr/>
-      </article>
-      {% endfor %}	
-
-    </div> <!-- End 12 columns -->
-</div>	 <!-- End row -->
-</div>	 <!-- end page -->
 
 <style>
 <!-- a { -->
@@ -68,5 +23,167 @@ display:none;
 }
 
 </style>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<style>
+  .fi-comment {
+  float:none;
+  }
+  .panel {
+  padding: 5px;
+  margin-top:5px;
+  }
+
+  .CodeMirror {
+  background: white!important;
+  border-radius: 0!important;
+  }
+
+
+  .comment-reply {
+    margin-top:20px;
+  }
+  .editor-toolbar {
+  background: white!important;
+  border-radius: 0px!important;
+  }
+
+  .editor-statusbar {
+      border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8;
+    background: #f2f2f2;
+  color: #333333;
+  padding: 5px;
+  margin-top:-1px;
+  }
+</style>
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <h1 style="float:left;"> Writing Prompts </h1>
+
+      <a href="http://fictionhub.io/" class="logo" style="float:right;">
+	<span style="font-weight:100;">fiction</span><span style="font-weight:400;">hub</span>
+	<img src="/static/img/logo_128x128.png"
+	     style="width: 40px;"/>
+      </a>
+	  <div class="clearfix"></div>
+	  
+      <!-- <div class="alert-box panel" data-alert> -->
+	<!-- Browse prompts that give you	most attention -->
+	<!-- and write stories using a beautiful distraction-free editor. -->
+
+	<!-- <p>Maximize the amount of upvotes and attention your story receives.  </p> -->
+
+	<!-- <p> -->
+	<!-- Shows you prompts that -->
+	<!-- were submitted in the last 5 hours, -->
+	<!-- with at least one upvote, and -->
+	<!-- less than 2 replies(sorted by score). -->
+	<!-- </p>	 -->
+	<!-- <p> -->
+	<!--   Prompts that are -->
+	<!--   less than 5 hours old, -->
+	<!--   have at least one upvote, -->
+	<!--   and less than 2 replies. -->
+	<!--   Sorted by score. -->
+	<!-- </p> -->
+      <!-- 	<a href="#" class="close" style="font-size: 41px; top: 20px;">&times;</a> -->
+      <!-- </div> -->
+
+
+      {# {% include "posts/editor.html" %} #}
+
+      
+
+      {% for prompt in prompts %}
+      <div class="prompt">
+	<article  style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+			 box-shadow: 0 1px 4px rgba(0,0,0,.04);
+			 border: 1px solid rgba(0,0,0,.09);
+			 border-radius: 3px;">
+
+	  <a href="{{prompt.permalink}}" class="bold black">{{prompt.title}}</a>
+	  <br/>
+
+	  <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+				    margin-bottom: -11px;
+				    margin-left: -11px;
+				    width: calc(100% + 22px);">
+
+	    <i class="fa fa-hashtag"></i>  {{prompt.position}}	 &nbsp;	
+	    <i class="fi-arrow-up"></i> {{prompt.score}} <!-- points -->	 &nbsp;
+	    <i class="fi-comment"></i> {{prompt.num_comments}} <!-- replies --> &nbsp;
+	    <i class="fi-clock"></i> {{prompt.age}} <!-- hours --> &nbsp;
+	    <a class="show-reply" style="float:right;"><b>Write a story!</b></a>
+	    <div class="clearfix"></div>		  
+	  </div>
+
+
+	  <div class="clearfix"></div>		  
+	</article>
+
+	<div class="comment-reply" style="display:none;">
+	  <form
+	     action="https://api.reddit.com/api/comment"
+	     method="post">
+	    <textarea type="text" name="text" id="{{prompt.fullname}}"></textarea>
+
+	    <!-- <input type="text" name="thing_id" value="{{prompt.fullname}}" style="display:none;"> -->
+	  <!-- <button class="button small" -->
+	  <!-- 	  style="border-radius:0; -->
+	  <!-- 		 background-color: #3D455B; -->
+	  <!-- 		 padding: 10px 20px;" -->
+	  <!-- 	  type="submit" -->
+	  <!-- 	  >Submit</button> -->
+	  </form>
+	  <div class="clearfix"></div>
+	</div>
+      </div>
+      {% endfor %}	
+
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- end page -->
+
+
+
+<!-- editors -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+
+
+<script>
+
+    $('textarea').each(function() {
+    	var simplemde = new SimpleMDE({
+	    element: this,
+ autosave: {
+        enabled: true,
+        uniqueId: $(this).attr('id'),
+        delay: 1000,
+    },    
+	});
+    	simplemde.render();	
+    })
+	
+
+    //Toggle reply
+    $('.show-reply').click(function () {
+    if ($(this).parent().parent().parent().find('.comment-reply').is(":visible")) {
+	$('.comment-reply').hide();
+    } else {
+	$('.comment-reply').hide();
+        $(this).parent().parent().parent().find('.comment-reply').show();
+    }
+    });
+  
+</script>
 {% endblock content %}
+
+
 
