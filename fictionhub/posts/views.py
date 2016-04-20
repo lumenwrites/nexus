@@ -1,6 +1,8 @@
 # standard library imports
 import re
 from string import punctuation
+# to round views
+import math
 
 # for rss
 from xml.etree.ElementTree import Element, SubElement, tostring 
@@ -202,11 +204,20 @@ def posts(request, rankby="hot", timespan="all-time",
         hubtitle = hub.title
         solohub = True
 
-    # orangemind
-    orangemind = False
-    # if request.META['HTTP_HOST'] == "orangemind.io":
-        # orangemind = True
-    
+
+    view_count = 0
+    score = 0        
+    try:
+        # try is for solo hub, remove try lateer
+        for post in userprofile.posts.all():
+            view_count += post.views
+            score += post.score
+    except:
+        pass
+
+    if view_count > 1000:
+        view_count = str(math.floor(view_count/1000)) + "K"
+
         
     return render(request, 'posts/posts.html',{
         'posts':posts,
@@ -225,7 +236,8 @@ def posts(request, rankby="hot", timespan="all-time",
         'prompt':prompt,
         'solohub':solohub,
         'hubtitle':hubtitle,
-        'orangemind':orangemind
+        'view_count':view_count,
+        'score':score,
     })
 
 

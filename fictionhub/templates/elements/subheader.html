@@ -1,0 +1,345 @@
+{% load staticfiles %}
+{% load markdownify %}
+
+
+<!-- lumiverse style -->
+
+
+<style>
+
+
+.subheader .rss-icon {
+    font-size:48px;
+    padding: 3px 10px!important;
+    padding: 3px 10px 3px 11px !important;    
+}
+
+
+
+.user-info {
+    float:left;
+
+    .avatar {
+	float:left;
+	width:70px;
+	border-radius: 4px;
+	margin:10px;
+	margin-left:0;
+    }
+
+    .username {
+	font-weight: bold;
+	color: white;
+	margin: 2px 0 0 0px;
+	text-shadow: 1px 1px 2px black;	
+    }
+
+    .stats {
+	float:left;
+	color: lighten($bright,20%);
+    }
+
+    i {
+	margin: 0 4px;
+	color: lighten($bright,20%);
+    }
+    
+}
+
+.user-info {
+padding:0;
+height: 94px;
+}
+
+.stats {
+color:white;
+}
+
+.subheader .buttons {
+    margin-top: 20px;
+    float:right;
+}
+.subheader .buttons .button {
+    padding:20px;
+}
+
+
+/* Purchase */
+.purchase {
+    box-shadow: inset 0px 0px 0px 1px green;
+    span {
+	color: green;
+    }
+}
+
+/* Tagline */
+.tagline {
+    width: 100%;
+    padding: 20px;
+    color: #fefefe;
+    background-color: rgba(10, 10, 10, 0.5);
+
+}
+
+
+/* Browse */
+/* Featured */
+
+#rayalez-img {
+    margin-top:-40px;
+}
+@media screen and (orientation:portrait) {
+    #rayalez-img {
+	margin-top:0;
+    }
+}
+
+</style>
+
+
+
+<!-- Subnav -->
+<div style="background:url(/static/img/bg.jpg);
+	    background-position-y: -320px;
+	    display:none;
+	    {% if solohub or userprofile %}
+	    display:block;
+	    {% endif %}	    
+	    ">
+<div class="row">
+  <div class="large-12 small-12 columns subheader"
+       style="padding-top:20px;padding-bottom: 14px;">
+    {% if solohub %}
+    <h1 style="color:#172630;font-weight:bold;color:white;margin-left:0px;margin-top: 2px;
+	       text-shadow: 1px 1px 2px black;" class="left"> {{hubtitle}} </h1>
+    <!-- <h2 style="color:#172630"> Subtitle </h1> -->
+    <!-- 
+    <button class="button small right"
+	    style="margin-right:0px;
+		   background: rgba(47, 51, 51, 0.9);"		   
+    	    type="submit">Submit</button>
+    -->
+    <!-- 
+    <button class="button small right"
+	    style="margin-right:10px;
+		   background: rgba(47, 51, 51, 0.9);"
+    	    type="submit">Subscribe</button>
+    -->
+    <br/>
+    <br/>    
+
+    {% elif userprofile %}
+
+
+  <div class="large-4 small-4 columns user-info">
+    <a href="/user/{{userprofile.username}}">
+
+    <!-- Avatar -->
+    {% if userprofile.username == "rayalez" %}
+    <img src="{% static "/static/img/signature.png" %}"
+	 class="avatar"/>
+    </a>
+    {% endif %}
+    
+
+	  
+      <div class="left">
+	<h1 class="username"> {{userprofile.username}} </h1>
+	<div class="stats">    
+	  <i class="fi-torsos-all stats-icon"></i>
+	  {{userprofile.subscribers.count}}
+
+	  <i class="fi-arrow-up stats-icon"></i>
+	  {{score}}
+	  <i class="fi-eye stats-icon"></i>
+	  {{view_count}}
+	</div>
+      </div>
+    </a>
+  </div>
+
+  
+    
+    <br/>
+
+    {% if userprofile.username != "rayalez" and False %}
+    <br/>
+    <div style="margin-left:4px; float:left;">
+      <i class="fi-graph-bar stats-icon"></i>
+      <span style="color:white;">
+	<i class="fi-arrow-up stats-icon"></i>
+	{{userprofile.karma}}
+      </span>
+      <span style="color:white;">
+	<i class="fi-torsos-all stats-icon"></i>
+	{{userprofile.subscribers.count}}
+      </span>
+      <span style="color:white;">
+	<i class="fi-eye stats-icon"></i>
+	2.1K
+      </span>
+      <!-- + --> <!-- K --><!-- M -->
+	<!-- <span class="fi-page-multiple  stats-icon">23</span> -->
+	<!-- <span class="fi-background-color stats-icon">316</span> -->
+    </div>
+    <style>
+      .subheader .button.small {
+      margin-top: -40px;
+      }
+    </style>
+    {% endif %}    
+
+  <div class="large-8 small-8 columns">
+    <div class="buttons">
+
+    <!-- Subscribe button -->
+	{% if user.is_authenticated %}	
+	    {% if userprofile not in subscribed_to %}	
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/subscribe">
+              Subscribe
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
+    	    {% else %}
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/unsubscribe">
+              Subscribed
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
+	    {% endif %}
+        {% else %} <!-- if not authenticated -->
+            <a class="button small right subscribers-button"
+               href="/login/?next={{request.path}}"
+	       data-reveal-id="login-popup">
+              Subscribe
+	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
+	    </a>
+	{% endif %}   
+
+	    <!-- Other buttons -->
+
+	    {% if userprofile.website %}
+            <a class="button small right subscribers-button"
+               href="{{userprofile.website}}">
+	      Website
+	    </a>
+	    {% endif %}
+
+
+	    {% if userprofile.username == "rayalez" %}
+	    <!-- 
+            <a class="button small right subscribers-button"
+               href="/user/{{userprofile.username}}/store">
+	      Store
+	    </a>
+	    -->
+
+	    <!-- 
+            <a class="button small right subscribers-button"
+               href="http://webcomics.io/user/rayalez/">
+	      Videos
+	    </a>
+	    -->
+	    
+            <!-- <a class="button small right subscribers-button" -->
+            <!--    href="https://www.patreon.com/rayalez"> -->
+	    <!--   Patreon -->
+	    <!-- </a> -->
+	    {% endif %}
+	    
+
+ 
+    <style>
+      .subheader {
+      margin:0;
+      }
+      .subheader h1 {
+      color:#172630;
+      font-weight:bold;
+      color:white;
+      margin: 2px 0 0 0px;
+      text-shadow: 1px 1px 2px black;
+      /*margin: -12px 0 -12px 10px;*/
+      }
+      .avatar {
+      width:64px;
+      border-radius: 4px;
+      float:left;
+      margin-top: -8px;
+      margin-bottom: -2px;
+      /*width: 90px;*/
+      /*width: 124px;*/
+    width: 80px;
+    border-radius: 4px;
+    float: left;
+    margin-top: -8px;
+    margin-bottom: -2px;
+    /* width: 90px; */
+    /* width: 124px; */
+    margin: 6px;
+
+      }
+      .subscribers {
+      background: rgba(255, 255, 255, 0.86);
+      padding: 0px 8px;
+      float: right;
+      margin-top: -2px;
+      margin-bottom: -4px;
+      }
+      .subscribers-button {
+      margin-right:0px;
+      background: rgba(47, 51, 51, 0.9)!important;
+      padding: 17px 14px!important;
+      /* position: absolute!important; */
+      /* right: 15px!important; */
+      /* top: 20px!important; */
+      border-radius:0;
+      margin-top: -27px;
+      margin-left:10px;
+      }
+      
+      .subheader-link {
+      font-size: 20px;
+      margin-right:10px;
+      color: rgba(255, 255, 255, 0.64);
+      color: white;
+      }
+      .subtitle {
+      float:left;font-size:20px;
+      color: rgba(255, 255, 255, 0.64);
+      color:white;
+      }
+      .stats-icon {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.80);
+      /*color:white;*/
+      }
+      
+    </style>
+
+    {% endif %}    
+  </div>
+
+
+  </div>
+
+</div>
+</div> <!-- end buttons -->
+
+
+  <!-- Tagline -->
+  {% if userprofile.about %}
+<div class="tagline">
+  <div class="row">
+        <div class="large-12 small-12 columns" style="color:#fefefe;">
+	  {{userprofile.about }}
+	</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+  {% endif %}
+
+
+</div>
+
+

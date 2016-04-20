@@ -1,228 +1,10 @@
 {% load staticfiles %}
+{% load markdownify %}
+
+{% if solohub or userprofile %}
+{% include "elements/subheader.html" %}
+{% endif %}
 <!-- Subnav -->
-<div style="background:url(/static/img/bg.jpg);
-	    background-position-y: -320px;
-	    display:none;
-	    {% if solohub or userprofile %}
-	    display:block;
-	    {% endif %}	    
-	    ">
-<div class="row">
-  <div class="large-12 small-12 columns subheader"
-       style="padding-top:20px;padding-bottom: 14px;">
-    {% if solohub %}
-    <h1 style="color:#172630;font-weight:bold;color:white;margin-left:0px;margin-top: 2px;
-	       text-shadow: 1px 1px 2px black;" class="left"> {{hubtitle}} </h1>
-    <!-- <h2 style="color:#172630"> Subtitle </h1> -->
-    <!-- 
-    <button class="button small right"
-	    style="margin-right:0px;
-		   background: rgba(47, 51, 51, 0.9);"		   
-    	    type="submit">Submit</button>
-    -->
-    <!-- 
-    <button class="button small right"
-	    style="margin-right:10px;
-		   background: rgba(47, 51, 51, 0.9);"
-    	    type="submit">Subscribe</button>
-    -->
-    <br/>
-    <br/>    
-
-    {% elif userprofile %}
-
-    <!-- Avatar -->
-    {% if userprofile.username == "rayalez" %}
-    <a href="/u/rayalez">
-    <img src="{% static "/static/img/signature.png" %}"
-	 class="avatar"/>
-    </a>
-    <a href="/u/{{userprofile.username}}">
-      <h1 class="left"
-	  style="margin-left:10px;"> Ray Alez </h1>
-    </a>
-
-    {% else %}    
-    <a href="/u/{{userprofile.username}}">
-      <h1 class="left" style="margin-top:0px;" > {{userprofile.username}} </h1>
-      <!-- Change margin depending on avatar -->
-    </a>
-    {% endif %}
-    
-    
-    <br/>
-
-    {% if userprofile.username != "rayalez" and False %}
-    <br/>
-    <div style="margin-left:4px; float:left;">
-      <i class="fi-graph-bar stats-icon"></i>
-      <span style="color:white;">
-	<i class="fi-arrow-up stats-icon"></i>
-	{{userprofile.karma}}
-      </span>
-      <span style="color:white;">
-	<i class="fi-torsos-all stats-icon"></i>
-	{{userprofile.subscribers.count}}
-      </span>
-      <span style="color:white;">
-	<i class="fi-eye stats-icon"></i>
-	2.1K
-      </span>
-      <!-- + --> <!-- K --><!-- M -->
-	<!-- <span class="fi-page-multiple  stats-icon">23</span> -->
-	<!-- <span class="fi-background-color stats-icon">316</span> -->
-    </div>
-    <style>
-      .subheader .button.small {
-      margin-top: -40px;
-      }
-    </style>
-    {% endif %}    
-
-    <!-- Subscribe button -->
-	{% if user.is_authenticated %}	
-	    {% if userprofile not in subscribed_to %}	
-            <a class="button small right subscribers-button"
-               href="/user/{{userprofile.username}}/subscribe">
-              Subscribe
-	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
-	    </a>
-    	    {% else %}
-            <a class="button small right subscribers-button"
-               href="/user/{{userprofile.username}}/unsubscribe">
-              Unsubscribe
-	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
-	    </a>
-	    {% endif %}
-        {% else %} <!-- if not authenticated -->
-            <a class="button small right subscribers-button"
-               href="/login/?next={{request.path}}"
-	       data-reveal-id="login-popup">
-              Subscribe
-	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
-	    </a>
-	{% endif %}   
-
-	    <!-- Other buttons -->
-
-	    {% if userprofile.website %}
-            <a class="button small right subscribers-button"
-               href="{{userprofile.website}}">
-	      Website
-	    </a>
-	    {% endif %}
-
-	    {% if userprofile.about %}	    
-            <a class="button small right subscribers-button"
-               href="/user/{{userprofile.username}}/about">
-	      About
-	    </a>
-	    {% endif %}
-
-
-	    {% if userprofile.username == "rayalez" %}
-	    <!-- 
-            <a class="button small right subscribers-button"
-               href="/user/{{userprofile.username}}/store">
-	      Store
-	    </a>
-	    -->
-
-            <a class="button small right subscribers-button"
-               href="http://webcomics.io/user/rayalez/">
-	      My Comics
-	    </a>
-
-            <!-- <a class="button small right subscribers-button" -->
-            <!--    href="https://www.patreon.com/rayalez"> -->
-	    <!--   Patreon -->
-	    <!-- </a> -->
-	    {% endif %}
-
-
-
-	    {% if userprofile.username != user.username %}
-	    {% if user.is_authenticated %}
-            <a class="button small right subscribers-button"
-	       href="/message/{{userprofile.username}}/"
-	       style="padding-bottom: 14px!important;">
-	      <i class="fa fa-envelope-o"
-		 style="font-size: 24px;color:white;margin-top:8px;line-height: 0px;"></i>
-	    </a>
-            {% else %} <!-- if not authenticated -->
-            <a class="button small right subscribers-button"
-	       href="/login/?next={{request.path}}"
-	       style="padding-bottom: 14px!important;">
-	      <i class="fa fa-envelope-o"
-		 style="font-size: 24px;color:white;margin-top:8px;line-height: 0px;"></i>
-	    </a>
-	    {% endif %}   
-
-	    {% endif %}	    
- 
-    <style>
-      .subheader {
-      margin:0;
-      }
-      .subheader h1 {
-      color:#172630;
-      font-weight:bold;
-      color:white;
-      margin: 2px 0 0 0px;
-      text-shadow: 1px 1px 2px black;
-      /*margin: -12px 0 -12px 10px;*/
-      }
-      .avatar {
-      width:64px;
-      border-radius: 4px;
-      float:left;
-      margin-top: -8px;
-      margin-bottom: -2px;
-      /*width: 90px;*/
-      /*width: 124px;*/
-      }
-      .subscribers {
-      background: rgba(255, 255, 255, 0.86);
-      padding: 0px 8px;
-      float: right;
-      margin-top: -2px;
-      margin-bottom: -4px;
-      }
-      .subscribers-button {
-      margin-right:0px;
-      background: rgba(47, 51, 51, 0.9)!important;
-      padding: 17px 14px!important;
-      /* position: absolute!important; */
-      /* right: 15px!important; */
-      /* top: 20px!important; */
-      border-radius:0;
-      margin-top: -27px;
-      margin-left:10px;
-      }
-      
-      .subheader-link {
-      font-size: 20px;
-      margin-right:10px;
-      color: rgba(255, 255, 255, 0.64);
-      color: white;
-      }
-      .subtitle {
-      float:left;font-size:20px;
-      color: rgba(255, 255, 255, 0.64);
-      color:white;
-      }
-      .stats-icon {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.80);
-      /*color:white;*/
-      }
-      
-    </style>
-
-    {% endif %}    
-  </div>    
-</div>
-</div>
 <div class="subnav">  
   <div class="row">
     {% if userprofile %}
@@ -237,8 +19,8 @@
     Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>    
     {% else %}    
       <div class="{% if userprofile %}profile{% endif %} rank-types">
-	<a href="{{filterurl}}/hot/"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
-	<a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
+	<a href="{{filterurl}}/hot/" id="hot"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
 	  <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}>
@@ -286,7 +68,10 @@
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
 
     {% if userprofile.username == "rayalez" %}
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Fiction </a> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" -->
+    <!--    style="margin: 10px 0;text-transform:none;margin-right:10px;"> Short stories </a> -->
+    <!-- <a href="/user/{{userprofile.username}}/about" -->
+    <!--    style="margin: 10px 0;text-transform:none;"> On writing </a> -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Essays </a>             -->
     <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a>     -->
     <!-- <a href="http://orangemind.io/" style="margin: 10px 0;"> Website </a> -->
@@ -321,38 +106,13 @@
 		 id="search-input">
 	<!-- <a class="hubs-dropdown right" id="toggle-hubs">Hubs</a> -->
     </div>
+    
     {% endif %}
 
-    {% endif %}
-  </div>
-</div>
+  <div class="clearfix"></div>
 
 
 
-    <style>
-      .vote-column {
-      display:none;
-      }
-
-      .post-header {
-      width:100%;
-      }
-
-      .hubs {
-      margin-top: -10px!important;
-      }
-      #search-hubs {
-      margin-top: 22px!important;
-      }
-    </style>    
-{% if userprofile.username == "rayalez" %}    
-<script>    
-function Scrolldown() {
-     window.scroll(0,120); 
-}
-
-//window.onload = Scrolldown;
-</script>
 {% endif %}    
-
-
+  </div>    
+  </div>    
