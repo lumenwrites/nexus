@@ -4,14 +4,6 @@
 {% load firstparagraph %}
 {% load age %}
 
-{% block main_header %}
-  {% if orangemind %}
-  <!-- nothing -->
-  {% else %}
-  {{ block.super }}
-  {% endif %}
-{% endblock main_header %}
-
 {% block content %}
 <div id="page" class="posts-page">
 
@@ -43,11 +35,7 @@
 <div class="row" id="posts">
   <div class="large-12 small-12 columns posts">
 
-    <!-- orangemind -->
-    {% if orangemind %}    
-    {% include "posts/orangemind-header.html" %}
-    {% endif %}        
-    
+
 {% if challenge.state = "open" %}
       <div class="panel">
 	<p>Challenge "<a href="{{challenge.get_absolute_url}}">{{challenge.title}}</a>" is still receiving submissions.

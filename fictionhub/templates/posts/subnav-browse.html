@@ -6,18 +6,13 @@
 {% endif %}
 <!-- Subnav -->
 <div class="subnav">  
-  <div class="row">
-    {% if userprofile %}
-    <div class="large-6 small-6 columns">
-    {% elif solohub %}
-    <div class="large-12 small-12 columns">
-    {% else %}      
-    <div class="large-9 small-9 columns"> <!-- large-7 -->
-    {% endif %}            
 
-    {% if challenge %}
-    Challenge: <a href="{{challenge.get_absolute_url}}" class="challenge-title">{{challenge.title}}</a>    
-    {% else %}    
+
+  <div class="row">
+
+    <div class="large-9 small-9 columns">
+
+      <!-- Rank -->
       <div class="{% if userprofile %}profile{% endif %} rank-types">
 	<a href="{{filterurl}}/hot/" id="hot"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
@@ -33,86 +28,40 @@
 	<a href="{{filterurl}}/top/month/">
 	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
 	<!-- While website is not being updated that often.
-	<a href="{{filterurl}}/top/day">
-	  <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
-	 -->
+	     <a href="{{filterurl}}/top/day">
+	       <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
+	     -->
 	{% endif %} <!-- end rankby top, showing timespans -->
-     {% endif %}    <!-- end if not challengestate -->
-	<!-- <a href="{{filterurl}}/new/"><span {% if rankby = "new" %}class="bold"{% endif %}>Limbo</span></a>	 -->
 
 
-
-	{% if not userprofile and filterby != "subscriptions" %}
+	{% if not userprofile and filterby != "subscriptions" and not solohub %}
 	<span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span>
 	
-	<!-- 
-	<a href="" class="right" style="margin:0;">
-	  <span style="margin:0;" class="">Limbo</span></a>
-	 -->
 	{% endif %}	
-      </div>
-    </div>
-    
-
-    {% if userprofile %}
-    <div class="large-6 small-6 columns">
-      <div class="right">
-    <!-- <span class="fi-graph-bar stats-icon"></span> -->
-    <!-- <span class="fi-arrow-up stats-icon">{{userprofile.karma|add:"124"}}</span> -->
-    <!-- <span class="fi-torsos-all stats-icon">17</span> -->
-    <!-- <span class="fi-eye stats-icon">8.1K+ <\!-- K -\-><\!-- M -\-></span> -->
-    <!-- <span class="fi-page-multiple  stats-icon">23</span> -->
-    <!-- <span class="fi-background-color stats-icon">316</span> -->
-
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a> -->
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Website </a> -->
-
-    {% if userprofile.username == "rayalez" %}
-    <!-- <a href="/user/{{userprofile.username}}/about" -->
-    <!--    style="margin: 10px 0;text-transform:none;margin-right:10px;"> Short stories </a> -->
-    <!-- <a href="/user/{{userprofile.username}}/about" -->
-    <!--    style="margin: 10px 0;text-transform:none;"> On writing </a> -->
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Essays </a>             -->
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Stats </a>     -->
-    <!-- <a href="http://orangemind.io/" style="margin: 10px 0;"> Website </a> -->
-    <!-- <a href="http://orangemind.io/book/" style="margin: 10px 0;" class="store"> Store </a>     -->
-    <!-- <a href="https://www.patreon.com/rayalez" style="margin: 10px 0;"> Patreon </a> -->
-    {% endif %}    
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Store </a> -->
-
-    {% if userprofile.about and not userprofile.username == "rayalez"  %}
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;" class="about">About</a> -->
-    {% endif %}
-    
-    <!-- <a href="/user/{{userprofile.username}}/about" style="margin: 10px 0;"> Hubs </a> -->
-    <!-- <i class="fa fa-envelope-o"style="font-size: 20px; color:#bbbbbb;"></i> -->
+      </div> <!-- Close rank types -->
+    </div> <!-- Close 9 columns -->
 
 
-      </div>
+      {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub and not userprofile %}
+
+      <div class="large-3 small-3 columns">
+	<!-- Search -->
+	<i class="fi-magnifying-glass right"
+	   style="position: relative;
+	  	  right: 28px;
+	  	  width: 0;
+	  	  top: 12px;
+	  	  color: #cccccc;"
+	   ></i>
+	<input placeholder="" name="query" value="{{query}}"
+	       type="text" class="right searchbar" form="search-form"
+	       id="search-input">
+      </div> <!-- Close 4 columns -->
       
-    </div>
-    {% else %}     <!-- endif userprofile -->
-    {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub %}    
-    <div class="large-3 small-3 columns">
-	  <i class="fi-magnifying-glass right"
-	     style="position: relative;
-	  	    right: 28px;
-	  	    width: 0;
-	  	    top: 12px;
-	  	    color: #cccccc;"
-	     ></i>
-	  <input placeholder="" name="query" value="{{query}}"
-		 type="text" class="right searchbar" form="search-form"
-		 id="search-input">
-	<!-- <a class="hubs-dropdown right" id="toggle-hubs">Hubs</a> -->
-    </div>
-    
-    {% endif %}
+      {% endif %}
 
-  <div class="clearfix"></div>
+      <div class="clearfix"></div>
 
+  </div>   <!-- Close row -->
+</div>   <!-- Close subnav -->  
 
-
-{% endif %}    
-  </div>    
-  </div>    
