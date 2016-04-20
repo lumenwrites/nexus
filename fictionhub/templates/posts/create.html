@@ -2,6 +2,47 @@
 {% load staticfiles %}
 {% block content %}
 
+<style>
+  .panel {
+  padding: 5px;
+  margin-top:5px;
+  }
+
+  .CodeMirror {
+  background: white!important;
+  border-radius: 0!important;
+  }
+
+  .editor-toolbar {
+  background: white!important;
+  border-radius: 0px!important;
+  }
+
+  .editor-statusbar {
+      border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8;
+    background: #f2f2f2;
+  color: #333333;
+  padding: 5px;
+  margin-top:-1px;
+  }
+
+  #id_title {
+  padding: 24px 10px;
+  }
+
+  #id_title, .CodeMirror, textarea {
+  font-size: 21px!important;
+  }
+
+  .button.small {
+    border-radius: 0;
+    padding: 15px 25px;
+  }
+</style>
+
+
 <div id="page"  class="postPage">
 
 <div class="row">
