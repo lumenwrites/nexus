@@ -123,7 +123,7 @@
 	{% if user.is_authenticated %}      
 	<a class="show-reply">reply</a>
 	{% else %}
-	<a class="show-reply" data-reveal-id="login-popup">reply</a>
+	<a data-reveal-id="login-popup">reply</a>
 	{% endif %}        
 	{% if comment.author == user %}        
 	<a href="/comment/{{comment.id}}/edit?next={{request.path}}">edit</a>
