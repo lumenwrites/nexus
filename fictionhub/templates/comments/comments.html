@@ -1,6 +1,44 @@
 {% load staticfiles %}
 {% load markdownify %}
 
+	  <style>
+	    .comment-vote {
+	    padding: 4px 6px;
+	    border-radius: 3px;
+	    margin-bottom:0px;
+	    }
+	    .comment-body {
+	    /*width: calc(100% - 40px);*/
+	    /*float:right;*/
+	    padding: 0;
+
+	    }
+
+	    .comment-footer {
+	    text-align:right;
+	    }
+
+	    .comment-box {
+	    border: 1px solid #CCC;
+	    box-shadow:none;
+	    padding-bottom: 10px;	    
+	    }
+
+	    .comment-dark, .score {
+	    color: #3d454b;
+	    }
+
+    .comment-upvoted span, .comment-upvoted .score, .comment-upvoted i {
+	color: #a2a8ab;	
+	    }
+
+.comment-reply .button.small {
+   border-radius: 0;
+    background: #3D455B;
+}	    
+	  </style>
+
+
 <!-- Comments -->
 <div class="row comments">
   <div class="large-12 columns">
@@ -13,7 +51,10 @@
       </div>
       <div style="float:right;">
 	<br/>
-	<button class="button small right" type="submit">Submit</button>
+	<button class="button small right" type="submit"
+		style="background-color: #3D455B;
+		       padding: 16px 28px;
+		       border-radius:0;">Submit</button>
 	<!-- <div class="right comment-type">{{form.comment_type}}</div> -->
 	<!-- <div class="right comment-type">{{form.rating}}</div>	 -->	
       </div>
@@ -26,9 +67,10 @@
 
     <!-- Ranking -->
 
+<!--
 <div class="left">
 {% if post.comments.all %}
-  {% if not filterurl == "reviews" %} <!-- Hide hot if reviews -->
+  {% if not filterurl == "reviews" %} 
   <a href="{{post.get_absolute_url}}{{filterby}}/hot#comments">
     <span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>	
   {% endif %}
@@ -38,7 +80,7 @@
     <span {% if rankby = "top" %}class="bold"{% endif %}>Top</span></a>	
 {% endif %}  
 </div>
-
+ -->
 
 <div class="clearfix"></div>	
 <div class="comments">   
@@ -66,30 +108,42 @@
 	  </div>
 	</div>
 
-      <div class="comment-header">
-	<!-- {% if not comment.leaf %}<a class="comment-collapse">[-]</a>{% endif %}    -->
+      <div class="comment-body">      
+	{{comment | markdownify | safe }}
+
+
+	<div class="comment-footer">
 	<span class="bold">
 	  <a class="black" href="/user/{{comment.author.username}}">{{comment.author}}</a>
 	</span>
-	{% if comment.rating %}
-	<div class="comment-rating" id="{{comment.rating}}"></div>
-	{% endif %}        	
-	<!-- {{comment.score}} points  -->
-	<!-- 2 hours ago -->
-      </div>
-      <div class="comment-body">
-	{{comment | markdownify | safe }}
-      </div>
-      <div class="comment-footer">
+
+
+	
 	{% if user.is_authenticated %}      
 	<a class="show-reply">reply</a>
 	{% endif %}        
-	<a href="{{comment.get_absolute_url}}#comments">permalink</a>
 	{% if comment.author == user %}        
 	<a href="/comment/{{comment.id}}/edit?next={{request.path}}">edit</a>
 	<a href="/comment/{{comment.id}}/delete?next={{request.path}}">delete</a>
+	{% else %}        
+	<!--  -->
+	<span class="comment-dark" style="margin-left: 5px;font-weight: bold;">
+
+	    <a href="/login/?next={{request.path}}"
+	       class="comment-upvote
+		      {% if comment in user.comments_upvoted.all %}comment-upvoted{% endif %}"
+	       id="comment-upvote-{{comment.id}}">
+	      <span class="score">{{comment.score}}</span>
+	      <!-- upvote s/d --> <!-- points -->	    
+	      <i class="comment-dark fi-arrow-up"></i>
+	    </a>
+
+	</span>
+	
 	{% endif %}        
       </div>
+      </div>
+	  <div class="clearfix"></div>		    	
       <!-- Reply form -->
       <div class="comment-reply" style="display:none;">
 	<form action="/comment-submit/{{comment.id}}?next={{request.path}}"
@@ -340,7 +394,7 @@ $(document).ready(function(){
     //Toggle reply
     $('.show-reply').click(function () {
 	$('.comment-reply').hide()
-	$(this).parent().parent().find('.comment-reply').toggle();
+	$(this).parent().parent().parent().find('.comment-reply').toggle();
     });
     //cancel
     $('.cancel').click(function () {

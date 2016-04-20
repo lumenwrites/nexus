@@ -7,7 +7,7 @@ class CommentForm(ModelForm):
     
     class Meta:
         model = Comment
-        fields = ['body', 'comment_type', 'rating',] # 'comment_type',
+        fields = ['body', 'rating',] # 'comment_type',
         widgets = {
             'rating' : forms.Select(attrs={'id':'rating'})
         }

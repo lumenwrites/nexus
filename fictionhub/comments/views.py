@@ -34,6 +34,7 @@ def comment_submit(request, comment_id):
             comment.author = request.user
             comment.parent = Comment.objects.get(id=comment_id)
             comment.post = comment.parent.post
+            comment.comment_type = "comment"
             comment.save()
             # Send Email
             # send_comment_email_notification(comment)
@@ -102,7 +103,7 @@ def comment_delete(request, comment_id):
     if request.user != comment.author:
         return HttpResponseRedirect('/')        
     try:
-        path = '/story/'+comment.parent.post.slug + '/' + comment.post.slug + '#comments'
+        path = '/story/'+comment.parent.post.slug + '#comments'
     except:
         path = '/story/'+comment.post.slug + '#comments'
 
