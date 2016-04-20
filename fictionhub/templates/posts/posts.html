@@ -103,7 +103,8 @@
 	<hr />
       </header>
       <!-- Post Body -->
-      {{post | markdownify:"True" | safe }}
+      {# {{post | markdownify:"True" | safe }} #}
+      {{post | markdownify:"True" | firstparagraph | safe  }} <!-- firstparagraph -->      
       <div class="clearfix"></div>
       
       <!-- 
