@@ -30,7 +30,7 @@
   padding: 24px 10px;
   }
 
-  #id_title, .CodeMirror {
+  #id_title, .CodeMirror, textarea {
   font-size: 21px!important;
   }
 
@@ -71,12 +71,16 @@
 
 
       <!-- Title -->
-      <div style="{% if not story.children.all %}
-				   width:calc(100% - 200px);
-				   {% else %}
-				   width:calc(100% - 320px);				   
-				   {% endif %}            				   
-				   float:left;margin:0;">
+      <div style="{% if action != "chapter_create" %}
+                       {% if not story.children.all %}
+			   width:calc(100% - 200px);
+		       {% else %}
+  		           width:calc(100% - 320px);				   
+		       {% endif %}
+		  {% else %}
+  		      width: 100%;				   		  
+		  {% endif %}            				   		       
+		  float:left;margin:0;">
 	{{form.title}}
       </div>
 
