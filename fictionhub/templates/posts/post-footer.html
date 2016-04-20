@@ -1,43 +1,37 @@
-<div class="post-footer-signup panel padding-10">
-  <!-- Orangemind -->
-  {% if orangemind %}
-      <!-- Follow orangemind -->
-    <span style="float:left"><p>Liked this post? Subscribe to updates!</p></span>
-    <div id="mc_embed_signup" style="/* margin-left:60; float: right;*/">
-      <form action="//orangemind.us7.list-manage.com/subscribe/post?u=0f23c7984541d915d1108a16e&amp;id=6b00e5a9f8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <div class="mc-field-group">
-	  
-	  <!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	     -->
 
-          <input class="small button"
-                 id="subscribeButton"
-                 name="subscribe"
-                 type="submit"
-                 value="Subscribe"/>
-          <input class="required email"
-                 id="mce-EMAIL"
-                 name="EMAIL"
-                 placeholder="Enter your email"
-                 type="email"
-                 value=""/>
-        </div>
+<style>
+  .post-footer .button.small {
+  padding: 13px 20px;
+  border-radius: 0;
+  background:#3D455B;
+  height: 42px!important;
+  margin: 0;
+  overflow: hidden;
+  margin-bottom: -10px;
+  }
 
-        <div class="clear" id="mce-responses">
-          <div class="response" id="mce-error-response" style="display:none">&nbsp;</div>
-          <div class="response" id="mce-success-response" style="display:none">&nbsp;</div>
-        </div>
-      </form>
-    </div>
-  {% else %} <!-- if not orangemind -->
+  .button.upvote .fi-arrow-up {
+  color: white;
+      margin-right: 4px;
+    line-height: 0;
+  }
+
+  .rss-icon {
+  padding: 12px 9px!important;
+  margin-left:5px!important;
+  }
+.fi-rss:before {
+  line-height: 16px;
+  color:white;
+}  
+</style>
+
+<div class="post-footer-signup  post-footer panel padding-10">
   <div class="left stats" style="margin: 6px;">
 	<!-- Vote in footer -->
     <div style="float: left;
     		margin-right: 8px;"> <!-- vote -->
-    	    <a href="/login/?next={{request.path}}"
-    	       class="fi-arrow-up upvote arrow
-    		      {% if post in upvoted %}upvoted{% endif %}
-                      {% if post in downvoted %}downvoted{% endif %}"
-    	       id="post-upvote-{{post.id}}"></a>
+    	    <i class="fi-arrow-up arrow"></i>
     	    <span class="score"> {{post.score}} </span>
 	    
     </div>
@@ -47,19 +41,6 @@
       <span style="float:left"> {{post.comments.count}} </span>
     </a>
     
-	    <!-- 
-	<span class="fi-arrow-up"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.upvoters.count}}	  
-	</span>
-	    
-	<span class="fi-arrow-down"
-	      style="font-size: 20px;
-		     margin-right:10px;">
-	  {{post.downvoters.count}}
-	</span>
-	-->
 	
 	<span class="fi-eye"
 	      style="font-size: 20px;
@@ -67,17 +48,6 @@
 	  {{post.views}}
 	</span>
 
-
-	{% if post.children.all %}
-	<!-- 
-	<span class="fi-page-multiple"
-	      style="font-size: 20px;
-		     margin-right:10px;"
-	      title="Number of chapters">
-	  {{post.children.all|length}}
-	</span>
-	 -->
-	{% endif %}	    
 
 	<span class="fi-background-color"
 	      style="font-size: 20px;
@@ -92,51 +62,157 @@
       {% endfor %}
   </div>
 
-	<div class="author">
-	  <div style="margin: 6px;float:left;" class="post-footer-username">
-	    {% if post.author.external_url and post.author.website %}
-	    <a href="{{post.author.website}}">{{post.author}}</a>
-	    {% else %}
-	    <a href="/user/{{post.author.username}}">{{post.author}}</a>
-	    {% endif %}	  
-	    <span class="userkarma">{{post.author.karma}}</span>
-	  </div>
-
-	<!-- Subscribe/unsubscribe button -->
-	{% if user.is_authenticated %}
-	  {% if not user == post.author %} <!-- if it's not my story' -->
-
-	    {% if post.author not in user.subscribed_to.all %} <!-- if not subscribed -->
-	    <a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	       href="/user/{{post.author.username}}/subscribe">
-	      Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	    </a>
-	    <!-- 
-	    <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	    --> 
-	    {% else %} <!-- if subscribed then unsubscribe -->
-	    <a class="small button usersubscribe unsubscribe" style="padding:10px;margin:0 10px;"
-	       href="/user/{{post.author.username}}/unsubscribe">
-	      Unsubscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	    </a>
-	    <!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span>	     -->
-            {% endif %}
-          
-
-	  {% else %} 	<!-- user == post.author -->
-	  <button class="small button usersubscribe" style="padding:10px;margin:0 10px;background-color:gray;cursor:auto;">
-	    Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	  </button>	    
-	  {% endif %}	<!-- user == post.author -->
 
 
-        {% else %} <!-- if not authenticated then send to login -->
-	<a class="small button usersubscribe" style="padding:10px;margin:0 10px;"
-	   href="/login/?next={{request.path}}">
-	  Subscribe <span class="subscribers">{{post.author.subscribers.count}}</span>
-	</a>
-	<!-- <span class="rss-icon"><a href="/story/{{post.slug}}/feed"><i class="fi-rss large"></i></a></span> -->
-	{% endif %}
+  <div class="right">
+    <a class="small button" href="/user/{{post.author.username}}">
+      {{post.author}}
+
+      <!-- Avatar -->
+      {# {% if post.author.avatar %}      #}
+      {# {% thumbnail post.author.avatar "40x40" crop="center" as im %} #}
+	    <!-- <img src="{{im.url}}" class="avatar"/><br/> -->
+	{# {% endthumbnail %}	   #}
+      {# {% endif %}      	     #}
+    </a>
+
+    {% if not user == post.author %}
+        {% if user.is_authenticated %}
+        <a class="small button upvote {% if post in user.upvoted.all %}upvoted{% endif %}"
+           id="post-upvote-{{post.id}}"    
+           href="/login/?next={{request.path}}">
+          {% if post in user.upvoted.all %}
+              Upvoted
+          {% else %}      
+              <i class="fi-arrow-up"></i>Upvote
+          {% endif %}
+        </a>
+        {% else %}
+	<a class="small button upvote" data-open="login-popup">
+	  <i class="fi-arrow-up"></i>Upvote</a>
+        {% endif %}	
+    {% else %}    
+	<!-- Nothing -->
+	<a class="small button upvote disabled">
+	  <i class="fi-arrow-up"></i>Upvote</a> 
+    {% endif %}    
+	
+
+      {% if not user == post.author %}
+          {% if user.is_authenticated %}
+              {% if user not in post.author.subscribers.all %}	
+		   <a class="small button" 
+		      href="/user/{{post.author.username}}/subscribe">
+		     Subscribe
+		   </a>
+	      {% else %}
+		   <a class="small button" 
+		      href="/user/{{post.author.username}}/unsubscribe">
+		     Subscribed
+		   </a>
+	      {% endif %}	
+	  {% else %}	   
+              <a class="button" data-open="login-popup">
+		Subscribe</a>
+	      <!-- href="/login/?next={{request.path}}" -->
+	  {% endif %}	   
+      {% else %}
+	      <!-- Nothing -->
+	      <a class="small button disabled" >
+		Subscribe
+	      </a>
+      {% endif %}
+
+              <a class="button small rss-icon"
+		 href="/user/{{post.author.username}}/feed/atom/">
+	      <i class="fi-rss large"></i></a>
         </div> <!-- End Author -->
 	<div class="clearfix"></div>
-	{% endif %} <!-- endif orangemind -->
+
       </div>
+
+<script>
+$(document).ready(function(){
+    // getting csrf token.
+    function getCookie(name) {
+	var cookieValue = null;
+	if (document.cookie && document.cookie != '') {
+	    var cookies = document.cookie.split(';');
+	    for (var i = 0; i < cookies.length; i++) {
+		var cookie = jQuery.trim(cookies[i]);
+		// Does this cookie string begin with the name we want?
+		if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		    break;
+		}
+	    }
+	}
+	return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    // Upvote
+    function upvote(postId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/upvote/",
+	    data: {"post-id": postId},
+	    success: function(){
+		var upvoteLink = $('#post-upvote-'+postId);
+		upvoteLink.addClass('upvoted');
+		upvoteLink.html("Upvoted");		
+		upvoteLink.off("click");
+		upvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return unupvote(postId);
+		})
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+
+    
+
+    // Unupvote
+    function unupvote(postId) {
+	$.ajax({
+	    type: "POST",
+	    url: "/unupvote/",
+	    data: {"post-id": postId},
+	    success: function(){
+		var upvoteLink = $('#post-upvote-'+postId);
+		upvoteLink.removeClass('upvoted');
+		upvoteLink.html("<i class='fi-arrow-up'></i>Upvote");				
+		upvoteLink.off("click");
+		upvoteLink.click(function(){
+		    var postId = parseInt(this.id.split("-")[2]);
+		    return upvote(postId);
+		})
+	    },
+	    headers: {
+		'X-CSRFToken': csrftoken
+	    }
+	});
+	return false;
+    }
+
+    
+    {% if user.is_authenticated %}
+    //Connect functions
+    $("a.upvote").click(function(){
+	var postId = parseInt(this.id.split("-")[2]);
+	return upvote(postId);
+    })
+
+    // Upvoted
+    $("a.upvoted").click(function(){
+	var postId = parseInt(this.id.split("-")[2]);
+	return unupvote(postId);
+    })
+    
+    {% endif %}
+})
+</script>

@@ -4,6 +4,10 @@ from . import views
 from .views import MainFeed
 
 urlpatterns = [
+
+    # Feed
+    url(r'^user/(?P<username>[^\.]+)/feed/atom/$', views.UserFeed()),    
+
     # Store
     url(r'^user/rayalez/store/$', views.item),
     
@@ -64,7 +68,7 @@ urlpatterns = [
     # Shorthand
     url(r'^u/(?P<username>[^\.]+)$', views.posts,
         {'filterby': 'user'}),    
-    
+
     
     # Subscriptions
     url(r'^subscriptions/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,

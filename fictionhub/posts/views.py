@@ -9,6 +9,7 @@ from django.utils.feedgenerator import Atom1Feed
 from django.core.urlresolvers import reverse
 
 
+
 import json # for temporary post api. Replace with REST.
 import feedparser
 from bs4 import BeautifulSoup # to parse prompt
@@ -391,7 +392,7 @@ def unupvote(request):
     post = get_object_or_404(Post, id=request.POST.get('post-id'))
     post.score -= 1
     post.save()
-    post.author.karma = 1
+    post.author.karma -= 1
     post.author.save()
     user = request.user
     user.upvoted.remove(post)
@@ -786,8 +787,8 @@ def post_publish(request, story):
     post.published = True
     post.save()
 
-    if request.user.username == "rayalez":
-        return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
+    # if request.user.username == "rayalez":
+    #     return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
 
     # Send Email
     # author = post.author
@@ -933,6 +934,40 @@ def sandbox(request):
     
     
 
+
+# rss
+# rss
+class UserFeed(Feed):
+    title = "fictionhub latests stories"
+    link = "/"
+    feed_type = Atom1Feed
+
+    def get_object(self, request, username):
+        return get_object_or_404(User, username=username)
+
+    def title(self, obj):
+        return "fictionhub: %s latest stories" % obj.username
+
+    def link(self, obj):
+        return "http://fictionhub.io/user/" + obj.username
+        # return "http://fictionhub.io/" +  str(item.get_absolute_url())
+    
+    def items(self, obj):
+        return Post.objects.filter(published=True, author=obj).order_by("-pub_date")
+
+    def item_title(self, item):
+        return item.title
+    
+    def item_pubdate(self, item):
+        return item.pub_date
+
+    def item_description(self, item):
+        md = Markdown()
+        return md.convert(item.body)
+
+
+
+    
 # TODO: replace with CBVs
 # from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView
 # from django.shortcuts import render
@@ -1195,3 +1230,5 @@ def prompts_repost(request):
     return render(request, 'posts/test.html', {
         'teststring': teststring,
     })
+
+
