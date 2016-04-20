@@ -1,5 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+  .panel {
+  padding: 5px;
+  margin-top:5px;
+  }
+
+  .CodeMirror {
+  background: white!important;
+  border-radius: 0!important;
+  }
+
+  .editor-toolbar {
+  background: white!important;
+  border-radius: 0px!important;
+  }
+
+  .editor-statusbar {
+      border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8;
+    background: #f2f2f2;
+  color: #333333;
+  padding: 5px;
+  margin-top:-1px;
+  }
+
+  #id_title {
+  padding: 24px 10px;
+  }
+
+  #id_title, .CodeMirror {
+  font-size: 21px!important;
+  }
+
+  .button.small {
+    border-radius: 0;
+    padding: 15px 25px;
+  }
+</style>
 
 
 
@@ -29,20 +68,19 @@
       <form action="/story/{{story.slug}}/{{chapter.slug}}/edit" method="post">
       {% endif %}	
       {% csrf_token %}
-      {{form.title}}
-      <div class="editor">
-	{{form.body}}
+
+
+      <!-- Title -->
+      <div style="{% if not story.children.all %}
+				   width:calc(100% - 200px);
+				   {% else %}
+				   width:calc(100% - 320px);				   
+				   {% endif %}            				   
+				   float:left;margin:0;">
+	{{form.title}}
       </div>
-      <br/>
 
-      <!-- Hub multiselect -->
-      {% if action != "chapter_create" and action != "chapter_edit" %}
-      <div class="set-hubs" style="width:calc(100% - 400px); float:left;margin:0;">
-	{{form.hubs}}
-      </div>
-      {% endif %}
-
-
+      <!-- Chapters -->
       {% if not story.children.all %}
           {% if action != "chapter_create" and action != "chapter_edit"  %}
           <!-- Add Chapter -->
@@ -52,7 +90,8 @@
           		height: 50px;
           		width:180px;
           		border-radius: 0px;
-          		float:right;">
+          		float:right;
+			background: rgb(132, 140, 150);">
           	Add Chapter</a>
           {% endif %}                  
       {% else %}            
@@ -86,6 +125,35 @@
           {% endif %}
       
       {% endif %}      
+
+
+      <div class="clearfix"></div>
+
+
+      
+      <!-- Editor -->
+      <div class="editor">
+	{{form.body}}
+      </div>
+
+
+      <!-- Hub multiselect -->
+      {% if action != "chapter_create" and action != "chapter_edit" %}
+      <br/>
+      <div class="set-hubs">
+	<!--
+	  style="{% if not story.children.all %}
+				   width:calc(100% - 200px);
+				   {% else %}
+				   width:calc(100% - 320px);				   
+				   {% endif %}            				   
+				   float:left;margin:0;"
+	  -->
+	{{form.hubs}}
+      </div>
+      {% endif %}
+
+
       
 
 
@@ -93,7 +161,7 @@
       <div class="clearfix"></div>      
 
 
-      <br/>
+      <!-- <br/> -->
 
       <!-- Buttons -->
       <!-- Delete Story/Chapter Buttons -->
