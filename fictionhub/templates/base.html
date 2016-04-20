@@ -224,7 +224,8 @@ console.log("yes");
 	  </ul>
 	  {% else %}
 	  <ul style="margin-right:0;">
-	    <a href="/login/?next={{request.path}}"> Login/Signup </a>
+	    <a href="/login/?next={{request.path}}"
+	       data-reveal-id="login-popup"> Login/Signup </a>
 	  </ul>
 	  
 	  {% endif %}
@@ -235,6 +236,45 @@ console.log("yes");
 
   {% block content %}
   {% endblock %}
+
+
+
+  <div class="reveal reveal-modal" id="login-popup" data-reveal
+       aria-hidden="true" role="dialog">
+
+  <div class="row">
+    <div class="large-5 columns">
+      <!-- Login -->
+      <h2> Login </h2>
+      <form method="post" action="/authenticate/?next={{request.path}}">{% csrf_token %}
+	<label for="id_username">Username:</label>
+	<input id="id_username" maxlength="254" name="username" type="text">
+	<label for="id_password">Password:</label>
+	<input id="id_password" name="password" type="password">
+	<input type="submit" class="button small" value="login">
+	<input type="hidden" name="next" value="">
+      </form>
+    </div>
+    
+    <div class="large-5 columns">
+      <!-- Register -->
+      <h2> Sign Up </h2>
+      <form method="post" action="/register/?next={{request.path}}">{% csrf_token %}
+	<input id="id_username" maxlength="30" name="username"
+	       placeholder="Username" type="text">
+	<input id="id_email" name="email" placeholder="E-Mail" type="text">
+	<input id="id_password1" name="password1" placeholder="Password (8+ symbols)" type="password">
+	<input id="id_password2" name="password2" placeholder="Repeat Password" type="password">
+	<input type="submit" class="button small" value="submit">
+	<input type="hidden" name="next" value="">
+	<div class="clearfix"></div>
+	<div style="width:100%; height: 20px"></div>
+	<br>
+      </form>    
+    </div>
+  </div>
+</div>
+
 
   <footer class="main-footer">
   </footer>
@@ -275,3 +315,5 @@ console.log("yes");
 </script>
 </body>
 </html>
+
+

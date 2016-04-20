@@ -88,7 +88,7 @@
           {% endif %}
         </a>
         {% else %}
-	<a class="small button upvote" data-open="login-popup">
+	<a class="small button upvote" data-open="login-popup" data-reveal-id="login-popup">
 	  <i class="fi-arrow-up"></i>Upvote</a>
         {% endif %}	
     {% else %}    
@@ -112,7 +112,7 @@
 		   </a>
 	      {% endif %}	
 	  {% else %}	   
-              <a class="small button" data-open="login-popup">
+              <a class="small button" data-open="login-popup" data-reveal-id="login-popup">
 		Subscribe</a>
 	      <!-- href="/login/?next={{request.path}}" -->
 	  {% endif %}	   

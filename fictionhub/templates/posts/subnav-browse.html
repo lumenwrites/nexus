@@ -96,7 +96,8 @@
 	    {% endif %}
         {% else %} <!-- if not authenticated -->
             <a class="button small right subscribers-button"
-               href="/login/?next={{request.path}}">
+               href="/login/?next={{request.path}}"
+	       data-reveal-id="login-popup">
               Subscribe
 	      <!-- <span class="subscribers">{{userprofile.subscribers.count|add:"16"}}</span> -->
 	    </a>
