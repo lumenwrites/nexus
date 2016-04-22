@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.generic import RedirectView
 
 from . import views
 from .views import MainFeed
@@ -19,6 +20,9 @@ urlpatterns = [
 
     #book
     url(r'^book/$', views.book),
+
+
+    url(r'^wiki/rational-fiction$', RedirectView.as_view(url='/story/rational-fiction')),
 
     
     # Rank comments
