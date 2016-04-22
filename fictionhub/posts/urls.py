@@ -5,6 +5,8 @@ from .views import MainFeed
 
 urlpatterns = [
 
+    # top
+    url(r'^users/top/$', views.users),
     # Feed
     url(r'^user/(?P<username>[^\.]+)/feed/atom/$', views.UserFeed()),    
 

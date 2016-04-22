@@ -943,7 +943,15 @@ def sandbox(request):
         'posts':posts,
         'hubs': [],        
     })
-    
+
+
+def users(request):
+    users = User.objects.all().order_by('-karma')[:100]
+    return render(request, 'profiles/users.html',{
+        'users':users,
+        'hubs': [],        
+    })
+
     
 
 

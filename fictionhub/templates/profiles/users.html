@@ -10,9 +10,16 @@
 <div id="page"  class="postPage">
   <div class="row">
     <div class="large-12 columns">
-      <!-- <p> -->
-      <!-- 	{{test}} -->
-      <!-- </p> -->
+      <ol>
+	{% for user in users %}
+	<article style="background:white; padding:10px;">
+	  <li style="margin:0; margin-left:40px;">
+	    <a href="/user/{{user.username}}">{{user.username}}</a>
+	    <span style="float:right"> {{user.karma}}</span>
+	  </li>
+	</article>
+      {% endfor users %}
+      </ol>
       <div id="test">
       </div>
     </div> <!-- End 12 columns -->
