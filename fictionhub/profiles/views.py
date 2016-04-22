@@ -194,7 +194,7 @@ def stats(request):
             days[post.pub_date.day] += number_of_words_in_a_post
             this_month += number_of_words_in_a_post
     
-    return render(request, "profiles/test.html", {
+    return render(request, "profiles/stats.html", {
         'wordcount': wordcount,
         'this_month': this_month,        
         'pub_date':pub_date,

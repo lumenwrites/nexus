@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load markdownify %}
+
+{% block title %}
+    {{post.title}}
+{% endblock %}
+
+{% block content %}
+<div id="page"  class="postPage">
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+	Wordcount:{{wordcount}} <br/>
+	This Month:{{wordcount}} <br/>	
+	<!-- Pub Date: {{pub_date}} <br/> -->
+	{% for day in days %}
+	{{day}} 
+	{% endfor %}
+      </p>
+    </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+</div>	 <!-- End page -->
+{% endblock content %}
+
