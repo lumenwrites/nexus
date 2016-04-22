@@ -99,7 +99,14 @@
 	       style="margin: -25px  -25px 0  -25px ;
 		      width: calc(100% + 50px)!important;
 		      max-width: inherit;" />
+
+    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
+	  <h4>rationalfiction.io is the perfect place to publish, discover and discuss <a href="/story/rational-fiction">rational fiction</a></h4>
+    {% else %}	    
 	  <h4>Fictionhub is the perfect place to publish, discover and discuss awesome fiction</h4>
+	  {% endif %}	    
+	  
+
 	  <!-- <p>Read great fiction, share your stories, find your audience, receive great feedback.</p> -->
 
 	  <!-- <br/> -->
