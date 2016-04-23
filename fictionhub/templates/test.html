@@ -13,7 +13,13 @@
       <!-- <p> -->
       <!-- 	{{test}} -->
       <!-- </p> -->
-      <div id="test">
+    <div id="test">
+
+    <div class="progress" style="border:none;">
+    <span class="meter" style="width:0;"></span>
+    </div>
+	<textarea>
+	</textarea>
       </div>
     </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
@@ -21,5 +27,34 @@
 
 
 
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+
+<script>
+    var simplemde;
+var editor;
+$('textarea').each(function() {
+    simplemde = new SimpleMDE({
+	element: this,
+	autosave: {
+            enabled: true,
+            uniqueId: "123",
+            delay: 1000,
+	},    
+    });
+   simplemde.render();
+    
+    simplemde.codemirror.on("change", function(){
+	editor = $(simplemde.element.parentNode.children[4]).parent()
+	words = editor.find(".words").html();
+	console.log($(editor).find(".meter").css("width",words+"%"));	// .parent().find(".words").html()
+    });
+    
+})
+	
+</script>
 {% endblock content %}
 
