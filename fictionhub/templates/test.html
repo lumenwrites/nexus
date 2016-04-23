@@ -14,12 +14,12 @@
       <!-- 	{{test}} -->
       <!-- </p> -->
     <div id="test">
-
-    <div class="progress" style="border:none;">
-    <span class="meter" style="width:0;"></span>
-    </div>
 	<textarea>
-	</textarea>
+    </textarea>
+    <div class="progress" style="border:none; margin: 20px;">
+    <span class="meter" style="width:0; max-width:100%;"></span>
+    </div>
+    
       </div>
     </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
@@ -50,7 +50,13 @@ $('textarea').each(function() {
     simplemde.codemirror.on("change", function(){
 	editor = $(simplemde.element.parentNode.children[4]).parent()
 	words = editor.find(".words").html();
-	console.log($(editor).find(".meter").css("width",words+"%"));	// .parent().find(".words").html()
+	percent = (parseFloat(words)/(256*2))*100;
+	$(editor).find(".meter").css("width",percent+"%")
+	if (percent > 50) {
+	    $(editor).find(".meter").css("background","green");
+	} else {
+	    $(editor).find(".meter").css("background","#008CBA");	    
+	}
     });
     
 })

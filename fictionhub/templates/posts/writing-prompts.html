@@ -144,10 +144,6 @@
 	</article>
 
 	<div class="comment-reply" style="display:none;">
-	      <div class="progress" style="border:none;">
-		<span class="meter" style="width:0;"></span>
-	      </div>
-
 	  <form
 	     action="https://api.reddit.com/api/comment"
 	     method="post">
@@ -202,16 +198,6 @@ $('textarea').each(function() {
 	},    
     });
     simplemde.render();
-    
-    simplemde.codemirror.on("change", function(){
-	console.log($(this).find(".words").html());
-    });
-
-    simplemde.codemirror.on("change", function(){
-	editor = $(simplemde.element.parentNode.children[4]).parent()
-	words = editor.find(".words").html();
-	console.log($(editor).find(".meter").css("width",words+"%"));	// .parent().find(".words").html()
-    });
     
 })
 	
