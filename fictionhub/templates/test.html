@@ -16,8 +16,10 @@
     <div id="test">
 	<textarea>
     </textarea>
-    <div class="progress" style="border:none; margin: 20px;">
-    <span class="meter" style="width:0; max-width:100%;"></span>
+    <div class="progress" style="margin: 20px;border: 1px solid #7C868E;">
+    <div class="goal" style="width:50%; height:24px;border: 1px solid #7C868E;">
+    <span class="meter" style="width:0; max-width:200%;"></span>
+    </div>
     </div>
     
       </div>
@@ -50,9 +52,9 @@ $('textarea').each(function() {
     simplemde.codemirror.on("change", function(){
 	editor = $(simplemde.element.parentNode.children[4]).parent()
 	words = editor.find(".words").html();
-	percent = (parseFloat(words)/(256*2))*100;
+	percent = (parseFloat(words)/(256))*100;
 	$(editor).find(".meter").css("width",percent+"%")
-	if (percent > 50) {
+	if (percent > 100) {
 	    $(editor).find(".meter").css("background","green");
 	} else {
 	    $(editor).find(".meter").css("background","#008CBA");	    

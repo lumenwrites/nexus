@@ -7,13 +7,7 @@
 		    box-shadow: 0 1px 4px rgba(0,0,0,.04);
 		    border: 1px solid rgba(0,0,0,.09);
 		    border-radius: 3px;">
-
-
-
       
-      <img src="/static/img/logo_128x128.png" style="float:left;"/>
-      
-      <div style="float:right; width:calc(100% - 128px);"> <!-- not image -->
       <!-- Header -->
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
@@ -23,10 +17,9 @@
       </header>
 
       <!-- Post Body -->
-      Hub description. Ladida.
       {#{hub.description | safe }#} <!-- firstparagraph -->
       <!-- ladisadida -->
-      <a class="small button" style="border-radius:0;float:right;">Subscribe</a>
+      <a class="small button" style="border-radius:0;width:100%;">Subscribe</a>
       <div class="clearfix"></div>
       <!-- Post Footer -->
       <br/>
@@ -70,15 +63,15 @@
 	<div class="right">
 	</div>
 	<div class="clearfix"></div>
-	<!-- <hr/> -->
-      </div> <!-- end not image -->
-      <div class="clearfix"></div>
+      <!-- <hr/> -->
     </article>
     {% endfor %}
 
     <style>
       article {
     margin-top: 20px;
+    width: 28%;
+    float: left;
     margin: 20px;
 }
 .button.small {

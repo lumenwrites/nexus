@@ -37,13 +37,10 @@
   <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" />
   {% endif %}  
   
-  {% if orangemind %}
-  <link rel="stylesheet" href="{% static "/static/orangemind/css/main.css" %}" />
 
-  <meta property="og:image" content="http://orangemind.io/static/orangemind/img/orangemind-square-brain.png"> <!-- orangeMindLogo.png -->
-  <meta property="og:description" content="Short funny science fiction stories and other creative things. ">
-  {% endif %}  
-
+  <meta property="og:image" content="http://fictionhub.io/static/img/element-icon-fire.png">
+  <meta property="og:description" content="Fictionhub is the perfect place to publish, discover and discuss awesome fiction.">
+  
   <!-- jQuery -->
   <script src="{% static "/static/js/vendor/jquery.js" %}" type="text/javascript"></script>
 
@@ -136,7 +133,7 @@ console.log("yes");
         <div class="large-6 small-6 columns" id="mainMenu">
 	  <div style="float:right;">
 
-	  <ul><a href="/browse/"> Browse </a></ul>
+	  <!-- <ul><a href="/browse/"> Browse </a></ul> -->
 
 	  {% if user.is_authenticated %}
 	  {% if user.subscribed_to.count > 0 %}	  
@@ -157,6 +154,10 @@ console.log("yes");
 		 style="padding: 5px 10px;
 		 background-color: rgb(136, 136, 136);
 		 top: -2px;"></i> -->
+
+	      <a href="/browse/">
+		<i class="fa fa-compass"></i></a>			    
+
 	      <a href="/user/{{user.username}}">
 		<!-- <i class="fi-torso"></i> -->
 		<i class="fa fa-home"></i></a>			    
