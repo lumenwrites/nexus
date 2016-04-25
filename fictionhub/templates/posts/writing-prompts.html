@@ -81,7 +81,7 @@
 
       <div class="clearfix"></div>
 	  
-      <div class="alert-box panel" data-alert style="padding:20px;">
+      <div class="alert-box panel" data-alert style="padding:20px; display:none;">
 	<h1 style="float:left;"> Distraction-Free Writing Prompts </h1>
 	<hr/>
 	<p> Write stories using a beautiful and convenient markdown editor.</p>
@@ -143,11 +143,18 @@
 	  <div class="clearfix"></div>		  
 	</article>
 
-	<div class="comment-reply" style="display:none;">
+	<div class="comment-reply" style="display:none;"> <!--  -->
 	  <form
 	     action="https://api.reddit.com/api/comment"
 	     method="post">
 	    <textarea type="text" name="text" id="{{prompt.fullname}}"></textarea>
+
+	    <!-- Progress Bar -->
+	    <div class="progress" style="margin: 20px;border: 1px solid #7C868E;">
+	      <div class="goal" style="width:50%; height:24px;border: 1px solid #7C868E;">
+		<span class="meter" style="width:0; max-width:200%;"></span>
+	      </div>
+	    </div>
 
 	    <input type="text" name="thing_id" value="{{prompt.fullname}}" style="display:none;">
 	    <input type="text" name="modhash" value="0lur7wsvexafb0e8e7096804c86bdf2c1e8590950cab3ac48d" style="display:none;">	    
@@ -198,6 +205,20 @@ $('textarea').each(function() {
 	},    
     });
     simplemde.render();
+
+    // Progress Bar
+    simplemde.codemirror.on("change", function(){
+	editor = $(simplemde.element.parentNode.children[4]).parent()
+	words = editor.find(".words").html();
+	percent = (parseFloat(words)/(256))*100;
+	$(editor).find(".meter").css("width",percent+"%")
+	if (percent > 100) {
+	    $(editor).find(".meter").css("background","green");
+	} else {
+	    $(editor).find(".meter").css("background","#008CBA");	    
+	}
+    });
+
     
 })
 	

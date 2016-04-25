@@ -1,5 +1,5 @@
 # standard library imports
-import re
+import re, random
 from string import punctuation
 # to round views
 import math
@@ -105,6 +105,8 @@ def posts(request, rankby="hot", timespan="all-time",
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
         userprofile = get_object_or_404(User, username=username)
+        if rankby != "top":
+            rankby = "new"
         if request.user == userprofile:
             # If it's my profile - display all the posts, even unpublished.
             # fictionhub includes rational        
@@ -1090,7 +1092,69 @@ class SeriesList(ListView):
     paginate_by=15
     
 
+
+
+
+
+    # Daily
+
+def post_create_daily(request):
+    rational = False
     
+    
+    if request.method == 'POST':
+        form = PostForm(request.POST, storyslug=story)
+        if form.is_valid():
+            post = form.save(commit=False) # return post but don't save it to db just yet
+            post.author = request.user
+            # self upvote
+            post.score += 1
+            post.post_type = "story"
+            post.rational = False
+            post.daily = True            
+            post.save()
+            request.user.upvoted.add(post)            
+            post.hubs.add(*form.cleaned_data['hubs'])
+            hubs = post.hubs.all()
+            if posttype == "thread":
+                post.hubs.add(Hub.objects.get(slug=hubslug))
+            for hub in hubs:
+                if hub.parent and hub.parent.hub_type != "folder":
+                    post.hubs.add(hub.parent)
+                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
+                        post.hubs.add(hub.parent.parent)
+
+            # Hacky way to 
+            # for hub in form.cleaned_data['hubs']:
+            #     if hub.parent:
+            #         post.hubs.add(hub.parent)
+            #         if hub.parent.parent:
+            #             post.hubs.add(hub.parent.parent)
+            if story:
+                return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'/edit')
+            elif posttype == "post":
+                return HttpResponseRedirect('/post/'+post.slug+'/edit')
+            else:
+                return HttpResponseRedirect('/story/'+post.slug+'/edit')
+    else:
+        form = PostForm()
+        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
+
+        r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+        subreddit = r.get_subreddit('writingprompts')
+        prompts = list(subreddit.get_top_from_all(limit=128))
+        random.shuffle(prompts)        
+        prompt = prompts[0]
+
+        prompt.title = prompt.title.replace("[WP] ", "", 1)
+        
+
+    return render(request, 'posts/create-daily.html', {
+        'form':form,
+        'hubs':Hub.objects.all(),
+        'prompt':prompt,
+        'test': ""
+    })    
 
 import praw    
 
@@ -1110,7 +1174,7 @@ def writing_prompts(request):
     for prompt in new_prompts:
         # 1 4 5*60
         if (prompt.score > 1) \
-        and ((prompt.num_comments-2) < 2) \
+        and ((prompt.num_comments-2) < 3) \
         and (age(prompt.created_utc) < max_age):
             if prompt.num_comments > 0:
                 prompt.num_comments -= 2 # remove 2 fake replies
@@ -1130,10 +1194,16 @@ def writing_prompts(request):
 
     # sort by score
     prompts.sort(key=lambda p: p.score, reverse=True)
-            
+
+    prompts = prompts[:16]
+
+    
+    # random.shuffle(prompts)
+    # prompts = prompts[:1]
+    
         
     return render(request, 'posts/writing-prompts.html', {
-        'prompts': prompts[:16],
+        'prompts': prompts,
         'max_age': max_age,        
     })
 

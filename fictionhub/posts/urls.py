@@ -18,6 +18,9 @@ urlpatterns = [
     url(r'^post/add$', views.post_create,
         {'posttype':'post'}),
 
+    # Post
+    url(r'^write/$', views.post_create_daily),
+    
     #book
     url(r'^book/$', views.book),
 

@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<style>
+  .panel {
+  padding: 5px;
+  margin-top:5px;
+  }
+
+  .CodeMirror {
+  background: white!important;
+  border-radius: 0!important;
+  }
+
+  .editor-toolbar {
+  background: white!important;
+  border-radius: 0px!important;
+  }
+
+  .editor-statusbar {
+      border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8;
+    background: #f2f2f2;
+  color: #333333;
+  padding: 5px;
+  margin-top:-1px;
+  }
+
+  #id_title {
+  padding: 24px 10px;
+  }
+
+  #id_title, .CodeMirror, textarea {
+  font-size: 21px!important;
+  }
+
+  .button.small {
+    border-radius: 0;
+    padding: 15px 25px;
+  }
+</style>
+
+
+<div id="page"  class="postPage">
+  {% include "elements/stats.html" %}
+  <br/>
+  
+<div class="row">
+  <div class="large-12 columns">
+
+
+    <!-- Prompt -->
+    <div class="prompt">
+      <article  style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+		       box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		       border: 1px solid rgba(0,0,0,.09);
+		       border-radius: 3px;">
+	<span class="bold black">
+	  Prompt: {{prompt.title}}
+	</span>
+      </article>
+    </div>
+    <br/>
+
+
+    {{test}}
+    {{form.errors}}
+    {{form.non_field_errors}}
+    <!-- Submit Form -->
+
+    <form action="/story/add" method="post">{% csrf_token %}
+      {{form.title}}
+      <div class="editor">
+	<!-- **Prompt: {{prompt.title}}** -->
+	<textarea name="body"></textarea>
+      	<!-- {{form.body}} -->
+      <!-- Progress Bar -->
+    <div class="progress" style="margin: 0px;border: 1px solid #7C868E;">
+      <div class="goal" style="width:50%; height:24px;border: 1px solid #7C868E;">
+	<span class="meter" style="width:0; max-width:200%;"></span>
+      </div>
+    </div>
+    <!-- End Progress Bar -->
+
+      </div> <!-- end editor -->
+
+
+      <br/>
+      <div class="set-hubs">
+	{{form.hubs}}
+      </div>
+      
+      <button class="button small right" type="submit">Save</button>
+
+      <div class="clearfix"></div>
+      <div style="width:100%; height: 20px"></div>
+    </form>
+    <!-- End Submit Form -->
+  </div> <!-- End 12 columns -->
+</div>	 <!-- End row -->
+
+
+
+<!-- Calendar Streaks -->
+<script src="{% static "/static/js/js-chart-widgets.min.js" %}" type="text/javascript"></script>
+
+<script>
+new Calendar({
+  append_to: 'calendar',
+  num_weeks: 51,
+  day_size: 11,
+  data: [
+    ['2012-03-01', 123],
+    ['2012-03-02', 456.7],
+    // gaps are fine
+    ['2016-05-01', 234]
+  ],
+  color: '#005500'
+});  
+</script>
+
+<style>
+  .Calendar div {
+  margin:auto;
+  }
+</style>
+
+
+<!-- Editor -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+
+
+<!-- Select2 -->
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+
+
+
+<script>
+    var simplemde;
+var editor;
+$('textarea').each(function() {
+    simplemde = new SimpleMDE({
+	element: this,
+	autosave: {
+            enabled: false,
+            uniqueId: "123",
+            delay: 1000,
+	},    
+    });
+   simplemde.render();
+    // Progress Bar
+    //initialize
+	editor = $(simplemde.element.parentNode.children[4]).parent()    
+	words = editor.find(".words").html();
+	percent = (parseFloat(words)/(256))*100;
+	$(".meter").css("width",percent+"%")
+	if (percent > 100) {
+	    $(".meter").css("background","green");
+	} else {
+	    $(".meter").css("background","#008CBA");	    
+	}
+    
+    simplemde.codemirror.on("change", function(){
+	editor = $(simplemde.element.parentNode.children[4]).parent()
+	words = editor.find(".words").html();
+	percent = (parseFloat(words)/(256))*100;
+	$(".meter").css("width",percent+"%")
+	if (percent > 100) {
+	    $(".meter").css("background","green");
+	} else {
+	    $(".meter").css("background","#008CBA");	    
+	}
+    });
+    
+})
+
+
+    // Multiselect
+    $("#id_hubs").select2({
+	placeholder: "Select hubs", // (maximum 4)
+	allowClear: true,
+	maximumSelectionLength: 4    
+    })
+    
+    
+</script>
+
+
+
+
+
+
+<style>
+.set-hubs {
+    width: calc(100% - 120px);
+    width: 200px;
+    width: 100%;    
+    float:left;
+    margin-right: 420px;    
+}
+
+<!-- Container -->
+.select2-container--default
+.select2-selection--multiple, {
+    border-color: #cccccc;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #cccccc;
+}
+
+
+.select2-container--default .select2-selection--multiple {
+    height: 50px;
+}
+
+.set-hubs input {
+    margin-top: -7px!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    margin-top: 10px;
+}
+
+#id_hubs {
+    list-style-type: none;
+    width:600px;
+    width:100%;    
+    padding: 0px;
+}
+    #id_hubs {
+	list-style-type: none;
+	width:400px;
+	width:100%;
+}
+
+.select2-container {
+width:100%!important;
+}
+
+
+
+<!-- Tags -->
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #e4e4e4;
+    border: none!important;
+    border-radius: 0px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border-radius: 0px;
+    border: none;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+  box-shadow: none;
+}
+
+.CodeMirror {
+  background: none;
+}
+
+</style>
+
+{% endblock content %}
+

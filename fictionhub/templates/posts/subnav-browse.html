@@ -14,7 +14,9 @@
 
       <!-- Rank -->
       <div class="{% if userprofile %}profile{% endif %} rank-types">
+	{% if not userprofile %}
 	<a href="{{filterurl}}/hot/" id="hot"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	{% endif %}
 	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
