@@ -8,6 +8,7 @@
 
 {% block head_extra %}
 <meta name="description" content="{{post.body | firstparagraph | safe }}">
+<meta property="og:description" content="{{post.body | firstparagraph | safe }}">
 {% endblock %}
 
 
