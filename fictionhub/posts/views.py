@@ -82,6 +82,7 @@ def posts(request, rankby="hot", timespan="all-time",
     rational = check_if_rational(request)
     daily = check_if_daily(request)
 
+    days = {}
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
     else:
@@ -127,6 +128,46 @@ def posts(request, rankby="hot", timespan="all-time",
                 posts = Post.objects.filter(author=userprofile,
                                             published=True, daily=daily)
         filterurl="/user/"+userprofile.username # to add to href  in subnav
+
+        statsposts = Post.objects.filter(author=userprofile, daily=daily)
+        # Count word stats graph
+        wordcount = 0
+        r = re.compile(r'[{}]'.format(punctuation))
+        days = {}
+        for post in statsposts:
+            no_punctuation = r.sub(' ',post.body)
+            number_of_words_in_a_post = len(no_punctuation.split())
+            wordcount += number_of_words_in_a_post
+            pub_date = post.pub_date
+            # if post.pub_date.month == today.month and post.pub_date.day < len(days):
+            #     days[post.pub_date.day] += number_of_words_in_a_post
+            #     this_month += number_of_words_in_a_post
+    
+            pub_date_string = str(pub_date.year) + "-"+ str(pub_date.month).zfill(2) + "-" + str(pub_date.day).zfill(2)
+    
+            if pub_date_string in days:
+                days[pub_date_string] += number_of_words_in_a_post
+            else:
+                days[pub_date_string] = number_of_words_in_a_post
+
+        days['00-00-00'] = 0                
+        days['00-00-01'] = 1
+        days['00-00-02'] = 2
+        days['00-00-03'] = 3
+        days['00-00-04'] = 4
+        days['00-00-05'] = 5
+        for date, wordcount in days.items():
+            if days[date] < 10:
+                days[date] = 1
+            elif days[date] < 256:
+                days[date] = 2
+            elif days[date] < 512:
+                days[date] = 3
+            elif  days[date] < 1024:
+                days[date] = 4
+            else:
+                days[date] = 5
+    
     elif filterby == "challenges":
         posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational, daily = daily)
         rankby = "new"
@@ -241,6 +282,7 @@ def posts(request, rankby="hot", timespan="all-time",
         'hubtitle':hubtitle,
         'view_count':view_count,
         'score':score,
+        'days':days,        
     })
 
 
@@ -714,9 +756,8 @@ def post_edit(request, story, chapter=""):
         chapter = Post.objects.get(parent=story,slug=chapter)
         action="chapter_edit"
 
-    rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
-        rational = True
+    rational = check_if_rational(request)
+    daily = check_if_daily(request)    
 
     # throw him out if he's not an author
     if request.user != story.author and not request.user.is_staff and story.post_type != "wiki":
@@ -731,6 +772,7 @@ def post_edit(request, story, chapter=""):
             post = form.save(commit=False) # return post but don't save it to db just yet
             # post.post_type = "story"
             post.rational = rational
+            post.daily = daily            
             if chapter:
                 post.post_type = "chapter"
                 post.parent = story

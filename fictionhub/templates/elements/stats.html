@@ -22,13 +22,12 @@
 <script>
 new Calendar({
   append_to: 'calendar',
-  num_weeks: 51,
+  num_weeks: 52,
   day_size: 11,
   data: [
-    ['2012-03-01', 123],
-    ['2012-03-02', 456.7],
-    // gaps are fine
-    ['2016-05-01', 234]
+	{% for date, wordcount in days.items %}
+	['{{date}}', {{wordcount}}],
+	{% endfor %}
   ],
   color: '#005500'
 });  

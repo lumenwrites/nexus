@@ -13,7 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, default="")
     published = models.BooleanField(default=False, blank=True)
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(blank=True) # auto_now_add=True
     # (default=datetime.datetime.now, null=True, blank=True)
     # datetime.datetime.utcnow().replace(tzinfo=utc)
     # modified = models.DateTimeField()
@@ -67,14 +67,15 @@ class Post(models.Model):
         return parent_title + self.title
 
     def save(self, slug="", *args, **kwargs):
+        if not self.id:
+            self.pub_date = datetime.datetime.now()
+        # self.modified = datetime.datetime.today()
+
+
         if (self.imported == True or self.post_type == "prompt") and slug != "":
             self.slug = slug            
         else:
             self.slug = slugify(self.title)
-
-        if not self.id:
-            self.pub_date = datetime.datetime.now()
-        # self.modified = datetime.datetime.today()
 
         try:
             if self.post_type == "chapter" and self.parent:

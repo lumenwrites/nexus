@@ -13,9 +13,13 @@
 	Wordcount:{{wordcount}} <br/>
 	This Month:{{wordcount}} <br/>	
 	<!-- Pub Date: {{pub_date}} <br/> -->
-	{% for day in days %}
-	{{day}} 
-	{% endfor %}
+	{% for date, wordcount in days.items %}
+	['{{date}}', {{wordcount}}],
+	{% endfor %} <br/>
+
+
+	
+
       </p>
     </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
