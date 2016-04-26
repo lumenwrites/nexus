@@ -824,15 +824,16 @@ def post_publish(request, story):
     # send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
 
     # Notification
-    subscribers = post.author.subscribers.all()
-    for subscriber in subscribers:
-        message = Message(from_user=post.author,
-                          to_user=subscriber,
-                          story=post,
-                          message_type="newstory")
-        message.save()
-        subscriber.new_notifications = True
-        subscriber.save()
+    if not check_if_daily(request):
+        subscribers = post.author.subscribers.all()
+        for subscriber in subscribers:
+            message = Message(from_user=post.author,
+                              to_user=subscriber,
+                              story=post,
+                              message_type="newstory")
+            message.save()
+            subscriber.new_notifications = True
+            subscriber.save()
 
     return HttpResponseRedirect('/story/'+post.slug+'/edit')
 
