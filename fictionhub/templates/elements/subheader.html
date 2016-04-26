@@ -287,7 +287,19 @@
   <div class="tagline">
     <div class="row">
       <div class="large-12 small-12 columns" style="color:#fefefe;">
+	{% if userprofile.username == "rayalez" %}
+	{% include "elements/stats.html" %}
+	<style>
+	  .tagline {
+	  padding:0;
+	  }
+	  .tagline b {
+	  color:#fefefe;
+	  }
+	</style>
+	{% else %}
 	{{userprofile.about }}
+	{% endif %}
       </div>
     </div>
   </div>

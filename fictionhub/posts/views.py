@@ -1097,7 +1097,6 @@ class SeriesList(ListView):
 
 
     # Daily
-
 def post_create_daily(request):
     rational = False
     
@@ -1148,7 +1147,7 @@ def post_create_daily(request):
 
         prompt.title = prompt.title.replace("[WP] ", "", 1)
         
-
+        # prompt =""
     return render(request, 'posts/create-daily.html', {
         'form':form,
         'hubs':Hub.objects.all(),
