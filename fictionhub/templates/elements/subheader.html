@@ -287,7 +287,7 @@
   <div class="tagline">
     <div class="row">
       <div class="large-12 small-12 columns" style="color:#fefefe;">
-	{% if userprofile.username == "rayalez" %}
+	{% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" %}	
 	{% include "elements/stats.html" %}
 	<style>
 	  .tagline {

@@ -82,18 +82,9 @@
       <!-- Logo -->      
         <div class="large-6 small-6 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
-	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
-	    rational<span class="bold">fiction</span>
-	    <!-- 
-	    <img style="border-radius: 65px;
-			padding: 3px;
-			background: black;"
-		 src="http://i.imgur.com/7S2KYdJ.png"/>
-	    -->
-	    {% elif request.META.HTTP_HOST == "vhub.io" %}	    	    
-	    video<span class="bold">hub</span>
-	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+	    {% if request.META.HTTP_HOST == "rationalfiction.io"  or request.META.HTTP_HOST == "localhost:8000" %}
+	    <!-- <img src="{% static "/static/img/logo_128x128.png" %}"/> -->
+	    <span style="font-weight:400;">writing</span><span style="font-weight:100;">challenge</span>
 	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
@@ -158,13 +149,22 @@ console.log("yes");
 	      <a href="/browse/">
 		<i class="fa fa-compass"></i></a>			    
 
+	      <!-- Home -->
 	      <a href="/user/{{user.username}}">
 		<!-- <i class="fi-torso"></i> -->
-		<i class="fa fa-home"></i></a>			    
+		<i class="fa fa-home"></i></a>
+
+	      <!-- Write -->
+	      {% if request.META.HTTP_HOST == "rationalfiction.io"  or request.META.HTTP_HOST == "localhost:8000" %}
+	      <a href="/write/">
+		<i class="fa fa-pencil-square-o"></i></a>
+	      <!-- <i class="fa fa-pencil"></i> -->
+	      {% else %}
 	      <a href="/story/add">
 		<i class="fa fa-pencil-square-o"></i></a>
 	      <!-- <i class="fa fa-pencil"></i> -->
-
+	      {% endif %}
+	      
 	      {% if user.in_messages.count > 0 %}
 	      <a href="{% if user.new_notifications %}
 		 /notifications/unread/

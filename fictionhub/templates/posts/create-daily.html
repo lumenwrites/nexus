@@ -163,6 +163,7 @@ jQuery(function ($) {
   </div>
   <!-- Third -->
   <div class="content" id="panel3">
+    <p>Search, list of 5:</p>
       <h4>Recognizer.</h4>
       <p>[slightly modify] [property] > abstract recognizer > [beam search other stuff that fits under it] > [cut and paste elements]  //translate?</p>
       <!-- <h4>//Association.</h4> -->
@@ -209,7 +210,7 @@ padding:10px;    background: rgba(255,255,255,0.5);//#fff;
     {{form.non_field_errors}}
     <!-- Submit Form -->
 
-    <form action="/story/add" method="post">{% csrf_token %}
+    <form action="/write/" method="post">{% csrf_token %}
       {{form.title}}
       <div class="editor">
 	<!-- **Prompt: {{prompt.title}}** -->

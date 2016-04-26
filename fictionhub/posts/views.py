@@ -38,7 +38,7 @@ from django.conf import settings
 # My own stuff
 # utility functions
 from comments.utils import get_comment_list
-from .utils import rank_hot, rank_top, check_if_rational
+from .utils import rank_hot, rank_top, check_if_rational,check_if_daily
 from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm, PromptForm
@@ -80,6 +80,7 @@ def posts(request, rankby="hot", timespan="all-time",
         prompt = []
 
     rational = check_if_rational(request)
+    daily = check_if_daily(request)
 
     if not request.user.is_anonymous():
         subscribed_to = request.user.subscribed_to.all()
@@ -101,7 +102,7 @@ def posts(request, rankby="hot", timespan="all-time",
                                         post_type = "wiki")
             post_type = "wiki"
         else:
-            posts = Post.objects.filter(hubs=hub, published=True, post_type = "story") #  rational = rational, 
+            posts = Post.objects.filter(hubs=hub, published=True, post_type = "story") #  rational = rational, daily = daily, 
         filterurl="/hub/"+hubslug # to add to href  in subnav
     elif filterby == "user":
         userprofile = get_object_or_404(User, username=username)
@@ -112,7 +113,7 @@ def posts(request, rankby="hot", timespan="all-time",
             # fictionhub includes rational        
             if rational:
                 posts = Post.objects.filter(author=userprofile,
-                                            rational=rational).exclude(post_type="chapter")
+                                            rational=rational,daily=daily).exclude(post_type="chapter")
             else:
                 posts = Post.objects.filter(author=userprofile).exclude(post_type="chapter")
             # , post_type="story")
@@ -120,14 +121,14 @@ def posts(request, rankby="hot", timespan="all-time",
             # fictionhub includes rational        
             if rational:
                 posts = Post.objects.filter(author=userprofile,
-                                            rational=rational,
+                                            rational=rational,daily=daily,
                                             published=True).exclude(post_type="chapter")
             else:
                 posts = Post.objects.filter(author=userprofile,
                                             published=True)
         filterurl="/user/"+userprofile.username # to add to href  in subnav
     elif filterby == "challenges":
-        posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational)
+        posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational, daily = daily)
         rankby = "new"
     elif filterby == "challenge":
         challenge = Post.objects.get(slug=challenge)
@@ -135,19 +136,19 @@ def posts(request, rankby="hot", timespan="all-time",
             rankby = "new" # later do random
         elif challenge.state == "completed":            
             rankby = "top"
-        posts = Post.objects.filter(parent=challenge, published=True, rational = rational)
+        posts = Post.objects.filter(parent=challenge, published=True, rational = rational, daily = daily)
     elif filterby == "prompt":
         prompt = Post.objects.get(slug=prompt)
-        posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational)
+        posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational, daily = daily)
         rankby = "hot"
     else:
         # fictionhub includes rational        
         if rational:
-            posts = Post.objects.filter(published=True, rational = rational, post_type="story")
+            posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
         else:
             posts = Post.objects.filter(published=True, post_type="story")
         # fictionhub doesn't include rational
-        # posts = Post.objects.filter(published=True, rational = rational, post_type="story")
+        # posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
         filterurl="/stories"
 
     if rankby == "hot":
@@ -246,7 +247,7 @@ def posts(request, rankby="hot", timespan="all-time",
 
 def browse(request, rankby="hot", timespan="all-time"):
     rational = check_if_rational(request)
-
+    daily = check_if_daily(request)
 
     post_type = "story"
 
@@ -282,13 +283,13 @@ def browse(request, rankby="hot", timespan="all-time"):
             if rational:
                 posts = posts.filter(Q(title__icontains=query,
                                        published=True, post_type=post_type,
-                                       rational = rational) |
+                                       rational = rational, daily = daily) |
                                      Q(body__icontains=query,
                                        published=True, post_type=post_type,
-                                       rational = rational) |
+                                       rational = rational, daily = daily) |
                                      Q(author__username__icontains=query,
                                        published=True, post_type=post_type,
-                                       rational = rational))
+                                       rational = rational, daily = daily))
             else:
                 posts = posts.filter(Q(title__icontains=query,
                                        published=True, post_type=post_type) |
@@ -299,14 +300,14 @@ def browse(request, rankby="hot", timespan="all-time"):
         else:
             # fictionhub includes rational            
             if rational:
-                posts = posts.filter(published=True, rational = rational, post_type=post_type)
+                posts = posts.filter(published=True, rational = rational, daily = daily, post_type=post_type)
             else:
                 posts = posts.filter(published=True, post_type=post_type)
             
     else:
         # fictionhub includes rational        
         if rational:
-            posts = Post.objects.filter(published=True, rational = rational, post_type=post_type)
+            posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type=post_type)
         else:
             posts = Post.objects.filter(published=True,post_type=post_type)
         
@@ -621,8 +622,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
     
     if request.method == 'POST':
@@ -715,8 +715,7 @@ def post_edit(request, story, chapter=""):
         action="chapter_edit"
 
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
 
     # throw him out if he's not an author
@@ -1100,9 +1099,10 @@ class SeriesList(ListView):
 def post_create_daily(request):
     rational = False
     
+    prompt =""
     
     if request.method == 'POST':
-        form = PostForm(request.POST, storyslug=story)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False) # return post but don't save it to db just yet
             post.author = request.user
@@ -1115,8 +1115,6 @@ def post_create_daily(request):
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
-            if posttype == "thread":
-                post.hubs.add(Hub.objects.get(slug=hubslug))
             for hub in hubs:
                 if hub.parent and hub.parent.hub_type != "folder":
                     post.hubs.add(hub.parent)
@@ -1129,12 +1127,7 @@ def post_create_daily(request):
             #         post.hubs.add(hub.parent)
             #         if hub.parent.parent:
             #             post.hubs.add(hub.parent.parent)
-            if story:
-                return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'/edit')
-            elif posttype == "post":
-                return HttpResponseRedirect('/post/'+post.slug+'/edit')
-            else:
-                return HttpResponseRedirect('/story/'+post.slug+'/edit')
+            return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         form = PostForm()
         form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
@@ -1147,7 +1140,6 @@ def post_create_daily(request):
 
         prompt.title = prompt.title.replace("[WP] ", "", 1)
         
-        # prompt =""
     return render(request, 'posts/create-daily.html', {
         'form':form,
         'hubs':Hub.objects.all(),

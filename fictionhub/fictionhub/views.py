@@ -18,6 +18,10 @@ def home(request):
        request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
+    if request.META['HTTP_HOST'] == "daily.fictionhub.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        return render(request, 'home-daily.html', {})
+        
     if request.user.is_authenticated():
         return HttpResponseRedirect('/browse/')        
         
@@ -67,7 +71,8 @@ def home(request):
 
     # hubs = 
     # hubs = hubs_storycount.order_by('storycount')
-    
+
+
  
     return render(request, 'home.html', {
         'hot_posts': top_posts, # hot_posts,

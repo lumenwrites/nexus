@@ -52,10 +52,18 @@ def rank_top(stories, timespan = None):
 
 def check_if_rational(request):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
     return rational
+
+
+def check_if_daily(request):
+    daily = False
+    if request.META['HTTP_HOST'] == "daily.fictionhub.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        daily = True
+    return daily
+
 
 def filter_posts(request, filterby,rational,hubslug):
     hub = []
