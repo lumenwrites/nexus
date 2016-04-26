@@ -115,7 +115,7 @@ def posts(request, rankby="hot", timespan="all-time",
                 posts = Post.objects.filter(author=userprofile,
                                             rational=rational,daily=daily).exclude(post_type="chapter")
             else:
-                posts = Post.objects.filter(author=userprofile).exclude(post_type="chapter")
+                posts = Post.objects.filter(author=userprofile, daily=daily).exclude(post_type="chapter")
             # , post_type="story")
         else:
             # fictionhub includes rational        
@@ -125,7 +125,7 @@ def posts(request, rankby="hot", timespan="all-time",
                                             published=True).exclude(post_type="chapter")
             else:
                 posts = Post.objects.filter(author=userprofile,
-                                            published=True)
+                                            published=True, daily=daily)
         filterurl="/user/"+userprofile.username # to add to href  in subnav
     elif filterby == "challenges":
         posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational, daily = daily)
@@ -146,7 +146,7 @@ def posts(request, rankby="hot", timespan="all-time",
         if rational:
             posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
         else:
-            posts = Post.objects.filter(published=True, post_type="story")
+            posts = Post.objects.filter(published=True, daily=daily, post_type="story")
         # fictionhub doesn't include rational
         # posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
         filterurl="/stories"
@@ -292,24 +292,24 @@ def browse(request, rankby="hot", timespan="all-time"):
                                        rational = rational, daily = daily))
             else:
                 posts = posts.filter(Q(title__icontains=query,
-                                       published=True, post_type=post_type) |
+                                       published=True, post_type=post_type, daily=daily) |
                                      Q(body__icontains=query,
-                                       published=True, post_type=post_type) |
+                                       published=True, post_type=post_type, daily=daily) |
                                      Q(author__username__icontains=query,
-                                       published=True, post_type=post_type))
+                                       published=True, post_type=post_type, daily=daily))
         else:
             # fictionhub includes rational            
             if rational:
                 posts = posts.filter(published=True, rational = rational, daily = daily, post_type=post_type)
             else:
-                posts = posts.filter(published=True, post_type=post_type)
+                posts = posts.filter(published=True, post_type=post_type, daily=daily)
             
     else:
         # fictionhub includes rational        
         if rational:
             posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type=post_type)
         else:
-            posts = Post.objects.filter(published=True,post_type=post_type)
+            posts = Post.objects.filter(published=True,post_type=post_type, daily=daily)
         
         filterhubs = []
 
