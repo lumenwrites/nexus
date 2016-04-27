@@ -209,9 +209,8 @@
 
 	<!-- Post to reddit -->
 	{% if not story.published %}	  
-	<a href="/story/{{story.slug}}/redditpost" class="button small">Post to reddit</a>
+	<a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a>
 	{% endif %}	  
-
 
 	  {% if user.approved %}	  	  
 	    {% if not story.published %}	  

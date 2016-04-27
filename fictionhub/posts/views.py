@@ -1141,7 +1141,7 @@ class SeriesList(ListView):
     # Daily
 def post_create_daily(request):
     rational = False
-    
+    test = ""
     prompt =""
     
     if request.method == 'POST':
@@ -1189,8 +1189,12 @@ def post_create_daily(request):
         wordcount = 0
         r = re.compile(r'[{}]'.format(punctuation))
         userprofile = get_object_or_404(User, username="rayalez")
-        statsposts = Post.objects.filter(author=userprofile)
+        statsposts = Post.objects.filter(author=request.user, daily=check_if_daily(request))
+        statsposts = statsposts.order_by('pub_date')
         days = {}
+        longeststreak = 0
+        currentstreak = 1
+        prevpost = statsposts[0]
         for post in statsposts:
             no_punctuation = r.sub(' ',post.body)
             number_of_words_in_a_post = len(no_punctuation.split())
@@ -1199,6 +1203,18 @@ def post_create_daily(request):
             # if post.pub_date.month == today.month and post.pub_date.day < len(days):
             #     days[post.pub_date.day] += number_of_words_in_a_post
             #     this_month += number_of_words_in_a_post
+
+            test += str(post.pub_date.day) + " "      
+            if post.pub_date.day - 1 == prevpost.pub_date.day:
+                currentstreak += 1
+                if currentstreak > longeststreak:
+                    longeststreak = currentstreak
+            elif post.pub_date.day == prevpost.pub_date.day:
+                pass
+            else:
+                currentstreak = 1
+
+            # test = str(prevpost.pub_date.day) + " " + str(post.pub_date.day)
     
             pub_date_string = str(pub_date.year) + "-"+ str(pub_date.month).zfill(2) + "-" + str(pub_date.day).zfill(2)
     
@@ -1207,12 +1223,13 @@ def post_create_daily(request):
             else:
                 days[pub_date_string] = number_of_words_in_a_post
 
-        days['00-00-00'] = 0                
-        days['00-00-01'] = 1
-        days['00-00-02'] = 2
-        days['00-00-03'] = 3
-        days['00-00-04'] = 4
-        days['00-00-05'] = 5
+            prevpost = post
+
+        if post.pub_date.day != datetime.now().day:
+            currentstreak = 0
+
+            
+
         for date, wordcount in days.items():
             if days[date] < 10:
                 days[date] = 1
@@ -1271,7 +1288,10 @@ def post_create_daily(request):
         'form':form,
         'hubs':Hub.objects.all(),
         'prompt':prompt,
-        'prompts':prompts,        
+        'prompts':prompts,
+        'days':days,
+        'longeststreak':longeststreak,
+        'currentstreak':currentstreak,        
         'test': ""
     })    
 
