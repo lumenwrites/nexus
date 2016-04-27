@@ -1144,6 +1144,9 @@ def post_create_daily(request):
     test = ""
     prompt =""
     prompts = ""
+    days = []
+    longeststreak = 0
+    currentstreak = 0    
     
     if request.method == 'POST':
         form = PostForm(request.POST)
