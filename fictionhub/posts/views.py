@@ -1199,7 +1199,7 @@ def post_create_daily(request):
             prevpost = statsposts[0]
         else:
             prevpost = []
-            post = []            
+            post = []
         for post in statsposts:
             no_punctuation = r.sub(' ',post.body)
             number_of_words_in_a_post = len(no_punctuation.split())
@@ -1230,9 +1230,11 @@ def post_create_daily(request):
 
             prevpost = post
 
-        if post.pub_date.day != datetime.now().day:
+        if post:
+            if post.pub_date.day != datetime.now().day:
+                currentstreak = 0
+        else:
             currentstreak = 0
-
             
 
         for date, wordcount in days.items():
