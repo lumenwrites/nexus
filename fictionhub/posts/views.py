@@ -1179,15 +1179,7 @@ def post_create_daily(request):
     else:
         form = PostForm()
         form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
-
-        r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-        subreddit = r.get_subreddit('writingprompts')
-        prompts = list(subreddit.get_top_from_all(limit=12)) # 8
-        random.shuffle(prompts)        
-        prompt = prompts[0]
-
-        prompt.title = prompt.title.replace("[WP]", "", 1).strip()
-
+        
 
         # Stats grid
         wordcount = 0
@@ -1254,7 +1246,7 @@ def post_create_daily(request):
                 days[date] = 5
 
         # Prompts
-
+        
         r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
         subreddit = r.get_subreddit('writingprompts')
         prompts = subreddit.get_new(limit=128)
@@ -1292,8 +1284,7 @@ def post_create_daily(request):
         prompts.sort(key=lambda p: p.score, reverse=True)
     
         prompts = prompts[:16]
-            
-    
+
 
     return render(request, 'posts/create-daily.html', {
         'form':form,
