@@ -1277,7 +1277,7 @@ def post_create_daily(request):
 
 
 
-
+import time
 def post_to_reddit(request, story):
     post = Post.objects.get(slug=story)
 
@@ -1291,6 +1291,7 @@ def post_to_reddit(request, story):
     # subreddit = r.get_subreddit('WritingPrompts')
     submission = r.get_submission(post.reddit_url)
     submission.add_comment(post.body)
+    time.sleep(1)
     
     return HttpResponseRedirect(post.reddit_url)
 
