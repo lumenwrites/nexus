@@ -1194,7 +1194,11 @@ def post_create_daily(request):
         days = {}
         longeststreak = 0
         currentstreak = 1
-        prevpost = statsposts[0]
+
+        if len(statsposts):
+            prevpost = statsposts[0]
+        else:
+            prevpost = []
         for post in statsposts:
             no_punctuation = r.sub(' ',post.body)
             number_of_words_in_a_post = len(no_punctuation.split())
