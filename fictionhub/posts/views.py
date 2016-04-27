@@ -1143,6 +1143,7 @@ def post_create_daily(request):
     rational = False
     test = ""
     prompt =""
+    prompts = ""
     
     if request.method == 'POST':
         form = PostForm(request.POST)
