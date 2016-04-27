@@ -1181,12 +1181,96 @@ def post_create_daily(request):
         random.shuffle(prompts)        
         prompt = prompts[0]
 
-        prompt.title = prompt.title.replace("[WP] ", "", 1)
+        prompt.title = prompt.title.replace("[WP]", "", 1).strip()
+
+
+        # Stats grid
+        wordcount = 0
+        r = re.compile(r'[{}]'.format(punctuation))
+        userprofile = get_object_or_404(User, username="rayalez")
+        statsposts = Post.objects.filter(author=userprofile)
+        days = {}
+        for post in statsposts:
+            no_punctuation = r.sub(' ',post.body)
+            number_of_words_in_a_post = len(no_punctuation.split())
+            wordcount += number_of_words_in_a_post
+            pub_date = post.pub_date
+            # if post.pub_date.month == today.month and post.pub_date.day < len(days):
+            #     days[post.pub_date.day] += number_of_words_in_a_post
+            #     this_month += number_of_words_in_a_post
+    
+            pub_date_string = str(pub_date.year) + "-"+ str(pub_date.month).zfill(2) + "-" + str(pub_date.day).zfill(2)
+    
+            if pub_date_string in days:
+                days[pub_date_string] += number_of_words_in_a_post
+            else:
+                days[pub_date_string] = number_of_words_in_a_post
+
+        days['00-00-00'] = 0                
+        days['00-00-01'] = 1
+        days['00-00-02'] = 2
+        days['00-00-03'] = 3
+        days['00-00-04'] = 4
+        days['00-00-05'] = 5
+        for date, wordcount in days.items():
+            if days[date] < 10:
+                days[date] = 1
+            elif days[date] < 256:
+                days[date] = 2
+            elif days[date] < 512:
+                days[date] = 3
+            elif  days[date] < 1024:
+                days[date] = 4
+            else:
+                days[date] = 5
+
+        # Prompts
+
+        r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
+        subreddit = r.get_subreddit('writingprompts')
+        prompts = subreddit.get_new(limit=128)
+        new_prompts = list(prompts)
+        prompts = []
+    
+    
+        hot_prompts = list(subreddit.get_hot(limit=50))
         
+        max_age = 5*60
+        # less than 5 replies, more than 1 upvote and less than 60 minutes old
+        for prompt in new_prompts:
+            # 1 4 5*60
+            if (prompt.score > 1) \
+            and ((prompt.num_comments-2) < 3) \
+            and (age(prompt.created_utc) < max_age):
+                if prompt.num_comments > 0:
+                    prompt.num_comments -= 2 # remove 2 fake replies
+                prompt.age = round(age(prompt.created_utc)/60,1)
+                # prompt.permalink = prompt.permalink.replace("www", "zn")
+                prompt.sort = prompt.score * (1-(prompt.age/5))
+    
+                # prompt position
+                for index, p in enumerate(hot_prompts):
+                    if prompt.title == p.title:
+                        setattr(prompt, "position", index)
+                        # prompt.position == index
+
+                prompt.title = prompt.title.replace("[WP]", "", 1).strip()   
+                prompts.append(prompt)
+                    
+    
+    
+        # sort by score
+        prompts.sort(key=lambda p: p.score, reverse=True)
+    
+        prompts = prompts[:16]
+            
+    
+
     return render(request, 'posts/create-daily.html', {
         'form':form,
         'hubs':Hub.objects.all(),
         'prompt':prompt,
+        'prompts':prompts,        
         'test': ""
     })    
 

@@ -7,7 +7,7 @@
 	<div id="calendar">
 	</div>
       </div>
-      <div class="large-4 columns">
+      <div class="large-4 columns show-for-large-up">
 	<b> Total Days: 94</b><br/> <!-- Stories? -->
 	<b> Longest Streak: 24</b><br/>	
 	<b> Current Streak: 18</b><br/>	
@@ -15,7 +15,7 @@
   </div>
 
 
-  <div class="clearfix"></div><br/>
+  <div class="clearfix"></div>
 
 <script src="{% static "/static/js/js-chart-widgets.min.js" %}" type="text/javascript"></script>
 
@@ -38,6 +38,9 @@ new Calendar({
   .Calendar div {
   margin:auto;
   }
+//  @media only screen .Calendar div {
+//  float: left;
+//  }
 </style>
 
   
