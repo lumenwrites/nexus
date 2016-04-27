@@ -47,6 +47,8 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
     url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
 
+    url(r'^story/(?P<story>[^\.]+)/redditpost$', views.post_to_reddit),    
+
 
     
     # Rss

@@ -200,9 +200,19 @@
       <div class="edit-buttons">
 	<br/>
 
+
 	<!-- View/Publish/Save buttons -->
 	{% if action = "story_edit" %}	  
+	<!-- View -->
 	<a href="/story/{{story.slug}}" class="button small view">View</a>
+
+
+	<!-- Post to reddit -->
+	{% if not story.published %}	  
+	<a href="/story/{{story.slug}}/redditpost" class="button small">Post to reddit</a>
+	{% endif %}	  
+
+
 	  {% if user.approved %}	  	  
 	    {% if not story.published %}	  
 	    <a href="/story/{{story.slug}}/publish" class="button small">Publish</a>

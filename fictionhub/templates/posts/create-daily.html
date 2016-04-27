@@ -84,6 +84,7 @@
     <!-- Submit Form -->
 
     <form action="/write/" method="post">{% csrf_token %}
+      <input type="hidden" id="reddit_url" name="reddit_url" value="test"></input>
       {{form.title}}
       <div class="editor">
 	<!-- **Prompt: {{prompt.title}}** -->

@@ -61,7 +61,7 @@
 		   border: 1px solid rgba(0,0,0,.09);
 		   border-radius: 3px;">
 
-    <a href="{{prompt.permalink}}" class="bold black">{{prompt.title}}</a>
+    <a href="{{prompt.permalink}}" class="prompttitle bold black">{{prompt.title}}</a>
     <br/>
 
     <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
@@ -93,6 +93,8 @@
   nextprompt = $('.prompts').find('#'+(parseInt(promptid)+1))
 
   prompt.replaceWith(nextprompt);  
+  $("#reddit_url").val($('.display-prompt').find('.prompttitle').attr('href'));
+
 
   $(".next-prompt").click(function() {
   prompt = $('.display-prompt').find('.prompt')
@@ -100,7 +102,8 @@
 
   nextprompt = $('.prompts').find('#'+(parseInt(promptid)+1))
 
-  prompt.replaceWith(nextprompt);  
+  prompt.replaceWith(nextprompt);
+  $("#reddit_url").val($('.display-prompt').find('.prompttitle').attr('href'));
   });
   
   });

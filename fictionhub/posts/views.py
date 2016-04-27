@@ -1153,7 +1153,8 @@ def post_create_daily(request):
             post.score += 1
             post.post_type = "story"
             post.rational = False
-            post.daily = True            
+            post.daily = True
+            post.reddit_url = request.POST.get("reddit_url", "") # form.cleaned_data['reddit_url']
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
@@ -1177,7 +1178,7 @@ def post_create_daily(request):
 
         r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
         subreddit = r.get_subreddit('writingprompts')
-        prompts = list(subreddit.get_top_from_all(limit=128))
+        prompts = list(subreddit.get_top_from_all(limit=12)) # 8
         random.shuffle(prompts)        
         prompt = prompts[0]
 
@@ -1273,6 +1274,27 @@ def post_create_daily(request):
         'prompts':prompts,        
         'test': ""
     })    
+
+
+
+
+def post_to_reddit(request, story):
+    post = Post.objects.get(slug=story)
+
+    # throw him out if he's not an author
+    if request.user != post.author:
+        return HttpResponseRedirect('/')        
+
+
+    r = praw.Reddit(user_agent='Post /r/WritingPrompts story by /u/raymestalez')
+    r.login(os.environ["REDDIT_USERNAME"],os.environ["REDDIT_PASSWORD"])
+    # subreddit = r.get_subreddit('WritingPrompts')
+    submission = r.get_submission(post.reddit_url)
+    submission.add_comment(post.body)
+    
+    return HttpResponseRedirect(post.reddit_url)
+
+
 
 import praw    
 
