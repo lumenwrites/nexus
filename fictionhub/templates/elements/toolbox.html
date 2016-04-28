@@ -1,79 +1,171 @@
+	  <style>
+	    .checkbox {
+	    float:left;
+	    margin: 13px!important;
+	    }
+	    .checkbox:after{
+	    position: relative;
+	    display: block;
+	    width: 20px;
+	    height: 20px;
+	    border: 1px solid #808080;
+	    content: "";
+	    background: #FFF;
+	    float:left;
+	    }
+	    .checkbox:checked:after {
+	    background: #3D454B;
+	    }
+	    //font-size:20px;line-height:20px;
+	    //padding:0 1px;
+
+	    //content: "\2714";
+
+	  </style>
+
+
+
 <div class="toolbox" style="display:none;">
 <ul class="tabs" data-tab>
-  <li class="tab-title"><a href="#panel2">Prompt</a></li>
-  <li class="tab-title active"><a href="#panel1">Goals/Structure</a></li>
-  <li class="tab-title"><a href="#panel3">Comedy</a></li>
-  <li class="tab-title"><a href="#other">//Quality/Substance</a></li>  
+  <!-- <li class="tab-title"><a href="#panel2">Prompt</a></li> -->
+  <!-- <li class="tab-title active"><a href="#panel1">Goals/Structure</a></li> -->
+  <!-- <li class="tab-title"><a href="#panel3">Comedy</a></li> -->
+  <!-- <li class="tab-title"><a href="#other">//Quality/Substance</a></li>   -->
 </ul>
+<br/>
 <div class="tabs-content">
   <!-- Goals -->
   <div class="content active" id="panel1">
-    <article>
-      Write a paragraph on:
-      <h4>Setting.</h4>
-      <p>Environment. Describe location/Situation.(of a situation).
-	Where is it?  character in a situation</p>
+    <article  style="margin:0;padding:0;">
 
-      <h4>Problem.</h4>
-      <p>Problem. What can go wrong? //Goal. 
-	Engage.</p>
+      <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
+	<!-- 
+	<li class="tab-title active">
+	  <input type="checkbox" class="checkbox"></input>
+	  <a href="#hc">Concept</a></li>
+	-->
+	<li class="tab-title">
+	  <input type="checkbox" class="checkbox"></input>
+	  <a href="#setting">Setting</a></li>
+	<li class="tab-title">
+	  <input type="checkbox" class="checkbox"></input>
+	  <a href="#problem">Problem</a></li> <!-- Engage -->
+	<li class="tab-title">
+	  <input type="checkbox" class="checkbox"></input>
+	  <a href="#escalate">Escalate</a></li>
+	<li class="tab-title">
+	  <input type="checkbox" class="checkbox"></input>
+	  <a href="#resolve">Resolve</a></li>	
+      </ul>
+      <div class="tabs-content">
+	<div class="content" id="hc" style="padding:20px!important;">
+	  <p>What is the story about? Describe it's premise, the "What if?". </p>
+	  <!-- <p><b>Prompt: {{prompt}}</b></p> -->
+	  {# {% include "elements/prompts.html" %} #}
+	</div>
+	<div class="content active" id="setting" style="padding:20px!important;">
+	  <p> Write a paragraph about the world where the story takes place.</p>
+	  <!--  Where is it? How does environment/location look like? -->
+	  <p>Describe a character in a situation.</p>
+	  <!-- <p><b>Prompt: {{setting}} | {{character}}</b> </p>     -->
+	</div>
+	<div class="content" id="problem" style="padding:20px!important;">
+	  <p>Describe the event that disrupts the normal course of events and begins the story. What can go wrong? What problem is character facing? What goal does he have? Who is the antagonist?</p> <!--  (he is probably the source of the problem) -->
+	  <!-- <p style="margin-bottom:0;"><b>Prompt: {{problem}} </b> </p>    	   -->
+	</div>
+	<div class="content" id="escalate" style="padding:20px!important;">
+	  <p> How can things escalate?
+	    <!-- Describe things getting worse.  -->
+	    <!-- Other challenges does the character face?   -->
+	    How does the character pursue his goal, what obstacles/challenes does he need to overcome?
+	  <!-- </p> -->
+	  <!-- <p style="margin-bottom:0;"> -->
+	    How can things spiral out of control, raising the stakes, requiring bigger and bigger risks, leading to the showdown between the hero and antagonist?</p>
+	  <!-- <p> Lose.</p> -->
+	</div>
+	<div class="content" id="resolve" style="padding:20px!important;">
+	  <p> How does it end? Does the character win? How? Why?</p>
 
-      <h4>Escalate.</h4>
-      <p>How can things escalate? 
-	Describe things getting worse. Other challenges he faces. out of control.
-	raise stakes.
-	Lose.(goes here, how does it lead to loss)</p>
-      <h4>Resolve.</h4>
-      <p>  How does it end? How does he win?(does the character win? How? Why?)</p>
+	  <p>How do things go back to normal?</p>
+	  <!-- How does he win?(does the character win? How? Why?) -->
+	  <!-- go back to normal. -->
+	</div>
+
+      </div>
+      
     </article>
   </div>
   <!-- Prompt -->
   <div class="content" id="panel2">    
     <article style="margin:0;padding:0;">
 
-<ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
-  <li class="tab-title"><a href="#panel21">Location</a></li>
-  <li class="tab-title"><a href="#panel31">Character</a></li>
-  <li class="tab-title"><a href="#panel41">Problem/Goal</a></li>
-</ul>
-<div class="tabs-content">
-  <div class="content active" id="panel21">
-    <p>This is the second panel of the basic tab example. This is the second panel of the basic tab example.</p>
-  </div>
-  <div class="content" id="panel31">
-    <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p>
-  </div>
-  <div class="content" id="panel41">
-    <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p>
-  </div>
-</div>
+      <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
+	<li class="tab-title"><a href="#panel21">Location</a></li>
+	<li class="tab-title"><a href="#panel31">Character</a></li>
+	<li class="tab-title"><a href="#panel41">Problem/Goal</a></li>
+      </ul>
+      <div class="tabs-content">
+	<div class="content active" id="panel21">
+	  <p> {{setting}} </p>
+	</div>
+	<div class="content" id="panel31">
+	  <p> {{character}} </p>    
+	</div>
+	<div class="content" id="panel41">
+	  <p> {{problem}} </p>    
+	</div>
+      </div>
 
-<style>
+      <style>
 
-  .vertical .tab-title {
-  margin:0!important; margin-right: 20px!important;
-  }
+	.vertical .tab-title {
+	margin:0!important; margin-right: 20px!important;
+	}
 
-  .tabs-content {
-  margin-bottom: 0!important;
-}
-</style>
+	.tabs-content {
+	margin-bottom: 0!important;
+	}
+      </style>
       <!-- <h4>Locations.(spaceship, etc).</h4> -->
       <!-- <h4>Characters(profession/character)</h4> -->
       <!-- <h4>Scifi HCs, tech/magic/superpowers</h4> -->
       <!-- <h4>Problems/Goals.</h4> -->
     </article>
   </div>
-  <!-- Third -->
+  <!-- Comedy -->
   <div class="content" id="panel3">
-    <p>Search, list of 5:</p>
-      <h4>Recognizer.</h4>
-      <p>[slightly modify] [property] > abstract recognizer > [beam search other stuff that fits under it] > [cut and paste elements]  //translate?</p>
-      <h4>Association.</h4>
-      <p>Extract element, drop context > find association. > setup 1, punch reinterpret 2</p>
-      <h4>Jump-move. Flip/Exaggerate.</h4>
-      <p>Flip element, Jump > Move(find lane that fits elements and jumps, expplain why?) </p>
+    <article style="margin:0;padding:0;">
+      <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
+	<li class="tab-title"><a href="#element">Element</a></li>
+	<li class="tab-title"><a href="#jump">Jump/Recognizer</a></li>
+	<li class="tab-title"><a href="#move">Move/Associate</a></li>
+	<li class="tab-title"><a href="#express">Express</a></li>	
+      </ul>
+      <div class="tabs-content">
+	<p style="margin-bottom:0;">Search, list of 5:</p>	
+	<div class="content active" id="element">
+	  <p>Extract Element/Property. Drop context.</p>
+	  <p>Fundamental</p>
+	  <p><b>{{element}}</b></p>	  
+	</div>
+	<div class="content" id="jump">
+	  <p> Jump(flip/Exaggerate) </p>
+	  <p> Recognizer.(More abstract?) Determine pattern? </p>
+	  <p> //Assumptions/Expectations? Identify reason for the assumption? </p>	  
 
+	</div>
+	<div class="content" id="move">
+	  <p>Move(find lane that fits elements and jumps(explains why).</p>
+	  <p>Find association. Associate/Translate. search other interpretations(craziest)</p>
+	  <p>Beam. Other things recognizable by recognizer. </p>
+	  <!-- <p>[slightly modify] [property] > abstract recognizer > [beam search other stuff that fits under it] > [cut and paste elements]  //translate?</p> -->
+	</div>
+	<div class="content" id="express">
+	  <p>Express first lane with a setup(mislead).</p>
+	  <p> 2nd lane with a punch. Reinterpret. Cut and paste.</p>    
+	</div>
+      </div>
+    </article>
   </div>
   <div class="content" id="other">
       <h4>Scifi HC</h4>

@@ -1,5 +1,4 @@
 
-
 <style>
   .fi-comment {
   float:none;
@@ -46,42 +45,39 @@
 
 
 
-
-
 <div class="display-prompt">
   <div class="prompt" id="0"></div>
 </div>
 
 
 <div class="prompts">
-{% for prompt in prompts %}
-<div class="prompt" id="{{ forloop.counter }}">
-  <article  style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
-		   box-shadow: 0 1px 4px rgba(0,0,0,.04);
-		   border: 1px solid rgba(0,0,0,.09);
-		   border-radius: 3px;">
+  {% for prompt in prompts %}
+  <div class="prompt" id="{{ forloop.counter }}">
+    <article  style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+		     box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		     border: 1px solid rgba(0,0,0,.09);
+		     border-radius: 3px;">
 
-    <a href="{{prompt.permalink}}" class="prompttitle bold black">{{prompt.title}}</a>
-    <br/>
+	<a href="{{prompt.permalink}}" class="prompttitle bold black">{{prompt.title}}</a>
+      <br/>
 
-    <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
-			      margin-bottom: -11px;
-			      margin-left: -11px;
-			      width: calc(100% + 22px);">
+      <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+				margin-bottom: -11px;
+				margin-left: -11px;
+				width: calc(100% + 22px);">
 
-      <i class="fa fa-hashtag"></i>  {{prompt.position}}	 &nbsp;	
-      <i class="fi-arrow-up"></i> {{prompt.score}} <!-- points -->	 &nbsp;
-      <i class="fi-comment"></i> {{prompt.num_comments}} <!-- replies --> &nbsp;
-      <i class="fi-clock"></i> {{prompt.age}} <!-- hours --> &nbsp;
+	<i class="fa fa-hashtag"></i>  {{prompt.position}}	 &nbsp;	
+	<i class="fi-arrow-up"></i> {{prompt.score}} <!-- points -->	 &nbsp;
+	<i class="fi-comment"></i> {{prompt.num_comments}} <!-- replies --> &nbsp;
+	<i class="fi-clock"></i> {{prompt.age}} <!-- hours --> &nbsp;
 
-      <div class="right">
-	<a class='next-prompt' style="margin-right: 5px;"><i class="fa fa-refresh"></i></a>
+	<div class="right">
+	  <a class='next-prompt' style="margin-right: 5px;"><i class="fa fa-refresh"></i></a>
+	</div>
       </div>
-    </div>
-  </article>
-</div>
-
-{% endfor %}	
+    </article>
+  </div>
+  {% endfor %}	
 </div>
 
 

@@ -1146,8 +1146,21 @@ def post_create_daily(request):
     prompts = ""
     days = []
     longeststreak = 0
-    currentstreak = 0    
-    
+    currentstreak = 0
+    wordcount = 0
+
+
+    setting=["Pyramides", "Stanford/MIT"]
+    character=["Scientist", "Detective", "Writer"]
+    scifi = ["Aliens", "Nuclear postapoc", "Pirates", "Robot"]
+    problem = ["Someone attacks your home", "Dark overlord rises", "Priceless artifact stolen"]
+    setting = random.choice(setting)
+    character = random.choice(character)
+    scifi = random.choice(scifi)
+    problem =  random.choice(problem)
+    element = ["Opinion/Setup", "Phys", "Adj","Will","Because","Process",]
+    element =  random.choice(element)    
+
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -1233,7 +1246,7 @@ def post_create_daily(request):
             currentstreak = 0
             
 
-        for date, wordcount in days.items():
+        for date, words in days.items():
             if days[date] < 10:
                 days[date] = 1
             elif days[date] < 256:
@@ -1284,16 +1297,24 @@ def post_create_daily(request):
         prompts.sort(key=lambda p: p.score, reverse=True)
     
         prompts = prompts[:16]
+        prompt = prompts[0].title
 
-
+        if wordcount > 1000:
+            wordcount = str(int(wordcount/1000)) + "K"
+        
     return render(request, 'posts/create-daily.html', {
         'form':form,
         'hubs':Hub.objects.all(),
         'prompt':prompt,
         'prompts':prompts,
         'days':days,
+        'wordcount':wordcount,        
         'longeststreak':longeststreak,
-        'currentstreak':currentstreak,        
+        'currentstreak':currentstreak,
+        'setting':setting,
+        'character':character,
+        'problem':problem,
+        'element':element,        
         'test': ""
     })    
 

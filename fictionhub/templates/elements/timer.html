@@ -2,7 +2,9 @@
     <div class="timer" style="float:right;margin:20px;
 			      position: absolute;
 			      right: 20px;right: 0px;
-			      top: 8px;">
+			      top: 8px;
+			      z-index: 200;
+			      cursor: pointer;">
       <div class="progressbar" style="position:relative;">
 	<div class="progress" style="margin: 0px;border: 1px solid #7C868E;padding: 0;">
 	  <span class="meter" id="time" style="width:100%; max-width:100%;">20:00</span>
@@ -31,8 +33,14 @@
     }, 1000);
 }
 
-jQuery(function ($) {
-    display = $('#time');
-    startTimer( 60 * 20, display);
-});
+//jQuery(function ($) {
+//    display = $('#time');
+//    startTimer( 60 * 20, display);
+//		      });
+
+      $("#time").click(function(){
+		      display = $('#time');
+		      startTimer( 60 * 20, display);
+      });
+		      
     </script>
