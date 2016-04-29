@@ -217,6 +217,25 @@ $(editor).find(".meter").css("background","#008CBA");
 	} else {
 	    	$(editor).find(".meter").css("background","#008CBA");	    
 	}
+
+    //Sprint
+    if (health < 12) {
+    	health=health + 0.5;
+    }
+	editor = $(simplemde.element.parentNode.children[4]).parent()
+	words = editor.find(".words").html();
+	percent = (parseFloat(words)/(100))*100;
+	$(".sprintprogress").css("width",percent+"%")
+	if (percent > 99) {
+	    $(".meter").css("background","green");
+    clearTimeout(healthTimer);
+    $(".tab-title").find("#"+currentSprint).prop('checked', true);
+    
+	} else {
+	    $(".meter").css("background","#008CBA");	    
+	}
+
+
     });
     
 })

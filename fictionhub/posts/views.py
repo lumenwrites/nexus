@@ -38,7 +38,7 @@ from django.conf import settings
 # My own stuff
 # utility functions
 from comments.utils import get_comment_list
-from .utils import rank_hot, rank_top, check_if_rational,check_if_daily
+from .utils import rank_hot, rank_top, check_if_rational,check_if_daily, get_prompts, age
 from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm, PromptForm
@@ -952,15 +952,6 @@ def post_feed(request, story):
 
 
 
-def age(timestamp):
-    now = datetime.utcnow().replace(tzinfo=utc)
-    created_at = datetime.fromtimestamp(timestamp).replace(tzinfo=utc)
-    
-    age_in_minutes = int((now-created_at).total_seconds())/60
-
-    # usage: age(prompt.created_utc)
-    return age_in_minutes
-
 
     
     
@@ -1260,43 +1251,7 @@ def post_create_daily(request):
 
         # Prompts
         
-        r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-        subreddit = r.get_subreddit('writingprompts')
-        prompts = subreddit.get_new(limit=128)
-        new_prompts = list(prompts)
-        prompts = []
-    
-    
-        hot_prompts = list(subreddit.get_hot(limit=50))
-        
-        max_age = 5*60
-        # less than 5 replies, more than 1 upvote and less than 60 minutes old
-        for prompt in new_prompts:
-            # 1 4 5*60
-            if (prompt.score > 1) \
-            and ((prompt.num_comments-2) < 3) \
-            and (age(prompt.created_utc) < max_age):
-                if prompt.num_comments > 0:
-                    prompt.num_comments -= 2 # remove 2 fake replies
-                prompt.age = round(age(prompt.created_utc)/60,1)
-                # prompt.permalink = prompt.permalink.replace("www", "zn")
-                prompt.sort = prompt.score * (1-(prompt.age/5))
-    
-                # prompt position
-                for index, p in enumerate(hot_prompts):
-                    if prompt.title == p.title:
-                        setattr(prompt, "position", index)
-                        # prompt.position == index
-
-                prompt.title = prompt.title.replace("[WP]", "", 1).strip()   
-                prompts.append(prompt)
-                    
-    
-    
-        # sort by score
-        prompts.sort(key=lambda p: p.score, reverse=True)
-    
-        prompts = prompts[:16]
+        prompts = get_prompts()
         prompt = prompts[0].title
 
         if wordcount > 1000:

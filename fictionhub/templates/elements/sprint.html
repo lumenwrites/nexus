@@ -1,0 +1,70 @@
+<!-- <span id="stop">Stop</span><br/> -->
+<!-- <span id="more">More</span><br/>          -->
+
+<div style="width: calc(100% - 171px); float:right;">
+  <span class="button small start"
+	style="width:80px;padding:10px;height:35px;">Sprint</span>
+  <div style="width: calc(100% - 80px); float:right;">      
+    <div class="progress" style="margin: 0px;
+				 border: 1px solid #7C868E;
+				 float:right;
+				 width:50%;
+				 height:35px;">
+      <span class="meter sprintprogress" style="width:0%; max-width:100%;"></span>
+    </div>      
+
+    <div class="progress" style="margin: 0px;
+				 border: 1px solid #7C868E;
+				 float:left;
+				 width:50%;
+				 height:35px;">
+      <span class="meter health" style="width:100%; max-width:100%;"></span>
+    </div>
+  </div>
+</div>
+
+  <script>
+var health = 10;
+var healthTimer = "";
+var currentSprint = "";
+function startTimer() {
+    healthTimer = setInterval(function () {
+	//display.text(timer);
+	$(".health").css("width",(health/10)*100+"%");
+
+	health = health - 0.1/5;
+
+	if (health > 8) {
+	$(".health").css("background","green");	
+	} else if (health > 4) {
+	    $(".health").css("background","#008CBA");
+	} else {
+	    $(".health").css("background","red");	    
+	}
+
+	
+        if (health < -0.5) {
+	    simplemde.value("");
+            console.log("Lost");
+	    health = 0;
+        }
+    }, 10);
+}
+
+$(".start").click(function(){
+    startTimer(5);
+    id = $(this).parent().parent().attr('id');
+    currentSprint = id;
+});
+
+$("#stop").click(function(){
+    clearTimeout(healthTimer);
+});
+
+$("#more").click(function(){
+    health=health + 1;
+});
+    
+
+    
+  </script>

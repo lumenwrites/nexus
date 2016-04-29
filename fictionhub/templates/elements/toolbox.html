@@ -29,7 +29,7 @@
 <ul class="tabs" data-tab>
   <li class="tab-title active"><a href="#panel2">Prompt</a></li>
   <li class="tab-title"><a href="#panel1">Goals/Structure</a></li>
-  <!-- <li class="tab-title"><a href="#panel3">Comedy</a></li> -->
+  <li class="tab-title"><a href="#panel3">Comedy</a></li>
   <!-- <li class="tab-title"><a href="#other">//Quality/Substance</a></li>   -->
 </ul>
 <!-- <br/> -->
@@ -44,23 +44,23 @@
 	  <input type="checkbox" class="checkbox"></input>
 	  <a href="#hc">Concept</a></li>
 	 -->
-	<li class="tab-title">
-	  <input type="checkbox" class="checkbox"></input>
+	<li class="tab-title active">
+	  <input type="checkbox" class="checkbox" id="setting"></input>
 	  <a href="#setting">Setting</a></li>
 	<li class="tab-title">
-	  <input type="checkbox" class="checkbox"></input>
+	  <input type="checkbox" class="checkbox" id="problem"></input>
 	  <a href="#problem">Problem</a></li> <!-- Engage -->
 	<li class="tab-title">
-	  <input type="checkbox" class="checkbox"></input>
+	  <input type="checkbox" class="checkbox" id="escalate"></input>
 	  <a href="#escalate">Escalate</a></li>
 	<li class="tab-title">
-	  <input type="checkbox" class="checkbox"></input>
+	  <input type="checkbox" class="checkbox" id="resolve"></input>
 	  <a href="#resolve">Resolve</a></li>	
       </ul>
       <div class="tabs-content">
 	<div class="content" id="hc" style="padding:20px!important;">
 	  <p>What is the story about? Describe it's premise, the "What if?". </p>
-	  <!-- <p><b>Prompt: {{prompt}}</b></p> -->
+	  <!-- <p><b>Prompt: {{prompt}}</b></p> -->		
 	  {# {% include "elements/prompts.html" %} #}
 	</div>
 	<div class="content active" id="setting" style="padding:20px!important;">
@@ -68,6 +68,7 @@
 	  <!--  Where is it? How does environment/location look like? -->
 	  <p>Describe a character in a situation.</p>
 	  <!-- <p><b>Prompt: {{setting}} | {{character}}</b> </p>     -->
+	  {% include "elements/sprint.html" %}
 	</div>
 	<div class="content" id="problem" style="padding:20px!important;">
 	  <p>Describe the event that disrupts the normal course of events and begins the story. What can go wrong? What problem is character facing? What goal does he have? Who is the antagonist?</p> <!--  (he is probably the source of the problem) -->
@@ -162,27 +163,34 @@
 	<li class="tab-title"><a href="#express">Express</a></li>	
       </ul>
       <div class="tabs-content">
-	<p style="margin-bottom:0;">Search, list of 5:</p>	
 	<div class="content active" id="element">
-	  <p>Extract Element/Property. Drop context.</p>
-	  <p>Fundamental</p>
-	  <p><b>{{element}}</b></p>	  
+	  <!-- <p>Extract Element/Property. Drop context.</p> -->
+	<p style="margin-bottom:0;">Write the list of 5 elements.</p>	
+	  <ul>
+	    <li>Phys</li>
+	    <li>Adj</li>
+	    <li>Because</li>
+	    <li>Will</li>	    	    	    
+	  </ul>
+	  <!-- <p><b>{{element}}</b></p>	   -->
 	</div>
 	<div class="content" id="jump">
-	  <p> Jump(flip/Exaggerate) </p>
-	  <p> Recognizer.(More abstract?) Determine pattern? </p>
-	  <p> //Assumptions/Expectations? Identify reason for the assumption? </p>	  
+	  <p> Jump(Flip/Exaggerate)</p>
 
+	  <p>Recognizer(one of abstract pattens, debono categories, reason for the assumption). </p>
+	  <!-- <p> Recognizer.(More abstract?) Determine pattern? </p> -->
+	  <!-- <p> //Assumptions/Expectations? Identify reason for the assumption? </p>	   -->
 	</div>
 	<div class="content" id="move">
-	  <p>Move(find lane that fits elements and jumps(explains why).</p>
-	  <p>Find association. Associate/Translate. search other interpretations(craziest)</p>
-	  <p>Beam. Other things recognizable by recognizer. </p>
+	  <p>Move(Find recognizer that fits? Why?).</p>
+	  <p>Find association. Beam-search. Other things recognizable by recognizer.other interpretations(craziest).</p> 
+	  <p> Translate. Apply pattern to something else.</p>
+
 	  <!-- <p>[slightly modify] [property] > abstract recognizer > [beam search other stuff that fits under it] > [cut and paste elements]  //translate?</p> -->
 	</div>
 	<div class="content" id="express">
-	  <p>Express first lane with a setup(mislead).</p>
-	  <p> 2nd lane with a punch. Reinterpret. Cut and paste.</p>    
+	  <p>Express first lane with a setup(mislead). 2nd lane with a punch. Reinterpret. </p>
+	  <p> Cut and paste. element against recognzer.</p>    
 	</div>
       </div>
     </article>
