@@ -2,6 +2,8 @@ import datetime
 import time
 import praw    
 import re, random
+from string import punctuation
+
 from django.utils.timezone import utc
 
 from django.utils.timezone import utc
@@ -122,6 +124,73 @@ def get_prompts():
 
     return prompts[:16]
 
+
+def stats(posts):
+    # Stats grid
+    test = ""
+    wordcount = 0
+    r = re.compile(r'[{}]'.format(punctuation))
+
+    statsposts = posts
+    days = {}
+    longeststreak = 0
+    currentstreak = 1
+
+    if len(statsposts):
+        prevpost = statsposts[0]
+    else:
+        prevpost = []
+        post = []
+    for post in statsposts:
+        no_punctuation = r.sub(' ',post.body)
+        number_of_words_in_a_post = len(no_punctuation.split())
+        wordcount += number_of_words_in_a_post
+        pub_date = post.pub_date
+        # if post.pub_date.month == today.month and post.pub_date.day < len(days):
+        #     days[post.pub_date.day] += number_of_words_in_a_post
+        #     this_month += number_of_words_in_a_post
+
+        test += str(post.pub_date.day) + " "      
+        if post.pub_date.day - 1 == prevpost.pub_date.day:
+            currentstreak += 1
+            if currentstreak > longeststreak:
+                longeststreak = currentstreak
+        elif post.pub_date.day == prevpost.pub_date.day:
+            pass
+        else:
+            currentstreak = 1
+
+        # test = str(prevpost.pub_date.day) + " " + str(post.pub_date.day)
+
+        pub_date_string = str(pub_date.year) + "-"+ str(pub_date.month).zfill(2) + "-" + str(pub_date.day).zfill(2)
+
+        if pub_date_string in days:
+            days[pub_date_string] += number_of_words_in_a_post
+        else:
+            days[pub_date_string] = number_of_words_in_a_post
+
+        prevpost = post
+
+    if post:
+        if post.pub_date.day != datetime.datetime.now().day:
+            currentstreak = 0
+    else:
+        currentstreak = 0
+        
+
+    for date, words in days.items():
+        if days[date] < 10:
+            days[date] = 1
+        elif days[date] < 256:
+            days[date] = 2
+        elif days[date] < 512:
+            days[date] = 3
+        elif  days[date] < 1024:
+            days[date] = 4
+        else:
+            days[date] = 5
+
+    return days, longeststreak, currentstreak
 
 
 
