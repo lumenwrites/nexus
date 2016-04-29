@@ -190,7 +190,7 @@ def stats(posts):
         else:
             days[date] = 5
 
-    return days, longeststreak, currentstreak
+    return days, longeststreak, currentstreak, wordcount
 
 
 

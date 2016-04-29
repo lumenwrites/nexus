@@ -70,6 +70,11 @@ def posts(request, rankby="hot", timespan="all-time",
     filterurl = ""
     post_type = "story"
 
+    days = 0
+    longeststreak = 0
+    currentstreak = 0
+    wordcount = 0
+
     rational = check_if_rational(request)
     daily = check_if_daily(request)
 
@@ -121,8 +126,9 @@ def posts(request, rankby="hot", timespan="all-time",
         filterurl="/user/"+userprofile.username # to add to href  in subnav
 
         statsposts = Post.objects.filter(author=userprofile, daily=daily)
+        statsposts = statsposts.order_by('pub_date')
         # Count word stats graph
-        days, longeststreak, currentstreak = stats(statsposts) 
+        days, longeststreak, currentstreak, wordcount = stats(statsposts) 
     else:
         # fictionhub includes rational        
         if rational:
@@ -221,7 +227,10 @@ def posts(request, rankby="hot", timespan="all-time",
         'hubtitle':hubtitle,
         'view_count':view_count,
         'score':score,
-        'days':days,        
+        'days':days,
+        'longeststreak':longeststreak,
+        'currentstreak':currentstreak,
+        'wordcount':wordcount,        
     })
 
 
@@ -951,7 +960,7 @@ def post_create_daily(request):
         # Stats
         statsposts = Post.objects.filter(author=request.user, daily=check_if_daily(request))
         statsposts = statsposts.order_by('pub_date')
-        days, longeststreak, currentstreak = stats(statsposts)
+        days, longeststreak, currentstreak, wordcount = stats(statsposts)
 
         # Prompts
         prompts = get_prompts()
