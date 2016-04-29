@@ -33,6 +33,13 @@ from time import mktime
 from django.template.defaultfilters import slugify
 from django.conf import settings
 
+# CBVs
+from django.views.generic import View
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
+
+
 # My own stuff
 # utility functions
 from comments.utils import get_comment_list
@@ -59,11 +66,56 @@ import dropbox
 from markdown import Markdown
 import time
 
-# wordpress
-from wordpress_xmlrpc import Client, WordPressPost
-from wordpress_xmlrpc.methods.posts import GetPosts, NewPost, EditPost, GetPost
-from wordpress_xmlrpc.methods.users import GetUserInfo
 
+
+
+
+class FilterMixin(object):
+    paginate_by = 15
+    def get_queryset(self):
+        qs = super(FilterMixin, self).get_queryset()
+
+        # qs = qs.filter(published=True, author__hidden=False)
+
+        # Filter by hub
+        hub = self.request.GET.get('hub')
+        if hub:
+            hub = Hub.objects.get(slug=hub)
+            qs = qs.filter(hubs=hub)
+
+        # Sort
+        sorting = self.request.GET.get('sorting')
+        if sorting == 'top':
+            qs = qs.order_by('-score')
+        elif sorting == 'new':
+            qs = qs.order_by('-pub_date')
+        else:
+            qs = rank_hot(qs)
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(FilterMixin, self).get_context_data(**kwargs)
+        if self.request.GET.get('sorting'):
+            context['sorting'] = self.request.GET.get('sorting')
+        else:
+            context['sorting'] = "hot"
+        context['hub'] = self.request.GET.get('hub')
+        context['hubs'] = Hub.objects.all()
+        return context
+    
+
+
+
+class BrowseView(FilterMixin, ListView):
+    model = Post
+    template_name = "posts/browse.html"
+
+    # def get_queryset(self):
+    #     qs = super(BrowseView, self).get_queryset()        
+    #     qs = [video for video in qs if (video.author.hidden == False and video.published==True)]
+
+    #     return qs
 
 
 def posts(request, rankby="hot", timespan="all-time",
