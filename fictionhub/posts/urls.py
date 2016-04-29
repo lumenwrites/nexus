@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 
-from . import views, cbvs, feeds, editorial
+from . import views, cbvs, feeds, repost, editorial
 # from .feeds import MainFeed
 
 urlpatterns = [
@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
     url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
 
-    url(r'^story/(?P<story>[^\.]+)/redditpost$', views.post_to_reddit),    
+    url(r'^story/(?P<story>[^\.]+)/redditpost$', repost.post_to_reddit),    
 
 
     
