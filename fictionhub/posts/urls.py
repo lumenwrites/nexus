@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 
-from . import views, feeds
+from . import views, cbvs, feeds, editorial
 # from .feeds import MainFeed
 
 urlpatterns = [
@@ -91,8 +91,8 @@ urlpatterns = [
         {'filterby': 'subscriptions'}),    
 
 
-    url(r'^hubs/$', views.HubList.as_view()),
-    url(r'^series/$', views.SeriesList.as_view()),    
+    url(r'^hubs/$', cbvs.HubList.as_view()),
+    url(r'^series/$', cbvs.SeriesList.as_view()),    
     # By hub
     url(r'^hub/(?P<hubslug>[^\.]+)/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
         {'filterby': 'hub'}),    
@@ -108,7 +108,7 @@ urlpatterns = [
     url(r'^stories/(?P<rankby>[^\.]+)/$', views.posts),    
     # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
 
-    # url(r'^browse/$', views.BrowseView.as_view()),        
+    # url(r'^browse/$', cbvs.BrowseView.as_view()),        
     url(r'^browse/$', views.browse),
     url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
     url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
@@ -122,8 +122,8 @@ urlpatterns = [
     # Prompts
     url(r'^writing-prompts/$', views.writing_prompts),
     # Editorial
-    url(r'^prompt/$', views.prompt),
-    url(r'^promptsrepost/$', views.prompts_repost),
+    url(r'^prompt/$', editorial.prompt),
+    url(r'^promptsrepost/$', editorial.prompts_repost),
 ]
 
 

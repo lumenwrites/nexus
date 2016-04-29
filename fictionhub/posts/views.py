@@ -29,15 +29,8 @@ from django.template import RequestContext
 from datetime import datetime
 from django.utils.timezone import utc
 from time import mktime
-# slugify dropbox title
-from django.template.defaultfilters import slugify
-from django.conf import settings
 
-# CBVs
-from django.views.generic import View
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.conf import settings
 
 
 # My own stuff
@@ -62,60 +55,10 @@ from notifications.models import Message
 
 #dropbox
 import os
-import dropbox
 from markdown import Markdown
 import time
 
 
-
-
-
-class FilterMixin(object):
-    paginate_by = 15
-    def get_queryset(self):
-        qs = super(FilterMixin, self).get_queryset()
-
-        # qs = qs.filter(published=True, author__hidden=False)
-
-        # Filter by hub
-        hub = self.request.GET.get('hub')
-        if hub:
-            hub = Hub.objects.get(slug=hub)
-            qs = qs.filter(hubs=hub)
-
-        # Sort
-        sorting = self.request.GET.get('sorting')
-        if sorting == 'top':
-            qs = qs.order_by('-score')
-        elif sorting == 'new':
-            qs = qs.order_by('-pub_date')
-        else:
-            qs = rank_hot(qs)
-
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super(FilterMixin, self).get_context_data(**kwargs)
-        if self.request.GET.get('sorting'):
-            context['sorting'] = self.request.GET.get('sorting')
-        else:
-            context['sorting'] = "hot"
-        context['hub'] = self.request.GET.get('hub')
-        context['hubs'] = Hub.objects.all()
-        return context
-    
-
-
-
-class BrowseView(FilterMixin, ListView):
-    model = Post
-    template_name = "posts/browse.html"
-
-    # def get_queryset(self):
-    #     qs = super(BrowseView, self).get_queryset()        
-    #     qs = [video for video in qs if (video.author.hidden == False and video.published==True)]
-
-    #     return qs
 
 
 def posts(request, rankby="hot", timespan="all-time",
@@ -677,10 +620,6 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
                 post.post_type = "chapter"
                 number_of_chapters = post.parent.children.count()
                 post.number = number_of_chapters + 1
-            if challenge:
-                post.parent = Post.objects.get(slug=challenge)
-            if prompt:
-                post.parent = Post.objects.get(slug=prompt)
             if posttype == "post":
                 post.post_type = "post"                    
             if posttype == "thread":
@@ -934,63 +873,6 @@ def users(request):
     
 
 
-    
-# TODO: replace with CBVs
-# from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView
-# from django.shortcuts import render
-
-# from .models import Post
-# from .forms import PostForm
-# from .utils import rank_hot, rank_top
-
-
-
-# class PostsView(ListView):
-#     model = Post
-#     template_name = "posts/posts.html"
-
-#     def get_queryset(self):
-#         posts = Post.objects.all()
-
-#         rankby = self.kwargs['rankby']
-#         if rankby == "hot":
-#             post_list = rank_hot(posts, top=32)
-#         elif rankby == "top":
-#             post_list = rank_top(posts, timespan = timespan)
-#         elif rankby == "new":
-#             post_list = posts.order_by('-pub_date')
-#         else:
-#             post_list = []
-
-#         return posts
-
-#     def get_context_data(self, **kwargs):
-#         context = super(PostsView, self).get_context_data(**kwargs)
-#         context['rankby'] =  self.kwargs['rankby']
-#         return context    
-        
-
-# class PostView(DetailView):
-#     model = Post
-#     template_name = "posts/post.html"    
-
-# class PostCreate(CreateView):
-#     model = Post
-#     form_class = PostForm
-#     template_name = "posts/create.html"    
-
-# class PostEdit(FormView):
-#     template_name = "posts/edit.html"    
-#     form_class = PostForm
-
-#     success_url = '/thanks/'
-
-#     def form_valid(self, form):
-#         # This method is called when valid form data has been POSTed.
-#         # It should return an HttpResponse.
-#         form.send_email()
-#         return super(ContactView, self).form_valid(form)    
-
 # TODO: dry it in one function
 # def vote(request):
 #     post = Post.objects.get(id=request.POST.get('post-id'))
@@ -1001,41 +883,16 @@ def users(request):
 #         post.score -= 1
 #         post.author.karma -= 1
 #         user.upvoted.remove(post)
-#     elif post in user.downvoted:# undownvote
-#         post.score += 1
-#         post.author.karma += 1
-#         user.downvoted.remove(post)
 #     elif vote == "up":          # upvote
 #         post.score += 1
 #         post.author.karma += 1
 #         user.upvoted.add(post)
-#     elif vote == "down":        # downvote
-#         if post.score > 0:
-#             post.score -= 1
-#             post.author.karma -= 1
-#             user.downvoted.add(post)
 
 #     post.save()
 #     post.author.save()
 #     user.save()
 
 #     return HttpResponse()
-
-
-
-
-from django.views.generic.list import ListView
-
-class HubList(ListView):
-    model = Hub
-    template_name = "hubs/hubs.html"
-
-
-class SeriesList(ListView):
-    model = Post
-    template_name = "series/series.html"
-    paginate_by=15
-    
 
 
 
@@ -1156,118 +1013,5 @@ def writing_prompts(request):
         'max_age': max_age,        
     })
 
-
-
-# Editorial
-def prompt(request):
-    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-    subreddit = r.get_subreddit('writingprompts')
-    prompts = subreddit.get_new(limit=64)
-    new_prompts = list(prompts)
-    prompts = []
-
-    # less than 5 replies, more than 1 upvote and less than 60 minutes old
-    for prompt in new_prompts:
-        if (prompt.score > 1) \
-        and ((prompt.num_comments-2) < 4) \
-        and (age(prompt.created_utc) < 5*60):
-            if prompt.num_comments > 0:
-                prompt.num_comments -= 2 # remove 2 fake replies
-            prompts.append(prompt)
-
-    # sort by score
-    prompts.sort(key=lambda p: p.score, reverse=True)
-
-    prompt = prompts[0]
-
-    promptslist = ["\n\n" + p.title for p in prompts]
-    return HttpResponse(promptslist) #prompt.title
-    
-
-    
-def prompts_repost(request):
-    print ("\n\n################ Log ################") 
-    print (time.strftime("%d/%m/%Y"))
-    print(time.strftime("%H:%M:%S"))
-    print ("################")
-    
-    # Dropbox
-    access_token = os.environ["ACCESS_TOKEN"]
-    client = dropbox.client.DropboxClient(access_token)
-    folder_metadata = client.metadata('/prompts/')
-    
-    teststring = "\n\n"
-    imported = ""
-    updated = ""
-    
-    for file in folder_metadata["contents"]:
-        if not file["is_dir"]:
-            path = file["path"]
-            f, metadata = client.get_file_and_metadata(path)
-            text = f.read()
-            text = text.decode("utf-8")
-    
-            md = Markdown(extensions = ['meta', 'codehilite'])
-            content = md.convert(text)
-            metadata = {}
-            for name, value in md.Meta.items():
-                metadata[name] = value[0]
-                # teststring += name + ": " + value[0] + "<br/>"
-    
-            # teststring += "Title: " + metadata['title'] + "\n" + \
-            #               "Date: " + metadata['date'] + \
-            #               "Content: " + content
-    
-            publish = False
-            try:
-                if metadata['publish'].strip() == "True":
-                    publish = True
-            except:
-                pass
-                    
-    
-            if publish:
-                # Reddit
-                r = praw.Reddit(user_agent='Auto submit prompt replies from dropbox by /u/raymestalez')
-                r.login(os.environ["REDDITUNAME"],os.environ["REDDITUPASS"])
-                subreddit = r.get_subreddit('WritingPrompts')
-                
-                title = metadata["prompt"].strip()
-                # print("Title: " + title)
-                
-                # remove meta from text
-                text = "".join(text.split("\n\n", 1)[1:]).strip()
-                body = text
-    
-                # Get or create prompt            
-                thread = list(r.search(title, subreddit=subreddit, sort="new")) #, syntax='cloudsearch'
-                if thread:
-                    thread = thread[0]
-                    teststring += "Thread selected " + title + "\n"
-                # else:
-                #     thread = r.submit('/r/WritingPrompts', title, text=' ')
-                #     print("Thread created " + title)
-    
-
-                edited = False
-                comments = praw.helpers.flatten_tree(thread.comments)
-                for comment in comments:
-                    try:
-                        if comment.author.name == "raymestalez":
-                            comment.edit(body)
-                            print ("################")
-                            edited = True
-                            teststring += "Prompt Edited " + body[:10] + "\n"
-                    except:
-                        pass
-                        
-                if not edited:
-                    thread.add_comment(body)
-                    print ("################")
-                    teststring += "Prompt Submitted  " + body[:10]
-
-    return render(request, 'posts/test.html', {
-        'teststring': teststring,
-    })
 
 
