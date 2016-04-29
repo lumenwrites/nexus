@@ -1,15 +1,16 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from . import views
-from .views import MainFeed
+
+from . import views, feeds
+# from .feeds import MainFeed
 
 urlpatterns = [
 
     # top
     url(r'^users/top/$', views.users),
     # Feed
-    url(r'^user/(?P<username>[^\.]+)/feed/atom/$', views.UserFeed()),    
+    url(r'^user/(?P<username>[^\.]+)/feed/atom/$', feeds.UserFeed()),    
 
     # Store
     url(r'^user/rayalez/store/$', views.item),
@@ -52,8 +53,8 @@ urlpatterns = [
 
     
     # Rss
-    url(r'^feed/$', MainFeed()),            
-    url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),        
+    # url(r'^feed/$', MainFeed()),            
+    url(r'^story/(?P<story>[^\.]+)/feed$', feeds.post_feed),        
 
 
     url(r'^404/', views.page_404),

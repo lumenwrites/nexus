@@ -6,8 +6,6 @@ import math
 
 # for rss
 from xml.etree.ElementTree import Element, SubElement, tostring 
-from django.contrib.syndication.views import Feed
-from django.utils.feedgenerator import Atom1Feed
 from django.core.urlresolvers import reverse
 
 
@@ -902,58 +900,6 @@ def page_404(request):
     return response
 
 
-class MainFeed(Feed):
-    title = "fictionhub"
-    link = "/feed/"
-    description = "fictionhub"
-
-    def items(self):
-        return Post.objects.filter(published=True,post_type="story").order_by('-pub_date')[:25]
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        md = Markdown()
-        return md.convert(item.body)
-
-    # item_link is only needed if NewsItem has no get_absolute_url method.
-    def item_link(self, item):
-        return item.get_absolute_url()
-    
-def post_feed(request, story):
-    story = Post.objects.get(slug=story)
-    rss = Element('rss')
-    rss.set("version","2.0")
-
-    channel = SubElement(rss,'channel')
-
-    title = SubElement(channel,'title')
-    title.text = story.title
-
-    link = SubElement(channel,'link')
-    link.text = "/story/"+story.slug # request.build_absolute_uri(reverse("post"))
-
-    desc = SubElement(channel,'description')
-    desc.text = story.body
-
-    chapters = story.children.all()
-
-    for index in chapters:
-        item = SubElement(channel,'item')
-
-        title_c = SubElement(item,'title')
-        title_c.text = index.title
-        
-        link = SubElement(item,'link')
-        #link.text = request.build_absolute_uri(index.get_absolute_url())
-        link.text = "/story/"+story.slug
-    return HttpResponse(tostring(rss, encoding='UTF-8'), content_type='application/xml')
-
-
-
-
-
     
     
 def email(request):
@@ -989,38 +935,6 @@ def users(request):
     })
 
     
-
-
-# rss
-# rss
-class UserFeed(Feed):
-    title = "fictionhub latests stories"
-    link = "/"
-    feed_type = Atom1Feed
-
-    def get_object(self, request, username):
-        return get_object_or_404(User, username=username)
-
-    def title(self, obj):
-        return "fictionhub: %s latest stories" % obj.username
-
-    def link(self, obj):
-        return "http://fictionhub.io/user/" + obj.username
-        # return "http://fictionhub.io/" +  str(item.get_absolute_url())
-    
-    def items(self, obj):
-        return Post.objects.filter(published=True, author=obj).order_by("-pub_date")
-
-    def item_title(self, item):
-        return item.title
-    
-    def item_pubdate(self, item):
-        return item.pub_date
-
-    def item_description(self, item):
-        md = Markdown()
-        return md.convert(item.body)
-
 
 
     
@@ -1156,14 +1070,14 @@ def post_create_daily(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False) # return post but don't save it to db just yet
+            post = form.save(commit=False)
             post.author = request.user
             # self upvote
             post.score += 1
             post.post_type = "story"
             post.rational = False
             post.daily = True
-            post.reddit_url = request.POST.get("reddit_url", "") # form.cleaned_data['reddit_url']
+            post.reddit_url = request.POST.get("reddit_url", "")
             post.save()
             request.user.upvoted.add(post)            
             post.hubs.add(*form.cleaned_data['hubs'])
@@ -1174,12 +1088,6 @@ def post_create_daily(request):
                     if hub.parent.parent and hub.parent.parent.hub_type != "folder":
                         post.hubs.add(hub.parent.parent)
 
-            # Hacky way to 
-            # for hub in form.cleaned_data['hubs']:
-            #     if hub.parent:
-            #         post.hubs.add(hub.parent)
-            #         if hub.parent.parent:
-            #             post.hubs.add(hub.parent.parent)
             return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         form = PostForm()
@@ -1240,48 +1148,12 @@ import praw
 
     # prompts
 def writing_prompts(request):
-    r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
-    subreddit = r.get_subreddit('writingprompts')
-    prompts = subreddit.get_new(limit=128)
-    new_prompts = list(prompts)
-    prompts = []
-
-
-    hot_prompts = list(subreddit.get_hot(limit=50))
-    
-    max_age = 5*60
-    # less than 5 replies, more than 1 upvote and less than 60 minutes old
-    for prompt in new_prompts:
-        # 1 4 5*60
-        if (prompt.score > 1) \
-        and ((prompt.num_comments-2) < 3) \
-        and (age(prompt.created_utc) < max_age):
-            if prompt.num_comments > 0:
-                prompt.num_comments -= 2 # remove 2 fake replies
-            prompt.age = round(age(prompt.created_utc)/60,1)
-            # prompt.permalink = prompt.permalink.replace("www", "zn")
-            prompt.sort = prompt.score * (1-(prompt.age/5))
-
-            # prompt position
-            for index, p in enumerate(hot_prompts):
-                if prompt.title == p.title:
-                    setattr(prompt, "position", index)
-                    # prompt.position == index
-
-            prompts.append(prompt)
-                
-
-
-    # sort by score
-    prompts.sort(key=lambda p: p.score, reverse=True)
-
+    prompts = get_prompts()
     prompts = prompts[:16]
 
-    
     # random.shuffle(prompts)
     # prompts = prompts[:1]
     
-        
     return render(request, 'posts/writing-prompts.html', {
         'prompts': prompts,
         'max_age': max_age,        
