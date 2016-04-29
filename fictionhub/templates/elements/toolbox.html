@@ -25,23 +25,22 @@
 
 
 
-<div class="toolbox" style="display:none;">
+<div class="toolbox" style="//display:none;">
 <ul class="tabs" data-tab>
-  <!-- <li class="tab-title"><a href="#panel2">Prompt</a></li> -->
-  <!-- <li class="tab-title active"><a href="#panel1">Goals/Structure</a></li> -->
+  <li class="tab-title active"><a href="#panel2">Prompt</a></li>
+  <li class="tab-title"><a href="#panel1">Goals/Structure</a></li>
   <!-- <li class="tab-title"><a href="#panel3">Comedy</a></li> -->
   <!-- <li class="tab-title"><a href="#other">//Quality/Substance</a></li>   -->
 </ul>
-<br/>
+<!-- <br/> -->
 <div class="tabs-content">
   <!-- Goals -->
-  <div class="content active" id="panel1">
+  <div class="content" id="panel1">
     <article  style="margin:0;padding:0;">
 
       <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
 	
-	<li class="tab-title active">
-	  <!-- 
+	  <!-- 	<li class="tab-title active">
 	  <input type="checkbox" class="checkbox"></input>
 	  <a href="#hc">Concept</a></li>
 	 -->
@@ -97,30 +96,50 @@
     </article>
   </div>
   <!-- Prompt -->
-  <div class="content" id="panel2">    
+  <div class="content active" id="panel2">    
     <article style="margin:0;padding:0;">
 
-      <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
-	<li class="tab-title"><a href="#panel21">Location</a></li>
+      <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;
+						width:170px;">
+	<li class="tab-title active"><a href="#hcprompt">Prompt</a></li>	
+	<li class="tab-title"><a href="#panel21">Setting</a></li>
 	<li class="tab-title"><a href="#panel31">Character</a></li>
-	<li class="tab-title"><a href="#panel41">Problem/Goal</a></li>
+	<li class="tab-title"><a href="#panel41">Challenge</a></li> <!-- Problem/Goal -->
       </ul>
-      <div class="tabs-content">
-	<div class="content active" id="panel21">
-	  <p> {{setting}} </p>
+      <div class="tabs-content" style="margin-right: 0!important;">
+	<div class="content active" id="hcprompt" style="padding:0px!important;">
+	  <div style="width:calc(100% - 170px);float:right;">
+	    {% include "elements/prompts.html" %}
+	  </div>
+	  <style>
+	    .tab-title {
+	    width: 170px!important;
+	    }
+	    .prompttitle {height:109px!important;}
+	  </style>
+	</div>
+	<div class="content" id="panel21">
+	  <div style="width:calc(100% - 170px); float:right; padding:20px;">
+	       <p> {{setting}} </p>
+	  </div>
 	</div>
 	<div class="content" id="panel31">
-	  <p> {{character}} </p>    
+	  <div style="width:calc(100% - 170px); float:right; padding:20px;">	  
+	    <p> {{character}} </p>
+	  </div>
 	</div>
 	<div class="content" id="panel41">
-	  <p> {{problem}} </p>    
+	  <div style="width:calc(100% - 170px); float:right; padding:20px;">
+	    <p> {{problem}} </p>
+	  </div>
 	</div>
       </div>
 
       <style>
 
 	.vertical .tab-title {
-	margin:0!important; margin-right: 20px!important;
+	margin:0!important;
+	margin-right: 0px!important;
 	}
 
 	.tabs-content {

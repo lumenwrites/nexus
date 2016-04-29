@@ -9,6 +9,23 @@
   }
 
   .CodeMirror {
+    height: 300px!important;
+  }
+
+::-webkit-scrollbar {
+      width: 8px;
+} /* this targets the default scrollbar (compulsory) */
+
+::-webkit-scrollbar-track {
+      background-color: #F2F2F2;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(119, 119, 119, 0.2); 
+} /* this will style the thumb, ignoring the track */
+ 
+  
+  .CodeMirror {
   background: white!important;
   border-radius: 0!important;
   }
@@ -66,7 +83,7 @@
     {% include "elements/stats.html" %}
 
     {% include "elements/toolbox.html" %}
-    {% include "elements/prompts.html" %}
+    {# {% include "elements/prompts.html" %} #}
     
   </div>
 </div>
