@@ -65,6 +65,7 @@ from wordpress_xmlrpc.methods.posts import GetPosts, NewPost, EditPost, GetPost
 from wordpress_xmlrpc.methods.users import GetUserInfo
 
 
+
 def posts(request, rankby="hot", timespan="all-time",
             filterby="", hubslug="", username="", challenge="",
           prompt=""):
@@ -73,10 +74,6 @@ def posts(request, rankby="hot", timespan="all-time",
     userprofile = []
     filterurl = ""
     post_type = "story"
-    if not challenge:
-        challenge = []
-    if not prompt:
-        prompt = []
 
     rational = check_if_rational(request)
     daily = check_if_daily(request)
@@ -130,57 +127,7 @@ def posts(request, rankby="hot", timespan="all-time",
 
         statsposts = Post.objects.filter(author=userprofile, daily=daily)
         # Count word stats graph
-        wordcount = 0
-        r = re.compile(r'[{}]'.format(punctuation))
-        days = {}
-        for post in statsposts:
-            no_punctuation = r.sub(' ',post.body)
-            number_of_words_in_a_post = len(no_punctuation.split())
-            wordcount += number_of_words_in_a_post
-            pub_date = post.pub_date
-            # if post.pub_date.month == today.month and post.pub_date.day < len(days):
-            #     days[post.pub_date.day] += number_of_words_in_a_post
-            #     this_month += number_of_words_in_a_post
-    
-            pub_date_string = str(pub_date.year) + "-"+ str(pub_date.month).zfill(2) + "-" + str(pub_date.day).zfill(2)
-    
-            if pub_date_string in days:
-                days[pub_date_string] += number_of_words_in_a_post
-            else:
-                days[pub_date_string] = number_of_words_in_a_post
-
-        days['00-00-00'] = 0                
-        days['00-00-01'] = 1
-        days['00-00-02'] = 2
-        days['00-00-03'] = 3
-        days['00-00-04'] = 4
-        days['00-00-05'] = 5
-        for date, wordcount in days.items():
-            if days[date] < 10:
-                days[date] = 1
-            elif days[date] < 256:
-                days[date] = 2
-            elif days[date] < 512:
-                days[date] = 3
-            elif  days[date] < 1024:
-                days[date] = 4
-            else:
-                days[date] = 5
-    
-    elif filterby == "challenges":
-        posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational, daily = daily)
-        rankby = "new"
-    elif filterby == "challenge":
-        challenge = Post.objects.get(slug=challenge)
-        if challenge.state == "voting":
-            rankby = "new" # later do random
-        elif challenge.state == "completed":            
-            rankby = "top"
-        posts = Post.objects.filter(parent=challenge, published=True, rational = rational, daily = daily)
-    elif filterby == "prompt":
-        prompt = Post.objects.get(slug=prompt)
-        posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational, daily = daily)
-        rankby = "hot"
+        days, longeststreak, currentstreak = stats(statsposts) 
     else:
         # fictionhub includes rational        
         if rational:
@@ -275,8 +222,6 @@ def posts(request, rankby="hot", timespan="all-time",
         'userprofile':userprofile,
         'subscribed_to': subscribed_to,
         'hubs': hubs,
-        'challenge':challenge,
-        'prompt':prompt,
         'solohub':solohub,
         'hubtitle':hubtitle,
         'view_count':view_count,
