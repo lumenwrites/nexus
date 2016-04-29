@@ -35,7 +35,7 @@
 <!-- <br/> -->
 <div class="tabs-content">
   <!-- Goals -->
-  <div class="content" id="panel1">
+  <div class="content goals" id="panel1">
     <article  style="margin:0;padding:0;">
 
       <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;">
@@ -68,7 +68,7 @@
 	  <!--  Where is it? How does environment/location look like? -->
 	  <p>Describe a character in a situation.</p>
 	  <!-- <p><b>Prompt: {{setting}} | {{character}}</b> </p>     -->
-	  {% include "elements/sprint.html" %}
+	  {# {% include "elements/sprint.html" %} #}
 	</div>
 	<div class="content" id="problem" style="padding:20px!important;">
 	  <p>Describe the event that disrupts the normal course of events and begins the story. What can go wrong? What problem is character facing? What goal does he have? Who is the antagonist?</p> <!--  (he is probably the source of the problem) -->
@@ -93,6 +93,7 @@
 	</div>
 
       </div>
+	  {% include "elements/sprint.html" %}
       
     </article>
   </div>
@@ -206,6 +207,7 @@
 </div>
 
 </div> <!-- end .toolbox -->
+
 
 <style>
   .tab-title a {

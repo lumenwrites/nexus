@@ -1,9 +1,9 @@
 <!-- <span id="stop">Stop</span><br/> -->
 <!-- <span id="more">More</span><br/>          -->
 
-<div style="width: calc(100% - 171px); float:right;">
+<!-- <div style="width: calc(100% - 171px); float:right;"> -->
   <span class="button small start"
-	style="width:80px;padding:10px;height:35px;">Sprint</span>
+	style="width:80px;padding:10px;height:35px;background:#3D455B;">Sprint</span>
   <div style="width: calc(100% - 80px); float:right;">      
     <div class="progress" style="margin: 0px;
 				 border: 1px solid #7C868E;
@@ -21,18 +21,20 @@
       <span class="meter health" style="width:100%; max-width:100%;"></span>
     </div>
   </div>
-</div>
+<!-- </div> -->
 
   <script>
 var health = 10;
 var healthTimer = "";
 var currentSprint = "";
+var wordsBeforeSprint = 0;
 function startTimer() {
     healthTimer = setInterval(function () {
 	//display.text(timer);
 	$(".health").css("width",(health/10)*100+"%");
 
 	health = health - 0.1/5;
+	$(".sprintprogress").css("width",sprintpercent+"%")
 
 	if (health > 8) {
 	$(".health").css("background","green");	
@@ -47,14 +49,21 @@ function startTimer() {
 	    simplemde.value("");
             console.log("Lost");
 	    health = 0;
+	        $(".start").removeClass("disabled");
         }
     }, 10);
 }
 
 $(".start").click(function(){
-    startTimer(5);
     id = $(this).parent().parent().attr('id');
     currentSprint = id;
+    $(".health").css("width","100%");
+    $(".sprintprogress").css("width","0");
+    wordsBeforeSprint = parseInt(words);
+    sprintpercent = 0;		     
+    $(".start").addClass("disabled");
+    startTimer(5);
+
 });
 
 $("#stop").click(function(){
@@ -68,3 +77,8 @@ $("#more").click(function(){
 
     
   </script>
+  <style>
+    .disabled {
+    background: #848C96;
+    }
+  </style>

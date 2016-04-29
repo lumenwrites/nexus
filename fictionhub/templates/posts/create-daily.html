@@ -185,6 +185,7 @@
 <script>
     var simplemde;
 var editor;
+var sprintpercent;
 $('textarea').each(function() {
     simplemde = new SimpleMDE({
 	element: this,
@@ -218,21 +219,31 @@ $(editor).find(".meter").css("background","#008CBA");
 	    	$(editor).find(".meter").css("background","#008CBA");	    
 	}
 
-    //Sprint
-    if (health < 12) {
-    	health=health + 0.5;
-    }
-	editor = $(simplemde.element.parentNode.children[4]).parent()
+	//Sprint
+	// Increase health
+	if (health < 12) {
+    	    health=health + 0.5;
+	}
+	//Get number of words
+	editor = $(simplemde.element.parentNode.children[4]).parent();
 	words = editor.find(".words").html();
-	percent = (parseFloat(words)/(100))*100;
-	$(".sprintprogress").css("width",percent+"%")
-	if (percent > 99) {
-	    $(".meter").css("background","green");
-    clearTimeout(healthTimer);
-    $(".tab-title").find("#"+currentSprint).prop('checked', true);
-    
+	// Progreess = words written - words before sprint.
+	sprintpercent = ((parseInt(words)-wordsBeforeSprint)/(100))*100;
+	// $(".sprintprogress").css("width",sprintpercent+"%")
+	if (sprintpercent > 99) {
+	    $(".sprintprogress").css("background","green");
+	    //    $(".tab-title").find("#"+currentSprint).prop('checked', true);
+	    $(".goals").find(".active").find(".checkbox").prop('checked', true);    
+	    health = 10;
+	    $(".health").css("width","100%");
+	    $(".sprintprogress").css("width","100%");
+	    $(".health").css("background","green");
+	    $(".start").removeClass("disabled");
+	    clearTimeout(healthTimer);
+
 	} else {
-	    $(".meter").css("background","#008CBA");	    
+	    // Words blue
+	    $(".sprintprogress").css("background","#008CBA");	    
 	}
 
 
