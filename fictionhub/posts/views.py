@@ -74,6 +74,7 @@ def posts(request, rankby="hot", timespan="all-time",
     longeststreak = 0
     currentstreak = 0
     wordcount = 0
+    totalwordcount = 0    
 
     rational = check_if_rational(request)
     daily = check_if_daily(request)
