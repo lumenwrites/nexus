@@ -116,7 +116,7 @@ def get_prompts():
     prompts = Prompt.objects.all()
     
     fetch = False
-    fetchTop = True
+    fetchTop = False
     if fetchTop:
         prompts_fetch_top()
     if fetch:
