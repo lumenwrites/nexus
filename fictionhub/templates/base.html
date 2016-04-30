@@ -10,7 +10,7 @@
     {% block title %} 
     {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
     rationalfiction     
-    {% elif request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "localhost:8000" %}
+    {% elif request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}
     writingstreak
     {% else %}	        
     fictionhub 
