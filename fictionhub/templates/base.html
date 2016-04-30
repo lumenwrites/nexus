@@ -82,7 +82,7 @@
       <!-- Logo -->      
         <div class="large-6 small-6 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" %}
+	    {% if request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "localhost:8000" %}
 	    <!-- <img src="{% static "/static/img/logo_128x128.png" %}"/> -->
 	    <span style="font-weight:100;">writing</span><span style="font-weight:400;">streak</span> <!-- daily -->
 	    {% else %}	    
