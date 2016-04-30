@@ -922,6 +922,9 @@ def post_create_daily(request):
     wordcount = 0
 
 
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')        
+
     setting=["Pyramides", "Stanford/MIT"]
     character=["Scientist", "Detective", "Writer"]
     scifi = ["Aliens", "Nuclear postapoc", "Pirates", "Robot"]

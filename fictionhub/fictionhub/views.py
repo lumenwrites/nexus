@@ -19,6 +19,8 @@ def home(request):
         rational = True
 
     if check_if_daily(request):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/write/')        
         return render(request, 'home-daily.html', {})
         
     if request.user.is_authenticated():
