@@ -90,6 +90,7 @@ def posts(request, rankby="hot", timespan="all-time",
         posts = Post.objects.filter(author=subscribed_to, published=True)
         # posts = Post.objects.all()        
         filterurl="/subscriptions" # to add to href  in subnav
+        rankby = "new"
     elif filterby == "hub":
         hub = Hub.objects.get(slug=hubslug)
         # Show posts from all the children hubs? Don't know how to sort.

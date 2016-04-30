@@ -17,7 +17,7 @@
 	{% if not userprofile %}
 	<a href="{{filterurl}}/hot/" id="hot"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
 	{% endif %}
-	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" %}class="bold"{% endif %}>New</span></a>
+	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" and not filterby = "subscriptions" %}class="bold"{% endif %}>New</span></a>
 
 	<a href="{{filterurl}}/top/all-time/">
 	  <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}>
@@ -38,7 +38,7 @@
 	<!-- Subscritions -->
 	{% if user.is_authenticated %}
 	{% if user.subscribed_to.count > 0 %}
-	<a href="/subscriptions/new/">
+	<a href="/subscriptions/">
 	  <span {% if filterby = "subscriptions" %}class="bold"{% endif %}>Subscriptions</span>
 	</a>
 	{% endif %}
