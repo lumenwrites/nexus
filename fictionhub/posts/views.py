@@ -972,7 +972,7 @@ def post_create_daily(request):
 
         # Prompts
         prompts = get_prompts()
-        prompt = prompts[0].title
+        prompt = prompts[0].prompt
 
         if wordcount > 1000:
             wordcount = str(int(wordcount/1000)) + "K"

@@ -41,6 +41,9 @@
   .prompts {
   display:none;
   }
+
+  //.prompttitle {height:109px!important;}
+
 </style>
 
 
@@ -59,7 +62,8 @@
 		     border-radius: 3px;">
 
       <div class="prompttitle">
-	<a href="{{prompt.permalink}}" class="prompttitle bold black">{{prompt.title}}</a>
+	<!-- <a href="{{prompt.reddit_url}}" class="prompttitle bold black">{{prompt.prompt}}</a> -->
+	<span class="prompttitle bold black">{{prompt.prompt}}</span>	
       </div>
 	<br/>
 
@@ -68,14 +72,16 @@
 				margin-left: -11px;
 				width: calc(100% + 22px);">
 
-	<i class="fa fa-hashtag"></i>  {{prompt.position}}	 &nbsp;	
-	<i class="fi-arrow-up"></i> {{prompt.score}} <!-- points -->	 &nbsp;
-	<i class="fi-comment"></i> {{prompt.num_comments}} <!-- replies --> &nbsp;
-	<i class="fi-clock"></i> {{prompt.age}} <!-- hours --> &nbsp;
+	<!-- <i class="fa fa-hashtag"></i>  {{prompt.position}}	 &nbsp;	 -->
+	<!-- <i class="fi-arrow-up"></i> {{prompt.score}} <\!-- points -\->	 &nbsp; -->
+	<!-- <i class="fi-comment"></i> {{prompt.num_comments}} <\!-- replies -\-> &nbsp; -->
+	<!-- <i class="fi-clock"></i> {{prompt.age}} <\!-- hours -\-> &nbsp; -->
 
 	<div class="right">
 	  <a class='next-prompt' style="margin-right: 5px;"><i class="fa fa-refresh"></i></a>
 	</div>
+	<div class="clearfix">
+		    
       </div>
     </article>
   </div>
