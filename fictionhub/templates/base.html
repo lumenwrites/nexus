@@ -84,9 +84,9 @@
       <!-- Logo -->      
         <div class="large-6 small-6 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "localhost:8000" %}
+	    {% if request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io"  or  request.META.HTTP_HOST == "writingstreak.io" or request.META.HTTP_HOST == "localhost:8000" %}
 	    <!-- <img src="{% static "/static/img/logo_128x128.png" %}"/> -->
-	    <span style="font-weight:100;">writing</span><span style="font-weight:400;">streak</span> <!-- daily -->
+	    <span style="font-weight:100;">writing</span><span style="font-weight:400;">streak</span> <!-- daily --> 	<span class="beta" style="font-size:12px;">[beta]</span>
 	    {% else %}	    
 	    fiction<span class="bold">hub</span>
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
@@ -159,7 +159,7 @@ console.log("yes");
 		<i class="fa fa-home"></i></a>
 
 	      <!-- Write -->
-	      {% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "streak.fictionhub.io" %}
+	      {% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "writingstreak.io" %}
 	      <a href="/write/">
 		<i class="fa fa-pencil-square-o"></i></a>
 	      <!-- <i class="fa fa-pencil"></i> -->
