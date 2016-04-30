@@ -37,7 +37,7 @@
 
 	<!-- Subscritions -->
 	{% if user.is_authenticated %}
-	{% if user.subscribed_to.count > 0 %}
+	{% if user.subscribed_to.count > 0 and not userprofile and not solohub %}
 	<a href="/subscriptions/">
 	  <span {% if filterby = "subscriptions" %}class="bold"{% endif %}>Subscriptions</span>
 	</a>

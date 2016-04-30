@@ -65,22 +65,23 @@
   
 <div class="row">
   <div class="large-12 columns">
-    {% include "elements/timer.html" %}
+    {# {% include "elements/timer.html" %} #}
 
 
     <!-- Toolbox toggle -->
-    
+    <!-- 
     <a class="toolbox-toggle" style="position: absolute;
     	      right: 30px;
     	      top: 70px;
     	      z-index: 100;">
       <i class="fa fa-inbox" style="font-size: 40px;"></i></a>
+    -->
     <script>
       $(".toolbox-toggle").click(function(){
       $(".toolbox").toggle();
       });
     </script>
-    {% include "elements/stats.html" %}
+    {# {% include "elements/stats.html" %} #}
 
     {% include "elements/toolbox.html" %}
     {# {% include "elements/prompts.html" %} #}
@@ -186,6 +187,11 @@
     var simplemde;
 var editor;
 var sprintpercent;
+
+function toolboxToggle(){
+    $(".toolbox").toggle();
+}
+
 $('textarea').each(function() {
     simplemde = new SimpleMDE({
 	element: this,
@@ -193,7 +199,7 @@ $('textarea').each(function() {
             enabled: false,
             uniqueId: "123",
             delay: 1000,
-	},    
+	},
     });
    simplemde.render();
     // Progress Bar

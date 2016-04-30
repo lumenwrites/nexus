@@ -1,4 +1,15 @@
-	  <style>
+<style>
+  
+	    .maintab {
+	    width: 33.33%!important;
+	    width: 50%!important;	    
+	    }	    
+
+	    .prompttitle {height:109px!important;}
+	    .tab-title {
+	    width: 170px;
+	    }
+
 	    .checkbox {
 	    float:left;
 	    margin: 13px!important;
@@ -27,9 +38,9 @@
 
 <div class="toolbox" style="//display:none;">
 <ul class="tabs" data-tab>
-  <li class="tab-title active"><a href="#panel2">Prompt</a></li>
-  <li class="tab-title"><a href="#panel1">Goals/Structure</a></li>
-  <li class="tab-title"><a href="#panel3">Comedy</a></li>
+  <li class="tab-title active maintab"><a href="#panel2">Prompt</a></li>
+  <li class="tab-title maintab"><a href="#panel1">Goals/Structure</a></li>
+  <!-- <li class="tab-title maintab"><a href="#panel3">Comedy</a></li> -->
   <!-- <li class="tab-title"><a href="#other">//Quality/Substance</a></li>   -->
 </ul>
 <!-- <br/> -->
@@ -100,24 +111,22 @@
   <!-- Prompt -->
   <div class="content active" id="panel2">    
     <article style="margin:0;padding:0;">
+      {% include "elements/prompts.html" %}
 
+      <!-- 
       <ul class="tabs vertical" data-tab style=" margin-bottom: 0!important;
 						width:170px;">
 	<li class="tab-title active"><a href="#hcprompt">Prompt</a></li>	
 	<li class="tab-title"><a href="#panel21">Setting</a></li>
 	<li class="tab-title"><a href="#panel31">Character</a></li>
-	<li class="tab-title"><a href="#panel41">Challenge</a></li> <!-- Problem/Goal -->
+	<li class="tab-title"><a href="#panel41">Challenge</a></li>
       </ul>
       <div class="tabs-content" style="margin-right: 0!important;">
 	<div class="content active" id="hcprompt" style="padding:0px!important;">
 	  <div style="width:calc(100% - 170px);float:right;">
-	    {% include "elements/prompts.html" %}
+	    {# {% include "elements/prompts.html" %} #}
 	  </div>
 	  <style>
-	    .tab-title {
-	    width: 170px!important;
-	    }
-	    .prompttitle {height:109px!important;}
 	  </style>
 	</div>
 	<div class="content" id="panel21">
@@ -136,7 +145,7 @@
 	  </div>
 	</div>
       </div>
-
+      -->
       <style>
 
 	.vertical .tab-title {

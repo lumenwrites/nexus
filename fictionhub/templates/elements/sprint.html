@@ -35,6 +35,7 @@ function startTimer() {
 
 	health = health - 0.1/5;
 	$(".sprintprogress").css("width",sprintpercent+"%")
+	console.log("words:" + sprintpercent);
 
 	if (health > 8) {
 	$(".health").css("background","green");	
