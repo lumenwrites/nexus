@@ -287,8 +287,8 @@
   <div class="tagline">
     <div class="row">
       <div class="large-12 small-12 columns" style="color:#fefefe;">
-	{{ userprofile.about }}
-	{% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" %}	
+	<!-- {{ userprofile.about }} -->
+	{% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000"  or request.META.HTTP_HOST == "streak.fictionhub.io"  %}	
 	{% include "elements/stats.html" %}
 	<br/>
 	<style>

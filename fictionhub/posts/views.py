@@ -128,7 +128,7 @@ def posts(request, rankby="hot", timespan="all-time",
         statsposts = Post.objects.filter(author=userprofile, daily=daily)
         statsposts = statsposts.order_by('pub_date')
         # Count word stats graph
-        days, longeststreak, currentstreak, wordcount = stats(statsposts) 
+        days, longeststreak, currentstreak, totalwordcount = stats(statsposts) 
     else:
         # fictionhub includes rational        
         if rational:
@@ -209,6 +209,9 @@ def posts(request, rankby="hot", timespan="all-time",
     if view_count > 1000:
         view_count = str(math.floor(view_count/1000)) + "K"
 
+    if totalwordcount > 1000:
+        totalwordcount = str(int(totalwordcount/1000)) + "K"
+        
         
     return render(request, 'posts/posts.html',{
         'posts':posts,
@@ -230,7 +233,7 @@ def posts(request, rankby="hot", timespan="all-time",
         'days':days,
         'longeststreak':longeststreak,
         'currentstreak':currentstreak,
-        'wordcount':wordcount,        
+        'wordcount':totalwordcount,        
     })
 
 

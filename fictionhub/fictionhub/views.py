@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.db.models import Count
 
 from posts.models import Post
-from posts.utils import rank_hot, rank_top
+from posts.utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from hubs.models import Hub
 
 def home(request):
@@ -18,8 +18,7 @@ def home(request):
        request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
 
-    if request.META['HTTP_HOST'] == "daily.fictionhub.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
+    if check_if_daily(request):
         return render(request, 'home-daily.html', {})
         
     if request.user.is_authenticated():
@@ -73,7 +72,6 @@ def home(request):
     # hubs = hubs_storycount.order_by('storycount')
 
 
- 
     return render(request, 'home.html', {
         'hot_posts': top_posts, # hot_posts,
         'new_posts':new_posts,
