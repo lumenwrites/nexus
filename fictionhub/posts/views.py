@@ -87,7 +87,7 @@ def posts(request, rankby="hot", timespan="all-time",
     
     if filterby == "subscriptions":
         subscribed_to = request.user.subscribed_to.all()
-        posts = Post.objects.filter(author=subscribed_to, published=True)
+        posts = Post.objects.filter(author=subscribed_to, published=True, daily=daily)
         # posts = Post.objects.all()        
         filterurl="/subscriptions" # to add to href  in subnav
         rankby = "new"
