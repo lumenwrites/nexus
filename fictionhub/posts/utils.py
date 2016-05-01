@@ -113,7 +113,7 @@ def prompts_fetch_top():
 
 
 def get_prompts():
-    prompts = Prompt.objects.all()
+    # prompts = Prompt.objects.all() 
     
     fetch = False
     fetchTop = False
