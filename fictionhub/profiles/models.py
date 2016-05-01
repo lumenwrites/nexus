@@ -27,6 +27,8 @@ class User(AbstractUser):
     rational = models.BooleanField(default=False)
     daily = models.BooleanField(default=False)    
 
+    target_wordcount = models.IntegerField(default=250)
+    
     shadowban = models.BooleanField(default=False)
 
     approved = models.BooleanField(default=False)
