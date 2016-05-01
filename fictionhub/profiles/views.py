@@ -143,10 +143,14 @@ def authenticate_user(request):
 # Only sign up
 def register(request):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
+    if request.META['HTTP_HOST'] == "rationalfiction.io":
         rational = True
 
+    daily = False
+    if request.META['HTTP_HOST'] == "writingstreak.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        daily = True
+        
     if request.method == 'POST':
         # form = UserCreationForm(request.POST)
         form = RegistrationForm(request.POST)
@@ -155,6 +159,7 @@ def register(request):
             user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['password1'])
             user.email = form.cleaned_data['email']
             user.rational = rational
+            user.daily = daily            
             if rational:
                 user.approved = True
             user.save()
