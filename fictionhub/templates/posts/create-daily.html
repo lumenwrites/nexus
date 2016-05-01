@@ -134,7 +134,7 @@
 				   position:absolute;
 				   top: 0;
 				   left: 300px;
-				   left: calc(25.6% - 15px);
+				   left: calc({% widthratio user.target_wordcount 10 1 %}% - 15px);
 				   border: 1px solid #7C868E;
 				   background: rgba(96, 214, 67, 0.6);"></div>
 
@@ -223,7 +223,7 @@ $(editor).find(".meter").css("background","#008CBA");
 	words = editor.find(".words").html();
 	percent = (parseFloat(words)/(1000))*100;
 	$(editor).find(".meter").css("width",percent+"%")
-	if (percent > 25.6) {
+	if (percent > {{user.target_wordcount}}/10  ) {
 	    	$(editor).find(".meter").css("background","green");
 	} else {
 	    	$(editor).find(".meter").css("background","#008CBA");	    
