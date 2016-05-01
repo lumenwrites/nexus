@@ -1,0 +1,55 @@
+Click on a file, or type the corresponding digit key, to open it.
+Click on Cancel or type `q' to cancel.
+
+  [1] /home/ray/projects/fictionhub/fictionhub/templates/posts/create-daily.html
+  [2] /home/ray/projects/fictionhub/fictionhub/templates/posts/subnav-browse.html
+  [3] /home/ray/projects/fictionhub/fictionhub/profiles/models.py
+  [4] /home/ray/projects/fictionhub/fictionhub/templates/posts/edit.html
+  [5] /home/ray/projects/fictionhub/fictionhub/posts/views.py
+  [6] /home/ray/projects/fictionhub/fictionhub/posts/utils.py
+  [7] /home/ray/projects/fictionhub/fictionhub/profiles/views.py
+  [8] /home/ray/projects/fictionhub/fictionhub/templates/home-daily.html
+  [9] /home/ray/projects/fictionhub/fictionhub/templates/elements/prompts.html
+  [0] /home/ray/projects/fictionhub/fictionhub/templates/elements/toolbox.html
+  /home/ray/projects/fictionhub/fictionhub/challenges/models.py
+  /home/ray/projects/fictionhub/fictionhub/challenges/views.py
+  /home/ray/projects/fictionhub/fictionhub/challenges/admin.py
+  /home/ray/projects/fictionhub/fictionhub/fictionhub/settings.py
+  /home/ray/projects/fictionhub/fictionhub/posts/models.py
+  /home/ray/projects/fictionhub/fictionhub/hubs/models.py
+  /home/ray/projects/fictionhub/fictionhub/hubs/admin.py
+  /home/ray/projects/fictionhub/fictionhub/hubs/urls.py
+  /home/ray/projects/fictionhub/fictionhub/templates/base.html
+  /home/ray/projects/fictionhub/fictionhub/templates/elements/subheader.html
+  /home/ray/projects/fictionhub/fictionhub/templates/elements/sprint.html
+  /home/ray/projects/fictionhub/fictionhub/templates/elements/stats.html
+  /home/ray/projects/fictionhub/fictionhub/static/css/sass/style.scss
+  /home/ray/projects/fictionhub/fictionhub/fictionhub/views.py
+  /home/ray/projects/fictionhub/fictionhub/templates/posts/post.html
+  /home/ray/projects/fictionhub/fictionhub/templates/posts/posts.html
+  /home/ray/projects/fictionhub/fictionhub/posts/urls.py
+  /home/ray/projects/fictionhub/fictionhub/posts/repost.py
+  /home/ray/projects/fictionhub/fictionhub/posts/cbvs.py
+  /home/ray/projects/fictionhub/fictionhub/posts/editorial.py
+  /home/ray/projects/fictionhub/fictionhub/templates/posts/browse.html
+  /home/ray/projects/fictionhub/fictionhub/posts/feeds.py
+  /home/ray/projects/fictionhub/fictionhub/templates/test.html
+  /home/ray/projects/fictionhub/fictionhub/templates/posts/writing-prompts.html
+  /home/ray/projects_back/orangemind_old/content/essays/story.md
+  /home/ray/projects/fictionhub/fictionhub/templates/elements/timer.html
+  /home/ray/projects_back/orangemind_old/content/pages/hcs.md
+  /home/ray/projects/writingchallenge/fictionhub/posts/views.py
+  /home/ray/Dropbox/notes/notes.org
+  /home/ray/Dropbox/Apps/fictionhub/2016-04-20-note (Ray Alez's conflicted copy) (Ray Alez's conflicted copy).md
+  /etc/hosts
+  /home/ray/projects/writingchallenge/fictionhub/templates/test.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/elements/subheader.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/posts/create-daily.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/posts/writing-prompts.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/elements/stats.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/posts/subnav-browse.html
+  /home/ray/projects/writingchallenge/fictionhub/templates/base.html
+  /home/ray/projects/writingchallenge/fictionhub/fictionhub/views.py
+  /home/ray/projects/writingchallenge/fictionhub/templates/home.html
+
+[Cancel]

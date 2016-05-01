@@ -15,6 +15,48 @@
 
   <div class="row">
     <div class="large-12 columns">
+
+<!-- Sprint warning -->
+<div class="alert-box panel" id="sprint-popup" data-alert style="display:none;">
+  <h4>Sprints</h4>
+  <p> Your healthbar goes down when you stop typing, and refills as you write.
+    If it reaches zero - you "die" and lose everything you wrote.</p>
+
+  <p>Your progress bar fills up as you write, and when you reach 100 words - you win!</p>
+
+  <p> Sprints are a great tool that will help you to focus and achieve the state of flow. They are easy to start with(100 words is not a difficult challenge), and very satisfying to complete. You can forget about editing, stop censoring yourself, get out of your head, and just improvise.</p>
+
+  <p>Once you've completed your first streak, the first writing goal is automatically marked as complete. You can pause, rest, improve what you have written, and you can move on to the next one.</p>
+
+    
+<a href="#" class="close" style="font-size: 41px; top: 20px;">&times;</a>  
+</div>
+
+
+<script src="{% static "js/js.cookie.js" %}" type="text/javascript"></script>
+
+<script>
+
+
+
+
+$(document).ready(function() {
+
+$(window).on('close.fndtn.alert', function(event) {
+Cookies.set('sprint_closed', 'yes', { expires: 7 });	    
+});
+
+	
+    if (Cookies.get('sprint_closed')==null) {
+	// Cookies.set('name', 'value', { expires: 7 });
+        $('#sprint-popup').css("display","block");
+    }
+});
+</script>
+
+
+
+
     <b> Sprint: 0/100</b><br/>
     <span id="start">Start</span><br/>
     <!-- <span id="stop">Stop</span><br/> -->
