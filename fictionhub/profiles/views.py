@@ -160,7 +160,7 @@ def register(request):
             user.email = form.cleaned_data['email']
             user.rational = rational
             user.daily = daily            
-            if rational:
+            if rational or daily:
                 user.approved = True
             user.save()
 
