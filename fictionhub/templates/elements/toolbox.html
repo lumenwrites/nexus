@@ -39,8 +39,10 @@
 <ul class="tabs" data-tab>
   <li class="tab-title active maintab"><a href="#panel2">Prompt</a></li>
   <li class="tab-title maintab"><a href="#panel1">Goals/Structure</a></li>
-  <!-- <li class="tab-title maintab"><a href="#panel3">Comedy</a></li> -->
-  <!-- <style> .maintab {width: 33.33%!important;} </style> -->
+  {% if user.username == "rayalez" %}
+  <li class="tab-title maintab"><a href="#panel3">Comedy</a></li>
+  <style> .maintab {width: 33.33%!important;} </style>
+  {% endif %}  
   <!-- <li class="tab-title"><a href="#other">//Quality/Substance</a></li>   -->
 </ul>
 <!-- <br/> -->
@@ -174,8 +176,8 @@
       </ul>
       <div class="tabs-content">
 	<div class="content active" id="element">
-	  <p>Take a simple scene(character in a situation), and make a list of it's elements.</p>
-	  <p>Describe the "physical" elements in the scene. (objects, people, environment). Describe the properties of these elements. What are some adjectives that describe it? What are your assumptions about the scene? Why did it happen, what was before it? What do you expect to happen next?</p>
+	  <p>Take a simple scene(character in a situation), and make a list of it's elements.<br/>
+	    Describe the "physical" elements in the scene. (objects, people, environment). Describe the properties of these elements. What are some adjectives that describe it? What are your assumptions about the scene? Why did it happen, what was before it? What do you expect to happen next?</p>
 	  <!-- <p>Extract Element/Property. Drop context.</p> -->
 	<!-- <p style="margin-bottom:0;">Write the list of 5 elements.</p>	 -->
 	<!--   <ul> -->
@@ -187,13 +189,20 @@
 	  <!-- <p><b>{{element}}</b></p>	   -->
 	</div>
 	<div class="content" id="jump">
-	  <p>Look <!-- Take --> at each of the elements separately, without the context of the scene, and then:</p>
-	  <p><b>Reverse</b> the element. Ask what if the opposite were true? What if it's pollar opposite would be/happen in it's place? And how could that be possible?</p>
-	  <p> <b>Exaggerate</b> blow the lement out of the proportion, replace it with it's most extreme version.</p>
-	  <p> <b>Associate</b> List associations, the crazier - the better.  What other abstract patterns does it belong to?</p>
-	  <p> <b>Translate</b> Take the abstract pattern/category, and apply it to something else. What other elements can it be appleid to? </p>	  	  
-	  <p><b>Reinterpret</b> Take the assumption/expectation, ask what makes you make it(identify reason), and then reinterpret it.</p>	  
-	  <p>Recognizer(one of abstract pattens, debono categories, reason for the assumption). </p>
+	  <ul>
+	    <li>Element, drop context, find other recognizers it belongs to. (old associate)</li>
+	    <li>Element, take it’s Recognizer, beam-search for other elements, replace. (dean-moon)</li>
+	    <li>Take abstract pattern, apply to other kinds of elements.(translate, poop joke)</li>
+	    <li>Flip/Exaggerate element, find recognizer (jump/move, if it’s a thing)</li>
+	  </ul>
+	  
+	  <!-- <p>Look <\!-- Take -\-> at each of the elements separately, without the context of the scene, and then:</p> -->
+	  <!-- <p><b>Reverse</b> the element. Ask what if the opposite were true? What if it's pollar opposite would be/happen in it's place? And how could that be possible?</p> -->
+	  <!-- <p> <b>Exaggerate</b> blow the lement out of the proportion, replace it with it's most extreme version.</p> -->
+	  <!-- <p> <b>Associate</b> List associations, the crazier - the better.  What other abstract patterns does it belong to?</p> -->
+	  <!-- <p> <b>Translate</b> Take the abstract pattern/category, and apply it to something else. What other elements can it be appleid to? </p>	  	   -->
+	  <!-- <p><b>Reinterpret</b> Take the assumption/expectation, ask what makes you make it(identify reason), and then reinterpret it.</p>	   -->
+	  <!-- <p>Recognizer(one of abstract pattens, debono categories, reason for the assumption). </p> -->
 	  <!-- <p> //Assumptions/Expectations? Identify reason for the assumption? </p>	   -->
 	</div>
 	<div class="content" id="move">
