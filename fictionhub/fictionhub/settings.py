@@ -177,7 +177,7 @@ SERVER_EMAIL = 'raymestalez@gmail.com'
 
 # Admins
 ADMINS = (
-  ('Ray Alez', 'raymestalez@gmail.com'),
+#  ('Ray Alez', 'raymestalez@gmail.com'),
 )
 
 MANAGERS = ADMINS
