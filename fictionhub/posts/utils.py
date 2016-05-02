@@ -18,7 +18,7 @@ def rank_hot(stories, top=180, consider=1000):
     # top - number of stories to show,
     # consider - number of latest stories to rank
     
-    def score(post, gravity=1.8, timebase=120):
+    def score(post, gravity=1.2, timebase=120):
         # number_of_comments = len(post.comments.all())
         rating = (post.score + 1)**0.8 # + number_of_comments
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
