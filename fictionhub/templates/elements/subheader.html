@@ -282,13 +282,11 @@
   </div> <!-- Close row -->
 
 
-  <!-- Tagline -->
-  {% if userprofile.about %}
+  <!-- Stats -->
+  {% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000"  or request.META.HTTP_HOST == "streak.fictionhub.io"  or request.META.HTTP_HOST == "writingstreak.io"  %}	
   <div class="tagline">
     <div class="row">
       <div class="large-12 small-12 columns" style="color:#fefefe;">
-	<!-- {{ userprofile.about }} -->
-	{% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000"  or request.META.HTTP_HOST == "streak.fictionhub.io"  or request.META.HTTP_HOST == "writingstreak.io"  %}	
 	{% include "elements/stats.html" %}
 	<br/>
 	<style>
@@ -299,13 +297,21 @@
 	  color:#fefefe;
 	  }
 	</style>
-	{% else %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <!-- Tagline -->
+  {% if userprofile.about %}
+  <div class="tagline">
+    <div class="row">
+      <div class="large-12 small-12 columns" style="color:#fefefe;">
 	{{userprofile.about }}
-	{% endif %}
       </div>
     </div>
   </div>
   {% endif %}
+  {% endif %}  
 
 </div> <!-- Close top subheader div  -->
 
