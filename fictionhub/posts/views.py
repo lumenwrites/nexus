@@ -879,7 +879,7 @@ def sandbox(request):
 
 
 def users(request):
-    users = User.objects.all().order_by('-karma')[:100]
+    users = User.objects.filter(daily=True).order_by('-karma')[:25]
     return render(request, 'profiles/users.html',{
         'users':users,
         'hubs': [],        
