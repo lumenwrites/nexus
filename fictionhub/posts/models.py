@@ -77,6 +77,18 @@ class Post(models.Model):
         else:
             self.slug = slugify(self.title)
 
+        # if slug != "":
+        #     self.slug = slug            
+        # else:
+        #     if self.pk is None:
+        #         self.slug = orig = slugify(self.title)
+        #         # unique_slugify(self, orig) 
+        #         for x in itertools.count(1):
+        #             if not Video.objects.filter(slug=self.slug).exists():
+        #                 break
+        #             self.slug = '%s-%d' % (orig, x)            
+            
+
         try:
             if self.post_type == "chapter" and self.parent:
                 self.author = self.parent.author

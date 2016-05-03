@@ -926,16 +926,28 @@ def post_create_daily(request):
 
 
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')        
+        return HttpResponseRedirect('/')
 
-    setting=["Pyramides", "Stanford/MIT"]
-    character=["Scientist", "Detective", "Writer"]
-    scifi = ["Aliens", "Nuclear postapoc", "Pirates", "Robot"]
-    problem = ["Someone attacks your home", "Dark overlord rises", "Priceless artifact stolen"]
-    setting = random.choice(setting)
-    character = random.choice(character)
-    scifi = random.choice(scifi)
-    problem =  random.choice(problem)
+    concepts = list(Prompt.objects.filter(prompt_type="concept"))
+    concepts= [p.prompt for p in concepts]
+    random.shuffle(concepts)
+    concepts = concepts[:16]
+            
+    settings = list(Prompt.objects.filter(prompt_type="setting"))
+    settings= [p.prompt for p in settings]
+    random.shuffle(settings)
+    settings = settings[:16]
+
+    characters = list(Prompt.objects.filter(prompt_type="character"))
+    characters= [p.prompt for p in characters]
+    random.shuffle(characters)
+    characters = characters[:16]
+
+    problems = list(Prompt.objects.filter(prompt_type="problem"))
+    problems= [p.prompt for p in problems]
+    random.shuffle(problems)
+    problems = problems[:16]
+        
     element = ["Opinion/Setup", "Phys", "Adj","Will","Because","Process",]
     element =  random.choice(element)    
 
@@ -990,9 +1002,10 @@ def post_create_daily(request):
         'wordcount':wordcount,        
         'longeststreak':longeststreak,
         'currentstreak':currentstreak,
-        'setting':setting,
-        'character':character,
-        'problem':problem,
+        'concepts':concepts,        
+        'settings':settings,
+        'characters':characters,
+        'problems':problems,
         'element':element,        
         'test': ""
     })    

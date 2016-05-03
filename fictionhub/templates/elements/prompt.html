@@ -1,0 +1,78 @@
+
+<style>
+  .fi-comment {
+  float:none;
+  }
+  .panel {
+  padding: 5px;
+  margin-top:5px;
+  }
+
+  .CodeMirror {
+  background: white!important;
+  border-radius: 0!important;
+  }
+
+
+  .comment-reply {
+    margin-top:20px;
+  }
+  .editor-toolbar {
+  background: white!important;
+  border-radius: 0px!important;
+  }
+
+  .editor-statusbar {
+      border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8;
+    background: #f2f2f2;
+  color: #333333;
+  padding: 5px;
+  margin-top:-1px;
+  }
+
+</style>
+
+<style>
+
+.prompttitle {height:112px!important;}
+
+</style>
+
+
+
+<div class="prompts" style="margin: -1px;">
+
+  <div class="prompt" id="{{ forloop.counter }}">
+    <article  style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+		     box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		     border: 1px solid rgba(0,0,0,.09);
+		     border-radius: 3px;">
+
+      <div class="prompttitle">
+
+	<span class="prompt bold black">{{prompt.prompt}}</span>	
+      </div>
+
+      <br/>
+
+      <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+				margin-bottom: -11px;
+				margin-left: -11px;
+				width: calc(100% + 22px);">
+
+
+	<div class="right">
+	  <a class='next-prompt' style="margin-right: 5px;"><i class="fa fa-refresh"></i></a>
+	</div>
+	<div class="clearfix">
+		    
+      </div>
+    </article>
+  </div>
+
+</div>
+
+
+
