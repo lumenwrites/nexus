@@ -86,3 +86,8 @@ def test(request):
         'test':test,
         'domain':request.META['HTTP_HOST']
 })
+
+
+def about(request):
+    return render(request, 'about.html', {
+})

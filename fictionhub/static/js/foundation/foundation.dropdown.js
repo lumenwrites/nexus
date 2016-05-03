@@ -280,6 +280,13 @@
           }
         }
 
+	  if (this.hasClass('alignRight')) {
+	      if (t.offset().left + t.outerWidth() < t.offset().left + this.outerWidth()) {
+		  p.missRight = true;
+		  p.missLeft = false;
+	      }
+	  }	  
+
         return p;
       },
 

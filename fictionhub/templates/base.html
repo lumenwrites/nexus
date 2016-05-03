@@ -130,17 +130,8 @@ console.log("yes");
         <div class="large-6 small-6 columns" id="mainMenu">
 	  <div style="float:right;">
 
-	  <!-- <ul><a href="/browse/"> Browse </a></ul> -->
-
 
 	  {% if user.is_authenticated %}
-	  <!-- 
-	  {% if user.subscribed_to.count > 0 %}	  
-	  <ul>
-	    <a href="/subscriptions/new/"> Subscriptions </a>
-	  </ul> 
-	  {% endif %}
-	  -->
 	  
 	  <!-- User -->
 	  <ul style="margin-right:0;">
@@ -154,41 +145,127 @@ console.log("yes");
 		 background-color: rgb(136, 136, 136);
 		 top: -2px;"></i> -->
 
-	      <a href="/browse/">
-		<i class="fa fa-compass"></i></a>			    
+	      <!-- <a href="/browse/"></i>Browse</a> -->
 
+
+	      <a href="/browse/" data-dropdown="browsedropdown"
+		 data-options="is_hover:true; hover_timeout:5000;align:bottom;"
+		 >Browse</a>
+
+	      <ul id="browsedropdown" class="f-dropdown" data-dropdown-content>
+		<li>
+		  <a href="/browse/">
+		    <i class="fa fa-compass"></i>
+		      All stories
+		  </a>
+		</li>
+		{% if user.subscribed_to.count > 0 %}	  
+		<li>
+		  <a href="/subscriptions/new/">
+		    <i class="fa fa-rss"></i>
+		      Subscriptions
+		  </a>
+		</li>
+		{% endif %}
+		<li>
+		  <a href="/users/top/">
+		    <i class="fi-torsos"></i>
+		    Leaderboard</a>
+		</li>
+		<!-- 
+		<li>
+		  <a href="/about/">
+		    <i class="fa fa-info-circle"></i>
+		    About</a>
+		</li>
+		<li>
+		  <a href="/about/">
+		    <i class="fa fa-info-circle"></i>
+		    Forum</a>
+		</li>
+		 -->
+	      </ul>
+
+	      <style>
+		#browsedropdown {
+		width: 200px;
+		}		
+		#browsedropdown li a {
+		text-transform:none;
+		text-align: left;
+		}
+		#browsedropdown li a i {
+		margin-right: 10px;
+		}
+		.f-dropdown:before,
+		.f-dropdown:after{
+		display:none;
+		}
+	      </style>
+	      
+
+	      
+	      <a href="/user/{{user.username}}" data-dropdown="usermenu"
+		 data-options="is_hover:true; hover_timeout:5000;align:bottom;"
+		 >{{user.username}}</a>
+
+	      <ul id="usermenu" class="f-dropdown alignRight" data-dropdown-content>
+		<li>
+		  <a href="/user/{{user.username}}"><i class="fa fa-home"></i>Profile</a>
+		</li>
+		<li>
+		  <!-- Write -->
+		  {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}
+		  <a href="/write/"><i class="fa fa-pencil-square-o"></i>Write</a>
+		  {% else %}
+		  <a href="/story/add"><i class="fa fa-pencil-square-o"></i>Write</a>
+		  {% endif %}
+		</li>
+		{% if user.in_messages.count > 0 %}
+		<li>
+		  <a href="{% if user.new_notifications %}
+		     /notifications/unread/
+		     {% else %}
+		     /notifications/all/		 
+		     {% endif %}">
+		    <i class="fa fa-envelope-o
+		       {% if user.new_notifications %}new-notifications{% endif %}"></i>Inbox</a>
+		</li>
+		{% endif %}		  
+		<li>
+		  <a href="/preferences/"><i class="fa fa-cog"></i>Prefs</a>
+		</li>
+		<li>
+		  <a href="/logout/?next={{request.path}}"><i class="fa fa-power-off"></i>Logout</a>
+		</li>
+	      </ul>
+	      
+	      <style>
+		#usermenu {
+		width: 130px;
+		}		
+		#usermenu li a {
+		text-transform:none;
+		text-align: left;
+		}
+		#usermenu li a i {
+		margin-right: 10px;
+		}
+		.f-dropdown:before,
+		.f-dropdown:after{
+		display:none;
+		}
+	      </style>
+
+	      <!-- <a href="/browse/"> -->
+	      <!-- 	<i class="fa fa-compass"></i></a>			     -->
+	      
 	      <!-- Home -->
-	      <a href="/user/{{user.username}}">
-		<!-- <i class="fi-torso"></i> -->
-		<i class="fa fa-home"></i></a>
+	      <!-- <a href="/user/{{user.username}}"> -->
+	      <!-- 	<i class="fa fa-home"></i></a> -->
 
-	      <!-- Write -->
-	      {% if request.META.HTTP_HOST == "daily.fictionhub.io"  or request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "writingstreak.io" %}
-	      <a href="/write/">
-		<i class="fa fa-pencil-square-o"></i></a>
-	      <!-- <i class="fa fa-pencil"></i> -->
-	      {% else %}
-	      <a href="/story/add">
-		<i class="fa fa-pencil-square-o"></i></a>
-	      <!-- <i class="fa fa-pencil"></i> -->
-	      {% endif %}
-	      
-	      {% if user.in_messages.count > 0 %}
-	      <a href="{% if user.new_notifications %}
-		 /notifications/unread/
-		 {% else %}
-		 /notifications/all/		 
-		 {% endif %}">
-		<i class="fa fa-envelope-o
-		   {% if user.new_notifications %}new-notifications{% endif %}"></i></a>
-	      {% endif %}
-	      
-	      <a href="/preferences/">
-		<i class="fa fa-cog"></i></a>
-	      <a href="/logout/?next={{request.path}}">
-		<!-- &nbsp; --><i class="fa fa-power-off"></i></a>
-	      <!-- <i class="fa fa-plus"></i> -->
-	      
+
+	      	      
 	    </a>
 
 	    <style>
@@ -209,7 +286,7 @@ console.log("yes");
 		aria-hidden="true" tabindex="-1">
 	      <li><a href="/user/{{user.username}}">
 		  <b>{{user.username}}</b> ({{user.karma}})
-		  <!-- <i class="fi-torso"></i> --></a></li>
+	      </a></li>
 	      {# {% if user.approved %} #}
 	      <li><a href="/story/add"> Create Story
 		  <!-- <i class="fa fa-pencil-square-o"></i> --> </a></li> <!-- Submit --> 

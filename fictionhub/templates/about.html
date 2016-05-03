@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<style>
+  .tab-title {
+  width: 25%;
+  text-align:center;
+  }
+</style>
+<div id="page"  class="posts-page">
+  <div class="row">
+    <div class="large-12 small-12 columns">
+
+
+<ul class="tabs" data-tab>
+  <li class="tab-title active"><a href="#panel1">About/Welcome</a></li>
+  <li class="tab-title"><a href="#panel2">Guidelines</a></li>
+  <li class="tab-title"><a href="#panel3">Writer's resources</a></li>
+  <li class="tab-title"><a href="#panel4">Contact</a></li>
+</ul>
+<div class="tabs-content">
+  <div class="content active" id="panel1">
+          <article style="margin-top: 0px;
+			  background: white;
+			  padding: 40px;
+			  background: rgba(255,255,255,0.8);
+		      ">
+
+	<h1>About</h1>
+
+	<h4>Contact</h4>
+
+    <p>This is the first panel of the basic tab example. You can place all sorts of content here including a grid.</p>
+
+      </article>
+  </div>
+  <div class="content" id="panel2">
+    <p>This is the second panel of the basic tab example. This is the second panel of the basic tab example.</p>
+  </div>
+  <div class="content" id="panel3">
+    <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p>
+  </div>
+  <div class="content" id="panel4">
+    <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

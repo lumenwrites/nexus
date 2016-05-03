@@ -36,13 +36,13 @@
 	{% endif %} <!-- end rankby top, showing timespans -->
 
 	<!-- Subscritions -->
-	{% if user.is_authenticated %}
-	{% if user.subscribed_to.count > 0 and not userprofile and not solohub %}
-	<a href="/subscriptions/">
-	  <span {% if filterby = "subscriptions" %}class="bold"{% endif %}>Subscriptions</span>
-	</a>
-	{% endif %}
-	{% endif %}
+	<!-- {% if user.is_authenticated %} -->
+	<!-- {% if user.subscribed_to.count > 0 and not userprofile and not solohub %} -->
+	<!-- <a href="/subscriptions/"> -->
+	<!--   <span {% if filterby = "subscriptions" %}class="bold"{% endif %}>Subscriptions</span> -->
+	<!-- </a> -->
+	<!-- {% endif %} -->
+	<!-- {% endif %} -->
 
 	{% if not userprofile and filterby != "subscriptions" and not solohub %}
 	<span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span>
