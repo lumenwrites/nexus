@@ -152,7 +152,7 @@ console.log("yes");
 		 data-options="is_hover:true; align:bottom;"
 		 >Browse</a>
 
-	      <ul id="browsedropdown" class="f-dropdown" data-dropdown-content>
+	      <ul id="browsedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
 		<li>
 		  <a href="/browse/">
 		    <i class="fa fa-compass"></i>
@@ -209,22 +209,23 @@ console.log("yes");
 	      </style>
 	      
 
+	      <!-- Write -->
+	      {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}
+	      <a href="/write/">Write</a>
+	      <!-- <i class="fa fa-pencil-square-o"></i> -->
+	      {% else %}
+	      <a href="/story/add">Write</a>
+	      <!-- <i class="fa fa-pencil-square-o"></i> -->
+	      {% endif %}
+	      
 	      
 	      <a href="/user/{{user.username}}" data-dropdown="usermenu"
 		 data-options="is_hover:true; align:bottom;"
 		 >{{user.username}}</a>
 
-	      <ul id="usermenu" class="f-dropdown alignRight" data-dropdown-content>
+	      <ul id="usermenu" class="f-dropdown alignRight dropdownmenu" data-dropdown-content>
 		<li>
 		  <a href="/user/{{user.username}}"><i class="fa fa-home"></i>Profile</a>
-		</li>
-		<li>
-		  <!-- Write -->
-		  {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}
-		  <a href="/write/"><i class="fa fa-pencil-square-o"></i>Write</a>
-		  {% else %}
-		  <a href="/story/add"><i class="fa fa-pencil-square-o"></i>Write</a>
-		  {% endif %}
 		</li>
 		{% if user.in_messages.count > 0 %}
 		<li>
