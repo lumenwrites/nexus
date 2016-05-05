@@ -240,7 +240,7 @@ $(editor).find(".meter").css("background","#008CBA");
 	// Progreess = words written - words before sprint.
 	sprintpercent = ((parseInt(words)-wordsBeforeSprint)/(100))*100;
 	// $(".sprintprogress").css("width",sprintpercent+"%")
-	if (sprintpercent > 99) {
+	if (sprintpercent > 99 && sprint==true) {
 	    $(".sprintprogress").css("background","green");
 	    //    $(".tab-title").find("#"+currentSprint).prop('checked', true);
 	    $(".goals").find(".active").find(".checkbox").prop('checked', true);    
@@ -250,7 +250,7 @@ $(editor).find(".meter").css("background","#008CBA");
 	    $(".health").css("background","green");
 	    $(".start").removeClass("disabled");
 	    clearTimeout(healthTimer);
-
+	    sprint = False;
 	} else {
 	    // Words blue
 	    $(".sprintprogress").css("background","#008CBA");	    

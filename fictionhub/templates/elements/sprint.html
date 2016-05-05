@@ -73,11 +73,13 @@ Cookies.set('sprint_closed', 'yes', { expires: 7 });
 
   
 
+
   <script>
 var health = 10;
 var healthTimer = "";
 var currentSprint = "";
 var wordsBeforeSprint = 0;
+var sprint = false;
 function startTimer() {
     healthTimer = setInterval(function () {
 	//display.text(timer);
@@ -100,7 +102,7 @@ function startTimer() {
 	    simplemde.value("");
             console.log("Lost");
 	    health = 0;
-	        $(".start").removeClass("disabled");
+	    //$(".start").removeClass("disabled");
         }
     }, 10);
 }
@@ -114,6 +116,7 @@ $(".start").click(function(){
     sprintpercent = 0;		     
     $(".start").addClass("disabled");
     startTimer(5);
+    sprint = true;
 
 });
 
