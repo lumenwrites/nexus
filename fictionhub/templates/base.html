@@ -381,6 +381,22 @@ console.log("yes");
 
   <footer class="main-footer">
   </footer>
+
+  <style>
+::-webkit-scrollbar {
+      width: 8px;
+} /* this targets the default scrollbar (compulsory) */
+
+::-webkit-scrollbar-track {
+      background-color: #F2F2F2;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(119, 119, 119, 0.2); 
+} /* this will style the thumb, ignoring the track */
+ 
+    
+  </style>
   
   <!-- Scripts -->
   <script src="  {% static "/static/js/foundation/foundation.js" %}"></script>

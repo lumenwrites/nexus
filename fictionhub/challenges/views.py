@@ -2,8 +2,11 @@ import praw
 
 from django.shortcuts import render
 
-from .models import Prompt
 
+from django.views.generic import CreateView
+
+from .models import Prompt
+from .forms import PromptForm
 
 def get_prompts():
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
@@ -54,3 +57,46 @@ def get_prompts():
         
 
     return prompts[:16]
+
+
+
+class PromptCreate(CreateView):
+    model = Prompt
+    form_class = PromptForm
+    template_name = 'videos/edit.html'
+    
+    success_url = "/write/"
+    template_name = 'challenges/promptcreate.html'
+
+    def form_valid(self, form):
+       # user = self.request.user
+       # form.instance.author = user
+       # images = form.instance.images
+
+       # video = form.save()
+       return super(PromptCreate, self).form_valid(form)
+    
+
+
+    def get_success_url(self):
+        success_url = "/write/"
+        # success_url = "/video/"+self.object.slug+"/edit"
+        
+        # video = Video.objects.get(slug=self.object.slug)
+        # image = Image.objects.create(image=form.cleaned_data['image'])
+        # image.video = video # self.object
+        # image.save()
+        
+        return success_url
+        # return self.request.path    
+
+    # def get_form_kwargs(self):
+    #     kwargs = super(VideoCreate, self).get_form_kwargs()
+    #     kwargs.update({'user': self.request.user})
+    #     return kwargs    
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(VideoCreate, self).get_context_data(**kwargs)
+    #     context['creating'] = True
+    #     return context    
+
