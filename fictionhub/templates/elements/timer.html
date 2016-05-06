@@ -3,19 +3,21 @@
 			      position: absolute;
 			      right: 20px;right: 0px;
 			      top: 8px;
-			      z-index: 200;
-			      cursor: pointer;">
+			      cursor: pointer;
+			      z-index: 200;">
       <div class="progressbar" style="position:relative;">
 	<div class="progress" style="margin: 0px;border: 1px solid #7C868E;padding: 0;">
-	  <span class="meter" id="time" style="width:100%; max-width:100%;">20:00</span>
+	  <span class="meter" id="pomodoroTimer" style="width:100%; max-width:100%;">20:00</span>
 	</div>
       </div>
     </div>
 
     <script>
-      function startTimer(duration, display) {
+var pomodoroRunning = false;
+var pomodoroTimer;
+function startPomodoroTimer(duration, display) {
     var timer = duration, minutes, seconds;
-    setInterval(function () {
+    pomodoroTimer = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -25,7 +27,7 @@
         display.text(minutes + ":" + seconds);
 
 	//display.text(timer);
-	$("#time").css("width",(timer/duration)*100+"%");
+	$("#pomodoroTimer").css("width",(timer/duration)*100+"%");
 
         if (--timer < 0) {
             timer = duration;
@@ -38,9 +40,16 @@
 //    startTimer( 60 * 20, display);
 //		      });
 
-      $("#time").click(function(){
-		      display = $('#time');
-		      startTimer( 60 * 20, display);
-      });
+$("#pomodoroTimer").click(function(){
+    if (!pomodoroRunning) {
+	display = $('#pomodoroTimer');
+	startPomodoroTimer( 60 * 20, display);
+	pomodoroRunning = true;
+    } else {
+	pomodoroRunning = false;
+        $('#pomodoroTimer').text("20:00");	
+	clearTimeout(pomodoroTimer);
+    };
+});
 		      
     </script>

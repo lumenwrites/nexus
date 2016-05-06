@@ -250,8 +250,8 @@ $(editor).find(".meter").css("background","#008CBA");
 	    $(".health").css("background","green");
 	    $(".start").removeClass("disabled");
 	    clearTimeout(healthTimer);
-	    sprint = False;
-	} else {
+	    sprint = false;
+	} else if (sprint==true) {
 	    // Words blue
 	    $(".sprintprogress").css("background","#008CBA");	    
 	}
