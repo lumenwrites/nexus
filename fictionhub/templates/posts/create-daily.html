@@ -108,6 +108,11 @@
     <form action="/write/" method="post">{% csrf_token %}
       <input type="hidden" id="reddit_url" name="reddit_url" value="test"></input>
       {{form.title}}
+      <script>
+	$( "#id_title" ).on('input',function(e){
+	$("#savebutton").prop("disabled", false);
+	});
+      </script>
       <div class="editor">
 	<!-- **Prompt: {{prompt.title}}** -->
 	<textarea name="body"></textarea>
@@ -162,7 +167,7 @@
 	{{form.hubs}}
       </div>
       
-      <button class="button small right" type="submit">Save</button>
+      <button class="button small right" type="submit" id="savebutton" disabled>Save</button>
 
       <div class="clearfix"></div>
       <div style="width:100%; height: 20px"></div>
@@ -200,8 +205,8 @@ $('textarea').each(function() {
     simplemde = new SimpleMDE({
 	element: this,
 	autosave: {
-            enabled: false,
-            uniqueId: "123",
+            enabled: true,
+            uniqueId: "{{user.username}}",
             delay: 1000,
 	},
     });
