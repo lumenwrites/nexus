@@ -984,7 +984,7 @@ def post_create_daily(request):
         days, longeststreak, currentstreak, wordcount = stats(statsposts)
 
         # Prompts
-        # prompts = get_prompts()
+        prompts = get_prompts()
         prompts = list(Prompt.objects.all())
         random.shuffle(prompts)
         prompts = prompts[:16]
