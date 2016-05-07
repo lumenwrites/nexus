@@ -106,6 +106,7 @@ def prompts_fetch_top():
         
         prompt, created = Prompt.objects.get_or_create(slug = slug)
         prompt.prompt = title
+        prompt.prompt_type = "wpsub"
         prompt.save()
     
     return prompts[:16]

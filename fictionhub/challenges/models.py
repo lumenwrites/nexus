@@ -24,7 +24,7 @@ class Prompt(models.Model):
         ("setting", "Setting"),
         ("character", "Character"),        
         ("problem", "Problem/Goal"),
-        # ("wpsub", "wpsub"),
+        ("wpsub", "wpsub"),
     )
     prompt_type = models.CharField(default="concept", max_length=64, choices=PROMPT_TYPES, blank=True)
 
