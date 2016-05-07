@@ -928,7 +928,7 @@ def post_create_daily(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
 
-    concepts = list(Prompt.objects.filter(Q(prompt_type="concept") | Q(prompt_type="prompt")))
+    concepts = list(Prompt.objects.filter(Q(prompt_type="concept") | Q(prompt_type="prompt")  | Q(prompt_type="wpsub")))
     concepts= [p.prompt for p in concepts]
     random.shuffle(concepts)
     concepts = concepts[:16]
