@@ -1,8 +1,11 @@
+import itertools
+
 from django.forms import ModelForm
 from django import forms
 from django.template.defaultfilters import slugify
 
 from .models import Post
+
 
 class PostForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -35,12 +38,15 @@ class PostForm(ModelForm):
         except:
             pass
 
+        
         if story_exists:
             raise forms.ValidationError("A story with this title already exists!")
         elif chapter_exists:
             raise forms.ValidationError("A chapter with this title already exists!")            
         else:
             return self.cleaned_data
+
+        return self.cleaned_data        
 
     class Meta:
         model = Post

@@ -1,4 +1,5 @@
 import datetime
+import itertools
 from django.utils.timezone import utc
 
 from django.db import models
@@ -80,13 +81,13 @@ class Post(models.Model):
         # if slug != "":
         #     self.slug = slug            
         # else:
-        #     if self.pk is None:
-        #         self.slug = orig = slugify(self.title)
-        #         # unique_slugify(self, orig) 
-        #         for x in itertools.count(1):
-        #             if not Video.objects.filter(slug=self.slug).exists():
-        #                 break
-        #             self.slug = '%s-%d' % (orig, x)            
+        # if self.pk is None:
+        #     self.slug = orig = slugify(self.title)
+        #     # unique_slugify(self, orig) 
+        #     for x in itertools.count(1):
+        #         if not Post.objects.filter(slug=self.slug).exists():
+        #             break
+        #         self.slug = '%s-%d' % (orig, x)            
             
 
         try:
