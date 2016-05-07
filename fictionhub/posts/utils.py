@@ -97,10 +97,10 @@ from django.template.defaultfilters import slugify
 def prompts_fetch_top():
     r = praw.Reddit(user_agent='Request new prompts from /r/writingprompts by /u/raymestalez')
     subreddit = r.get_subreddit('writingprompts')
-    prompts = subreddit.get_top_from_all(limit=128)
+    prompts = subreddit.get_top_from_all(limit=512)
     prompts = list(prompts)
  
-    for p in prompts[:64]:
+    for p in prompts[:512]:
         title = p.title.replace("[WP]", "", 1).strip()
         slug = slugify(title[:32])
         
@@ -116,7 +116,7 @@ def get_prompts():
     # prompts = Prompt.objects.all() 
     
     fetch = False
-    fetchTop = False
+    fetchTop = True
     if fetchTop:
         prompts_fetch_top()
     if fetch:
