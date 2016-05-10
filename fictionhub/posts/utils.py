@@ -116,8 +116,8 @@ def prompts_fetch_top():
 def get_prompts():
     # prompts = Prompt.objects.all() 
     
-    fetch = False
-    fetchTop = True
+    fetch = True
+    fetchTop = False
     if fetchTop:
         prompts_fetch_top()
     if fetch:
@@ -158,19 +158,19 @@ def get_prompts():
         prompts.sort(key=lambda p: p.score, reverse=True)
     
     
-        for p in prompts:
-            prompt, created = Prompt.objects.get_or_create(reddit_url = p.permalink)
-            prompt.prompt = p.title
-            try:
-                prompt.position = p.position
-            except:
-                prompt.position = 0
-            prompt.score = p.score
-            prompt.num_comments = p.num_comments
-            prompt.age = p.age
-            prompt.save()
+        # for p in prompts:
+        #     prompt, created = Prompt.objects.get_or_create(reddit_url = p.permalink)
+        #     prompt.prompt = p.title
+        #     try:
+        #         prompt.position = p.position
+        #     except:
+        #         prompt.position = 0
+        #     prompt.score = p.score
+        #     prompt.num_comments = p.num_comments
+        #     prompt.age = p.age
+        #     prompt.save()
             
-
+ 
         
     return prompts[:16]
 

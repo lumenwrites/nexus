@@ -208,8 +208,8 @@
 
 
 	<!-- Post to reddit -->
-	{% if story.reddit_url and not story.published %}	  
-	<!-- <a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a> -->
+	{% if story.reddit_url and not story.published and user.username == "rayalez" %}	 
+	<a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a>
 	{% endif %}	  
 
 	  {% if user.approved %}	  	  

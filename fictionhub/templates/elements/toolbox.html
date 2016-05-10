@@ -156,7 +156,11 @@ padding:10px;    background: rgba(255,255,255,0.5);//#fff;
 	<div class="content active" id="conceptprompt" style="padding:0px!important;">
 	  <div style="width:calc(100% - 170px);float:right;">
 	    {# {% include "elements/prompts.html" %} #}
-	    {% include "elements/prompt.html" %}	    
+	    {% if request.user.username == "rayalez" %}
+	    {% include "elements/prompts.html" %}	    
+	    {% else %}
+	    {% include "elements/prompt.html" %}
+	    {% endif %}	    
 	  </div>
 	  <style>
 	  </style>

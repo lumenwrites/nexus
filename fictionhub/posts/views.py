@@ -984,11 +984,14 @@ def post_create_daily(request):
         days, longeststreak, currentstreak, wordcount = stats(statsposts)
 
         # Prompts
-        # prompts = get_prompts()
         prompts = list(Prompt.objects.all())
         random.shuffle(prompts)
         prompts = prompts[:16]
         prompt = prompts[0].prompt
+
+        # Fetch writingprompts for me
+        if request.user.username == "rayalez":
+            prompts = get_prompts()        
 
         if wordcount > 1000:
             wordcount = str(int(wordcount/1000)) + "K"
