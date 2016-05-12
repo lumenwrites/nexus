@@ -171,6 +171,8 @@ console.log("yes");
 		</li>
 		{% endif %}
 
+
+		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}				
 		<li>
 		  <a href="/users/top/">
 		    <i class="fi-torsos"></i>
@@ -184,12 +186,13 @@ console.log("yes");
 		    Discussion</a>
 		</li>
 
+
 		<li>
 		  <a href="/about/">
 		    <i class="fa fa-info-circle"></i>
 		    About</a>
 		</li>
-
+		{% endif %}
 
 	      </ul>
 
