@@ -5,10 +5,6 @@
 
 {% block content %}
 
-<div id="page"  class="posts-page">
-
-{% include "posts/subnav-browse.html" %}
-
 
 
 <style>
@@ -32,6 +28,91 @@
   
 
 </style>
+
+<!-- 
+<style>
+.hub-tag {
+  margin-left: 0;
+  
+  }
+
+.sidebar .hub-tag {
+display:block;  
+  }
+
+  .sidebar .hub-tag {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #3d454b;
+  border-radius: 0;
+  margin: 1px!important;
+  border: 0;  
+}  
+  
+</style>
+ -->
+<style>
+
+  #search-hubs .hub-tag {
+  padding:10px;
+  margin:20px 0;
+  }
+
+  #search-hubs .hub-tag i{
+  cursor:pointer;
+  }    
+.second-lvl .hub-tag {
+display:block;
+}
+
+.sidebar .hub-tag {
+  background: rgba(119, 119, 119, 0.1);
+}
+
+.sidebar .hub-tag .number-of-stories {
+position: absolute;
+right: 48px;
+line-height: 30px;
+margin-top: 6px;
+}
+  
+.children {
+padding: 0px;
+  }
+
+.posts .hub-tag {
+display:block;
+float:left;
+margin-right: 5px;
+}  
+.second-lvl .hub-tag {
+display:block;
+}
+
+.sidebar .hub-tag {
+  background: rgba(119, 119, 119, 0.1);
+}
+
+.sidebar .hub-tag .number-of-stories {
+position: absolute;
+right: 48px;
+line-height: 30px;
+margin-top: 6px;
+}
+  
+.children {
+padding: 0px;
+}
+
+</style>
+
+
+<div id="page"  class="posts-page">
+
+{% include "posts/subnav-browse.html" %}
+
+
 <div class="row">
 
 
@@ -464,83 +545,6 @@ document.onkeydown=function(){
 
 
 
-<!-- 
-<style>
-.hub-tag {
-  margin-left: 0;
-  
-  }
-
-.sidebar .hub-tag {
-display:block;  
-  }
-
-  .sidebar .hub-tag {
-  background: rgba(119, 119, 119, 0.2);
-  padding: 2px 8px;
-  border-radius: 4px;
-  color: #3d454b;
-  border-radius: 0;
-  margin: 1px!important;
-  border: 0;  
-}  
-  
-</style>
- -->
-<style>
-
-  #search-hubs .hub-tag {
-  padding:10px;
-  margin:20px 0;
-  }
-
-  #search-hubs .hub-tag i{
-  cursor:pointer;
-  }    
-.second-lvl .hub-tag {
-display:block;
-}
-
-.sidebar .hub-tag {
-  background: rgba(119, 119, 119, 0.1);
-}
-
-.sidebar .hub-tag .number-of-stories {
-position: absolute;
-right: 48px;
-line-height: 30px;
-margin-top: 6px;
-}
-  
-.children {
-padding: 0px;
-  }
-
-.posts .hub-tag {
-display:block;
-float:left;
-margin-right: 5px;
-}  
-.second-lvl .hub-tag {
-display:block;
-}
-
-.sidebar .hub-tag {
-  background: rgba(119, 119, 119, 0.1);
-}
-
-.sidebar .hub-tag .number-of-stories {
-position: absolute;
-right: 48px;
-line-height: 30px;
-margin-top: 6px;
-}
-  
-.children {
-padding: 0px;
-}
-
-</style>
 
 {% endblock content %}
 

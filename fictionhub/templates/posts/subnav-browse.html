@@ -5,10 +5,29 @@
 {% include "elements/subheader.html" %}
 {% endif %}
 <style>
+  .subnav {
+  height: 48px;
+  }  
 .subnav a, .subnav span {
     margin-right: 5px;
-  }
-  
+}
+
+.subnav .searchbar {
+  width: calc(100% - 48px);
+  float:left!important;
+}
+
+  #toggle-hubs {
+  float: right;
+		margin-top: 4px;
+		background: rgba(188, 187, 189, 0.32);
+		padding: 10px;
+		color: rgba(61, 69, 75, 0.83);
+		height: 40px;
+		font-size: 21px;
+  cursor:pointer;
+  width: 40px;
+}
 </style>
 
 <!-- Subnav -->
@@ -52,7 +71,7 @@
 	<!-- {% endif %} -->
 
 	{% if not userprofile and filterby != "subscriptions" and not solohub %}
-	<span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span>
+	<!-- <span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span> -->
 	<!-- <a href="/users/top/" style="float:right;cursor:pointer;" class="">Leaderboard</a> -->
 	{% endif %}	
       </div> <!-- Close rank types -->
@@ -61,18 +80,27 @@
 
       {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub and not userprofile %}
 
-      <div class="large-3 small-3 columns">
+    <div class="large-3 small-3 columns">
+
 	<!-- Search -->
 	<i class="fi-magnifying-glass right"
 	   style="position: relative;
 	  	  right: 28px;
 	  	  width: 0;
 	  	  top: 12px;
-	  	  color: #cccccc;"
+	  	  color: #cccccc;
+	  	  right: 68px;		  "
 	   ></i>
 	<input placeholder="" name="query" value="{{query}}"
 	       type="text" class="right searchbar" form="search-form"
 	       id="search-input">
+
+      <!-- Toggle Hubs -->
+      {% if not userprofile and filterby != "subscriptions" and not solohub %}
+      <i class="fa fa-bars"
+	 id="toggle-hubs"></i>
+      {% endif %}
+      	
       </div> <!-- Close 4 columns -->
       
       {% endif %}
