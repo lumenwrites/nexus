@@ -271,24 +271,8 @@ padding: 0px;
     {% endif %}	<!-- endif shadowban -->
     {% endfor %}
 
-<!-- Pagination -->
-<div class="pagination">
-  <span class="step-links">
-    {% if posts.has_previous %}
-    <a href="?page={{ posts.previous_page_number }}"><</a>
-    {% endif %}
-
-    <span class="current">
-      Page {{ posts.number }}
-      <!-- of {{ posts.paginator.num_pages }} -->
-    </span>
-
-    {% if posts.has_next %}
-    <a href="?page={{ posts.next_page_number }}">></a>
-    {% endif %}
-  </span>
-</div>
-
+    <!-- Pagination -->
+    {% include "elements/pagination.html" %}
 </div> <!-- End 8 columns -->
 
 <div class="large-3 small-3 columns sidebar" style="display:none;"> <!-- style="display:none;" -->
