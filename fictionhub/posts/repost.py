@@ -1,4 +1,4 @@
-import praw, time
+import praw, time, os
 
 from .models import Post
 
