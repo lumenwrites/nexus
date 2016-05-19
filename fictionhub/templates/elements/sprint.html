@@ -42,7 +42,7 @@ Cookies.set('sprint_closed', 'yes', { expires: 7 });
 <!-- <span id="stop">Stop</span><br/> -->
 <!-- <span id="more">More</span><br/>          -->
 
-<!-- <div style="width: calc(100% - 171px); float:right;"> -->
+<div style="//margin-top:-1px;">
   <span class="button small start"
 	style="width:80px;padding:10px;height:35px;background:#3D455B;">Sprint</span>
   <div style="width: calc(100% - 80px); float:right;">      
@@ -52,7 +52,13 @@ Cookies.set('sprint_closed', 'yes', { expires: 7 });
 				 width:50%;
 				 height:35px;">
       <span class="meter sprintprogress" style="width:0%; max-width:100%;">
-	<i class="fi-text-color"  style="margin-left: 4px;"></i>
+	<i class="fi-text-color"  style="margin-left: 4px;
+					 margin-top: 7px;"></i>
+	<style>
+	  .fi-text-color:before {
+	  margin-top: 7px;
+	  }
+	</style>
       </span>
     </div>      
 
@@ -62,11 +68,12 @@ Cookies.set('sprint_closed', 'yes', { expires: 7 });
 				 width:50%;
 				 height:35px;">
       <span class="meter health" style="width:100%; max-width:100%;">
-	<i class="fa fa-heart-o" style="margin-left: 4px;"></i>	
+	<i class="fa fa-heart-o" style="margin-left: 4px;
+					margin-top: 7px;"></i>	
       </span>
     </div>
   </div>
-  <!-- </div> -->
+  </div>
 
 
   

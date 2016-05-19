@@ -1,0 +1,49 @@
+	<!-- Progress Bar -->
+	<div class="progressbar" style="position:relative;">
+	  <div class="progress" style="margin: 0px;border: 1px solid #7C868E;">
+	    <span class="meter wordcountprogress" style="width:0; max-width:100%;"></span>
+	  </div>
+	  <div class="marks" style="width:50%; height:24px;
+				   position:absolute;
+				   top: 0;
+				   height: 29px;
+				   top: 3px;
+				   height: 24px;
+				   width: calc(100% - 6px);
+				   width: 100%;				   
+				   left: 3px;
+				   top:0;
+				   left:0;">
+	    <div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div>
+	    <div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div>
+	    <div class="mark" style="border-right: 1px solid #7C868E;"></div>
+	  </div>
+	  
+	  <div class="goal" style="width:30px; height:30px;border-radius:30px;
+				   position:absolute;
+				   top: 0;
+				   left: 300px;
+				   left: calc({% widthratio user.target_wordcount 10 1 %}% - 15px);
+				   border: 1px solid #7C868E;
+				   background: rgba(96, 214, 67, 0.6);"></div>
+
+	</div>
+
+	
+
+	<style>
+	  .progress {
+	  padding: 0;
+	  }
+	  .mark {
+	  border: 1px solid #7C868E;
+	  float:left;width:30px;height:20px;
+	  float: left;
+	  width: 10%;
+	  height: 23px;
+	  border-right:none;
+
+	  height: 30px;	  
+	  }
+	</style>
+	<!-- End Progress Bar -->

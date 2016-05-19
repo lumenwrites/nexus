@@ -71,20 +71,6 @@
   <div class="large-12 columns">
     {# {% include "elements/timer.html" %} #}
 
-
-    <!-- Toolbox toggle -->
-    <!-- 
-    <a class="toolbox-toggle" style="position: absolute;
-    	      right: 30px;
-    	      top: 70px;
-    	      z-index: 100;">
-      <i class="fa fa-inbox" style="font-size: 40px;"></i></a>
-    -->
-    <script>
-      $(".toolbox-toggle").click(function(){
-      $(".toolbox").toggle();
-      });
-    </script>
     {# {% include "elements/stats.html" %} #}
 
     {% include "elements/toolbox.html" %}
@@ -114,51 +100,29 @@
 	});
       </script>
       <div class="editor">
-	<!-- **Prompt: {{prompt.title}}** -->
+	<!-- Toolbox toggle -->
+	<a class="toolbox-toggle" style="position: absolute;
+    					 right: 30px;
+    					 top: 70px;
+    					 
+					 right: 32px;
+					 top: 79px;
+					 z-index: 1;">
+	  <i class="fa fa-inbox" style="font-size: 40px;
+					font-size: 30px;
+					color: #808B96;"></i></a>
+
+	<script>
+	  $(".toolbox-toggle").click(function(){
+	  $(".toolbox").toggle();
+	  });
+	</script>
+
+
+
 	<textarea name="body"></textarea>
-      	<!-- {{form.body}} -->
-	<!-- Progress Bar -->
-	<div class="progressbar" style="position:relative;">
-	  <div class="progress" style="margin: 0px;border: 1px solid #7C868E;">
-	    <span class="meter" style="width:0; max-width:100%;"></span>
-	  </div>
-	  <div class="marks" style="width:50%; height:24px;
-				   position:absolute;
-				   top: 0;
-				   height: 29px;
-				   top: 3px;
-				   height: 24px;
-				   width: calc(100% - 6px);
-				   left: 3px;">
-	    <div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div>
-	    <div class="mark"></div><div class="mark"></div><div class="mark"></div><div class="mark"></div>
-	    <div class="mark" style="border-right: 1px solid #7C868E;"></div>
-	  </div>
-	  
-	  <div class="goal" style="width:30px; height:30px;border-radius:30px;
-				   position:absolute;
-				   top: 0;
-				   left: 300px;
-				   left: calc({% widthratio user.target_wordcount 10 1 %}% - 15px);
-				   border: 1px solid #7C868E;
-				   background: rgba(96, 214, 67, 0.6);"></div>
-
-	</div>
-
-	
-
-	<style>
-	  .mark {
-	  border: 1px solid #7C868E;
-	  float:left;width:30px;height:20px;
-	  float: left;
-	  width: 10%;
-	  height: 23px;
-	  border-right:none;
-	  }
-	</style>
-    <!-- End Progress Bar -->
-
+	{% include "elements/sprint.html" %}
+	{% include "elements/progress-bar.html" %}		
       </div> <!-- end editor -->
 
 
@@ -216,22 +180,22 @@ $('textarea').each(function() {
 	editor = $(simplemde.element.parentNode.children[4]).parent()    
 	words = editor.find(".words").html();
 	percent = (parseFloat(words)/(1000))*100;
-$(editor).find(".meter").css("width",percent+"%")
+$(editor).find(".wordcountprogress").css("width",percent+"%")
 	if (percent > 100) {
-$(editor).find(".meter").css("background","green");
+$(editor).find(".wordcountprogress").css("background","green");
 	} else {
-$(editor).find(".meter").css("background","#008CBA");	    
+$(editor).find(".wordcountprogress").css("background","#008CBA");	    
 	}
     
     simplemde.codemirror.on("change", function(){
 	editor = $(simplemde.element.parentNode.children[4]).parent()
 	words = editor.find(".words").html();
 	percent = (parseFloat(words)/(1000))*100;
-	$(editor).find(".meter").css("width",percent+"%")
+	$(editor).find(".wordcountprogress").css("width",percent+"%")
 	if (percent > {{user.target_wordcount}}/10  ) {
-	    	$(editor).find(".meter").css("background","green");
+	    	$(editor).find(".wordcountprogress").css("background","green");
 	} else {
-	    	$(editor).find(".meter").css("background","#008CBA");	    
+	    	$(editor).find(".wordcountprogress").css("background","#008CBA");	    
 	}
 
 	//Sprint
