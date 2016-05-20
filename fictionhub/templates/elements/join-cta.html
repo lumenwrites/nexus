@@ -38,3 +38,29 @@
 
 	  <div class="clearfix"></div>    
 	</div>
+
+
+      <style>
+	.subnav {
+	display:none;
+	}
+      </style>
+
+
+      <script>
+	$(document).ready(function() {
+
+	$(window).on('close.fndtn.alert', function(event) {
+	// Cookies.set('sprint_closed', 'yes', { expires: 7 });
+	console.info('An alert box has been closed!');
+	$(".subnav").show();	    
+	});
+
+	
+	// if (Cookies.get('sprint_closed')==null) {
+	// Cookies.set('name', 'value', { expires: 7 });
+        // $('#sprint-popup').css("display","block");
+	// }
+	});
+      </script>
+      
