@@ -116,47 +116,60 @@ padding: 0px;
 <div class="row">
 
 
-  {% if request.path = "/" and not user.is_authenticated %}
-    <!-- Frontpage CTA -->
-    <div class="alert-box panel" data-alert  style="//margin-top:20px;//text-align:center;">
-      <img src="/static/img/valley_cropped.png"
-	   style="margin: -25px  -25px 0  -25px ;
-		  width: calc(100% + 50px)!important;
-		  max-width: inherit;" />
-      <h4>Fictionhub is the perfect place to publish, discover and discuss awesome fiction</h4>
+  {% if request.path = "/" and not user.is_authenticated %} 
+    <div class="row">
+      <div class="large-12 small-12 columns">
+        <!-- Frontpage CTA -->
+	<div class="alert-box panel" data-alert
+	     style="text-align: center;//margin-top:20px;//text-align:center;">
+	  <img src="/static/img/valley_cropped.png"
+	       style="margin: -25px  -25px 0  -25px ;
+		      width: calc(100% + 50px)!important;
+		      max-width: inherit;" />
 
-      <p>If you're a reader - This is a friendly and intelligent community, where readers can easy for readers to find discover great fiction, and easy for writers to find their audience and receive great feedback.</p>
+    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
+	  <h4>This is the perfect place to publish, discover and discuss <a href="/story/rational-fiction">rational fiction</a></h4>
+    {% else %}	    
+	  <h4>Fictionhub is the perfect place to publish, discover and discuss awesome fiction</h4>
+	  {% endif %}	    
+	  
+	  <p><!-- <b>Writer:</b> -->
+       	    <!-- Find your audience, receive great feedback, make money by selling your stories! -->
+	    Join our friendly and intelligent community, read and discuss great fiction, <br/>
+	    share your stories, find your audience, receive great feedback:</p>
+	  <a href="/login/"class="small button" style="border-radius:0;width: 100%;height:50px;"
+	     data-reveal-id="login-popup">Join</a>
+	  <br/>      <br/>
+	  <a href="#" class="close" style="font-size: 41px; top: 20px;">&times;</a>
 
-      
-      <!-- <p><b>Reader:</b> -->
-      <!-- 	Discover great fiction, find amazing authors, become a part of our friendly and intelligent community!</p> <\!-- read -\-> -->
-
-      <!-- <p><b>Writer:</b> -->
-      <!-- 	Find your audience, receive great feedback<\!-- , make money by selling your stories! -\-></p> -->
-      
-      <br/>
-
-
-      <div class="large-7 small-12 columns" style="//padding:0;//padding-right:10px; ">      
-	<!-- <a class="small button" style="border-radius:0;">Learn More</a> -->
-	<p>Subscribe to the monthly digest of our best stories:</p>
-	<input id="id_username" maxlength="254" name="email" type="text"
-	       placeholder="email"
-	       style="width: calc(100% - 180px);float: left;height:50px;">
-	<a class="small button" style="border-radius:0; height:50px;width:180px;">Subscribe</a>
+	  <div class="clearfix"></div>    
+	</div>
       </div>
+      <style>
+	.subnav {
+	display:none;
+	}
+      </style>
+      <script>
+    $(document).ready(function() {
 
-      <div class="large-5 small-12 columns" style="//padding:0;//padding-left:10px;">      
-	<p>Join our awesome community:</p>
-	<!-- Click here to signup, or click here to learn more. -->
-	<a href="/login/"class="small button" style="border-radius:0;width: 100%;">Join</a>
-      </div>
+	$(window).on('close.fndtn.alert', function(event) {
+	    // Cookies.set('sprint_closed', 'yes', { expires: 7 });
+	    console.info('An alert box has been closed!');
+	    $(".subnav").show();	    
+	});
 
-      <a href="#" class="close" style="font-size: 41px; top: 20px;">&times;</a>
+	
+	// if (Cookies.get('sprint_closed')==null) {
+	    // Cookies.set('name', 'value', { expires: 7 });
+            // $('#sprint-popup').css("display","block");
+	// }
+    });
 
-      <div class="clearfix"></div>    
-    </div>
-  {% endif %}    
+
+
+      </script>
+   {% endif %}     
 
   <div class="large-12 small-12 columns posts">
 
