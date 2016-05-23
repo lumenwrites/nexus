@@ -35,7 +35,7 @@ from django.conf import settings
 
 # My own stuff
 # utility functions
-from comments.utils import get_comment_list
+from comments.utils import get_comment_list, get_comments
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from .utils import get_prompts, age, stats
 from .ffnet import Munger, FFNetAdapter, FPAdapter
@@ -516,45 +516,16 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
 
     # Get top lvl comments
-    if filterby == "reviews":
-        filterurl = "reviews"
-        if chapter:
-            top_lvl_comments = Comment.objects.filter(post = chapter,
-                                                      comment_type="review",
-                                                      parent = None)
-        else:
-            top_lvl_comments = Comment.objects.filter(post = story,
-                                                      comment_type="review",
-                                                      parent = None)
+    if chapter:
+        comments = get_comments(post=chapter)
     else:
-        if chapter:
-            top_lvl_comments = Comment.objects.filter(post = chapter,
-                                                      comment_type="comment",
-                                                      parent = None)
-        else:
-            top_lvl_comments = Comment.objects.filter(post = story,
-                                                      comment_type="comment",
-                                                      parent = None)
-
-    # Rank comments
-    if rankby == "hot":
-        ranked_comments = rank_hot(top_lvl_comments, top=32)
-    elif rankby == "top":
-        ranked_comments = rank_top(top_lvl_comments, timespan = "all-time")
-    elif rankby == "new":
-        ranked_comments = top_lvl_comments.order_by('-pub_date')
-    else:
-        ranked_comments = []
+        comments = get_comments(post=story)
 
     # Permalink to one comment
     if comment_id:
-        comment = []
-        comment.append(Comment.objects.get(id = comment_id))
-        ranked_comments = comment
+        comments = get_comments(post=story, comment_id=comment_id)
 
 
-    # Nested comments
-    comments = list(get_comment_list(ranked_comments, rankby=rankby))
 
     if request.user.is_authenticated():
         comments_upvoted = request.user.comments_upvoted.all()
