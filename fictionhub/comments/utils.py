@@ -1,9 +1,53 @@
 from posts.utils import rank_hot, rank_top
 from django.core.mail import send_mail # for email
+from django.http import HttpResponseRedirect
+
+from notifications.models import Message
 
 from .models import Comment
+from .forms import CommentForm
 
-# Comments
+def submit_comment(request, post):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) # return post but don't save it to db just yet
+            comment.author = request.user
+            comment.parent = None
+            comment.post = post                
+            comment.save()
+            # Send Email
+            # if comment.post.author.email_comments:
+            #     commentauthor = comment.author.username
+            #     topic = commentauthor + " has commented on your story "
+            #     body = commentauthor + " has left a comment on your story\n" +\
+            #            "http://fictionhub.io"+comment.post.get_absolute_url()+ "\n" +\
+            #            "'" + comment.body[:64] + "...'"
+            #     body += "\n\nYou can manage your email notifications in preferences:\n" +\
+            #             "http://fictionhub.io/preferences/"
+            #     try:
+            #         email = comment.post.author.email            
+            #         send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
+            #     except:
+            #         pass
+            # Notification
+            message = Message(from_user=request.user,
+                              to_user=comment.post.author,
+                              story=comment.post,
+                              comment=comment,
+                              message_type="comment")
+            message.save()
+            comment.post.author.new_notifications = True
+            comment.post.author.save()
+            
+
+            if post.post_type == "chapter":
+                return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'#comments')
+            else:
+                return HttpResponseRedirect('/story/'+post.slug+'#comments')
+                
+    
+
 def get_comment_list(comments=None, rankby="hot"):
     """Recursively build a list of comments."""
     yield 'in'

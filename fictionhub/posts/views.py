@@ -35,7 +35,7 @@ from django.conf import settings
 
 # My own stuff
 # utility functions
-from comments.utils import get_comment_list, get_comments
+from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from .utils import get_prompts, age, stats
 from .ffnet import Munger, FFNetAdapter, FPAdapter
@@ -452,52 +452,11 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     hubs = story.hubs.all()
     
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False) # return post but don't save it to db just yet
-            comment.author = request.user
-            comment.parent = None
-            if chapter:
-                comment.post = chapter                
-            else:
-                comment.post = story
-            comment.save()
-            # Send Email
-            # if comment.post.author.email_comments:
-            #     commentauthor = comment.author.username
-            #     topic = commentauthor + " has commented on your story "
-            #     body = commentauthor + " has left a comment on your story\n" +\
-            #            "http://fictionhub.io"+comment.post.get_absolute_url()+ "\n" +\
-            #            "'" + comment.body[:64] + "...'"
-            #     body += "\n\nYou can manage your email notifications in preferences:\n" +\
-            #             "http://fictionhub.io/preferences/"
-            #     try:
-            #         email = comment.post.author.email            
-            #         send_mail(topic, body, 'raymestalez@gmail.com', [email], fail_silently=False)
-            #     except:
-            #         pass
-            # Notification
-            message = Message(from_user=request.user,
-                              to_user=comment.post.author,
-                              story=comment.post,
-                              comment=comment,
-                              message_type="comment")
-            message.save()
-            comment.post.author.new_notifications = True
-            comment.post.author.save()
-            
-
-            if comment.comment_type == "comment":
-                if chapter:
-                    return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'#comments')
-                else:
-                    return HttpResponseRedirect('/story/'+story.slug+'#comments')
-            else:
-                if chapter:
-                    return HttpResponseRedirect('/story/'+story.slug+'/'+chapter.slug+'/reviews#comments')
-                else:
-                    return HttpResponseRedirect('/story/'+story.slug+'/reviews#comments')
-                
+        if chapter:
+            submit_comment(request, chapter)
+        else:
+            submit_comment(request, story)            
+        form = CommentForm()
     else:
         form = CommentForm()
 
