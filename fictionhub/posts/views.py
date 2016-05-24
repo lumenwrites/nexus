@@ -38,6 +38,7 @@ from django.conf import settings
 from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from .utils import get_prompts, age, stats
+from .utils import count_words
 from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm, PromptForm
@@ -496,18 +497,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         post.save()
 
     # Count words
-    r = re.compile(r'[{}]'.format(punctuation))
-    wordcount = 0
-    text = r.sub(' ', post.body)
-    wordcount += len(text.split())
-
-    if post.children:
-        for child in post.children.all():
-            text = r.sub(' ',child.body)
-            wordcount += len(text.split())
-    if wordcount > 1000:
-        wordcount = str(int(wordcount/1000)) + "K"
-    post.wordcount = wordcount
+    post.wordcount = count_words(post)
 
         
     return render(request, 'posts/post.html',{

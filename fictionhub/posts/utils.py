@@ -14,6 +14,7 @@ from hubs.models import Hub
 from profiles.models import User
 from challenges.models import Prompt
 
+
 def rank_hot(stories, top=180, consider=1000):
     # top - number of stories to show,
     # consider - number of latest stories to rank
@@ -176,7 +177,20 @@ def get_prompts():
 
 
 
+def count_words(post):
+    r = re.compile(r'[{}]'.format(punctuation))
+    wordcount = 0
+    text = r.sub(' ', post.body)
+    wordcount += len(text.split())
 
+    if post.children:
+        for child in post.children.all():
+            text = r.sub(' ',child.body)
+            wordcount += len(text.split())
+    if wordcount > 1000:
+        wordcount = str(int(wordcount/1000)) + "K"
+
+    return wordcount
 
 def stats(posts):
     # Stats grid
