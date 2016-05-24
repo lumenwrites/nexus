@@ -450,7 +450,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         
     
     hubs = story.hubs.all()
-    
+
+    # Submit comments
     if request.method == 'POST':
         if chapter:
             submit_comment(request, chapter)
@@ -460,18 +461,16 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     else:
         form = CommentForm()
 
+        
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
-        downvoted = request.user.downvoted.all()                
+        subscribed_to = request.user.subscribed_to.all()
+        comments_upvoted = request.user.comments_upvoted.all()
+        comments_upvoted = []
     else:
         upvoted = []
-        downvoted = []  
-
-    # For subscribe button
-    if not request.user.is_anonymous():
-        subscribed_to = request.user.subscribed_to.all()
-    else:
         subscribed_to = []
+        
 
 
     # Get top lvl comments
@@ -479,29 +478,17 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         comments = get_comments(post=chapter)
     else:
         comments = get_comments(post=story)
-
     # Permalink to one comment
     if comment_id:
         comments = get_comments(post=story, comment_id=comment_id)
 
 
 
-    if request.user.is_authenticated():
-        comments_upvoted = request.user.comments_upvoted.all()
-        comments_downvoted = request.user.comments_downvoted.all()                
-    else:
-        comments_upvoted = []
-        comments_downvoted = []  
-
     if chapter:
         post = chapter
     else:
         post = story
 
-    if filterby:
-        filterby = "/" + filterby
-    else:
-        filterby = "/comments"
 
     # Increment views counter. Do clever memcache laters.
     if not request.user.is_staff and request.user != post.author:
@@ -522,10 +509,6 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         wordcount = str(int(wordcount/1000)) + "K"
     post.wordcount = wordcount
 
-    # orangemind
-    orangemind = False
-    # if request.META['HTTP_HOST'] == "orangemind.io":
-        # orangemind = True
         
     return render(request, 'posts/post.html',{
         'post': post,
@@ -534,16 +517,12 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'prev_chapter': prev_chapter,
         'next_chapter': next_chapter,       
         'upvoted': upvoted,
-        'downvoted': downvoted,
         'comments': comments,
         'comments_upvoted': comments_upvoted,
-        'comments_downvoted': comments_downvoted,
         'rankby': rankby,        
         'form': form,
         'hubs':hubs,
         'subscribed_to':subscribed_to,
-        'filterby':filterby,
-        'orangemind':orangemind
     })
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
