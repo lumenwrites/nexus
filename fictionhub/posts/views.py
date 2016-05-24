@@ -417,10 +417,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     if request.path[-1] == '/':
         return redirect(request.path[:-1])
 
-    try:
-        story = Post.objects.get(slug=story)
-    except:
-        return HttpResponseRedirect('/404')
+    story = get_object_or_404(Post, slug=story)
         
 
     try:
@@ -430,8 +427,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     except:
         first_chapter = []
     
-
-    # If chapter
+    # Prev next
     if chapter:
         chapter = Post.objects.get(parent=story,slug=chapter)
         first_chapter = []  # empty first chapter to show the right button in post template
@@ -482,7 +478,6 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     # Permalink to one comment
     if comment_id:
         comments = get_comments(post=story, comment_id=comment_id)
-
 
 
     if chapter:
