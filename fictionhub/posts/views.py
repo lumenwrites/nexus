@@ -165,13 +165,6 @@ def posts(request, rankby="hot", timespan="all-time",
         # If page is out of range (e.g. 9999), deliver last page of results.
         posts = paginator.page(paginator.num_pages)    
 
-    # Disable upvoted/downvoted
-    if request.user.is_authenticated():
-        upvoted = request.user.upvoted.all()
-        downvoted = request.user.downvoted.all()                
-    else:
-        upvoted = []
-        downvoted = []        
 
     
     # if not posts:
@@ -219,8 +212,6 @@ def posts(request, rankby="hot", timespan="all-time",
         
     return render(request, 'posts/posts.html',{
         'posts':posts,
-        'upvoted': upvoted,
-        'downvoted': downvoted,
         'filterby':filterby,
         'filterurl': filterurl,
         'hubslug': hubslug,        
