@@ -641,20 +641,12 @@ def post_edit(request, story, chapter=""):
         form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
         # filter(children=None).order_by('id')
 
-    if story.post_type == "wiki" or story.post_type == "post":
-        return render(request, 'posts/edit-post.html', {
-            'story':story,
-            'chapter':chapter,            
-            'form':form,
-            'action':action
-        })
-    else:
-        return render(request, 'posts/edit.html', {
-            'story':story,
-            'chapter':chapter,            
-            'form':form,
-            'action':action
-        })
+    return render(request, 'posts/edit.html', {
+        'story':story,
+        'chapter':chapter,            
+        'form':form,
+        'action':action
+    })
 
 
 def post_delete(request, story, chapter=""):

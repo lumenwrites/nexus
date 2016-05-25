@@ -10,9 +10,11 @@ from django.utils.timezone import utc
 from django.shortcuts import get_object_or_404
 
 from posts.models import Post
+from posts.forms import PostForm
 from hubs.models import Hub
 from profiles.models import User
 from challenges.models import Prompt
+
 
 
 def rank_hot(stories, top=180, consider=1000):
@@ -56,6 +58,12 @@ def rank_top(stories, timespan = None):
     
     top_stories = stories.order_by('-score')
     return top_stories
+
+
+
+
+
+
 
 
 
