@@ -76,9 +76,9 @@ def check_if_rational(request):
 
 def check_if_daily(request):
     daily = False
+    #        request.META['HTTP_HOST'] == "localhost:8000" or \
     if request.META['HTTP_HOST'] == "daily.fictionhub.io" or \
        request.META['HTTP_HOST'] == "writingstreak.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000" or \
        request.META['HTTP_HOST'] == "streak.fictionhub.io":
         daily = True
     return daily

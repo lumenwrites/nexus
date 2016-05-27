@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 # Models
 from .models import Post
-from .utils import rank_hot
+from .utils import rank_hot, check_if_rational, check_if_daily
 from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
@@ -20,26 +20,43 @@ class FilterMixin(object):
     def get_queryset(self):
         qs = super(FilterMixin, self).get_queryset()
 
-        # qs = qs.filter(published=True, author__hidden=False)
+        # Filter Stories
+        qs = qs.filter(post_type="story")
 
-        # Filter by hub
-        hub = self.request.GET.get('hub')
-        if hub:
-            hub = Hub.objects.get(slug=hub)
-            qs = qs.filter(hubs=hub)
+        # Filter by site
+        if check_if_rational(self.request):
+            qs = qs.filter(rational=True)            
 
+        if check_if_daily(self.request):
+            qs = qs.filter(rational=True)            
+
+        if not check_if_rational(self.request) and not  check_if_daily(self.request):
+            qs = qs.filter(daily=False)
+            
+        # Filter by hubs
         try:
             selectedhubs = self.request.GET['hubs'].split(",")
         except:
             selectedhubs = []
-            
         filterhubs = []
         if selectedhubs:
             for hubslug in selectedhubs:
                 filterhubs.append(Hub.objects.get(slug=hubslug))
-        
+        for hub in filterhubs:
+            qs = qs.filter(hubs=hub)            
 
+
+        # Filter by query
+        query = self.request.GET.get('query')
+        if query:
+            qs = qs.filter(title__icontains=query)                    
+
+        if self.request.GET.get('subscriptions'):
+            qs = qs.filter(author=subscribed_to)                    
+            
+            
         # Sort
+        # (Turns queryset into the list, can't just .filter() later
         sorting = self.request.GET.get('sorting')
         if sorting == 'top':
             qs = qs.order_by('-score')
@@ -68,12 +85,67 @@ class BrowseView(FilterMixin, ListView):
     context_object_name = 'posts'    
     template_name = "posts/browse.html"
 
-    # def get_queryset(self):
-    #     qs = super(BrowseView, self).get_queryset()        
-    #     qs = [video for video in qs if (video.author.hidden == False and video.published==True)]
+    def get_queryset(self):
+        qs = super(BrowseView, self).get_queryset()        
+        qs = [p for p in qs if (p.published == True and
+                                p.author.approved ==True)]
 
-    #     return qs
+        # qs = qs.filter(author__username="rayalez")                            
+        return qs
 
+class UserprofileView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(UserprofileView, self).get_queryset()
+
+        # Filter by user
+        username=self.request.GET.get('user')
+        userprofile = User.objects.get(username=username)            
+        qs = [p for p in qs if (p.author==userprofile)]
+        
+        return qs
+
+
+class SubscriptionsView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(UserprofileView, self).get_queryset()
+        
+        # Filter by subscriptions
+        user = self.request.user
+        subscribed_to = []
+        if user.is_authenticated():
+            subscribed_to = self.request.user.subscribed_to.all()
+        
+        qs = [p for p in qs if (p.author in subscribed_to)]
+        
+        return qs
+        
+
+
+class SubscriptionsView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(UserprofileView, self).get_queryset()
+
+
+        # Filter by hub
+        hub = self.request.GET.get('hub')
+        hub = Hub.objects.get(slug=hub)
+        qs = [p for p in qs if (hub in p.hubs.all())]
+        
+        return qs
+        
+    
 
     
 # TODO: replace with CBVs

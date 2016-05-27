@@ -108,8 +108,8 @@ urlpatterns = [
     url(r'^stories/(?P<rankby>[^\.]+)/$', views.posts),    
     # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
 
-    # url(r'^browse/$', cbvs.BrowseView.as_view()),        
-    url(r'^browse/$', views.browse),
+    url(r'^browse/$', cbvs.BrowseView.as_view()),        
+    # url(r'^browse/$', views.browse),
     url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
     url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
 
