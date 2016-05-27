@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView
 
 # Models
 from .models import Post
+from .utils import rank_hot
 from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
@@ -26,6 +27,17 @@ class FilterMixin(object):
         if hub:
             hub = Hub.objects.get(slug=hub)
             qs = qs.filter(hubs=hub)
+
+        try:
+            selectedhubs = self.request.GET['hubs'].split(",")
+        except:
+            selectedhubs = []
+            
+        filterhubs = []
+        if selectedhubs:
+            for hubslug in selectedhubs:
+                filterhubs.append(Hub.objects.get(slug=hubslug))
+        
 
         # Sort
         sorting = self.request.GET.get('sorting')
@@ -53,6 +65,7 @@ class FilterMixin(object):
 
 class BrowseView(FilterMixin, ListView):
     model = Post
+    context_object_name = 'posts'    
     template_name = "posts/browse.html"
 
     # def get_queryset(self):

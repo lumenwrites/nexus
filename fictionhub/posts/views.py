@@ -238,8 +238,6 @@ def browse(request, rankby="hot", timespan="all-time"):
         if selectedhubs:
             for hubslug in selectedhubs:
                 filterhubs.append(Hub.objects.get(slug=hubslug))
-            if hubslug == "wiki":
-                post_type = "wiki"                
                 
             # Both
             posts = Post.objects.all()
