@@ -313,18 +313,10 @@ def browse(request, rankby="hot", timespan="all-time"):
 
     hubs = Hub.objects.all().order_by('id')
 
-    # Disable upvoted/downvoted
-    if request.user.is_authenticated():
-        upvoted = request.user.upvoted.all()
-        downvoted = request.user.downvoted.all()                
-    else:
-        upvoted = []
-        downvoted = []        
 
     for post in posts:
         if post.wordcount > 1000:
             post.wordcount = str(int(post.wordcount/1000)) + "K"
-            
 
     if not query:
         query = ""
@@ -332,12 +324,11 @@ def browse(request, rankby="hot", timespan="all-time"):
     solohub = False
     # if len(filterhubs) == 1:
     #     solohub=True
+
     return render(request, 'posts/browse.html',{
         'posts':posts,
         'rankby': rankby,
         'filterurl': "/browse",
-        'upvoted': upvoted,
-        'downvoted': downvoted,
         'timespan': timespan,
         'query':query,
         'hubs': hubs,
