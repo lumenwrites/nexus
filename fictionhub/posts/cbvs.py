@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-
+from django.db.models import Q
 
 # Models
 from .models import Post
@@ -49,12 +49,10 @@ class FilterMixin(object):
         # Filter by query
         query = self.request.GET.get('query')
         if query:
-            qs = qs.filter(title__icontains=query)                    
+            qs = qs.filter(Q(title__icontains=query) |
+                           Q(body__icontains=query) |
+                           Q(author__username__icontains=query))                    
 
-        if self.request.GET.get('subscriptions'):
-            qs = qs.filter(author=subscribed_to)                    
-            
-            
         # Sort
         # (Turns queryset into the list, can't just .filter() later
         sorting = self.request.GET.get('sorting')
@@ -75,6 +73,7 @@ class FilterMixin(object):
             context['sorting'] = "hot"
         context['hub'] = self.request.GET.get('hub')
         context['hubs'] = Hub.objects.all()
+        # context['filterhubs'] = filterhubs
         return context
     
 
@@ -90,8 +89,14 @@ class BrowseView(FilterMixin, ListView):
         qs = [p for p in qs if (p.published == True and
                                 p.author.approved ==True)]
 
-        # qs = qs.filter(author__username="rayalez")                            
         return qs
+
+
+#     def get_context_data(self, **kwargs):
+#         context = super(PostsView, self).get_context_data(**kwargs)
+#         context['rankby'] =  self.kwargs['rankby']
+#         return context    
+    
 
 class UserprofileView(FilterMixin, ListView):
     model = Post
@@ -115,7 +120,7 @@ class SubscriptionsView(FilterMixin, ListView):
     template_name = "posts/browse.html"
 
     def get_queryset(self):
-        qs = super(UserprofileView, self).get_queryset()
+        qs = super(SubscriptionsView, self).get_queryset()
         
         # Filter by subscriptions
         user = self.request.user
@@ -129,58 +134,21 @@ class SubscriptionsView(FilterMixin, ListView):
         
 
 
-class SubscriptionsView(FilterMixin, ListView):
-    model = Post
-    context_object_name = 'posts'    
-    template_name = "posts/browse.html"
-
-    def get_queryset(self):
-        qs = super(UserprofileView, self).get_queryset()
-
-
-        # Filter by hub
-        hub = self.request.GET.get('hub')
-        hub = Hub.objects.get(slug=hub)
-        qs = [p for p in qs if (hub in p.hubs.all())]
-        
-        return qs
-        
-    
-
-    
-# TODO: replace with CBVs
-# from django.views.generic import View,TemplateView, ListView, DetailView, FormView, CreateView
-# from django.shortcuts import render
-
-# from .models import Post
-# from .forms import PostForm
-# from .utils import rank_hot, rank_top
-
-
-
-# class PostsView(ListView):
+# class HubView(FilterMixin, ListView):
 #     model = Post
-#     template_name = "posts/posts.html"
+#     context_object_name = 'posts'    
+#     template_name = "posts/browse.html"
 
 #     def get_queryset(self):
-#         posts = Post.objects.all()
+#         qs = super(HubView, self).get_queryset()
 
-#         rankby = self.kwargs['rankby']
-#         if rankby == "hot":
-#             post_list = rank_hot(posts, top=32)
-#         elif rankby == "top":
-#             post_list = rank_top(posts, timespan = timespan)
-#         elif rankby == "new":
-#             post_list = posts.order_by('-pub_date')
-#         else:
-#             post_list = []
-
-#         return posts
-
-#     def get_context_data(self, **kwargs):
-#         context = super(PostsView, self).get_context_data(**kwargs)
-#         context['rankby'] =  self.kwargs['rankby']
-#         return context    
+#         # Filter by hub
+#         hub = self.request.GET.get('hub')
+#         hub = Hub.objects.get(slug=hub)
+#         qs = [p for p in qs if (hub in p.hubs.all())]
+        
+#         return qs
+        
         
 
 # class PostView(DetailView):
@@ -205,8 +173,6 @@ class SubscriptionsView(FilterMixin, ListView):
 #         return super(ContactView, self).form_valid(form)    
 
 
-
-from django.views.generic.list import ListView
 
 class HubList(ListView):
     model = Hub
