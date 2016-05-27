@@ -321,19 +321,10 @@ def browse(request, rankby="hot", timespan="all-time"):
         upvoted = []
         downvoted = []        
 
-    # Count words
-    r = re.compile(r'[{}]'.format(punctuation))
     for post in posts:
-        wordcount = 0
-        text = r.sub(' ',post.body)
-        wordcount += len(text.split())
-        if post.children:
-            for child in post.children.all():
-                text = r.sub(' ',child.body)
-                wordcount += len(text.split())
-        if wordcount > 1000:
-            wordcount = str(int(wordcount/1000)) + "K"
-        post.wordcount = wordcount
+        if post.wordcount > 1000:
+            post.wordcount = str(int(post.wordcount/1000)) + "K"
+            
 
     if not query:
         query = ""

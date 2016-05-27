@@ -1,5 +1,8 @@
 import datetime
 import itertools
+import re
+from string import punctuation
+
 from django.utils.timezone import utc
 
 from django.db import models
@@ -24,6 +27,7 @@ class Post(models.Model):
     hubs = models.ManyToManyField('hubs.Hub', related_name="posts", blank=True)
     score = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+    wordcount = models.IntegerField(default=0)    
 
     imported = models.BooleanField(default=False)
     rational = models.BooleanField(default=False)
@@ -95,6 +99,22 @@ class Post(models.Model):
                 self.author = self.parent.author
         except:
             pass
+
+
+        # Count words
+        r = re.compile(r'[{}]'.format(punctuation))
+        wordcount = 0
+        text = r.sub(' ',self.body)
+        wordcount += len(text.split())
+        if self.children:
+            for child in self.children.all():
+                text = r.sub(' ',child.body)
+                wordcount += len(text.split())
+        self.wordcount = wordcount
+
+            
+
+
         return super(Post, self).save(*args, **kwargs)
     
     @permalink
