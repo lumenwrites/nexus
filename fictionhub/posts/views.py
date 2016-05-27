@@ -1,22 +1,19 @@
 # standard library imports
 import re, random
 from string import punctuation
-# to round views
-import math
-
-# for rss
-from xml.etree.ElementTree import Element, SubElement, tostring 
-from django.core.urlresolvers import reverse
-
-
-
-import json # for temporary post api. Replace with REST.
-import feedparser
-from bs4 import BeautifulSoup # to parse prompt
+import math # to round views
 from html2text import html2text
-from django.db.models import Q
+# date
+from datetime import datetime
+from time import mktime
+#dropbox
+import os
+from markdown import Markdown
+import time
+
 
 # core django components
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -25,10 +22,7 @@ from django.core.mail import send_mail # for email
 # for 404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-# date
-from datetime import datetime
 from django.utils.timezone import utc
-from time import mktime
 
 from django.conf import settings
 
@@ -39,7 +33,6 @@ from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from .utils import get_prompts, age, stats
 from .utils import count_words
-from .ffnet import Munger, FFNetAdapter, FPAdapter
 # Forms
 from .forms import PostForm, PromptForm
 from comments.forms import CommentForm
@@ -52,13 +45,6 @@ from hubs.models import Hub
 from comments.models import Comment
 from notifications.models import Message
 from challenges.models import Prompt
-
-
-
-#dropbox
-import os
-from markdown import Markdown
-import time
 
 
 
