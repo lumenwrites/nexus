@@ -356,6 +356,7 @@ $(document).ready(function(){
 	    var action = "/browse/";
 	}
 
+       var action = "/browse/";
 	var query = $('#search-input').val(); // attr("value")
 
 	var hubs = [];
@@ -380,13 +381,13 @@ $(document).ready(function(){
     });
 
     // Hot/New/Top. Submit a form instead of following a link
-    $(".rank-types").find("a").bind('click',function(event){
-	event.preventDefault();
-	event.stopPropagation();
-    	var link = $(this).attr('href');
-    	$("#search-form").get(0).setAttribute('action', link)
-    	$("#search-form").submit();
-    });
+    // $(".rank-types").find("a").bind('click',function(event){
+    // 	event.preventDefault();
+    // 	event.stopPropagation();
+    // 	var link = $(this).attr('href');
+    // 	$("#search-form").get(0).setAttribute('action', link)
+    // 	$("#search-form").submit();
+    // });
 
     // Toggle Hubs
     $("#toggle-hubs").bind('click',function(event){

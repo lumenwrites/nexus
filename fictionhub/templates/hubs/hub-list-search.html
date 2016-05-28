@@ -5,7 +5,7 @@
   <div class="top-lvl-hub">
     {% for hub in hubs|sortbypostcount:request %}
 
-    {% if not hub.parent %}
+    {% if not hub.parent and not hub in filterhubs %}
     {% if hub.posts.all %}
     {% endif %}
 
@@ -23,7 +23,7 @@
       {% if hub.hub_type = "hub" %}      
       <a href="/hub/{{hub.slug}}/" class="hub-filter" id="{{hub.slug}}">{{hub}}</a> <!-- hub-link -->
       {% else %}
-      {{hub}}
+      <!-- {{hub}} -->
       {% endif %}	
 
       {% if hub.hub_type == "hub" %}

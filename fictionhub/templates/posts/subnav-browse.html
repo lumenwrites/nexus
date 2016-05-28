@@ -39,41 +39,41 @@
     <div class="large-9 small-9 columns">
 
       <!-- Rank -->
-      <div class="{% if userprofile %}profile{% endif %} rank-types">
+      <div class="rank-types">
 	{% if not userprofile %}
-	<a href="{{filterurl}}/hot/" id="hot"><span {% if rankby = "hot" %}class="bold"{% endif %}>Hot</span></a>
+	<!-- Hot -->
+	<a href="{{request.path}}?sorting=hot{{urlstring}}">
+	  <span {% if sorting = "hot" %}class="bold"{% endif %}>Hot</span>
+	</a>
 	{% endif %}
-	<a href="{{filterurl}}/new/" id="new"><span {% if rankby = "new" and not filterby = "subscriptions" %}class="bold"{% endif %}>New</span></a>
+	<!-- New -->
+	<a href="{{request.path}}?sorting=new{{urlstring}}">
+	  <span {% if sorting = "new" %}class="bold"{% endif %}>New</span>
+	</a>
+	<!-- Top -->
+	<a href="{{request.path}}?sorting=top{{urlstring}}">
+	  <span {% if sorting = "top" %}class="bold"{% endif %}>Top</span>
+	</a>	
 
-	<a href="{{filterurl}}/top/all-time/">
-	  <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}>
-	    Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a>
-	{% if rankby == "top" and not userprofile %}
-	<a href="{{filterurl}}/top/all-time/">
-	  <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a>
-	<a href="{{filterurl}}/top/year/">
-	  <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a>
-	<a href="{{filterurl}}/top/month/">
-	  <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a>
-	<!-- While website is not being updated that often.
-	     <a href="{{filterurl}}/top/day">
-	       <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a>
-	     -->
-	{% endif %} <!-- end rankby top, showing timespans -->
 
-	<!-- Subscritions -->
-	<!-- {% if user.is_authenticated %} -->
-	<!-- {% if user.subscribed_to.count > 0 and not userprofile and not solohub %} -->
-	<!-- <a href="/subscriptions/"> -->
-	<!--   <span {% if filterby = "subscriptions" %}class="bold"{% endif %}>Subscriptions</span> -->
-	<!-- </a> -->
-	<!-- {% endif %} -->
-	<!-- {% endif %} -->
+	<!-- Top -->
+	<!-- <a href="{{filterurl}}/top/all-time/"> -->
+	<!--   <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}> -->
+	<!--     Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a> -->
+	<!-- {% if rankby == "top" and not userprofile %} -->
+	<!-- <a href="{{filterurl}}/top/all-time/"> -->
+	<!--   <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a> -->
+	<!-- <a href="{{filterurl}}/top/year/"> -->
+	<!--   <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a> -->
+	<!-- <a href="{{filterurl}}/top/month/"> -->
+	<!--   <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a> -->
+	<!-- <\!-- While website is not being updated that often. -->
+	<!--      <a href="{{filterurl}}/top/day"> -->
+	<!--        <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a> -->
+	<!--      -\-> -->
+	<!-- {% endif %} <\!-- end rankby top, showing timespans -\-> -->
 
-	{% if not userprofile and filterby != "subscriptions" and not solohub %}
-	<!-- <span  id="toggle-hubs" style="float:right;cursor:pointer;" class="">Categories</span> -->
-	<!-- <a href="/users/top/" style="float:right;cursor:pointer;" class="">Leaderboard</a> -->
-	{% endif %}	
+
       </div> <!-- Close rank types -->
     </div> <!-- Close 9 columns -->
 

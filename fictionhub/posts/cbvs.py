@@ -67,13 +67,45 @@ class FilterMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(FilterMixin, self).get_context_data(**kwargs)
+        urlstring = ""
+        # Sorting
         if self.request.GET.get('sorting'):
-            context['sorting'] = self.request.GET.get('sorting')
+            sorting = self.request.GET.get('sorting')
         else:
-            context['sorting'] = "hot"
-        context['hub'] = self.request.GET.get('hub')
+            sorting = "hot"
+        context['sorting'] = sorting
+
+        # urlstring = self.request.path + "?sorting=" + sorting
+            
+
+        # Filtered Hubs
+        try:
+            selectedhubs = self.request.GET['hubs'].split(",")
+        except:
+            selectedhubs = []
+        filterhubs = []
+        if selectedhubs:
+            for hubslug in selectedhubs:
+                filterhubs.append(Hub.objects.get(slug=hubslug))
+        context['filterhubs'] = filterhubs
+        # All Hubs
         context['hubs'] = Hub.objects.all()
-        # context['filterhubs'] = filterhubs
+        # Solo Hub
+        context['hub'] = self.request.GET.get('hub')
+
+
+        if filterhubs:
+            hublist = ",".join([hub.slug for hub in filterhubs])
+            urlstring += "&hubs=" + hublist
+
+        # Query
+        query = self.request.GET.get('query')
+        if query:
+            context['query'] = query
+            urlstring += "&query=" + query            
+
+        context['urlstring'] = urlstring
+
         return context
     
 
