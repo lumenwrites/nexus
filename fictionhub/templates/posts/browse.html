@@ -112,13 +112,14 @@ padding: 0px;
 
 {% include "posts/subnav-browse.html" %}
 
+  {% if request.path = "/" and not user.is_authenticated %}  
+  {% include "elements/join-cta.html" %}
+  {% endif %}     
 
 <div class="row">
 
 
-  {% if request.path = "/" and not user.is_authenticated %} 
-  {% include "elements/join-cta.html" %}
-  {% endif %}     
+
 
   <div class="large-12 small-12 columns posts">
 
