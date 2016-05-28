@@ -164,7 +164,7 @@ console.log("yes");
 		</li>
 		{% if user.subscribed_to.count > 0 %}	  
 		<li>
-		  <a href="/subscriptions/new/">
+		  <a href="/subscriptions/?sorting=new">
 		    <i class="fa fa-rss"></i>
 		      Subscriptions
 		  </a>
@@ -242,7 +242,12 @@ console.log("yes");
 		    <i class="fa fa-envelope-o
 		       {% if user.new_notifications %}new-notifications{% endif %}"></i>Inbox</a>
 		</li>
-		{% endif %}		  
+		{% endif %}
+		<!-- 
+		<li>
+		  <a href="/stats/"><i class="fa fa-bar-chart"></i>Stats</a>
+		</li>
+		 -->
 		<li>
 		  <a href="/preferences/"><i class="fa fa-cog"></i>Settings</a>
 		</li>

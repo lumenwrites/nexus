@@ -80,6 +80,16 @@ def home(request):
         'hubs':hubs
     })
 
+
+def page_404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+
+
 def test(request):
     test = request.META['HTTP_HOST']
     return render(request, 'test.html', {

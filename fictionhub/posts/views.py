@@ -1,7 +1,7 @@
 # standard library imports
 import re, random
 from string import punctuation
-import math # to round views
+from math import floor # to round views
 from html2text import html2text
 # date
 from datetime import datetime
@@ -13,6 +13,12 @@ import time
 
 
 # core django components
+# CBVs
+from django.views.generic import View
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
+
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
@@ -49,291 +55,233 @@ from challenges.models import Prompt
 
 
 
-def posts(request, rankby="hot", timespan="all-time",
-            filterby="", hubslug="", username="", challenge="",
-          prompt=""):
 
-    # for user profile navbar
-    userprofile = []
-    filterurl = ""
-    post_type = "story"
+class FilterMixin(object):
+    paginate_by = 15
+    def get_queryset(self):
+        qs = super(FilterMixin, self).get_queryset()
 
-    days = 0
-    longeststreak = 0
-    currentstreak = 0
-    wordcount = 0
-    totalwordcount = 0    
+        # Filter Stories
+        qs = qs.filter(post_type="story")
 
-    rational = check_if_rational(request)
-    daily = check_if_daily(request)
+        # Filter by site
+        if check_if_rational(self.request):
+            qs = qs.filter(rational=True)            
 
-    days = {}
-    if not request.user.is_anonymous():
-        subscribed_to = request.user.subscribed_to.all()
-    else:
-        subscribed_to = []
-    
-    if filterby == "subscriptions":
-        subscribed_to = request.user.subscribed_to.all()
-        posts = Post.objects.filter(author=subscribed_to, published=True, daily=daily)
-        # posts = Post.objects.all()        
-        filterurl="/subscriptions" # to add to href  in subnav
-        rankby = "new"
-    elif filterby == "hub":
-        hub = Hub.objects.get(slug=hubslug)
-        # Show posts from all the children hubs? Don't know how to sort.
-        # children = Hub.objects.filter(parent=hub)
-        # hubs = []
-        if hubslug == "wiki":
-            posts = Post.objects.filter(hubs=hub, published=True,
-                                        post_type = "wiki")
-            post_type = "wiki"
-        else:
-            posts = Post.objects.filter(hubs=hub, published=True, post_type = "story") #  rational = rational, daily = daily, 
-        filterurl="/hub/"+hubslug # to add to href  in subnav
-    elif filterby == "user":
-        userprofile = get_object_or_404(User, username=username)
-        if rankby != "top":
-            rankby = "new"
-        if request.user == userprofile:
-            # If it's my profile - display all the posts, even unpublished.
-            # fictionhub includes rational        
-            if rational:
-                posts = Post.objects.filter(author=userprofile,
-                                            rational=rational,daily=daily).exclude(post_type="chapter")
-            else:
-                posts = Post.objects.filter(author=userprofile, daily=daily).exclude(post_type="chapter")
-            # , post_type="story")
-        else:
-            # fictionhub includes rational        
-            if rational:
-                posts = Post.objects.filter(author=userprofile,
-                                            rational=rational,daily=daily,
-                                            published=True).exclude(post_type="chapter")
-            else:
-                posts = Post.objects.filter(author=userprofile,
-                                            published=True, daily=daily)
-        filterurl="/user/"+userprofile.username # to add to href  in subnav
+        if check_if_daily(self.request):
+            qs = qs.filter(daily=True)            
 
-        statsposts = Post.objects.filter(author=userprofile, daily=daily)
-        statsposts = statsposts.order_by('pub_date')
-        # Count word stats graph
-        days, longeststreak, currentstreak, totalwordcount = stats(statsposts) 
-    else:
-        # fictionhub includes rational        
-        if rational:
-            posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
-        else:
-            posts = Post.objects.filter(published=True, daily=daily, post_type="story")
-        # fictionhub doesn't include rational
-        # posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type="story")
-        filterurl="/stories"
-
-    if rankby == "hot":
-        post_list = rank_hot(posts, top=32)
-    elif rankby == "top":
-        post_list = rank_top(posts, timespan = timespan)
-    elif rankby == "new":
-        post_list = posts.order_by('-pub_date')
-    else:
-        post_list = []
-
-
-    # Pagination
-    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        posts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        posts = paginator.page(paginator.num_pages)    
-
-
-    
-    # if not posts:
-    #     return HttpResponseRedirect('/404')
-
-    hubs = Hub.objects.all().order_by('id')
-
-    # Count words
-    r = re.compile(r'[{}]'.format(punctuation))
-    for post in posts:
-        wordcount = 0
-        text = r.sub(' ',post.body)
-        wordcount += len(text.split())
-        if post.children:
-            for child in post.children.all():
-                text = r.sub(' ',child.body)
-                wordcount += len(text.split())
-        if wordcount > 1000:
-            wordcount = str(int(wordcount/1000)) + "K"
-        post.wordcount = wordcount
-
-    solohub = False
-    hubtitle = ""
-    if filterby == "hub":
-        hubtitle = hub.title
-        solohub = True
-
-
-    view_count = 0
-    score = 0        
-    try:
-        # try is for solo hub, remove try lateer
-        for post in userprofile.posts.all():
-            view_count += post.views
-            score += post.score
-    except:
-        pass
-
-    if view_count > 1000:
-        view_count = str(math.floor(view_count/1000)) + "K"
-
-    if totalwordcount > 1000:
-        totalwordcount = str(int(totalwordcount/1000)) + "K"
-        
-        
-    return render(request, 'posts/posts.html',{
-        'posts':posts,
-        'filterby':filterby,
-        'filterurl': filterurl,
-        'hubslug': hubslug,        
-        'post_type':post_type,
-        'rankby': rankby,
-        'timespan': timespan,
-        'userprofile':userprofile,
-        'subscribed_to': subscribed_to,
-        'hubs': hubs,
-        'solohub':solohub,
-        'hubtitle':hubtitle,
-        'view_count':view_count,
-        'score':score,
-        'days':days,
-        'longeststreak':longeststreak,
-        'currentstreak':currentstreak,
-        'wordcount':totalwordcount,        
-    })
-
-
-
-def browse(request, rankby="hot", timespan="all-time"):
-    rational = check_if_rational(request)
-    daily = check_if_daily(request)
-
-    post_type = "story"
-
-    query = ""
-    selectedhubs = ""
-    filterhubs = []
-    if request.method == 'GET':
-        # selectedhubs = request.GET.getlist('hubs')
+        if not check_if_rational(self.request) and not  check_if_daily(self.request):
+            qs = qs.filter(daily=False)
+            
+        # Filter by hubs
         try:
-            selectedhubs = request.GET['hubs'].split(",")
+            selectedhubs = self.request.GET['hubs'].split(",")
         except:
-            electedhubs = []
+            selectedhubs = []
         filterhubs = []
         if selectedhubs:
             for hubslug in selectedhubs:
                 filterhubs.append(Hub.objects.get(slug=hubslug))
-                
-            # Both
-            posts = Post.objects.all()
-            for hub in filterhubs:
-                posts = posts.filter(hubs=hub)
-        else:
-            posts = Post.objects.all()            
+        for hub in filterhubs:
+            qs = qs.filter(hubs=hub)            
 
-        # Approved only
-        posts = posts.filter(author__approved=True)
 
-        query = request.GET.get('query')
+        # Filter by query
+        query = self.request.GET.get('query')
         if query:
-            # fictionhub includes rational
-            if rational:
-                posts = posts.filter(Q(title__icontains=query,
-                                       published=True, post_type=post_type,
-                                       rational = rational, daily = daily) |
-                                     Q(body__icontains=query,
-                                       published=True, post_type=post_type,
-                                       rational = rational, daily = daily) |
-                                     Q(author__username__icontains=query,
-                                       published=True, post_type=post_type,
-                                       rational = rational, daily = daily))
-            else:
-                posts = posts.filter(Q(title__icontains=query,
-                                       published=True, post_type=post_type, daily=daily) |
-                                     Q(body__icontains=query,
-                                       published=True, post_type=post_type, daily=daily) |
-                                     Q(author__username__icontains=query,
-                                       published=True, post_type=post_type, daily=daily))
+            qs = qs.filter(Q(title__icontains=query) |
+                           Q(body__icontains=query) |
+                           Q(author__username__icontains=query))                    
+
+        # Sort
+        # (Turns queryset into the list, can't just .filter() later
+        sorting = self.request.GET.get('sorting')
+        if sorting == 'top':
+            qs = qs.order_by('-score')
+        elif sorting == 'new':
+            qs = qs.order_by('-pub_date')
         else:
-            # fictionhub includes rational            
-            if rational:
-                posts = posts.filter(published=True, rational = rational, daily = daily, post_type=post_type)
-            else:
-                posts = posts.filter(published=True, post_type=post_type, daily=daily)
+            qs = rank_hot(qs)
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(FilterMixin, self).get_context_data(**kwargs)
+        urlstring = ""
+        # Sorting
+        if self.request.GET.get('sorting'):
+            sorting = self.request.GET.get('sorting')
+        else:
+            sorting = "hot"
+        context['sorting'] = sorting
+
+        # urlstring = self.request.path + "?sorting=" + sorting
             
-    else:
-        # fictionhub includes rational        
-        if rational:
-            posts = Post.objects.filter(published=True, rational = rational, daily = daily, post_type=post_type)
-        else:
-            posts = Post.objects.filter(published=True,post_type=post_type, daily=daily)
-        
+
+        # Filtered Hubs
+        try:
+            selectedhubs = self.request.GET['hubs'].split(",")
+        except:
+            selectedhubs = []
         filterhubs = []
+        if selectedhubs:
+            for hubslug in selectedhubs:
+                filterhubs.append(Hub.objects.get(slug=hubslug))
+        context['filterhubs'] = filterhubs
+        # All Hubs
+        context['hubs'] = Hub.objects.all()
+        # Solo Hub
+        context['hub'] = self.request.GET.get('hub')
 
 
-    # Ranking
-    if rankby == "hot":
-        post_list = rank_hot(posts, top=32)
-    elif rankby == "top":
-        post_list = rank_top(posts, timespan = timespan)
-    elif rankby == "new":
-        post_list = posts.order_by('-pub_date')
-    else:
-        post_list = []
+        if filterhubs:
+            hublist = ",".join([hub.slug for hub in filterhubs])
+            urlstring += "&hubs=" + hublist
+
+        # Query
+        query = self.request.GET.get('query')
+        if query:
+            context['query'] = query
+            urlstring += "&query=" + query            
+
+        context['urlstring'] = urlstring
+
+        return context
+    
 
 
-    # Pagination
-    paginator = Paginator(post_list, settings.PAGINATION_NUMBER_OF_PAGES)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        posts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        posts = paginator.page(paginator.num_pages)    
 
-    hubs = Hub.objects.all().order_by('id')
+class BrowseView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(BrowseView, self).get_queryset()        
+        qs = [p for p in qs if (p.published == True and
+                                p.author.approved ==True)]
+
+        return qs
 
 
-    for post in posts:
-        if post.wordcount > 1000:
-            post.wordcount = str(int(post.wordcount/1000)) + "K"
+#     def get_context_data(self, **kwargs):
+#         context = super(PostsView, self).get_context_data(**kwargs)
+#         context['rankby'] =  self.kwargs['rankby']
+#         return context    
+    
 
-    if not query:
-        query = ""
+class UserprofileView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
 
-    solohub = False
-    # if len(filterhubs) == 1:
-    #     solohub=True
+    def get_queryset(self):
+        qs = super(UserprofileView, self).get_queryset()
 
-    return render(request, 'posts/browse.html',{
-        'posts':posts,
-        'rankby': rankby,
-        'filterurl': "/browse",
-        'timespan': timespan,
-        'query':query,
-        'hubs': hubs,
-        'filterhubs':filterhubs,
-        'solohub':solohub,
-        'test': request.POST
-    })
+        # Filter by user
+        userprofile = User.objects.get(username=self.kwargs['username'])        
+        qs = [p for p in qs if (p.author==userprofile)]
+        
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(UserprofileView, self).get_context_data(**kwargs)
+        userprofile = User.objects.get(username=self.kwargs['username'])        
+        context['userprofile'] = userprofile
+        
+        view_count = 0
+        for post in userprofile.posts.all():
+            view_count += post.views
+        if view_count > 1000:
+            view_count = str(floor(view_count/1000)) + "K"
+        context['view_count'] = view_count
+                
+        score = 0        
+        for post in userprofile.posts.all():
+            score += post.score
+        if score > 1000:
+            score = str(int(score/1000)) + "K"
+        context['score'] = score
+
+
+        # Stats for writingstreak
+        statsposts = Post.objects.filter(author=userprofile, daily=True)
+        statsposts = statsposts.order_by('pub_date')
+        days, longeststreak, currentstreak, totalwordcount = stats(statsposts)
+        context['days'] = days
+        context['longeststreak'] = longeststreak
+        context['currentstreak'] = currentstreak
+        context['wordcount'] = totalwordcount
+        
+        return context    
+    
+
+class SubscriptionsView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(SubscriptionsView, self).get_queryset()
+        
+        # Filter by subscriptions
+        user = self.request.user
+        subscribed_to = []
+        if user.is_authenticated():
+            subscribed_to = self.request.user.subscribed_to.all()
+        
+        qs = [p for p in qs if (p.author in subscribed_to)]
+        
+        return qs
+        
+
+
+class HubView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def get_queryset(self):
+        qs = super(HubView, self).get_queryset()
+
+        # Filter by hub
+        hub = Hub.objects.get(slug=self.kwargs['hubslug'])
+
+        # qs = [p for p in qs if (hub in p.hubs.all())]
+
+        posts = []
+        for post in qs:
+            for h in post.hubs.all():
+                if h.slug==hub.slug:
+                    posts.append(post)
+        qs = posts
+
+        return qs
+        
+    def get_context_data(self, **kwargs):
+        context = super(HubView, self).get_context_data(**kwargs)
+        hub = Hub.objects.get(slug=self.kwargs['hubslug'])
+        context['hubtitle'] = hub.title
+        context['solohub'] = True
+        return context    
+    
+
+
+class HubList(ListView):
+    model = Hub
+    template_name = "hubs/hubs.html"
+
+
+class SeriesList(ListView):
+    model = Post
+    template_name = "series/series.html"
+    paginate_by=15
+    
+
+
+
+    
 
 
 # Voting
@@ -687,11 +635,6 @@ def post_unpublish(request, story):
 
 
 
-def page_404(request):
-    response = render_to_response('404.html', {},
-                                  context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
 
 
     
@@ -721,12 +664,6 @@ def sandbox(request):
     })
 
 
-def users(request):
-    users = User.objects.filter(daily=True).order_by('-karma')[:25]
-    return render(request, 'profiles/users.html',{
-        'users':users,
-        'hubs': [],        
-    })
 
     
 

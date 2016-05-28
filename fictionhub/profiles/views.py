@@ -19,6 +19,14 @@ from notifications.models import Message
 # import praw
 # import webbrowser
 
+def users(request):
+    users = User.objects.filter(daily=True).order_by('-karma')[:25]
+    return render(request, 'profiles/users.html',{
+        'users':users,
+        'hubs': [],        
+    })
+
+
 def subscribe(request, username):
     userprofile = User.objects.get(username=username)
     if not request.user.is_anonymous():

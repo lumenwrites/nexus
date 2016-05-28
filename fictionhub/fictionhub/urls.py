@@ -31,7 +31,6 @@ from . import views
 
 
 from posts import views as posts_views
-from posts import cbvs as posts_cbvs
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -50,7 +49,9 @@ urlpatterns = [
     
     # Front page
     # url(r'^$', views.home),
-    url(r'^$', posts_cbvs.BrowseView.as_view()),    
+    url(r'^$', posts_views.BrowseView.as_view()),
+
+    url(r'^404/', views.page_404),    
 
     # url(r'.*', stories.views.page_404),
 ]

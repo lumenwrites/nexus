@@ -1,25 +1,12 @@
 {% extends "base.html" %}
 {% load markdownify %}
 
-{% block title %}
-    {{post.title}}
-{% endblock %}
-
 {% block content %}
 <div id="page"  class="postPage">
   <div class="row">
     <div class="large-12 columns">
+      {% include "elements/stats.html" %}      
       <p>
-	Wordcount:{{wordcount}} <br/>
-	This Month:{{wordcount}} <br/>	
-	<!-- Pub Date: {{pub_date}} <br/> -->
-	{% for date, wordcount in days.items %}
-	['{{date}}', {{wordcount}}],
-	{% endfor %} <br/>
-
-
-	
-
       </p>
     </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->

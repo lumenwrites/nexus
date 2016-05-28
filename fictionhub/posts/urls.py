@@ -2,32 +2,36 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 
-from . import views, cbvs, feeds, repost, editorial
+from . import views, feeds, repost, editorial
 # from .feeds import MainFeed
 
 urlpatterns = [
 
-    # top
-    url(r'^users/top/$', views.users),
-    # Feed
+    # User Feed
     url(r'^user/(?P<username>[^\.]+)/feed/atom/$', feeds.UserFeed()),    
 
     # Store
     url(r'^user/rayalez/store/$', views.item),
-    
-    # Post
-    url(r'^post/add$', views.post_create,
-        {'posttype':'post'}),
-
-    # Post
-    url(r'^write/$', views.post_create_daily),
-    
-    #book
     url(r'^book/$', views.book),
 
-
+    # Temp
     url(r'^wiki/rational-fiction$', RedirectView.as_view(url='/story/rational-fiction')),
 
+
+
+    # Class Based Views
+    # Browse
+    url(r'^browse/$', views.BrowseView.as_view()),        
+    # Subscriptions
+    url(r'^subscriptions/$', views.SubscriptionsView.as_view()),    
+    # User
+    url(r'^user/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
+    url(r'^u/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),    
+    # Hub
+    url(r'^hub/(?P<hubslug>[^\.]+)/$', views.HubView.as_view()),
+    
+
+    
     
     # Rank comments
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/comments/(?P<rankby>[^\.]+)$',
@@ -38,7 +42,8 @@ urlpatterns = [
 
     
     
-    # Edit story
+    # CRUD Stories
+    url(r'^write/$', views.post_create_daily),
     url(r'^story/add$', views.post_create),
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.post_edit),    
     url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.post_delete),        
@@ -46,18 +51,9 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/delete$', views.post_delete),
     url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
-    url(r'^story/(?P<story>[^\.]+)/add$', views.post_create),
+    url(r'^story/(?P<story>[^\.]+)/add$', views.post_create), # add chapter
 
     url(r'^story/(?P<story>[^\.]+)/redditpost$', repost.post_to_reddit),    
-
-
-    
-    # Rss
-    # url(r'^feed/$', MainFeed()),            
-    url(r'^story/(?P<story>[^\.]+)/feed$', feeds.post_feed),        
-
-
-    url(r'^404/', views.page_404),
 
 
     # View story/chapter
@@ -67,53 +63,11 @@ urlpatterns = [
     url(r'^upvote/$', views.upvote),
     url(r'^unupvote/$', views.unupvote),
 
-    # List stories
-    # User
-    # url(r'^user/(?P<username>[^\.]+)/$', cbvs.UserprofileView.as_view()),
     
-    # Subscriptions
-    url(r'^user/(?P<username>[^\.]+)/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
-        {'filterby': 'user'}),    
-    url(r'^user/(?P<username>[^\.]+)/(?P<rankby>[^\.]+)/$', views.posts,
-        {'filterby': 'user'}),    
-    url(r'^user/(?P<username>[^\.]+)/$', views.posts,
-        {'filterby': 'user'}),    
+    # Other
+    url(r'^hubs/$', views.HubList.as_view()),
+    url(r'^series/$', views.SeriesList.as_view()),    
 
-    # Shorthand
-    url(r'^u/(?P<username>[^\.]+)$', views.posts,
-        {'filterby': 'user'}),    
-
-    
-    # Subscriptions
-    url(r'^subscriptions/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
-        {'filterby': 'subscriptions'}),    
-    url(r'^subscriptions/(?P<rankby>[^\.]+)/$', views.posts,
-        {'filterby': 'subscriptions'}),    
-    url(r'^subscriptions/$', views.posts,
-        {'filterby': 'subscriptions'}),    
-
-
-    url(r'^hubs/$', cbvs.HubList.as_view()),
-    url(r'^series/$', cbvs.SeriesList.as_view()),    
-    # By hub
-    url(r'^hub/(?P<hubslug>[^\.]+)/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts,
-        {'filterby': 'hub'}),    
-    url(r'^hub/(?P<hubslug>[^\.]+)/(?P<rankby>[^\.]+)/$', views.posts,
-        {'filterby': 'hub'}),    
-    url(r'^hub/(?P<hubslug>[^\.]+)/$', views.posts,
-        {'filterby': 'hub'}),
-
-
-    # No filter, just rank.
-    url(r'^stories/$', views.posts),
-    url(r'^stories/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.posts),    
-    url(r'^stories/(?P<rankby>[^\.]+)/$', views.posts),    
-    # url(r'^story/(?P<story>[^\.]+)/feed$', views.post_feed),
-
-    # url(r'^browse/$', cbvs.BrowseView.as_view()),        
-    url(r'^browse/$', views.browse),
-    url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
-    url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
 
     # Email
     url(r'^email/$', views.email),
@@ -126,11 +80,17 @@ urlpatterns = [
     # Editorial
     url(r'^prompt/$', editorial.prompt),
     url(r'^promptsrepost/$', editorial.prompts_repost),
+
+    # Browse old
+    # url(r'^browse/$', views.browse),
+    # url(r'^browse/(?P<rankby>[^\.]+)/(?P<timespan>[^\.]+)/$', views.browse),    
+    # url(r'^browse/(?P<rankby>[^\.]+)/$', views.browse),    
+    
 ]
 
 
 
-# TODO: replace with CBVs.
+# TODO: replace with Views.
 # from django.conf.urls import url
 
 # from .views import PostsView,  PostView, PostEdit, PostCreate
