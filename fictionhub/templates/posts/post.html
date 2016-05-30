@@ -139,12 +139,12 @@
 	{% endif %}
 	</div> -->
 	<!-- Button read next -->
-	{% if first_chapter and post.post_type != "challenge" %}
-	<a class="button small next-chapter"
-	   href="{{first_chapter.get_absolute_url}}">Read ></a>
-	{% elif next_chapter %}
+	{% if next_chapter %}
 	<a class="button small next-chapter"
 	   href="{{next_chapter.get_absolute_url}}">Next ></a> 
+	{% elif first_chapter and not chapter %}
+	<a class="button small next-chapter"
+	   href="{{first_chapter.get_absolute_url}}">Read ></a>
 	{% endif %}
 	<div class="clearfix"></div>	
 	<div style="width:100%; height: 20px"></div>	

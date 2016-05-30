@@ -39,6 +39,7 @@ from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from .utils import get_prompts, age, stats
 from .utils import count_words
+from .shortcuts import get_or_none
 # Forms
 from .forms import PostForm, PromptForm
 from comments.forms import CommentForm
@@ -324,33 +325,28 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
     story = get_object_or_404(Post, slug=story)
         
+    # Get first chapter if it exists
+    first_chapter = Post.objects.filter(parent=story, number=1).first()
 
-    try:
-        # doesn't work if 2 chapters #1
-        first_chapter = Post.objects.get(parent=story, number=1)
-        # first_chapter = story.children.filter(number=1)[0]
-    except:
-        first_chapter = []
-    
-    # Prev next
     if chapter:
         chapter = Post.objects.get(parent=story,slug=chapter)
-        first_chapter = []  # empty first chapter to show the right button in post template
-        try:
-            prev_chapter = Post.objects.get(parent=story, number=chapter.number-1)
-        except:
-            prev_chapter = []
-
-        try:
-            next_chapter = Post.objects.get(parent=story, number=chapter.number+1)
-        except:
-            next_chapter = []
+        prev_chapter = get_or_none(Post, parent=story, number=chapter.number-1)
+        next_chapter = get_or_none(Post, parent=story, number=chapter.number+1)
+        post = chapter
+        comments = get_comments(post=chapter)        
     else:
         chapter = []
         prev_chapter = []
         next_chapter = []
+        post = story        
+        comments = get_comments(post=story)
+
+    # Permalink to one comment
+    if comment_id:
+        comments = get_comments(post=story, comment_id=comment_id)
         
-    
+
+
     hubs = story.hubs.all()
 
     # Submit comments
@@ -359,46 +355,23 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
             submit_comment(request, chapter)
         else:
             submit_comment(request, story)            
-        form = CommentForm()
-    else:
-        form = CommentForm()
+    form = CommentForm()
 
-        
+
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         subscribed_to = request.user.subscribed_to.all()
         comments_upvoted = request.user.comments_upvoted.all()
-        comments_upvoted = []
     else:
         upvoted = []
         subscribed_to = []
+        comments_upvoted = []
         
-
-
-    # Get top lvl comments
-    if chapter:
-        comments = get_comments(post=chapter)
-    else:
-        comments = get_comments(post=story)
-    # Permalink to one comment
-    if comment_id:
-        comments = get_comments(post=story, comment_id=comment_id)
-
-
-    if chapter:
-        post = chapter
-    else:
-        post = story
-
 
     # Increment views counter. Do clever memcache laters.
     if not request.user.is_staff and request.user != post.author:
         post.views +=1
         post.save()
-
-    # Count words
-    post.wordcount = count_words(post)
-
         
     return render(request, 'posts/post.html',{
         'post': post,
