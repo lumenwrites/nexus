@@ -45,7 +45,8 @@ urlpatterns = [
     url(r'', include(quests_urls)),    
 
     url(r'^test/$', views.test),
-    url(r'^about/$', views.about),            
+    url(r'^about/$', views.about),
+    url(r'^join/$', views.home),                
     
     # Front page
     # url(r'^$', views.home),

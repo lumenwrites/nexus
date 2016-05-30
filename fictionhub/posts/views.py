@@ -157,6 +157,16 @@ class BrowseView(FilterMixin, ListView):
     context_object_name = 'posts'    
     template_name = "posts/browse.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        # Redirect to wst homepage
+        if request.META['HTTP_HOST'] == "writingstreak.io":
+            if request.user.is_authenticated():
+                return HttpResponseRedirect('/write/')        
+            return render(request, 'home-daily.html', {})
+        else:
+            return super(BrowseView, self).dispatch(request, *args, **kwargs)
+       
+        
     def get_queryset(self):
         qs = super(BrowseView, self).get_queryset()        
         qs = [p for p in qs if (p.published == True and
