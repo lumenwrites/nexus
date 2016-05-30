@@ -159,7 +159,7 @@ class BrowseView(FilterMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         # Redirect to wst homepage
-        if request.META['HTTP_HOST'] == "writingstreak.io":
+        if request.META['HTTP_HOST'] == "writingstreak.io" and request.path == "/":
             if request.user.is_authenticated():
                 return HttpResponseRedirect('/write/')        
             return render(request, 'home-daily.html', {})
