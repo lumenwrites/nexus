@@ -79,7 +79,7 @@
     </div> <!-- Close 9 columns -->
 
 
-      {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not challenge and not solohub and not userprofile %}
+      {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not solohub and not userprofile %}
 
     <div class="large-3 small-3 columns">
 
@@ -105,6 +105,21 @@
       </div> <!-- Close 4 columns -->
       
       {% endif %}
+
+    {% if userprofile.username == "rayalez" %}
+    <!-- 
+    <div class="large-3 small-3 columns">
+      <div class="rank-types" style="float:right;">
+	<a href="{{request.path}}?sorting=hot{{urlstring}}">
+	  <span>Articles</span>
+	</a>
+	<a href="{{request.path}}?sorting=hot{{urlstring}}">
+	  <span>Fiction</span>
+	</a>
+      </div>
+    </div>
+     -->
+    {% endif %}
 
       <div class="clearfix"></div>
 

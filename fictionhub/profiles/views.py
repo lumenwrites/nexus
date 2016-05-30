@@ -170,6 +170,8 @@ def register(request):
             user.daily = daily            
             if rational or daily:
                 user.approved = True
+            # All users approved by default
+            # user.approved = True                
             user.save()
 
             # log user in after signig up
