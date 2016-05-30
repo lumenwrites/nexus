@@ -56,7 +56,6 @@ from challenges.models import Prompt
 
 
 
-
 class FilterMixin(object):
     paginate_by = 15
     def get_queryset(self):
