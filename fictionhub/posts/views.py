@@ -190,7 +190,15 @@ class UserprofileView(FilterMixin, ListView):
         context = super(UserprofileView, self).get_context_data(**kwargs)
         userprofile = User.objects.get(username=self.kwargs['username'])        
         context['userprofile'] = userprofile
+
+        # Sorting
+        if self.request.GET.get('sorting'):
+            sorting = self.request.GET.get('sorting')
+        else:
+            sorting = "new"
+        context['sorting'] = sorting
         
+
         view_count = 0
         for post in userprofile.posts.all():
             view_count += post.views
@@ -574,11 +582,6 @@ def post_unpublish(request, story):
     post.save()
     return HttpResponseRedirect('/story/'+post.slug+'/edit')
 
-
-
-
-
-
     
     
 def email(request):
@@ -630,8 +633,6 @@ def sandbox(request):
 #     user.save()
 
 #     return HttpResponse()
-
-
 
 
 
