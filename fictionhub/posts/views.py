@@ -344,10 +344,6 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     # Permalink to one comment
     if comment_id:
         comments = get_comments(post=story, comment_id=comment_id)
-        
-
-
-    hubs = story.hubs.all()
 
     # Submit comments
     if request.method == 'POST':
@@ -357,7 +353,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
             submit_comment(request, story)            
     form = CommentForm()
 
-
+    # Footer info
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         subscribed_to = request.user.subscribed_to.all()
@@ -366,7 +362,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         upvoted = []
         subscribed_to = []
         comments_upvoted = []
-        
+
+    hubs = story.hubs.all()        
 
     # Increment views counter. Do clever memcache laters.
     if not request.user.is_staff and request.user != post.author:
@@ -389,64 +386,36 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     })
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
-    rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
-        rational = True
-    
     if request.method == 'POST':
         form = PostForm(request.POST, storyslug=story)
         if form.is_valid():
-            post = form.save(commit=False) # return post but don't save it to db just yet
+            # Create new story
+            post = form.save(commit=False)
             post.author = request.user
-            # self upvote
-            post.score += 1
+            post.score += 1 # self upvote
             post.post_type = "story"
-            post.rational = rational
+            post.rational = check_if_rational()
+            post.daily = check_if_daily()            
             if story:
+                # Create new chapter
                 post.parent = Post.objects.get(slug=story)
                 post.post_type = "chapter"
                 number_of_chapters = post.parent.children.count()
                 post.number = number_of_chapters + 1
-            if posttype == "post":
-                post.post_type = "post"                    
-            if posttype == "thread":
-                post.post_type = "post"
             post.save()
-            request.user.upvoted.add(post)            
+            request.user.upvoted.add(post)
+            
+            # Add hubs
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
-            if posttype == "thread":
-                post.hubs.add(Hub.objects.get(slug=hubslug))
-            for hub in hubs:
-                if hub.parent and hub.parent.hub_type != "folder":
-                    post.hubs.add(hub.parent)
-                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
-                        post.hubs.add(hub.parent.parent)
 
-            # Hacky way to 
-            # for hub in form.cleaned_data['hubs']:
-            #     if hub.parent:
-            #         post.hubs.add(hub.parent)
-            #         if hub.parent.parent:
-            #             post.hubs.add(hub.parent.parent)
             if story:
                 return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'/edit')
-            elif posttype == "post":
-                return HttpResponseRedirect('/post/'+post.slug+'/edit')
             else:
                 return HttpResponseRedirect('/story/'+post.slug+'/edit')
     else:
         form = PostForm()
         form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
-        # Hub.objects.filter(children=None).order_by('id')
-        if challenge:
-            challenge = Post.objects.get(slug=challenge)
-        else:
-            challenge =[]
-        if prompt:
-            prompt = Post.objects.get(slug=prompt)
-        else:
-            prompt =[]            
 
     if story:
         story = Post.objects.get(slug=story)
