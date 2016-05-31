@@ -73,6 +73,13 @@ def check_if_rational(request):
         rational = True
     return rational
 
+def check_if_fictionhub(request):
+    fictionhub = False
+    if request.META['HTTP_HOST'] == "fictionhub.io":
+        fictionhub = True
+    return fictionhub
+
+
 
 def check_if_daily(request):
     daily = False

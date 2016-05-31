@@ -36,7 +36,7 @@ from django.conf import settings
 # My own stuff
 # utility functions
 from comments.utils import get_comment_list, get_comments, submit_comment
-from .utils import rank_hot, rank_top, check_if_rational, check_if_daily
+from .utils import rank_hot, rank_top, check_if_rational, check_if_daily, check_if_fictionhub
 from .utils import get_prompts, age, stats
 from .utils import count_words
 from .shortcuts import get_or_none
@@ -412,7 +412,8 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             post.score += 1 # self upvote
             post.post_type = "story"
             post.rational = check_if_rational()
-            post.daily = check_if_daily()            
+            post.daily = check_if_daily()
+            post.fictionhub = check_if_fictionhub()                        
             if story:
                 # Create new chapter
                 post.parent = Post.objects.get(slug=story)

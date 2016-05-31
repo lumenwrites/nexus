@@ -31,7 +31,8 @@ class Post(models.Model):
 
     imported = models.BooleanField(default=False)
     rational = models.BooleanField(default=False)
-    daily = models.BooleanField(default=False)    
+    daily = models.BooleanField(default=False)
+    fictionhub = models.BooleanField(default=False)        
 
     parent = models.ForeignKey('Post', related_name="children",default=None, null=True, blank=True)
 
