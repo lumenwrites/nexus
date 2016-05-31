@@ -182,12 +182,13 @@ console.log("yes");
 		{% endif %}
 
 
+		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}						
 		<li>
 		  <a href="/hub/discussion/">
 		    <i class="fi-comments"></i>
 		    Discussion</a>
 		</li>
-
+		{% endif %}
 
 		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}						
 		<li>
