@@ -258,10 +258,8 @@ padding: 0px;
     	{% endfor %}
     </select>
 
-    {% if not userprofile %}
     <div id="search-hubs">
     </div>
-    {% endif %}
 
     <!-- 
     <div class="right">
@@ -276,9 +274,9 @@ padding: 0px;
     <!-- <input placeholder="Select Hub" type="text" name="query" class="left" value="{{query}}" -->
     <!-- 	   type="submit"></input><br/><br/> -->
 
-    {% if not userprofile %}
+
     {% include "hubs/hub-list-search.html" %}  
-    {% endif %}
+
 
 </div> <!-- End 4 columns -->
 
@@ -429,6 +427,7 @@ $(document).ready(function(){
     });
     
     // open sidebar if there are some hubs selected
+    {% if not userprofile %}
     if ($('select#hubs-multiselect').val()){
     	$(".posts").removeClass("large-12");
     	$(".posts").removeClass("small-12");  	      
@@ -437,7 +436,7 @@ $(document).ready(function(){
     	$(".sidebar").show();
     	$("#toggle-hubs").addClass("expanded");
     }
-
+    {% endif %}
     // Open sidebar by default
   {% if request.path = "/" and False %}    
     {% if not solohub %}
