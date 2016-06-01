@@ -258,10 +258,11 @@ padding: 0px;
     	{% endfor %}
     </select>
 
-
+    {% if not userprofile %}
     <div id="search-hubs">
-      
     </div>
+    {% endif %}
+
     <!-- 
     <div class="right">
     <span class="number-of-stories">&#8745;</span>
@@ -274,7 +275,10 @@ padding: 0px;
 
     <!-- <input placeholder="Select Hub" type="text" name="query" class="left" value="{{query}}" -->
     <!-- 	   type="submit"></input><br/><br/> -->
-  {% include "hubs/hub-list-search.html" %}  
+
+    {% if not userprofile %}
+    {% include "hubs/hub-list-search.html" %}  
+    {% endif %}
 
 </div> <!-- End 4 columns -->
 
