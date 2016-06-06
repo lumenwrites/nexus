@@ -36,9 +36,11 @@
 
 
   <div class="row">
-
+    {% if userprofile.username == "rayalez" %}
+    <div class="large-8 small-8 columns">
+    {% else %}
     <div class="large-9 small-9 columns">
-
+    {% endif %}
       <!-- Rank -->
       <div class="rank-types">
 	{% if not userprofile %}
@@ -107,7 +109,7 @@
       {% endif %}
 
     {% if userprofile.username == "rayalez" %}
-    <div class="large-3 small-3 columns">
+    <div class="large-4 small-4 columns">
       <div class="rank-types" style="float:right;">
 	<a href="{{request.path}}?hubs=science-fiction">
 	  <span>Fiction</span>
