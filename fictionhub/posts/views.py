@@ -411,9 +411,9 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             post.author = request.user
             post.score += 1 # self upvote
             post.post_type = "story"
-            post.rational = check_if_rational()
-            post.daily = check_if_daily()
-            post.fictionhub = check_if_fictionhub()                        
+            post.rational = check_if_rational(request)
+            post.daily = check_if_daily(request)
+            post.fictionhub = check_if_fictionhub(request)
             if story:
                 # Create new chapter
                 post.parent = Post.objects.get(slug=story)
