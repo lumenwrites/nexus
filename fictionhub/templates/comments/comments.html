@@ -120,6 +120,10 @@
       </div>
     </form>
     {% else %}
+    <a href="/login/?next={{request.path}}"
+       data-reveal-id="login-popup">Login</a> to leave a comment.
+    <!-- Not authenticated form -->
+    <!-- 
     <form action="{{post.get_absolute_url}}"
 	  method="post">{% csrf_token %}
       <div class="editor reply-non-registered">
@@ -127,17 +131,14 @@
 		  data-reveal-id="login-popup"></textarea>	
       </div>
     </form>
-    <!-- 
-    <a href="/login/?next={{request.path}}"
-       data-reveal-id="login-popup">Login</a> to leave a comment.
-    -->
-<script>
-$('document').ready(function(){
-    $('.reply-non-registered').click(function() {
-    $('#login-popup').foundation('reveal','open');
-    });
-});    
-</script>
+    <script>
+      $('document').ready(function(){
+      $('.reply-non-registered').focus(function() {
+      $('#login-popup').foundation('reveal','open');
+      });
+      });    
+    </script>
+     -->
     {% endif %}	<!-- end  user.is_authenticated -->
     <div class="clearfix"></div>	
     <div style="width:100%; height: 20px"></div>	
@@ -468,7 +469,8 @@ $(document).ready(function(){
 	});
     	simplemde.render();	
     })
-	
+
+				
 
     //Toggle reply
     $('.show-reply').click(function () {
