@@ -1,23 +1,23 @@
 <!-- Pagination -->
-{% if posts.has_previous or posts.has_next %}
+{% if is_paginated %}
 <div class="pagination panel" style="margin-top: 20px;
 				     padding: 10px;
 				     text-align: center;" >
   
   <span class="step-links">
-    {% if posts.has_previous %}
-    <a href="?page={{ posts.previous_page_number }}">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">
           <i class="fa fa-chevron-left left" style="margin: 5px 0;"></i>
     </a>
     {% endif %}
 
     <span class="current">
-      Page {{ posts.number }}
+      Page {{ page_obj.number }}
     <!-- of {{ posts.paginator.num_pages }} -->
     </span>
 
-    {% if posts.has_next %}
-    <a href="?page={{ posts.next_page_number }}">
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">
       <i class="fa fa-chevron-right right" style="margin: 5px 0;"></i>    
     </a>
     {% endif %}
