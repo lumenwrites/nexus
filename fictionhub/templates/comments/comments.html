@@ -81,29 +81,63 @@
 	  </style>
 
 
+    <style>
+      .CodeMirror, .CodeMirror-scroll {
+      height: 100px;            
+      min-height: 100px!important;      
+      }
+//
+      .editor-statusbar {
+      display:none;
+      }
+//      
+      .editor-toolbar {
+      display:none;      
+      }
+    </style>	  
+
 <!-- Comments -->
 <div class="row comments">
   <div class="large-12 columns">
-    <h4 id="comments"> Comments </h4>
+    <!-- <h4 id="comments"> Comments </h4> -->
     {% if user.is_authenticated %}      
     <form action="{{post.get_absolute_url}}"
 	  method="post">{% csrf_token %}
       <div class="editor">
-	{{form.body}}
+	<textarea style="height:100px;" name="body" placeholder="Write a comment..."></textarea>	
+	<!-- {{form.body}} -->
       </div>
       <div style="float:right;">
-	<br/>
+	<!-- <br/> -->
 	<button class="button small right" type="submit"
 		style="background-color: #3D455B;
 		       padding: 16px 28px;
-		       border-radius:0;">Submit</button>
+		       border-radius:0;
+		       margin-top: 10px;
+		       padding: 10px 20px;">Submit</button>
 	<!-- <div class="right comment-type">{{form.comment_type}}</div> -->
 	<!-- <div class="right comment-type">{{form.rating}}</div>	 -->	
       </div>
     </form>
     {% else %}
+    <form action="{{post.get_absolute_url}}"
+	  method="post">{% csrf_token %}
+      <div class="editor reply-non-registered">
+	<textarea style="height:100px;" name="body" placeholder="Write a comment..."
+		  data-reveal-id="login-popup"></textarea>	
+      </div>
+    </form>
+    <!-- 
     <a href="/login/?next={{request.path}}"
        data-reveal-id="login-popup">Login</a> to leave a comment.
+    -->
+<script>
+$('document').ready(function(){
+    $('.reply-non-registered').click(function() {
+    $('#login-popup').foundation('reveal','open');
+    });
+});    
+</script>
     {% endif %}	<!-- end  user.is_authenticated -->
     <div class="clearfix"></div>	
     <div style="width:100%; height: 20px"></div>	
