@@ -1,5 +1,7 @@
 from django.core.mail import send_mail # for email
+from django.core.mail import EmailMultiAlternatives
 from notifications.models import Message
+
 
 def send_comment_email(from_username,to_email,story_url,comment_body):
     if comment.post.author.email_comments:
@@ -26,7 +28,6 @@ def send_notification_email(message):
         website_name = "rationalfiction"
     else:
         website_name = "fictionhub"
-
 
 
     if message.message_type == "upvote" and to_user.email_upvotes:

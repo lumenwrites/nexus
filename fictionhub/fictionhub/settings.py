@@ -162,17 +162,18 @@ PAGINATION_NUMBER_OF_PAGES = 25
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Host for sending e-mail.
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.mailgun.com'
 
 # Port for sending e-mail.
 EMAIL_PORT = 587
 
 # Optional SMTP authentication information for EMAIL_HOST.
-EMAIL_HOST_USER = 'raymestalez@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ["PASS"]
+EMAIL_HOST_USER = 'postmaster@mg.fictionhub.io'
+EMAIL_HOST_PASSWORD = os.environ["MAILGUN_PASS"]
 EMAIL_USE_TLS = True
 
 SERVER_EMAIL = 'raymestalez@gmail.com'
+DEFAULT_FROM_EMAIL = 'raymestalez@gmail.com'
 
 
 # Admins
