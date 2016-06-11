@@ -78,13 +78,13 @@ class Post(models.Model):
             self.pub_date = datetime.datetime.now()
         # self.modified = datetime.datetime.today()
 
-        if slug:
-            # If I'm passing a slug - just use it.
-            self.slug = slug            
-        else:
-            # If not - slugify title
-            self.slug = orig = slugify(self.title)
-            if self.pk is None:            
+        if self.pk is None:            
+            if slug:
+                # If I'm passing a slug - just use it.
+                self.slug = slug            
+            else:
+                # If not - slugify title
+                self.slug = orig = slugify(self.title)
                 # Come up with unique id
                 while True:
                     # If the post is unique now - it's done, if not - come up with another one
@@ -94,7 +94,7 @@ class Post(models.Model):
                     uniqueid = uuid.uuid1().hex[:5]
                     self.slug = orig + "-" + str(uniqueid)
                     
-                    
+                
 
         try:
             if self.post_type == "chapter" and self.parent:
