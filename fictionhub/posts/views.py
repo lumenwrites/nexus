@@ -420,6 +420,7 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
                 post.post_type = "chapter"
                 number_of_chapters = post.parent.children.count()
                 post.number = number_of_chapters + 1
+
             post.save()
             request.user.upvoted.add(post)
             
@@ -485,7 +486,12 @@ def post_edit(request, story, chapter=""):
             if chapter:
                 post.post_type = "chapter"
                 post.parent = story
-            post.save()
+
+            if chapter:
+                post.save(slug=chapter.slug)
+            else:
+                post.save(slug=story.slug)                
+
             post.hubs = []
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()

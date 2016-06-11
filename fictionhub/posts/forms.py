@@ -15,36 +15,6 @@ class PostForm(ModelForm):
         cleaned_data = super(PostForm, self).clean()
         title = cleaned_data.get("title")
         slug = slugify(title)
-        
-        try:
-            # if story with this title already exists
-            story_exists = Post.objects.filter(slug=slug, post_type="story").exists()
-        except:
-            story_exists = False
-
-        try:
-            # get story with a slug I've passed
-            parent = Post.objects.get(slug=self.storyslug)
-            # if chapter with this title already exists in this story
-            chapter_exists = Post.objects.filter(parent=parent, slug=slug).exists() 
-        except:
-            chapter_exists = False
-
-        try:
-            # but if I haven't changed the title it's fine
-            if self.instance.slug == slug:
-                chapter_exists = False
-                story_exists = False
-        except:
-            pass
-
-        
-        if story_exists:
-            raise forms.ValidationError("A story with this title already exists!")
-        elif chapter_exists:
-            raise forms.ValidationError("A chapter with this title already exists!")            
-        else:
-            return self.cleaned_data
 
         return self.cleaned_data        
 

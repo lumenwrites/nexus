@@ -1,6 +1,7 @@
 import datetime
 import itertools
 import re
+import uuid
 from string import punctuation
 
 from django.utils.timezone import utc
@@ -77,23 +78,22 @@ class Post(models.Model):
             self.pub_date = datetime.datetime.now()
         # self.modified = datetime.datetime.today()
 
-
-        if (self.imported == True or self.post_type == "prompt") and slug != "":
+        if slug:
+            # If I'm passing a slug - just use it.
             self.slug = slug            
         else:
-            self.slug = slugify(self.title)
-
-        # if slug != "":
-        #     self.slug = slug            
-        # else:
-        # if self.pk is None:
-        #     self.slug = orig = slugify(self.title)
-        #     # unique_slugify(self, orig) 
-        #     for x in itertools.count(1):
-        #         if not Post.objects.filter(slug=self.slug).exists():
-        #             break
-        #         self.slug = '%s-%d' % (orig, x)            
-            
+            # If not - slugify title
+            self.slug = orig = slugify(self.title)
+            # Come up with unique id
+            while True:
+                # If the post is unique now - it's done, if not - come up with another one
+                if not Post.objects.filter(slug=self.slug).exists():
+                    break
+                # Generate random id
+                uniqueid = uuid.uuid1().hex[:5]
+                self.slug = orig + "-" + str(uniqueid)
+                
+                
 
         try:
             if self.post_type == "chapter" and self.parent:
