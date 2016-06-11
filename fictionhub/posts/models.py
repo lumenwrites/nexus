@@ -84,16 +84,17 @@ class Post(models.Model):
         else:
             # If not - slugify title
             self.slug = orig = slugify(self.title)
-            # Come up with unique id
-            # while True:
-            #     # If the post is unique now - it's done, if not - come up with another one
-            #     if not Post.objects.filter(slug=self.slug).exists():
-            #         break
-            #     # Generate random id
-            #     uniqueid = uuid.uuid1().hex[:5]
-            #     self.slug = orig + "-" + str(uniqueid)
-                
-                
+            if self.pk is None:            
+                # Come up with unique id
+                while True:
+                    # If the post is unique now - it's done, if not - come up with another one
+                    if not Post.objects.filter(slug=self.slug).exists():
+                        break
+                    # Generate random id
+                    uniqueid = uuid.uuid1().hex[:5]
+                    self.slug = orig + "-" + str(uniqueid)
+                    
+                    
 
         try:
             if self.post_type == "chapter" and self.parent:
