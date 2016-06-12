@@ -1,6 +1,31 @@
 from django.core.mail import send_mail # for email
-from django.core.mail import EmailMultiAlternatives
 from notifications.models import Message
+
+from django.core.mail import EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import render_to_string
+
+
+def send_email(subject, body, to=['raymestalez@gmail.com']):
+    context = Context({
+        'body':body
+    })    
+
+    text_content = render_to_string('email/email.txt', context)
+    email = EmailMultiAlternatives(subject, text_content)
+
+    # html
+    # html_content = render_to_string('email/email.html', context)
+    # email.attach_alternative(html_content, "text/html")
+    
+    email.to = to
+    email.send()
+
+
+    # message.email_sent = True
+    # message.save()
+
+                
 
 
 def send_comment_email(from_username,to_email,story_url,comment_body):

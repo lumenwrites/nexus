@@ -81,6 +81,7 @@ class Post(models.Model):
         if self.pk is None:            
             if slug:
                 # If I'm passing a slug - just use it.
+                # As it stands - don't need it, I'm never editing it once created.
                 self.slug = slug            
             else:
                 # If not - slugify title
