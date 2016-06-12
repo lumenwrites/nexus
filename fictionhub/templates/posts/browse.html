@@ -119,18 +119,18 @@ padding: 0px;
       <header class="post-header">
 	<a href="{{post.get_absolute_url}}">
 	  <h1 class="left"> {{post.title}} </h1>
-
-	  <!-- 
-      	  <a href="/hub/{{hub.slug}}" id="{{hub.slug}}">
-	    <i class="fa fa-external-link"
-	       style="margin: 10px;
-		      font-size: 30px;
-		          //background: #DADADA;
-			  //padding: 10px;
-			  //border-radius: 4px;
-			  float:right;"
-	       aria-hidden="true"></i></a> -->
 	</a>
+	{% if userprofile and user == post.author or user.is_staff %}
+	<a class="edit-post" href="{{post.get_absolute_url}}/edit" style="margin-top: 18px;
+									  margin-left: 4px;">
+	  <i class="fa fa-pencil"></i></a>
+	{% endif %}
+	
+	{% if not post.published %}
+	<span class="hub-tag right margins-side-20" style="position:relative;top:14px;">Not published</span>  
+	{% endif %}
+	
+	
 	<hr/>
 	<div class="clearfix"></div>
       </header>
