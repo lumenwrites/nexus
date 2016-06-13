@@ -192,6 +192,10 @@ class UserprofileView(FilterMixin, ListView):
         # Filter by user
         userprofile = User.objects.get(username=self.kwargs['username'])        
         qs = [p for p in qs if (p.author==userprofile)]
+
+        # Show only published to everyone else
+        if self.request.user != userprofile:
+            qs = [p for p in qs if (p.published==True)]            
         
         return qs
 
