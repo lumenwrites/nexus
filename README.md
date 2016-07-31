@@ -90,6 +90,4 @@ The most basic features are done, now - refactoring and cleaning the code accord
     - What else?
 -->
 
-&nbsp;
-
 <!-- - [Maybe](https://gist.github.com/raymestalez/8252dfa470857c3c6764) -->
