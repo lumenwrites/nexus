@@ -5,9 +5,10 @@
 
 http://fictionhub.io/
 
-My goal is to create the perfect place for people to share stories they write, discuss fiction/fanfiction, and help each other to get better at writing.
+Fictionhub is the perfect place to publish, discover and discuss awesome fiction.
 
-Project is in active development. This is a very early version, not even alpha yet, just a prototype.
+Write your stories with a beautiful editor, share them with our community, receive feedback, discover great fiction, and help each other to get better at writing.
+
 
 ![fictionhub](https://raw.githubusercontent.com/raymestalez/fictionhub/master/fictionhub/static/img/fictionhub3_small.png)
 
