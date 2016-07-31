@@ -1,7 +1,7 @@
 # Fictionhub
 
 
-[![Join the chat at https://gitter.im/raymestalez/fictionhub](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raymestalez/fictionhub?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<!-- [![Join the chat at https://gitter.im/raymestalez/fictionhub](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raymestalez/fictionhub?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) -->
 
 http://fictionhub.io/
 
@@ -9,7 +9,7 @@ My goal is to create the perfect place for people to share stories they write, d
 
 Project is in active development. This is a very early version, not even alpha yet, just a prototype.
 
-![fictionhub](https://raw.githubusercontent.com/raymestalez/fictionhub/master/fictionhub/static/img/fictionhub.png)
+![fictionhub](https://raw.githubusercontent.com/raymestalez/fictionhub/master/fictionhub/static/img/fictionhub3_small.png)
 
 <!-- # To Contributors -->
 <!-- If you want to contribute to this project and make it more awesome, here's what you can do: -->
@@ -18,7 +18,7 @@ Project is in active development. This is a very early version, not even alpha y
 <!--   At this point I'm actively refactoring code, so it will be hard to make a meaningful contribution on the backend, but you can use the website and write me your thoughts about it or suggest new features to raymestalez@gmail.com - I will be very grateful =) -->
 <!-- - If you are a javascript person - consider forking [this editor](https://github.com/lepture/editor) and figuring out how to make it work well on mobile. -->
 
-
+<!-- 
 # To-Do
 
 [Major cleanup](https://gist.github.com/raymestalez/4710ae5b406bf1216199).  
@@ -74,7 +74,7 @@ The most basic features are done, now - refactoring and cleaning the code accord
   - When there's too much hubs - search/filter hubs in the sidebar.
 - Recommendation engine.
     - top-rated stories by all users that gave 5 stars to a particular story?
-
+ -->
 <!--
 - Store
   Brainstorm and discuss with community,
@@ -91,4 +91,4 @@ The most basic features are done, now - refactoring and cleaning the code accord
 
 &nbsp;
 
-- [Maybe](https://gist.github.com/raymestalez/8252dfa470857c3c6764)
+<!-- - [Maybe](https://gist.github.com/raymestalez/8252dfa470857c3c6764) -->
