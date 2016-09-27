@@ -10,7 +10,7 @@
     {% block title %} 
     {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
     rationalfiction     
-    {% elif request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io" or request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %} 
+    {% elif request.META.HTTP_HOST == "writingstreak.io" %} 
     Writing Streak
     {% else %}	        
     fictionhub 
@@ -90,7 +90,7 @@
       <!-- Logo -->      
         <div class="large-6 small-6 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "daily.fictionhub.io" or  request.META.HTTP_HOST == "streak.fictionhub.io"  or  request.META.HTTP_HOST == "writingstreak.io" or request.META.HTTP_HOST == "localhost:8000" %}
+	    {% if request.META.HTTP_HOST == "writingstreak.io" %}
 	    <!-- <img src="{% static "/static/img/logo_128x128.png" %}"/> -->
 	    <span style="font-weight:100;">writing</span><span style="font-weight:400;">streak</span><span class="beta" style="font-size:12px;">[beta]</span>
 	    {% elif request.META.HTTP_HOST == "rationalfiction.io"  %}
@@ -185,7 +185,7 @@ margin-left: 5px;
 		{% endif %}
 
 
-		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}				
+		{% if request.META.HTTP_HOST == "writingstreak.io" %}				
 		<li>
 		  <a href="/users/top/">
 		    <i class="fi-torsos"></i>
@@ -194,7 +194,7 @@ margin-left: 5px;
 		{% endif %}
 
 
-		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}						
+		{% if request.META.HTTP_HOST == "writingstreak.io" %}						
 		<li>
 		  <a href="/hub/discussion/">
 		    <i class="fi-comments"></i>
@@ -202,7 +202,7 @@ margin-left: 5px;
 		</li>
 		{% endif %}
 
-		{% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}						
+		{% if  request.META.HTTP_HOST == "writingstreak.io" %}						
 		<li>
 		  <a href="/about/">
 		    <i class="fa fa-info-circle"></i>
@@ -232,7 +232,7 @@ margin-left: 5px;
 	      
 
 	      <!-- Write -->
-	      {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "writingstreak.io" %}
+	      {% if  request.META.HTTP_HOST == "writingstreak.io" %}
 	      <a href="/write/">Write</a>
 	      <!-- <i class="fa fa-pencil-square-o"></i> -->
 	      {% else %}
@@ -345,8 +345,10 @@ margin-left: 5px;
 	    <a href="/login/?next={{request.path}}"
 	       data-reveal-id="login-popup"> Login </a>
 	    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "fictionhub.io"  %}
+	    <!-- 
 	    <a href="/login/?next=/story/add"
 	       data-reveal-id="login-popup"> Submit Story </a>
+	     -->
 	    {% endif %}	       
 
 	    <a href="/login/?next={{request.path}}"
