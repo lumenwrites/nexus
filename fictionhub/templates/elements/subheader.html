@@ -15,13 +15,18 @@
   margin-top: 20px!important;
   }
   .subheader {
-      padding: 40px 10px!important;
+  padding: 40px 10px!important
+  padding: 40px 0px 20px 0 !important;  ;
   }
   .post-footer {
   display:none;
   }
   article {
   padding-bottom: 0!important;
+  }
+  .tagline a {
+  color: white;
+  text-decoration: underline;
   }
 </style>
 {% endif %}
@@ -336,7 +341,7 @@
       <div class="tagline">
         <div class="row">
           <div class="large-12 small-12 columns" style="color:#fefefe;">
-    	{{userprofile.about }}
+    	{{userprofile.about | safe }}
           </div>
         </div>
       </div>
