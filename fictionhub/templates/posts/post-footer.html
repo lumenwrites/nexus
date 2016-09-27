@@ -111,21 +111,26 @@
 		     Subscribed
 		   </a>
 	      {% endif %}	
+
+	      <!-- RSS -->
+              <a class="button small rss-icon"
+		 href="/user/{{post.author.username}}/feed/atom/">
+	      <i class="fi-rss large"></i></a>
+
 	  {% else %}	   
-              <a class="small button" data-open="login-popup" data-reveal-id="login-popup">
+	      <!-- If not logged in. -->
+              <a class="small button" data-open="usersub-popup" data-reveal-id="usersub-popup">
 		Subscribe</a>
 	      <!-- href="/login/?next={{request.path}}" -->
 	  {% endif %}	   
       {% else %}
+	      <!-- If author -->
 	      <!-- Nothing -->
 	      <a class="small button disabled" >
 		Subscribe
 	      </a>
       {% endif %}
 
-              <a class="button small rss-icon"
-		 href="/user/{{post.author.username}}/feed/atom/">
-	      <i class="fi-rss large"></i></a>
         </div> <!-- End Author -->
 	<div class="clearfix"></div>
 

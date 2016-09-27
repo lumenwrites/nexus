@@ -198,7 +198,11 @@
 
 	<div class="left">
 	  <a href="/user/{{userprofile.username}}">
+	    {% if userprofile.username == "alex_aka_jj" %}
+	    <h1 class="username"> Alexey Berezin </h1>
+	    {% else %}	    
 	    <h1 class="username"> {{userprofile.username}} </h1>
+	    {% endif %}	    	    
 	  </a>
 	  
 	  <div class="stats">    
@@ -241,7 +245,7 @@
 		     Subscribed</a>
 	      {% endif %}	
 	  {% else %}	   
-              <a class="button small right subscribers-button" data-open="login-popup" data-reveal-id="login-popup">
+              <a class="button small right subscribers-button" data-open="usersub-popup" data-reveal-id="usersub-popup">
 		Subscribe</a>
               <!-- <a class="button" -->
 	      <!-- 	 href="/login/?next={{request.path}}"> -->

@@ -464,8 +464,14 @@ margin-left: 5px;
 	  {{userprofile.username}}
 	  {% endif %}	  
 	</h2>
-    	<form method="post" action="/authenticate/?next={{request.path}}">{% csrf_token %}
-    	  <input id="id_username" maxlength="254" name="username" type="text"
+    	<form method="post"
+	  {% if post.author %}
+	      action="/user/{{post.author}}/email_subscribe?next={{request.path}}"
+	  {% else %}
+	      action="/user/{{userprofile.username}}/email_subscribe?next={{request.path}}"
+	  {% endif %}	  
+	      >{% csrf_token %}
+    	  <input id="email" maxlength="254" name="email" type="text"
     		 placeholder="email"
 		 style="float: left;
 			width: calc(100% - 200px);
@@ -484,9 +490,13 @@ margin-left: 5px;
 	   {% endif %}	  	   
 	   style="float: right;
 		  height: 50px;
-		  width: 50px;">
+		  width: 50px;
+		  border-radius: 0;
+		  padding: 5px 11px!important;">
 	  <i class="fi-rss large" style="float: right;
-					 padding: 5px 2px;"></i>
+					 padding: 0;
+					 color:white;
+					 line-height: 40px;"></i>
 	</a>
 	
       </div>

@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-from .models import User
+from .models import User, Subscriber
 from .forms import RegistrationForm, UserForm
 
 from posts.models import Post
@@ -225,3 +225,26 @@ def stats(request):
         'days':days,
         'test':test        
     })
+
+
+# Email subscribe
+def email_subscribe(request, username):
+    userprofile = User.objects.get(username=username)
+    
+    if request.method == 'POST':    
+        email = request.POST.get('email')
+        email_subscriber, created = Subscriber.objects.get_or_create(email=email)
+        
+        email_subscriber.subscribed_to.add(userprofile)
+        email_subscriber.save()
+        # Notification
+        # message = Message(from_user=user,
+        #                   to_user=userprofile,
+        #                   message_type="subscriber")
+        # message.save()
+        # userprofile.new_notifications = True
+        # userprofile.save()
+        
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))         

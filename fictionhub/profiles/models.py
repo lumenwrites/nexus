@@ -42,7 +42,7 @@ class User(AbstractUser):
     verbose_name='Send me email notifications when someone replies to my story or comment')
     email_messages = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone sends me a personal message.')
-    email_subscribers = models.BooleanField(default=True,
+    email_subscriber_notifications = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone subscribes to my stories.')
     email_upvotes = models.BooleanField(default=True,
     verbose_name='Send me email notifications when someone upvotes my story.')
@@ -58,3 +58,11 @@ class User(AbstractUser):
     # @permalink
     # def get_absolute_url(self):
     #     return ('view_post', None, {'slug': self.slug })        
+
+
+class Subscriber(models.Model):
+    email = models.CharField(max_length=64, blank=True)    
+    subscribed_to = models.ManyToManyField('User', related_name="email_subscribers", blank=True)
+
+    def __str__(self):
+        return self.email
