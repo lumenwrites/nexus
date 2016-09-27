@@ -226,6 +226,11 @@
       <div class="large-6 small-6 columns">
 	<div class="buttons">
 
+
+	  <!-- Subscribe button -->
+      {% if not user == userprofile %}
+          {% if user.is_authenticated %}
+
 	  <!-- RSS icon -->
 
 	  <span class="button small right subscribers-button rss-icon"
@@ -235,9 +240,6 @@
 	  </span>
 
 
-	  <!-- Subscribe button -->
-      {% if not user == userprofile %}
-          {% if user.is_authenticated %}
               {% if user not in userprofile.subscribers.all %}	
                    <a class="button small right subscribers-button"
 		      href="/user/{{userprofile.username}}/subscribe">
