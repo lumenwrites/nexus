@@ -328,8 +328,7 @@
   {% if request.META.HTTP_HOST == "writingstreak.io"  %}	
   <div class="tagline">
     <div class="row">
-      <div class="large-12 small-12 columns" style="color:#fefefe;
-						    padding: 5px;">
+      <div class="large-12 small-12 columns" style="color:#fefefe;">
 	{% include "elements/stats.html" %}
 	<br/>
 	<style>
@@ -348,8 +347,9 @@
       {% if userprofile.about %}
       <div class="tagline">
         <div class="row">
-          <div class="large-12 small-12 columns" style="color:#fefefe;">
-    	{{userprofile.about | safe }}
+          <div class="large-12 small-12 columns" style="color:#fefefe;
+							padding: 0 5px;">
+    	    {{userprofile.about | safe }}
           </div>
         </div>
       </div>
