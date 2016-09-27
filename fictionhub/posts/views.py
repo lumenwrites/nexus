@@ -390,7 +390,10 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
     if not request.user.is_staff and request.user != post.author:
         post.views +=1
         post.save()
-        
+
+    # Just for private website subheader
+    userprofile = post.author
+
     return render(request, 'posts/post.html',{
         'post': post,
         'first_chapter':first_chapter,
@@ -404,6 +407,7 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
         'form': form,
         'hubs':hubs,
         'subscribed_to':subscribed_to,
+        'userprofile':userprofile,        
     })
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):

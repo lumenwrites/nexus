@@ -27,6 +27,20 @@
 //  border-radius: 3px;  
 }  
 </style>
+
+
+{% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" %}
+{% include "elements/subheader.html" %}
+<style>
+  article {
+  
+  margin-top: 20px;
+  }
+</style>
+{% endif %}
+
+
+
   
 
 
@@ -151,8 +165,50 @@
       </article>
       
 
+<!-- Personal footer -->
+{% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" and not user.is_authenticated %}
+<div class="panel" style="padding:10px;">
+  <div class="left" style="padding: 6px 0;">
+  Liked this story? Subscribe to the updates!
+  </div>
+
+  <!-- RSS icon -->
+        <a class="button small rss-icon right"
+	   href="/user/{{post.author.username}}/feed/atom/"
+	   style="height: 40px;
+		  width: 40px;
+		  border-radius: 0;
+		  padding: 0;
+		  margin-left: 5px;">
+	  <i class="fi-rss large" style="padding: 0;
+					 color:white;"></i>
+	</a>
+
+	<!-- Email Subscribe -->
+  <div class="right">
+    	<form method="post"
+	      action="/user/{{post.author}}/email_subscribe?next={{request.path}}"
+	      >{% csrf_token %}
+    	  <input id="email" maxlength="254" name="email" type="text"
+    		 placeholder="email"
+		 style="float: left;
+			width: 200px;
+			height: 40px;
+			margin:0;">
+    	  <input type="submit" class="button small" value="Subscribe"
+		 style="padding: 10px 20px;
+			height: 40px;			
+			float:left;">
+    	</form>
+  </div>
+
+	<div class="clearfix"></div>
+</div>
+{% else %}
 <!-- Follow -->
 {% include "posts/post-footer.html" %}
+
+{% endif %}
 
 <!-- Comments -->
 {% include "comments/comments.html" %}
