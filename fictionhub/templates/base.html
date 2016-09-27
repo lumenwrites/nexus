@@ -37,6 +37,7 @@
 
   {% if user.enable_dark_interface %}  
   <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" />
+  <link rel="stylesheet" href="{% static "/static/css/forum.css" %}" />  
   {% endif %}  
   
 
@@ -121,13 +122,24 @@ top: 54px!important;
 .f-dropdown.drop-left:after{
 display:none;
 }
+
+#mainMenu a {
+text-transform:none;
+margin-left: 5px;	      
+}
+
+
+#mainMenu a {
+text-transform:none;
+margin-left: 5px;	      
+}
+
+#mainMenu a:hover {
+    color: #f76300;
+}
+
+
 </style>
-<script>
-$("#webcomics").click(function(){
-console.log("yes");
-})		
-  
-</script>
         </div>
 
 	<!-- Main Menu -->
@@ -331,7 +343,20 @@ console.log("yes");
 	  <ul style="margin-right:0;">
 	    <a href="/browse/"> Browse </a>
 	    <a href="/login/?next={{request.path}}"
-	       data-reveal-id="login-popup"> Login/Signup </a>
+	       data-reveal-id="login-popup"> Login </a>
+	    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "fictionhub.io"  %}
+	    <a href="/login/?next=/story/add"
+	       data-reveal-id="login-popup"> Submit Story </a>
+	    {% endif %}	       
+
+	    <a href="/login/?next={{request.path}}"
+	       data-reveal-id="sub-popup"
+	       class="small button"
+	       style="padding: 10px 20px;
+		      color: white;
+		      border-radius: 0;">
+	      Subscribe </a>
+
 	  </ul>
 	  
 	  {% endif %}
@@ -347,18 +372,6 @@ console.log("yes");
 
   <div class="reveal reveal-modal" id="login-popup" data-reveal
        aria-hidden="true" role="dialog">
-
-    <!-- <div class="row"> -->
-    <!--   <div class="large-12 columns"> -->
-    <!-- 	<h2> Subscribe via email </h2> -->
-    <!-- 	<form method="post" action="/authenticate/?next={{request.path}}">{% csrf_token %} -->
-    <!-- 	  <input id="id_username" maxlength="254" name="username" type="text" -->
-    <!-- 		 placeholder="email"> -->
-    <!-- 	  <input type="submit" class="button small" value="Subscribe"> -->
-    <!-- 	</form> -->
-    <!-- 	<hr/> -->
-    <!--   </div> -->
-    <!-- </div> -->
     
   <div class="row">
     <div class="large-5 columns">
@@ -395,6 +408,93 @@ console.log("yes");
 </div>
 
 
+  <!-- Subscribe Popup -->
+  <div class="reveal reveal-modal" id="sub-popup" data-reveal
+       aria-hidden="true" role="dialog">
+
+    <div class="row">
+      <div class="large-12 columns">
+    	<h2> Subscribe to the weekly digest of our best stories! </h2>
+	<!-- 
+    	<form method="post" action="/authenticate/?next={{request.path}}">{% csrf_token %}
+    	  <input id="id_username" maxlength="254" name="username" type="text"
+    		 placeholder="email"
+		 style="float: left;
+			width: calc(100% - 200px);
+			height: 50px;">
+    	  <input type="submit" class="button small" value="Subscribe"
+		 style="padding: 16px 32px;
+			height: 50px;">
+    	</form>
+	-->
+
+	<!-- Begin MailChimp Signup Form -->
+	<div id="mc_embed_signup">
+	  <form action="//medium.us7.list-manage.com/subscribe/post?u=0f23c7984541d915d1108a16e&amp;id=44874c7f19" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+	    <!-- Email -->
+	    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL"
+	   	   style="float: left;
+			  width: calc(100% - 200px);
+			  height: 50px;">
+	    <!-- Submit -->
+	    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button small"		 style="padding: 16px 32px; height: 50px;" />
+	    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+	    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_0f23c7984541d915d1108a16e_44874c7f19" tabindex="-1" value=""></div>
+	  </form>
+	</div>
+	<!--End mc_embed_signup-->
+
+      </div>
+    </div>
+    
+  </div>
+</div>
+  
+
+  <!-- User subscribe -->
+  <div class="reveal reveal-modal" id="usersub-popup" data-reveal
+       aria-hidden="true" role="dialog">
+
+    <div class="row">
+      <div class="large-12 columns">
+    	<h2> Subscribe to the updates from
+	  {% if post.author %}
+	  {{post.author}}
+	  {% else %}
+	  {{userprofile.username}}
+	  {% endif %}	  
+	</h2>
+    	<form method="post" action="/authenticate/?next={{request.path}}">{% csrf_token %}
+    	  <input id="id_username" maxlength="254" name="username" type="text"
+    		 placeholder="email"
+		 style="float: left;
+			width: calc(100% - 200px);
+			height: 50px;">
+    	  <input type="submit" class="button small" value="Subscribe"
+		 style="padding: 16px 32px;
+			height: 50px;
+			float:left;">
+    	</form>
+
+        <a class="button small rss-icon"
+	   {% if post.author %}
+	   href="/user/{{post.author.username}}/feed/atom/"
+	   {% else %}
+	   href="/user/{{userprofile.username}}/feed/atom/"	   
+	   {% endif %}	  	   
+	   style="float: right;
+		  height: 50px;
+		  width: 50px;">
+	  <i class="fi-rss large" style="float: right;
+					 padding: 5px 2px;"></i>
+	</a>
+	
+      </div>
+    </div>
+        
+  </div>
+</div>
+  
   <footer class="main-footer">
   </footer>
 
