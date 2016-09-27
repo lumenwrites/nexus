@@ -167,7 +167,10 @@
 
 <!-- Personal footer -->
 {% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" and not user.is_authenticated %}
-<div class="panel" style="padding:10px;">
+<div class="panel" style="padding:10px;
+			  padding: 13px;
+			  background: rgba(240, 249, 255, 0.32);
+			  background: #F2F2F2;">
   <div class="left" style="padding: 6px 0;">
   Liked this story? Subscribe to the updates!
   </div>
@@ -190,11 +193,13 @@
 	      action="/user/{{post.author}}/email_subscribe?next={{request.path}}"
 	      >{% csrf_token %}
     	  <input id="email" maxlength="254" name="email" type="text"
-    		 placeholder="email"
+    		 placeholder="Enter your email"
 		 style="float: left;
 			width: 200px;
 			height: 40px;
-			margin:0;">
+			margin:0;
+			/*border: 1px solid white;
+			box-shadow: none;*/">
     	  <input type="submit" class="button small" value="Subscribe"
 		 style="padding: 10px 20px;
 			height: 40px;			
