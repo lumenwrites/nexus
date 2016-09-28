@@ -251,17 +251,22 @@
 	  background-color:rgba(10, 10, 10, 0.75);
 	  }
 	</style>
+	{% endif %}
 
-	{% elif userprofile.username == "alex_aka_jj" %}	
+	{% if userprofile.username == "alex_aka_jj" %}	
 	<img src="{% static "/static/img/alexey_berezin_avatar.jpg" %}"
 	     class="avatar"/>
 	<style>
-	  .subheader-bg {
-	  background: url(https://cdn-images-1.medium.com/max/2000/1*ov4IxUOXMBJCfVTT4UpFtA.png)!important;
+	  .subheader {
+	  background: url(/static/img/alexey_berezin_bg.jpg)!important;
 	  background-position-y: 0px;
-	  background-size: cover!important;
-	  display: none;
-
+	  background-size: cover;
+	  }
+	  .subheader-bg, .subheader {
+	  box-shadow: inset 0 6px 9px -7px rgba(0,0,0,0.15);	  
+	  }
+	  .main-header {
+	  display:block;
 	  }
 	</style>
 	{% endif %}
