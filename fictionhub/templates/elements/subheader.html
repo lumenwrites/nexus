@@ -226,18 +226,6 @@
 	{% if userprofile.username == "rayalez" %}
 	<img src="{% static "/static/img/signature.png" %}"
 	     class="avatar"/>
-	{% elif userprofile.username == "alex_aka_jj" %}	
-	<img src="{% static "/static/img/alexey_berezin_avatar.jpg" %}"
-	     class="avatar"/>
-	<style>
-	  .subheader-bg {
-	  background: url(https://cdn-images-1.medium.com/max/2000/1*ov4IxUOXMBJCfVTT4UpFtA.png)!important;
-	  background-position-y: 0px;
-	  background-size: cover!important;
-	  display: none;
-
-	  }
-	</style>
 	{% elif userprofile.username == "lumenwrites" or userprofile.username == "alex_aka_jj" %}	
 	<!-- <img src="{% static "/static/img/data-brain.jpg" %}" -->
 	<!--      class="avatar"/> -->
@@ -258,6 +246,22 @@
 	  }
 	  .subheader {
 	  padding: 20px 0px 20px 20px!important;
+	  }
+	  .tagline {
+	  background-color:rgba(10, 10, 10, 0.75);
+	  }
+	</style>
+
+	{% elif userprofile.username == "alex_aka_jj" %}	
+	<img src="{% static "/static/img/alexey_berezin_avatar.jpg" %}"
+	     class="avatar"/>
+	<style>
+	  .subheader-bg {
+	  background: url(https://cdn-images-1.medium.com/max/2000/1*ov4IxUOXMBJCfVTT4UpFtA.png)!important;
+	  background-position-y: 0px;
+	  background-size: cover!important;
+	  display: none;
+
 	  }
 	</style>
 	{% endif %}
@@ -343,7 +347,7 @@
 	       </a>
 	  {% endif %}
 
-	  {% if user.username == "lumenwrites" %}	
+	  {% if user.username == "lumenwrites" and userprofile.username == "lumenwrites" %}	
                    <a class="button small right subscribers-button"
 		      href="/story/add">
 		     Write</a>
