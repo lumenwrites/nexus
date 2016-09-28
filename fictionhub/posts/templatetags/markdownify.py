@@ -16,6 +16,7 @@ def markdownify(post, short = "False"):
             pass
         text = text[:1024]
 
+        
     html = markdown.markdown(text)
 
     if short == "True":    
