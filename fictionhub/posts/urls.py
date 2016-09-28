@@ -26,7 +26,8 @@ urlpatterns = [
     url(r'^subscriptions/$', views.SubscriptionsView.as_view()),    
     # User
     url(r'^user/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
-    url(r'^u/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),    
+    url(r'^u/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
+    url(r'^@(?P<username>[^\.]+)$', views.UserprofileView.as_view()),        
     # Hub
     url(r'^hub/(?P<hubslug>[^\.]+)/$', views.HubView.as_view()),
     
