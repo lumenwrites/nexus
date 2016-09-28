@@ -207,7 +207,7 @@
 	    {% if solohub or userprofile %}
 	    display:block;
 	    {% endif %}	    
-	    ">
+	    " class="subheader-bg">
   <div class="row">
     <div class="large-12 small-12 columns subheader"
 	 style="padding-top:20px;padding-bottom: 14px;">
@@ -229,6 +229,37 @@
 	{% elif userprofile.username == "alex_aka_jj" %}	
 	<img src="{% static "/static/img/alexey_berezin_avatar.jpg" %}"
 	     class="avatar"/>
+	<style>
+	  .subheader-bg {
+	  background: url(https://cdn-images-1.medium.com/max/2000/1*ov4IxUOXMBJCfVTT4UpFtA.png)!important;
+	  background-position-y: 0px;
+	  background-size: cover!important;
+	  display: none;
+
+	  }
+	</style>
+	{% elif userprofile.username == "lumenwrites" or userprofile.username == "alex_aka_jj" %}	
+	<!-- <img src="{% static "/static/img/data-brain.jpg" %}" -->
+	<!--      class="avatar"/> -->
+	<style>
+	  .subheader-bg {
+	  background:url(/static/img/blue_bg_crop.png)!important;
+	  background:white!important;	  
+	  }
+	  .main-header {
+	  display:none;
+	  }
+	  .subheader h1 {
+	  font-family: "Titillium Web";
+	  font-size: 36px;
+	  font-weight: 100!important;
+	  text-shadow: none;
+	  color:#3d454b;
+	  }
+	  .subheader {
+	  padding: 20px 0px 20px 20px!important;
+	  }
+	</style>
 	{% endif %}
 
 
@@ -236,7 +267,8 @@
 	<div class="left">
 	  <a href="/user/{{userprofile.username}}">
 	    {% if userprofile.username == "alex_aka_jj" %}
-	    <h1 class="username"> Alexey Berezin </h1>
+	    <!-- <h1 class="username"> Alexey Berezin </h1> -->
+	    <h1 class="username"> alex_aka_jj </h1>	    
 	    {% else %}	    
 	    <h1 class="username"> {{userprofile.username}} </h1>
 	    {% endif %}	    	    
@@ -310,6 +342,12 @@
 		 Essays
 	       </a>
 	  {% endif %}
+
+	  {% if user.username == "lumenwrites" %}	
+                   <a class="button small right subscribers-button"
+		      href="/story/add">
+		     Write</a>
+	  {% endif %}	
 	  
 	</div> <!-- Close buttons -->
 
