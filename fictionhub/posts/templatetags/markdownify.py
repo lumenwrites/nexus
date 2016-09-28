@@ -16,8 +16,17 @@ def markdownify(post, short = "False"):
             pass
         text = text[:1024]
 
-        
     html = markdown.markdown(text)
+
+    if short == "True":
+        try:
+            sep = '</p>'
+            firstparagraphs = html.split(sep, 2)[:2]
+            html = ''.join(firstparagraphs)
+        except:
+            pass
+        
+    
 
     if short == "True":    
         html += "<div class='clearfix'></div><a href='"+post.get_absolute_url()+"' class='readmore'> read more >>>> </a>"
