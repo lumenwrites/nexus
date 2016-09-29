@@ -73,8 +73,16 @@
 
     {# {% include "elements/stats.html" %} #}
 
+    {% if request.META.HTTP_HOST == "lumenwrites.com" %}    
+    {% include "elements/prompts.html" %}
+    <style>
+      .main-header {
+      display:none;
+      }
+    </style>
+    {% else %}	            
     {% include "elements/toolbox.html" %}
-    {# {% include "elements/prompts.html" %} #}
+    {% endif %}	                
     
   </div>
 </div>
@@ -121,8 +129,10 @@
 
 
 	<textarea name="body"></textarea>
+	{% if not request.META.HTTP_HOST == "lumenwrites.com" %}
 	{% include "elements/sprint.html" %}
-	{% include "elements/progress-bar.html" %}		
+	{% include "elements/progress-bar.html" %}
+	{% endif %}	    	
       </div> <!-- end editor -->
 
 

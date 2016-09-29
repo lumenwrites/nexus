@@ -737,7 +737,7 @@ def post_create_daily(request):
         prompt = prompts[0].prompt
 
         # Fetch writingprompts for me
-        if request.user.username == "rayalez":
+        if request.user.username == "rayalez" or request.user.username == "lumenwrites":
             prompts = get_prompts()        
 
         if wordcount > 1000:
