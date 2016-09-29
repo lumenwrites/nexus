@@ -210,6 +210,11 @@
 	<!-- Post to reddit -->
 	{% if story.reddit_url and not story.published and user.username == "lumenwrites" %}	 
 	<a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a>
+	<style>
+      .main-header, #orange-line, footer {
+      display:none;
+      }
+	</style>
 	{% endif %}	  
 
 	  {% if user.approved %}	  	  
@@ -226,7 +231,7 @@
 	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Ubsubmit</a>
 	    {% endif %}
 	    -->
-	    {% if not story.published %}	  
+	    {% if not story.published and not user.username == "lumenwrites" %}	  
 	    <a href="/story/{{story.slug}}/publish" class="button small">Publish to my blog</a>
 	    <i class="fa fa-question-circle"
 	       style="font-size:22px;margin-right:10px;"

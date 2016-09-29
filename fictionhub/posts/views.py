@@ -429,6 +429,9 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
                 number_of_chapters = post.parent.children.count()
                 post.number = number_of_chapters + 1
 
+            if  request.user.username == "lumenwrites":
+                post.published = True            
+
             post.save()
             request.user.upvoted.add(post)
             
@@ -739,6 +742,7 @@ def post_create_daily(request):
         # Fetch writingprompts for me
         if request.user.username == "rayalez" or request.user.username == "lumenwrites":
             prompts = get_prompts()        
+
 
         if wordcount > 1000:
             wordcount = str(int(wordcount/1000)) + "K"
