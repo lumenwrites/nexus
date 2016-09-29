@@ -291,7 +291,11 @@
 	</style>
 	{% endif %}
 
-
+	{% if userprofile.username == "lumenwrites" %}
+	  .main-header {
+	  display:none;
+	}
+	{% endif %}
 
 	<div class="left">
 	  <a href="/user/{{userprofile.username}}">
