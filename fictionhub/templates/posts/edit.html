@@ -231,7 +231,9 @@
 	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Ubsubmit</a>
 	    {% endif %}
 	    -->
-	    {% if not story.published and not user.username == "lumenwrites" %}	  
+	    
+	    {% if not user.username == "lumenwrites" %}	  	    
+	    {% if not story.published %}	  
 	    <a href="/story/{{story.slug}}/publish" class="button small">Publish to my blog</a>
 	    <i class="fa fa-question-circle"
 	       style="font-size:22px;margin-right:10px;"
@@ -248,6 +250,7 @@
 	    {% else %}
 	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
 	    {% endif %}	    
+	    {% endif %}	<!-- remove lumen buttons -->
 	  {% endif %}	    	    
 	{% elif action = "chapter_edit" %}
 	<a href="/story/{{story.slug}}/{{chapter.slug}}"
