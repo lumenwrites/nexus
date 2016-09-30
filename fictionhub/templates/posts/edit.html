@@ -267,5 +267,24 @@
 
 {% include "posts/editor.html" %}
 
+  <style>
+
+{% if user.enable_dark_interface %}  
+  .CodeMirror {
+  background: #121212!important;
+}
+.editor-statusbar {
+    background: #1A1B1B;
+}
+.prompt article {
+background:#222222!important;
+}
+.prompttitle a {
+    color: #CCCCCC;
+}
+
+
+{% endif %}      
+  </style>
 {% endblock content %}
 
