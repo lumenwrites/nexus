@@ -390,3 +390,15 @@ a {
 .editor-statusbar {
     background: #1A1B1B;
 }
+.subheader-bg {
+    background: #141414!important;
+}
+
+.article {
+    background:   #1F1F1F!important;
+    border: solid rgba(162, 168, 166, 0.19);    
+}
+
+.subheader h1 {
+    color: #A2A8A6;
+}
