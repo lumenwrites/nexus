@@ -396,9 +396,9 @@ a {
 
 .article {
     background:   #1F1F1F!important;
-    border: solid rgba(162, 168, 166, 0.19);    
+    border: solid rgba(162, 168, 166, 0.19)!important;    
 }
 
 .subheader h1 {
-    color: #A2A8A6;
+    color: #A2A8A6!important;
 }
