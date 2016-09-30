@@ -366,3 +366,27 @@ a {
   border-left: 1px solid #a2a8ab!important;
 }
 
+
+
+
+#id_title, .CodeMirror, textarea {
+    font-size: 21px!important;
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.CodeMirror {
+    background: rgb(18, 18, 18) !important;
+}
+
+.editor {
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.button {
+    background: #141414!important;
+}
+
+.editor-statusbar {
+    background: #1A1B1B;
+}
