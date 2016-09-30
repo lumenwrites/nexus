@@ -495,10 +495,6 @@ def post_edit(request, story, chapter=""):
             post.rational = rational
             post.daily = daily            
 
-            if request.user.username == "lumenwrites":
-                post.published = True            
-            
-
             if chapter:
                 post.post_type = "chapter"
                 post.parent = story
@@ -716,6 +712,11 @@ def post_create_daily(request):
             post.post_type = "story"
             post.rational = False
             post.daily = True
+
+            if request.user.username == "lumenwrites":
+                post.published = True
+                post.daily = False                            
+            
             post.reddit_url = request.POST.get("reddit_url", "")
             post.save()
             request.user.upvoted.add(post)            
