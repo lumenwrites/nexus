@@ -429,7 +429,7 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
                 number_of_chapters = post.parent.children.count()
                 post.number = number_of_chapters + 1
 
-            if  request.user.username == "lumenwrites":
+            if request.user.username == "lumenwrites":
                 post.published = True            
 
             post.save()
@@ -494,6 +494,11 @@ def post_edit(request, story, chapter=""):
             # post.post_type = "story"
             post.rational = rational
             post.daily = daily            
+
+            if request.user.username == "lumenwrites":
+                post.published = True            
+            
+
             if chapter:
                 post.post_type = "chapter"
                 post.parent = story
