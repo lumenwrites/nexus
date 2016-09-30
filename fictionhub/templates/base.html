@@ -563,6 +563,42 @@ margin-left: 5px;
       }
   });
 </script>
+
+{% if user.enable_dark_interface %}  
+  .CodeMirror {
+  background: #121212!important;
+}
+.editor-statusbar {
+    background: #1A1B1B;
+}
+.prompt article {
+background:#222222!important;
+}
+.prompttitle a {
+    color: #CCCCCC;
+}
+
+
+#deleteStory {
+    background: #0D0D0D;
+    border: none;
+}
+
+.subheader-bg {
+    background: #141414!important;
+}
+
+.article {
+    background:   #1F1F1F!important;
+    border: solid rgba(162, 168, 166, 0.19)!important;    
+}
+
+.subheader h1 {
+    color: #A2A8A6!important;
+}
+
+{% endif %}
+
 </body>
 </html>
 
