@@ -13,7 +13,7 @@ def post_to_reddit(request, story):
 
 
     r = praw.Reddit(user_agent='Post /r/WritingPrompts story by /u/raymestalez')
-    r.login(os.environ["REDDITUNAME"],os.environ["REDDITUPASS"])
+    r.login(os.environ["LUMENUNAME"],os.environ["LUMENPASS"])
     # subreddit = r.get_subreddit('WritingPrompts')
     submission = r.get_submission(post.reddit_url)
     submission.add_comment(post.body)
@@ -23,4 +23,3 @@ def post_to_reddit(request, story):
 
 
 
-import praw    
