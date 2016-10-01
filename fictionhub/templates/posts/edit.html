@@ -208,7 +208,7 @@
 
 
 	<!-- Post to reddit -->
-	{% if story.reddit_url and not story.published and user.username == "lumenwrites" %}	 
+	{% if story.reddit_url and user.username == "lumenwrites" %}	 
 	<a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a>
 	<style>
       .main-header, #orange-line {
