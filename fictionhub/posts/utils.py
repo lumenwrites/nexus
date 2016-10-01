@@ -151,10 +151,10 @@ def get_prompts():
         for prompt in new_prompts:
             # 1 4 5*60
             if (prompt.score > 1) \
-            and ((prompt.num_comments-2) < 3) \
+            and ((prompt.num_comments-1) < 3) \
             and (age(prompt.created_utc) < max_age):
                 if prompt.num_comments > 0:
-                    prompt.num_comments -= 2 # remove 2 fake replies
+                    prompt.num_comments -= 1 # remove 2 fake replies
                 prompt.age = round(age(prompt.created_utc)/60,1)
                 # prompt.permalink = prompt.permalink.replace("www", "zn")
                 prompt.sort = prompt.score * (1-(prompt.age/5))
