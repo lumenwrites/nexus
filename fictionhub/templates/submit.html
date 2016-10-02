@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<style>
+  .tab-title {
+  width: 25%;
+  text-align:center;
+  }
+
+  article {
+  margin-top: 0px;
+  background: white;
+  padding: 40px;
+  background: rgba(255,255,255,0.8);  
+  }
+</style>
+<div id="page"  class="posts-page">
+  <div class="row">
+    <div class="large-12 small-12 columns">
+      <br/>
+      <!-- About -->
+      <div class="content active" id="about">
+	<article>
+	  <h1>Submit your story!</h1>
+	  
+	  <p>To submit your story, send it to <strong>fictionhub.io@gmail.com</strong>&nbsp;or tweet it at <strong><a href="https://twitter.com/fictionhub">@fictionhub</a></strong>.</p>
+
+	  <p>All fictional stories — science fiction, fantasy, comedy, short, long, serialized, etc are welcome. Our only rule — please submit only the stories you’re really proud of.</p>
+
+	  <p>All accepted stories will be shared with our&nbsp;<a href="https://twitter.com/fictionhub">twitter followers</a>. The best stories will be featured  on our front page and sent to all of our subscribers in the weekly email digest.</p>
+
+	  <p>To make it easier for us to feature your story, and to increase the amount of people who will read it, I recommend adding a beautiful illustration at the beginning of the story. Great places to find illustrations are&nbsp;<a href="https://www.artstation.com/">ArtStation</a>&nbsp;and&nbsp;<a href="http://www.deviantart.com/">DeviantArt</a>. The best illustrations are appealing to look at, inspire curiosity, and represent the content of your story very well.</p>
+
+	  <p>We’re looking forward to reading your stories!</p>
+
+
+	</article>
+      </div>
+    </div>
+  </div>
+</div>
+    {% endblock %}
+

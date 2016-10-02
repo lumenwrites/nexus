@@ -14,9 +14,15 @@ from hubs.models import Hub
 
 def home(request):
     rational = False
+
     if request.META['HTTP_HOST'] == "rationalfiction.io" or \
        request.META['HTTP_HOST'] == "localhost:8000":
         rational = True
+
+    if not request.user.is_authenticated() and  (request.META['HTTP_HOST'] == "fictionhub.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000"):
+        return render(request, 'home.html', {})
+
 
     if check_if_daily(request):
         if request.user.is_authenticated():
@@ -100,4 +106,8 @@ def test(request):
 
 def about(request):
     return render(request, 'about.html', {
+})
+
+def submit(request):
+    return render(request, 'submit.html', {
 })

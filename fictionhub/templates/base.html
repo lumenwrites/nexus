@@ -353,6 +353,8 @@ margin-left: 5px;
 	     -->
 	    {% endif %}	       
 
+	    
+	    {% if not user.is_authenticated and not request.path = "/" %}
 	    <a href="/login/?next={{request.path}}"
 	       data-reveal-id="sub-popup"
 	       class="small button subscribe-button"
@@ -360,6 +362,7 @@ margin-left: 5px;
 		      color: white;
 		      border-radius: 0;">
 	      Subscribe </a>
+	    {% endif %}
 
 	  </ul>
 	  

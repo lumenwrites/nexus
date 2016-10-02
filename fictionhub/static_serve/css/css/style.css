@@ -1044,3 +1044,108 @@ article header {
   margin-top: 0px;
   margin-right: 2px;
 }
+
+/* Home Page */
+/* line 953, ../sass/style.scss */
+.header-background {
+  background: #253153 url("/static/img/space2.jpg") no-repeat center;
+  background-size: cover;
+}
+
+/* line 958, ../sass/style.scss */
+.header-background-overlay {
+  background: rgba(0, 0, 0, 0.175);
+  padding: 80px;
+}
+
+/* line 964, ../sass/style.scss */
+.homepage-header {
+  text-align: center;
+}
+/* line 966, ../sass/style.scss */
+.homepage-header .button {
+  border-radius: 0;
+  margin: 40px 10px;
+  margin-bottom: 0;
+}
+
+/* line 972, ../sass/style.scss */
+.homepage h1, .homepage h2 {
+  text-align: center;
+  color: white;
+}
+
+/* line 976, ../sass/style.scss */
+.homepage h2 {
+  font-weight: normal;
+}
+
+/* line 979, ../sass/style.scss */
+.big-logo {
+  text-align: center;
+}
+
+/* line 982, ../sass/style.scss */
+.big-logo img {
+  width: 200px;
+}
+
+/* line 990, ../sass/style.scss */
+.homepage .stories {
+  background: #f6f3ea;
+}
+
+/* line 996, ../sass/style.scss */
+.homepage .subnav-background {
+  background: #f6630a;
+  padding: 10px 0;
+}
+/* line 1001, ../sass/style.scss */
+.homepage .subnav {
+  background: none;
+}
+/* line 1003, ../sass/style.scss */
+.homepage .subnav ul {
+  margin-top: 20px;
+  list-style-type: none;
+}
+/* line 1006, ../sass/style.scss */
+.homepage .subnav ul li {
+  float: left;
+}
+/* line 1008, ../sass/style.scss */
+.homepage .subnav ul li a {
+  color: #FFC99E;
+  text-transform: none;
+}
+/* line 1011, ../sass/style.scss */
+.homepage .subnav ul li a i {
+  color: #FFC99E;
+}
+/* line 1019, ../sass/style.scss */
+.homepage .stories {
+  padding: 20px;
+}
+/* line 1022, ../sass/style.scss */
+.homepage .story {
+  float: left;
+  padding: 10px;
+}
+/* line 1025, ../sass/style.scss */
+.homepage .story .thumbnail {
+  height: 172px;
+  background-position: 50% 50%;
+  background-size: cover;
+  width: 100%;
+}
+/* line 1032, ../sass/style.scss */
+.homepage .story h3 {
+  text-align: left;
+  color: #373737;
+  font-size: 24px;
+  font-weight: bold;
+}
+/* line 1038, ../sass/style.scss */
+.homepage .story p {
+  font-size: 18px;
+}

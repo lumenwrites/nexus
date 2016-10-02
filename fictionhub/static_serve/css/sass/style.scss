@@ -847,7 +847,7 @@ margin-top: -7px!important;
 }
 
 #id_hubs {
-    list-style-type: none;
+list-style-type: none;    
 width:400px;
 padding: 0px;
 }
@@ -946,4 +946,97 @@ article header {
     font-size: 20px;
     margin-top: 0px;
     margin-right:2px;
+}
+
+
+/* Home Page */
+.header-background {
+    background: #253153 url("/static/img/space2.jpg") no-repeat center;
+    background-size: cover;
+    
+}
+.header-background-overlay {
+    background: rgba(0,0,0,.175);
+    padding: 80px;
+	
+}
+
+.homepage-header {
+    text-align: center;
+    .button {
+	border-radius:0;
+	margin: 40px 10px;
+	margin-bottom:0;
+    }
+}
+.homepage h1, .homepage h2 {
+    text-align: center;
+    color: white;
+}
+.homepage h2 {
+    font-weight: normal;
+}
+.big-logo {
+    text-align:center;
+}
+.big-logo img {
+    width: 200px;
+}
+
+.homepage .subnav-background {
+    
+}
+
+.homepage .stories {
+    background: $cream;
+}
+
+
+.homepage {
+    .subnav-background {
+	background: #f6630a;
+	padding: 10px 0;
+    }
+
+    .subnav {
+	background: none;
+	ul {
+	    margin-top: 20px;
+	    list-style-type: none;
+	    li {
+		float:left;
+		a {
+		    color: #FFC99E;
+		    text-transform: none;
+		    i {
+			color: #FFC99E;
+		    }
+		}
+	    }
+	}
+    }
+
+    .stories {
+	padding: 20px;
+    }
+    .story {
+	float: left;
+	padding: 10px;
+	.thumbnail {
+	    height: 172px;
+	    background-position: 50% 50%;
+	    background-size:cover;
+	    width: 100%;
+
+	}
+	h3 {
+	    text-align:left;
+	    color: #373737;
+	    font-size: 24px;
+	    font-weight:bold;
+	}
+	p {
+	    font-size: 18px;
+	}
+    }
 }

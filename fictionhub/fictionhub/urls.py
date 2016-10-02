@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 # from chaoslegion import urls as chaoslegion_urls
 from profiles import urls as profiles_urls
@@ -46,13 +48,14 @@ urlpatterns = [
 
     url(r'^test/$', views.test),
     url(r'^about/$', views.about),
+    url(r'^submit/$', views.submit),    
     url(r'^join/$', views.home),                
     
     # Front page
-    # url(r'^$', views.home),
+    url(r'^$', views.home),
     url(r'^$', posts_views.BrowseView.as_view()),
 
     url(r'^404/', views.page_404),    
 
     # url(r'.*', stories.views.page_404),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

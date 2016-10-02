@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% load firstparagraph %}
+{% load numberofstories %}
+{% load sortbypostcount %}
+
+{% block head_extra %}
+<meta name="description" content="The most awesome place to publish, discover, and discuss fiction.">
+{% endblock %}
+
+{% block content %}
+
+<style>
+  h2, h3 {
+  text-align: center;
+  font-weight: 100;
+  text-transform: uppercase;
+  }
+
+  ul li, li {
+  list-style-type:none;
+  margin: 10px 0px;
+  }
+
+  .featured-image {
+  height: 320px;
+  }
+
+  .featured-image a img {
+  margin-top: -140px;
+  }
+
+  @media screen and (max-width: 1000px) {
+  .featured-image {
+  height: 240px;
+  }
+
+  }
+
+  @media screen and (max-width: 800px) {
+  .featured-image a img {
+  margin-top: 0;
+  }
+  .featured-image {
+  height: 240px;
+  }
+
+  }
+
+  .hub-tag {
+  margin-left: 0;
+  }
+</style>
+
+
+
+<style>
+  h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 0;
+
+  }
+
+  h3 {
+  margin: 0;
+  }
+
+  .tabs {
+  margin-left: -20px;
+  margin-top: -10px;
+  margin-left: 0px;
+  margin-top: -34px;
+  margin-top: -14px;
+  <!-- margin-top: -10px;   -->
+  margin-bottom: -30px!important;
+  }
+  .tab-title {
+  width:calc(33.33%);
+  }
+  .tab-title a {
+  padding: 8px!important;
+  }
+  .tabs dd.active a, .tabs .tab-title.active a {
+  background-color:#DADADA!important;
+  }
+</style>
+
+<div id="page"  class="posts-page">
+
+  <!-- Call to action -->
+  {% include "elements/join-cta.html" %}
+
+	<ul class="tabs" data-tab>
+	  <li class="tab-title active"><a href="#panel1"><h3>Hot</h3></a></li>
+	  <li class="tab-title"><a href="#panel2"><h3>New</h3></a></li>
+	  <li class="tab-title"><a href="#panel3"><h3>Top</h3></a></li>
+	</ul>
+
+	<div class="tabs-content">
+	  <div class="content active" id="panel1">
+	    <div class="row">
+	      <div class="large-12 columns">
+		
+		{% for post in hot_posts %}
+		{% if not post.author.shadowban or post.author = user %}
+		<article style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+				box-shadow: 0 1px 4px rgba(0,0,0,.04);
+				border: 1px solid rgba(0,0,0,.09);
+				border-radius: 3px;">
+		  
+		  <!-- Header -->
+		  <header class="post-header">
+		    <a href="{{post.get_absolute_url}}">
+		      <h1 class="left"> {{post.title}} </h1>
+		    </a>
+		    <hr/>
+		    <div class="clearfix"></div>
+		  </header>
+		  
+		  <!-- Post Body -->
+		  
+		  {{post.body | firstparagraph | safe  }} <!-- firstparagraph -->
+		  <div class="clearfix"></div>
+
+		  <!-- Post Footer -->
+		  <br/>
+
+		  <!-- <div class="panel" style=""> -->
+		  <!--   <p><b>New Chapter:</b> "Trials and Tribulations"</p> -->
+		  <!-- </div>       -->
+		  
+
+		  <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+					    margin-bottom: -11px;
+					    margin-left: -11px;
+					    width: calc(100% + 22px);">
+		    <div class="stats left">
+
+		      <!-- Vote in footer -->
+		      <div style="float: left;
+    				  margin-right: 8px;" class=""> <!-- vote -->
+    			<a href="/login/?next={{request.path}}"
+    			   class="fi-arrow-up upvote arrow
+    				  {% if post in upvoted %}upvoted{% endif %}
+				  {% if post in downvoted %}downvoted{% endif %}"
+    			   id="post-upvote-{{post.id}}"></a>
+    			<span class="score"> {{post.score}} </span>
+		      </div>
+
+		      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+			<span class="fi-comment"></span>
+			<span style="float:left"> {{post.comments.count}} </span>
+		      </a>
+
+		      <span class="fi-eye"
+			    style="font-size: 20px;
+				   margin-right:10px;">
+			{{post.views}}
+		      </span>
+
+		      <span class="fi-background-color"
+			    style="font-size: 20px;
+				   margin-right:10px;"
+			    title="Number of words">
+			{{post.wordcount}}
+		      </span>
+		      
+		    </div> <!-- end stats left -->
+
+      		    {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      		    <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">{{hub.title}}</a>
+      		    {% endfor %}
+
+		    <div class="right">
+		      by
+		      {% if post.author.external_url %}
+		      <a href="{{post.author.website}}">{{post.author}}</a>
+		      {% else %}
+		      <a href="/user/{{post.author.username}}">{{post.author}}</a>
+		      {% endif %}
+		      <!--
+			  in
+			  <a>Orange Mind</a>  --> <!-- series. -->
+		    </div>
+		    <div class="clearfix"></div>
+		  </div>
+		  <!-- <hr/> -->
+		</article>
+		{% endif %}      
+		{% endfor%}
+	      </div>
+	    </div>
+	  </div>
+
+
+	  <div class="content" id="panel2">
+	    <div class="row">
+	      <div class="large-12 columns">
+		
+		{% for post in new_posts %}
+		{% if not post.author.shadowban or post.author = user %}    
+		<article style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+				box-shadow: 0 1px 4px rgba(0,0,0,.04);
+				border: 1px solid rgba(0,0,0,.09);
+				border-radius: 3px;">
+		  
+		  <!-- Header -->
+		  <header class="post-header">
+		    <a href="{{post.get_absolute_url}}">
+		      <h1 class="left"> {{post.title}} </h1>
+		    </a>
+		    <hr/>
+		    <div class="clearfix"></div>
+		  </header>
+		  
+		  <!-- Post Body -->
+		  
+		  {{post.body | firstparagraph | safe  }} <!-- firstparagraph -->
+		  <div class="clearfix"></div>
+
+		  <!-- Post Footer -->
+		  <br/>
+
+		  <!-- <div class="panel" style=""> -->
+		  <!--   <p><b>New Chapter:</b> "Trials and Tribulations"</p> -->
+		  <!-- </div>       -->
+		  
+
+		  <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+					    margin-bottom: -11px;
+					    margin-left: -11px;
+					    width: calc(100% + 22px);">
+		    <div class="stats left">
+
+		      <!-- Vote in footer -->
+		      <div style="float: left;
+    				  margin-right: 8px;" class=""> <!-- vote -->
+    			<a href="/login/?next={{request.path}}"
+    		   class="fi-arrow-up upvote arrow
+    			  {% if post in upvoted %}upvoted{% endif %}
+			  {% if post in downvoted %}downvoted{% endif %}"
+    		   id="post-upvote-{{post.id}}"></a>
+    		<span class="score"> {{post.score}} </span>
+	      </div>
+
+	      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+		<span class="fi-comment"></span>
+		<span style="float:left"> {{post.comments.count}} </span>
+	      </a>
+
+	      <span class="fi-eye"
+		    style="font-size: 20px;
+			   margin-right:10px;">
+		{{post.views}}
+	      </span>
+
+	      <span class="fi-background-color"
+		    style="font-size: 20px;
+			   margin-right:10px;"
+		    title="Number of words">
+		{{post.wordcount}}
+	      </span>
+	      
+	    </div> <!-- end stats left -->
+
+      	    {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	    <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">{{hub.title}}</a>
+      	    {% endfor %}
+
+	    <div class="right">
+	      by
+	      {% if post.author.external_url %}
+	      <a href="{{post.author.website}}">{{post.author}}</a>
+	      {% else %}
+	      <a href="/user/{{post.author.username}}">{{post.author}}</a>
+	      {% endif %}
+	      <!--
+		  in
+		  <a>Orange Mind</a>  --> <!-- series. -->
+	    </div>
+	    <div class="clearfix"></div>
+	  </div>
+	  <!-- <hr/> -->
+	</article>
+      {% endif %}      
+      {% endfor%}
+      </div>
+      </div>
+      </div>
+
+
+	  <!-- TOP POSTS -->
+
+	  <div class="content" id="panel3">
+	    <div class="row">
+	      <div class="large-12 columns">
+		
+		{% for post in hot_posts %}
+		{% if not post.author.shadowban or post.author = user %}    
+		<article style="padding:10px;    background: rgba(255,255,255,0.5);//#fff;
+				box-shadow: 0 1px 4px rgba(0,0,0,.04);
+				border: 1px solid rgba(0,0,0,.09);
+				border-radius: 3px;">
+		  
+		  <!-- Header -->
+		  <header class="post-header">
+		    <a href="{{post.get_absolute_url}}">
+		      <h1 class="left"> {{post.title}} </h1>
+		    </a>
+		    <hr/>
+		    <div class="clearfix"></div>
+		  </header>
+		  
+		  <!-- Post Body -->
+		  
+		  {{post.body | firstparagraph | safe  }} <!-- firstparagraph -->
+		  <div class="clearfix"></div>
+
+		  <!-- Post Footer -->
+		  <br/>
+
+		  <!-- <div class="panel" style=""> -->
+		  <!--   <p><b>New Chapter:</b> "Trials and Tribulations"</p> -->
+		  <!-- </div>       -->
+		  
+
+		  <div class="panel" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+					    margin-bottom: -11px;
+					    margin-left: -11px;
+					    width: calc(100% + 22px);">
+		    <div class="stats left">
+
+		      <!-- Vote in footer -->
+		      <div style="float: left;
+    				  margin-right: 8px;" class=""> <!-- vote -->
+    			<a href="/login/?next={{request.path}}"
+    		   class="fi-arrow-up upvote arrow
+    			  {% if post in upvoted %}upvoted{% endif %}
+			  {% if post in downvoted %}downvoted{% endif %}"
+    		   id="post-upvote-{{post.id}}"></a>
+    		<span class="score"> {{post.score}} </span>
+	      </div>
+
+	      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+		<span class="fi-comment"></span>
+		<span style="float:left"> {{post.comments.count}} </span>
+	      </a>
+
+	      <span class="fi-eye"
+		    style="font-size: 20px;
+			   margin-right:10px;">
+		{{post.views}}
+	      </span>
+
+	      <span class="fi-background-color"
+		    style="font-size: 20px;
+			   margin-right:10px;"
+		    title="Number of words">
+		{{post.wordcount}}
+	      </span>
+	      
+	    </div> <!-- end stats left -->
+
+      	    {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+      	    <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">{{hub.title}}</a>
+      	    {% endfor %}
+
+	    <div class="right">
+	      by
+	      {% if post.author.external_url %}
+	      <a href="{{post.author.website}}">{{post.author}}</a>
+	      {% else %}
+	      <a href="/user/{{post.author.username}}">{{post.author}}</a>
+	      {% endif %}
+	      <!--
+		  in
+		  <a>Orange Mind</a>  --> <!-- series. -->
+	    </div>
+	    <div class="clearfix"></div>
+	  </div>
+	  <!-- <hr/> -->
+	</article>
+      {% endif %}      
+      {% endfor%}
+      </div>
+      </div>
+      </div>
+	  
+
+
+</div>
+</div>
+</div>
+
+</div>
+<script>
+  $(document).ready(function() {
+  $(".orbit-bullets").remove();
+  $(".orbit-slide-number").remove(); 
+  });
+</script>
+{% endblock %}
