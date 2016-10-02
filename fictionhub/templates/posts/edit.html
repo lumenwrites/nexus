@@ -217,6 +217,13 @@
 	</style>
 	{% endif %}	  
 
+
+	<!-- 
+	<a href="/story/{{story.slug}}/publish"
+	   data-reveal-id="submit-to-fictionhub-popup"
+	   class="button small">Submit to Fiction Hub</a>	
+	-->
+
 	  {% if user.approved %}	  	  
 	    {% if not story.published %}	  
 	    <a href="/story/{{story.slug}}/publish" class="button small">Publish</a>
@@ -264,6 +271,19 @@
       <!-- End Submit Form -->
     </div> <!-- End 9 columns -->
 </div>	 <!-- End row -->
+
+
+  <!-- Submit to fiction hub popup. -->
+  <div id="submit-to-fictionhub-popup" class="reveal-modal"
+       data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <h2 id="modalTitle"> Submit to Fiction Hub </h2>
+    <p class="lead">Are you really proud of the story you have created?</p>
+    <p class="lead"> Submit it to<a href="http://fictionhub.io">Fiction Hub</a>! Fiction Hub is the place for high quality stories, ...</p>
+    <!-- Button -->
+    <a href="/story/{{story.slug}}/delete"
+       class="button small right">Submit</a>      	
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+  </div>
 
 {% include "posts/editor.html" %}
 

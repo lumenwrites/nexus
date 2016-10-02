@@ -157,6 +157,9 @@ li p {
     color: #bbbbbb;
 }
 
+.center-text {
+    text-align:center;
+}
 .center-vertically {
     position: absolute;
     left: 50%;
@@ -1010,6 +1013,7 @@ article header {
 		    text-transform: none;
 		    i {
 			color: #FFC99E;
+			font-size: 22px;
 		    }
 		}
 	    }

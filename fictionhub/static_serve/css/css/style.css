@@ -1121,31 +1121,32 @@ article header {
 /* line 1011, ../sass/style.scss */
 .homepage .subnav ul li a i {
   color: #FFC99E;
+  font-size: 22px;
 }
-/* line 1019, ../sass/style.scss */
+/* line 1020, ../sass/style.scss */
 .homepage .stories {
   padding: 20px;
 }
-/* line 1022, ../sass/style.scss */
+/* line 1023, ../sass/style.scss */
 .homepage .story {
   float: left;
   padding: 10px;
 }
-/* line 1025, ../sass/style.scss */
+/* line 1026, ../sass/style.scss */
 .homepage .story .thumbnail {
   height: 172px;
   background-position: 50% 50%;
   background-size: cover;
   width: 100%;
 }
-/* line 1032, ../sass/style.scss */
+/* line 1033, ../sass/style.scss */
 .homepage .story h3 {
   text-align: left;
   color: #373737;
   font-size: 24px;
   font-weight: bold;
 }
-/* line 1038, ../sass/style.scss */
+/* line 1039, ../sass/style.scss */
 .homepage .story p {
   font-size: 18px;
 }
