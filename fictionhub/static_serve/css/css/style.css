@@ -1048,7 +1048,7 @@ article header {
 /* Home Page */
 /* line 953, ../sass/style.scss */
 .header-background {
-  background: #253153 url("/static/img/space2_small.jpg") no-repeat center;
+  background: #253153 url("/static/img/space2_medium.jpg") no-repeat center;
   background-size: cover;
 }
 
