@@ -44,6 +44,7 @@
   {% endif %}  
   
 
+  {% block meta %}  
   <meta property="og:image" content="http://fictionhub.io/static/img/valley_cropped.png">
   {% if request.META.HTTP_HOST == "writingstreak.io"  %}
   <meta property="og:description" content="Write fiction every day!">
@@ -51,7 +52,7 @@
   <meta property="og:description" content="Fictionhub is the perfect place to publish, discover and discuss awesome fiction.">
   <meta name="description" content="The most awesome place to publish, discover, and discuss fiction.">
   {% endif %}  
-
+  {% endblock meta %}  
   <!-- jQuery -->
   <script src="{% static "/static/js/vendor/jquery.js" %}" type="text/javascript"></script>
 
