@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+
+{% block head_extra %}
+<title>
+  <title>Submit your story!</title>
+  <meta name="title" content="Submit your story!">
+  <meta name="description" content="We're looking forward to reading the awesome stories you've created!">
+
+  <meta property="og:url" content="http://fictionhub.io/submit/">
+  <meta property="og:description" content="We're looking forward to reading the awesome stories you've created!">
+  <meta property="og:image" content="http://fictionhub.io/static/img/submit-story.jpg">
+  <meta name="twitter:description" content="We’re looking forward to reading the awesome stories you’ve created!">
+  <meta name="twitter:image:src" content="http://fictionhub.io/static/img/submit-story.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@fictionhub">
+  <meta name="twitter:site" content="@fictionhub">
+  <meta property="og:site_name" content="Fiction Hub">
+{% endblock %}
+
+
+
 {% block content %}
 <style>
   .tab-title {
