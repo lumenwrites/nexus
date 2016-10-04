@@ -48,7 +48,8 @@ urlpatterns = [
 
     url(r'^test/$', views.test),
     url(r'^about/$', views.about),
-    url(r'^submit/$', views.submit),    
+    url(r'^submit/$', views.submit),
+    url(r'^store/$', views.store),        
     url(r'^join/$', views.home),                
     
     # Front page

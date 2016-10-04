@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.db.models import Count
 
 from posts.models import Post
+from profiles.models import User
 from posts.utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from hubs.models import Hub
 
@@ -111,3 +112,10 @@ def about(request):
 def submit(request):
     return render(request, 'submit.html', {
 })
+
+
+def store(request):
+    userprofile=User.objects.get(username="lumenwrites")
+    return render(request, 'store/lumenwrites.html', {
+        "userprofile":userprofile
+    })
