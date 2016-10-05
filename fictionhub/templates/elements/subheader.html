@@ -300,14 +300,24 @@
 	{% endif %}
 
 	<div class="left">
+	  {% if userprofile.username = "alex_aka_jj" %}
 	  <a href="/user/{{userprofile.username}}">
-	    {% if userprofile.username == "alex_aka_jj" %}
 	    <h1 class="username"> Alexey Berezin </h1>
-	    <!-- <h1 class="username"> alex_aka_jj </h1>	     -->
-	    {% else %}	    
-	    <h1 class="username"> {{userprofile.username}} </h1>
-	    {% endif %}	    	    
+	    <!-- <h1 class="username"> alex_aka_jj </h1> -->
 	  </a>
+	  {% elif userprofile.username = "rayalez" %}
+	  <a href="/@rayalez">
+	    <h1 class="username"> Ray Alez </h1>
+	  </a>
+	  {% elif userprofile.username = "lumenwrites" %}
+	  <a href="http://lumenwrites.com">
+	    <h1 class="username"> lumenwrites </h1>
+	  </a>
+	  {% else %}
+	  <a href="/user/{{userprofile.username}}">	    
+	    <h1 class="username"> {{userprofile.username}} </h1>
+	  </a>
+	  {% endif %}	    	    
 	  
 	  <div class="stats">    
 	    <i class="fi-torsos-all stats-icon"></i>
@@ -372,14 +382,16 @@
 	  {% endif %}
 
 	  {% if userprofile.username == "rayalez" %}
+	  <!-- 
                <a class="button small right subscribers-button"
 		  href="http://orangemind.io/">
 		 Essays
 	       </a>
+	       -->
 	  {% endif %}
 
 
-	  {% if userprofile.username == "lumenwrites" %}
+	  {% if userprofile.username == "lumenwrites"  or userprofile.username == "rayalez"%}
                <a class="button small right subscribers-button"
 		  href="/store/">
 		 Book
@@ -461,6 +473,26 @@
           <div class="large-12 small-12 columns" style="color:#fefefe;
 							padding: 0 20px;">
     	    {{userprofile.about | safe }}
+
+	    {% if userprofile.username == "rayalez" %}
+	    <ul class="right">
+	      <li>
+		<a href="https://www.facebook.com/rayalez/">
+		  <i class="fa fa-facebook-square" aria-hidden="true"></i>
+		</a>
+	      </li>
+	      <li>
+		<a href="https://twitter.com/raymestalez/">
+		  <i class="fa fa-twitter-square" aria-hidden="true"></i>
+		</a>
+	      </li>
+	      <li>
+		<a href="https://medium.com/@rayalez">
+		  <i class="fa fa-medium" aria-hidden="true"></i>
+		</a>
+	      </li>
+	    </ul>
+	    {% endif %}	    
           </div>
         </div>
       </div>
