@@ -403,6 +403,27 @@ header {
 }
 
 
+
+.tagline {
+    ul {
+	list-style-type: none;
+	margin: 0;
+	li {
+	    float:left;
+	    margin: 0!important;
+	    margin-left: 10px!important;
+	    a {
+		i {
+		    color: #FFC99E;
+		    color: rgba(254, 254, 212, 0.7);
+		    font-size: 22px;
+		}
+	    }
+	}
+    }
+}
+
+
 /* ================ Log in ================ */
 .helptext {
     display:none;
