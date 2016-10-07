@@ -1102,74 +1102,79 @@ article header {
 .homepage h2 {
   font-weight: normal;
 }
+/* line 1002, ../sass/style.scss */
+.homepage h2 a {
+  color: white;
+  text-decoration: underline;
+}
 
-/* line 1003, ../sass/style.scss */
+/* line 1007, ../sass/style.scss */
 .big-logo {
   text-align: center;
 }
 
-/* line 1006, ../sass/style.scss */
+/* line 1010, ../sass/style.scss */
 .big-logo img {
   width: 200px;
 }
 
-/* line 1014, ../sass/style.scss */
+/* line 1018, ../sass/style.scss */
 .homepage .stories {
   background: #f6f3ea;
 }
 
-/* line 1020, ../sass/style.scss */
+/* line 1024, ../sass/style.scss */
 .homepage .subnav-background {
   background: #f6630a;
   padding: 10px 0;
 }
-/* line 1025, ../sass/style.scss */
+/* line 1029, ../sass/style.scss */
 .homepage .subnav {
   background: none;
 }
-/* line 1027, ../sass/style.scss */
+/* line 1031, ../sass/style.scss */
 .homepage .subnav ul {
   margin-top: 20px;
   list-style-type: none;
 }
-/* line 1030, ../sass/style.scss */
+/* line 1034, ../sass/style.scss */
 .homepage .subnav ul li {
   float: left;
 }
-/* line 1032, ../sass/style.scss */
+/* line 1036, ../sass/style.scss */
 .homepage .subnav ul li a {
   color: #FFC99E;
   text-transform: none;
 }
-/* line 1035, ../sass/style.scss */
+/* line 1039, ../sass/style.scss */
 .homepage .subnav ul li a i {
   color: #FFC99E;
   font-size: 22px;
 }
-/* line 1044, ../sass/style.scss */
+/* line 1048, ../sass/style.scss */
 .homepage .stories {
   padding: 20px;
 }
-/* line 1047, ../sass/style.scss */
+/* line 1051, ../sass/style.scss */
 .homepage .story {
   float: left;
   padding: 10px;
 }
-/* line 1050, ../sass/style.scss */
+/* line 1054, ../sass/style.scss */
 .homepage .story .thumbnail {
   height: 172px;
   background-position: 50% 50%;
   background-size: cover;
   width: 100%;
 }
-/* line 1057, ../sass/style.scss */
+/* line 1061, ../sass/style.scss */
 .homepage .story h3 {
   text-align: left;
   color: #373737;
   font-size: 24px;
   font-weight: bold;
 }
-/* line 1063, ../sass/style.scss */
+/* line 1067, ../sass/style.scss */
 .homepage .story p {
   font-size: 18px;
 }
