@@ -999,6 +999,10 @@ article header {
 }
 .homepage h2 {
     font-weight: normal;
+    a {
+	color: white;
+	text-decoration: underline;
+    }
 }
 .big-logo {
     text-align:center;
@@ -1065,3 +1069,5 @@ article header {
 	}
     }
 }
+
+

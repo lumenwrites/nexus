@@ -22,7 +22,7 @@ def home(request):
 
     if not request.user.is_authenticated() and  (request.META['HTTP_HOST'] == "fictionhub.io" or \
        request.META['HTTP_HOST'] == "localhost:8000"):
-        return render(request, 'home.html', {})
+        return render(request, 'home-rationalfiction.html', {})
 
 
     if check_if_daily(request):
