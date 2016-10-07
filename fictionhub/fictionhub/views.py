@@ -116,6 +116,7 @@ def submit(request):
 
 def store(request):
     userprofile=User.objects.get(username="lumenwrites")
+    userprofile=User.objects.get(username="rayalez")    
     return render(request, 'store/lumenwrites.html', {
         "userprofile":userprofile
     })
