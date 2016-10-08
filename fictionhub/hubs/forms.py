@@ -5,7 +5,7 @@ from .models import Hub
 
 
 class HubForm(ModelForm):
-    hubs = Hub.objects.filter(users_can_create_children=True).order_by('id')
+    hubs = Hub.objects.all().order_by('id')
     parent = forms.ModelChoiceField(queryset=hubs)
     parent.empty_label = None
     class Meta:

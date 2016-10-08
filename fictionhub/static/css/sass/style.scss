@@ -94,6 +94,7 @@ blockquote strong {
 
 #page {
     min-height:82vh;
+    padding: 20px;
 }
 
 
@@ -181,8 +182,9 @@ li p {
 .button {
 	background-color: #f76301;
 	border: 0;
-	border-radius: 5px;
+	border-radius: 0px;
 	box-shadow: 0 5px #d05301;
+	padding: 10px 20px;
 }
 
 .button:hover {
@@ -299,9 +301,17 @@ header {
 .subnav {
   /* padding: 10px; */
   /* margin: 10px; */
-  background-color: rgba(0,0,0,0.02);
+    background-color: rgba(0,0,0,0.02);
+    padding: 2px 10px;
 }
 
+.subnav {
+    .button {
+	background: #e1ded9;
+	color: #3d454b;
+	padding: 10px 20px;
+    }
+}
 .subnav .row .columns {
     /* padding: 10px; */
 }
@@ -385,6 +395,10 @@ header {
   margin-top: 10px!important;
 }
 
+.hubs {
+    background: #fbf9f5;
+    padding: 20px 10px;
+}
 .hubs-dropdown {
     margin: 10px;
 }
@@ -580,10 +594,6 @@ article header {
 /* Story footer */
 
 .hub-tag {
-  background: rgba(119, 119, 119, 0.2);
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-left: 6px;
   color: $black;
 }
 
@@ -1071,3 +1081,40 @@ article header {
 }
 
 
+/* Profile Card */
+
+.profile-card {
+    background: rgba(255,255,255,0.5);
+    .user-background {
+	background:url(/static/img/bg.jpg);
+	height:120px;
+	background-position-y:-320px;
+	margin-bottom: 10px;
+    }
+    .avatar {
+	float:left;
+	width:80px;
+	border-radius: 4px;
+	margin:10px;
+	border: 2px solid white;
+	margin-top: -30px;
+    }
+
+    .username {
+	font-weight:bold;
+	color: $black;
+	font-size: 18px;
+    }
+
+    .about {
+	padding:10px;
+    }
+
+    .button {
+	width:calc(100% - 20px);
+	margin:10px;
+	i {
+	    color:white;
+	}
+    }
+}

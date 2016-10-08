@@ -27,7 +27,7 @@ urlpatterns = [
     # User
     url(r'^user/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
     url(r'^u/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
-    url(r'^@(?P<username>[^\.]+)$', views.UserprofileView.as_view()),        
+    url(r'^@(?P<username>[^\.]+)$', views.UserprofileView.as_view(), name="user_profile"),        
     # Hub
     url(r'^hub/(?P<hubslug>[^\.]+)/$', views.HubView.as_view()),
     
@@ -46,20 +46,15 @@ urlpatterns = [
     # CRUD Stories
     url(r'^write/$', views.post_create_daily),
     url(r'^story/add$', views.post_create),
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/edit$', views.post_edit),    
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/delete$', views.post_delete),        
+    url(r'^post/create$', views.post_create),    
     url(r'^story/(?P<story>[^\.]+)/edit$', views.post_edit),
     url(r'^story/(?P<story>[^\.]+)/delete$', views.post_delete),
     url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
-    url(r'^story/(?P<story>[^\.]+)/add$', views.post_create), # add chapter
-
-    url(r'^story/(?P<story>[^\.]+)/redditpost$', repost.post_to_reddit),    
 
 
     # View story/chapter
-    url(r'^story/(?P<story>[^\.]+)/(?P<chapter>[^\.]+)/?$', views.post, name='view_chapter'), 
-    url(r'^story/(?P<story>[^\.]+)/?$', views.post, name='view_story'),
+    url(r'^post/(?P<slug>[^\.]+)/?$', views.post, name='view_post'),
 
     url(r'^upvote/$', views.upvote),
     url(r'^unupvote/$', views.unupvote),

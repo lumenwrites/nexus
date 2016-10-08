@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'fictionhub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':"fictionhub",
+        'NAME':"nexus",
         'USER':os.environ["PG_USERNAME"],
         'PASSWORD':os.environ["PG_PASS"],
         'HOST': 'localhost',

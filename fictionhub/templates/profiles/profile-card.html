@@ -1,0 +1,67 @@
+{% load staticfiles %}
+{% load markdownify %}
+
+{% if userprofile %}
+<div class="profile-card">
+  <div class="user-background"></div>
+  <div class="user-info">
+    <img src="{% static "/static/img/signature.png" %}"
+	 class="avatar"/>
+    <a class="username">@{{userprofile.username}}</a>
+    
+    <div class="stats">    
+      <i class="fi-torsos-all stats-icon"></i>
+      {{userprofile.subscribers.count}}
+      10
+      <i class="fi-arrow-up stats-icon"></i>
+      {{score}}
+      410
+      <i class="fi-eye stats-icon"></i>
+      {{view_count}} 30
+    </div>
+
+    <div class="about">Startup founder, web developer, and blogger. I also like scifi and comedy.</div>
+
+    {% if not userprofile = user %}
+    <a class="small button"> Follow </a>
+    {% else %}
+    <a href="/preferences/" class="small button">
+      <i class="fa fa-cog"></i>
+      Preferences </a>
+    {% endif %}
+  </div>
+  <div class="clearfix"></div>
+</div>
+<br/>
+
+{% elif hubtitle %}
+<div class="profile-card">
+  <div class="user-background"></div>
+  <div class="user-info">
+    <div class="about">
+      <span class="bold">#{{hubtitle}}</span><br/>
+      Join a community of hackers, developers, startup founders.
+    </div>
+  </div>    
+    <a class="small button"> Subscribe </a>
+  <div class="clearfix"></div>
+</div>
+<br/>
+
+
+{% else %}
+<div class="profile-card">
+  <div class="user-background"></div>
+  <div class="user-info">
+    <div class="about">
+      <span class="bold">Join our community!</span><br/>
+      Join a community of hackers, developers, startup founders.
+    </div>
+  </div>    
+    <a class="small button"> Join </a>
+  <div class="clearfix"></div>
+</div>
+<br/>
+
+{% endif %}
+

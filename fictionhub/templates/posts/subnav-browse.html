@@ -1,126 +1,151 @@
 {% load staticfiles %}
 {% load markdownify %}
 
-
-{% if solohub or userprofile %}
-{% include "elements/subheader.html" %}
-{% endif %}
 <style>
-  .subnav {
-  height: 48px;
-  }  
-.subnav a, .subnav span {
-    margin-right: 5px;
-}
+  .subnav a, .subnav span {
+  margin-right: 5px;
+  text-transform: none;
+  color: #42454b;
+  }
 
-.subnav .searchbar {
-  width: calc(100% - 48px);
-  float:left!important;
-}
+  #typedropdown {
+  width: 140px;
+  }
+  #typedropdown li {
+  padding:0;
+  margin:0;
+  }		
+  #typedropdown li a {
+  text-transform:none;
+  }
+  #typedropdown li a i {
+  margin-right: 10px;
+  }
+  .f-dropdown:before,
+  .f-dropdown:after{
+  display:none;
+  }
+</style>	
 
-  #toggle-hubs {
-  float: right;
-		margin-top: 4px;
-		background: rgba(188, 187, 189, 0.32);
-		padding: 10px;
-		color: rgba(61, 69, 75, 0.83);
-		height: 40px;
-		font-size: 21px;
-  cursor:pointer;
-  width: 40px;
-}
+<style>
+  #rankdropdown {
+  width: 100px;
+  }
+  #rankdropdown li {
+  padding:0;
+  margin:0;
+  }		
+  #rankdropdown li a {
+  text-transform:none;
+  }
+  #rankdropdown li a i {
+  margin-right: 10px;
+  }
+  .f-dropdown:before,
+  .f-dropdown:after{
+  display:none;
+  }
 </style>
 
+	
 <!-- Subnav -->
 <div class="subnav">  
-
-
   <div class="row">
-    {% if userprofile.username == "rayalez" %}
     <div class="large-8 small-8 columns">
-    {% else %}
-    <div class="large-9 small-9 columns">
-    {% endif %}
+
       <!-- Rank -->
       <div class="rank-types">
-	{% if not userprofile %}
+	<a href="/browse/" data-dropdown="rankdropdown"
+	   data-options="is_hover:true; align:bottom;"
+	   class=""
+	   style="background: rgba(188, 187, 189, 0.32);
+		  margin: -5px 5px 0 0;
+		  padding:4px 10px;
+		  width:100px;">
+	  <i class="fa fa-fire"></i>
+	  Hot
+	</a>
+
+	<ul id="rankdropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
 	<!-- Hot -->
-	<a href="{{request.path}}?sorting=hot{{urlstring}}">
-	  <span {% if sorting = "hot" %}class="bold"{% endif %}>Hot</span>
+	<li>	
+	  <a href="{{request.path}}?sorting=hot{{urlstring}}">
+	    <span {% if sorting = "hot" %}class="bold"{% endif %}>
+	      <i class="fa fa-fire"></i>
+	      Hot</span>
+	  </a>
+	</li>	
+	<!-- New -->
+	<li>
+	  <a href="{{request.path}}?sorting=new{{urlstring}}">
+	    <span {% if sorting = "new" %}class="bold"{% endif %}>
+	      <i class="fa fa-clock-o"></i>
+	      New</span>
+	</a>
+	</li>
+	<!-- Top -->
+	<li>
+	  <a href="{{request.path}}?sorting=top{{urlstring}}">
+	    <span {% if sorting = "top" %}class="bold"{% endif %}>
+	      <i class="fa fa-arrow-up"></i>
+	      Top</span>
+	</a>
+	</li>
+	</ul>
+
+
+
+	<!-- Browse -->
+	{% if request.path = "/browse/" and user.is_authenticated %}
+	<a href="/browse/" data-dropdown="typedropdown"
+	   data-options="is_hover:true; align:bottom;"
+	   class=""
+	   style="background: rgba(188, 187, 189, 0.32);
+		  margin: -5px 5px 0 0;
+		  padding:4px 10px;
+		  width:140px;">
+	  <i class="fa fa-compass"></i>
+	  All Tags
 	</a>
 	{% endif %}
-	<!-- New -->
-	<a href="{{request.path}}?sorting=new{{urlstring}}">
-	  <span {% if sorting = "new" %}class="bold"{% endif %}>New</span>
-	</a>
-	<!-- Top -->
-	<a href="{{request.path}}?sorting=top{{urlstring}}">
-	  <span {% if sorting = "top" %}class="bold"{% endif %}>Top</span>
-	</a>	
+	
+	<ul id="typedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
+	  {% if not userprofile %}
+	  <li>
+	    <a href="{{request.path}}?sorting=top{{urlstring}}">
+	      <span {% if sorting = "top" %}class="bold"{% endif %}>
+		<i class="fa fa-compass" style="width:14px;"></i> 
+		All Tags</span>
+	    </a>
+	  </li>
+	  {% endif %}
+	  <li>
+	    <a href="{{request.path}}?sorting=top{{urlstring}}">
+	      <span {% if sorting = "top" %}class="bold"{% endif %}>
+		<i class="fa fa-hashtag" style="width:14px;"></i> 
+		Following</span>
+	    </a>
+	  </li>
 
-
-	<!-- Top -->
-	<!-- <a href="{{filterurl}}/top/all-time/"> -->
-	<!--   <span {% if rankby == "top" and userprofile %}class="bold"{% endif %}> -->
-	<!--     Top {% if rankby == "top" and not userprofile %}:{% endif %}</span></a> -->
-	<!-- {% if rankby == "top" and not userprofile %} -->
-	<!-- <a href="{{filterurl}}/top/all-time/"> -->
-	<!--   <span {% if timespan = "all-time" %}class="bold"{% endif %}>All time</span></a> -->
-	<!-- <a href="{{filterurl}}/top/year/"> -->
-	<!--   <span {% if timespan = "year" %}class="bold"{% endif %}>Year</span></a> -->
-	<!-- <a href="{{filterurl}}/top/month/"> -->
-	<!--   <span {% if timespan = "month" %}class="bold"{% endif %}>Month</span></a> -->
-	<!-- <\!-- While website is not being updated that often. -->
-	<!--      <a href="{{filterurl}}/top/day"> -->
-	<!--        <span {% if timespan = "day" %}class="bold"{% endif %}>Day</span></a> -->
-	<!--      -\-> -->
-	<!-- {% endif %} <\!-- end rankby top, showing timespans -\-> -->
-
+	</ul>
 
       </div> <!-- Close rank types -->
     </div> <!-- Close 9 columns -->
-
-
-      {% if filterurl != "/user" and filterurl != "/subscriptions" and filterby != "hub" and not solohub and not userprofile %}
-
-    <div class="large-3 small-3 columns">
-
+  
+    <div class="large-4 small-4 columns">
 	<!-- Search -->
 	<i class="fi-magnifying-glass right"
 	   style="position: relative;
 	  	  right: 28px;
 	  	  width: 0;
 	  	  top: 12px;
-	  	  color: #cccccc;
-	  	  right: 68px;		  "
+	  	  color: #cccccc;"
 	   ></i>
 	<input placeholder="" name="query" value="{{query}}"
 	       type="text" class="right searchbar" form="search-form"
 	       id="search-input">
-
-      <!-- Toggle Hubs -->
-      {% if not userprofile and filterby != "subscriptions" and not solohub %}
-      <i class="fa fa-bars"
-	 id="toggle-hubs"></i>
-      {% endif %}
-      	
       </div> <!-- Close 4 columns -->
       
-      {% endif %}
-
-    {% if userprofile.username == "rayalez" %}
-    <div class="large-4 small-4 columns">
-      <div class="rank-types" style="float:right;">
-	<a href="{{request.path}}?hubs=science-fiction">
-	  <span>Fiction</span>
-	</a>
-	<a href="{{request.path}}?hubs=articles">
-	  <span>On writing</span>
-	</a>
-      </div>
-    </div>
-    {% endif %}
-
       <div class="clearfix"></div>
 
   </div>   <!-- Close row -->

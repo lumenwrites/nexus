@@ -6,17 +6,7 @@ from django.db.models import permalink
 class Hub(models.Model):
     title = models.CharField(max_length=64)    
     slug = models.SlugField(max_length=64, default="")
-    description = models.TextField(default="", blank=True)
-    parent = models.ForeignKey('Hub', related_name="children", default=None,null=True, blank=True)
-    users_can_create_children = models.BooleanField(default=False)    
-    description = models.TextField(max_length=512, blank=True)
-
-    HUB_TYPES = (
-        ("hub", "Hub"),
-        ("folder", "Folder"),
-    )
-    hub_type = models.CharField(default="hub", max_length=64, choices=HUB_TYPES, blank=True)
-    order = models.IntegerField(default=0)
+    # description = models.TextField(max_length=512, blank=True)
     
     def __str__(self):
         # try:
@@ -24,7 +14,7 @@ class Hub(models.Model):
         # except:
         #     parent_title = ""
         # return parent_title  + self.title
-        return self.title        
+        return self.slug
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

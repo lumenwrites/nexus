@@ -1,44 +1,6 @@
 {% load staticfiles %}
 {% load markdownify %}
 
-
-<!-- lumiverse style -->
-{% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" %}	
-<style>
-  .subnav {
-  display: none;
-  }
- .subheader .stats {
-    display: none;
-  }
-  .subheader h1 {
-  margin-top: 20px!important;
-  }
-  .subheader {
-  padding: 40px 10px!important;
-  padding: 40px 0px 20px 0 !important;
-  }
-  .article-footer {
-  display:none;
-  }
-  article {
-  padding-bottom: 0!important;
-  }
-  .tagline a {
-  color: white;
-  text-decoration: underline;
-  }
-  #mainMenu .subscribe-button {
-  display:none;
-  }
-  .subheader .rss-icon {
-  display:none;
-  }
-  
-</style>
-{% endif %}
-
-
 <style>
 
   .subheader .rss-icon {
@@ -52,13 +14,6 @@
   .user-info {
   float:left;
 
-  .avatar {
-  float:left;
-  width:70px;
-  border-radius: 4px;
-  margin:10px;
-  margin-left:0;
-  }
 
   .username {
   font-weight: bold;
@@ -201,13 +156,6 @@
 
 
 <!-- Subheader -->
-<div style="background:url(/static/img/bg.jpg);
-	    background-position-y: -320px;
-	    display:none;
-	    {% if solohub or userprofile %}
-	    display:block;
-	    {% endif %}	    
-	    " class="subheader-bg">
   <div class="row">
     <div class="large-12 small-12 columns subheader"
 	 style="padding-top:20px;padding-bottom: 14px;">
@@ -224,8 +172,6 @@
       <div class="large-6 small-6 columns user-info">
 	<!-- Avatar -->
 	{% if userprofile.username == "rayalez" %}
-	<img src="{% static "/static/img/signature.png" %}"
-	     class="avatar"/>
 	{% elif userprofile.username == "lumenwrites" or userprofile.username == "alex_aka_jj" %}	
 	<!-- <img src="{% static "/static/img/data-brain.jpg" %}" -->
 	<!--      class="avatar"/> -->

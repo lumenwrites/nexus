@@ -8,15 +8,7 @@
 
   <title>
     {% block title %} 
-    {% if request.META.HTTP_HOST == "rationalfiction.io"  %}
-    rationalfiction     
-    {% elif request.META.HTTP_HOST == "writingstreak.io" %} 
-    Writing Streak
-    {% elif request.META.HTTP_HOST == "lumenwrites.com" %}
-    lumenwrites
-    {% else %}	        
-    fictionhub 
-    {% endif %}	    
+    Hacker Tribe
     {% endblock title %}
   </title>
 
@@ -38,20 +30,12 @@
   <!-- <link rel="stylesheet" href="{% static "/static/css/main.css" %}" /> -->
   <link rel="stylesheet" href="{% static "/static/css/css/style.css" %}" />
 
-  {% if user.enable_dark_interface %}  
-  <link rel="stylesheet" href="{% static "/static/css/dark.css" %}" />
-  <link rel="stylesheet" href="{% static "/static/css/forum.css" %}" />  
-  {% endif %}  
   
 
   {% block meta %}  
   <meta property="og:image" content="http://fictionhub.io/static/img/valley_cropped.png">
-  {% if request.META.HTTP_HOST == "writingstreak.io"  %}
-  <meta property="og:description" content="Write fiction every day!">
-  {% else %}
   <meta property="og:description" content="Fictionhub is the perfect place to publish, discover and discuss awesome fiction.">
   <meta name="description" content="The most awesome place to publish, discover, and discuss fiction.">
-  {% endif %}  
   {% endblock meta %}  
   <!-- jQuery -->
   <script src="{% static "/static/js/vendor/jquery.js" %}" type="text/javascript"></script>
@@ -94,17 +78,10 @@
       <!-- Logo -->      
         <div class="large-6 small-6 columns" >
           <a href="/" class="logo">
-	    {% if request.META.HTTP_HOST == "writingstreak.io" %}
-	    <!-- <img src="{% static "/static/img/logo_128x128.png" %}"/> -->
-	    <span style="font-weight:100;">writing</span><span style="font-weight:400;">streak</span><span class="beta" style="font-size:12px;">[beta]</span>
-	    {% elif request.META.HTTP_HOST == "rationalfiction.io"  %}
 	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
-	    <span style="font-weight:100;">rational</span><span style="font-weight:400;">fiction</span>
-	    {% else %}	    
-	    fiction<span class="bold">hub</span>
-	    <img src="{% static "/static/img/logo_128x128.png" %}"/>
+	    <span style="font-weight:100;margin-right:2px">hacker</span><span>tribe</span>
 
-	    {% endif %}	    
+
 	  </a>
 	  <a data-dropdown="websites-dropdown" aria-controls="drop1" aria-expanded="false" data-options="align:left" >
 	    <!-- Hide arrow -->
@@ -152,220 +129,25 @@ margin-left: 5px;
 
 
 	  {% if user.is_authenticated %}
-	  
-	  <!-- User -->
 	  <ul style="margin-right:0;">
-	    <a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false">
-	      <!-- Avatar -->
-	      <!-- <img class="avatar-icon" src="{% static "/static/img/signature.png" %}"/> -->
-	      <!-- {{user.username}} -->
-	      <!-- 
-	      <i class="button small fi-torso"
-		 style="padding: 5px 10px;
-		 background-color: rgb(136, 136, 136);
-		 top: -2px;"></i> -->
-
-	      <!-- <a href="/browse/"></i>Browse</a> -->
-
-
-	      <a href="/browse/" data-dropdown="browsedropdown"
-		 data-options="is_hover:true; align:bottom;"
-		 >Browse</a>
-
-	      <ul id="browsedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
-		<li>
-		  <a href="/browse/">
-		    <i class="fa fa-compass"></i>
-		      All stories
-		  </a>
-		</li>
-		{% if user.subscribed_to.count > 0 %}	  
-		<li>
-		  <a href="/subscriptions/?sorting=new">
-		    <i class="fa fa-rss"></i>
-		      Subscriptions
-		  </a>
-		</li>
-		{% endif %}
-
-
-		{% if request.META.HTTP_HOST == "writingstreak.io" %}				
-		<li>
-		  <a href="/users/top/">
-		    <i class="fi-torsos"></i>
-		    Top users</a>
-		</li>
-		{% endif %}
-
-
-		{% if request.META.HTTP_HOST == "writingstreak.io" %}						
-		<li>
-		  <a href="/hub/discussion/">
-		    <i class="fi-comments"></i>
-		    Discussion</a>
-		</li>
-		{% endif %}
-
-		{% if  request.META.HTTP_HOST == "writingstreak.io" %}						
-		<li>
-		  <a href="/about/">
-		    <i class="fa fa-info-circle"></i>
-		    About</a>
-		</li>
-		{% endif %}
-
-
-	      </ul>
-
-	      <style>
-		#browsedropdown {
-		width: 200px;
-		}		
-		#browsedropdown li a {
-		text-transform:none;
-		text-align: left;
-		}
-		#browsedropdown li a i {
-		margin-right: 10px;
-		}
-		.f-dropdown:before,
-		.f-dropdown:after{
-		display:none;
-		}
-	      </style>
-	      
-
-	      <!-- Write -->
-	      {% if  request.META.HTTP_HOST == "writingstreak.io" %}
-	      <a href="/write/">Write</a>
-	      <!-- <i class="fa fa-pencil-square-o"></i> -->
-	      {% else %}
-	      <a href="/story/add">Write</a>
-	      <!-- <i class="fa fa-pencil-square-o"></i> -->
-	      {% endif %}
-	      
-	      
-	      <a href="/user/{{user.username}}" data-dropdown="usermenu"
-		 data-options="is_hover:true; align:bottom;"
-		 >{{user.username}}</a>
-
-	      <ul id="usermenu" class="f-dropdown alignRight dropdownmenu" data-dropdown-content>
-		<li>
-		  <a href="/user/{{user.username}}"><i class="fa fa-home"></i>Profile</a>
-		</li>
-		{% if user.in_messages.count > 0 %}
-		<li>
-		  <a href="{% if user.new_notifications %}
-		     /notifications/unread/
-		     {% else %}
-		     /notifications/all/		 
-		     {% endif %}">
-		    <i class="fa fa-envelope-o
-		       {% if user.new_notifications %}new-notifications{% endif %}"></i>Inbox</a>
-		</li>
-		{% endif %}
-		<!-- 
-		<li>
-		  <a href="/stats/"><i class="fa fa-bar-chart"></i>Stats</a>
-		</li>
-		 -->
-		<li>
-		  <a href="/preferences/"><i class="fa fa-cog"></i>Settings</a>
-		</li>
-		<li>
-		  <a href="/logout/?next={{request.path}}"><i class="fa fa-power-off"></i>Logout</a>
-		</li>
-	      </ul>
-	      
-	      <style>
-		#usermenu {
-		width: 130px;
-		}		
-		#usermenu li a {
-		text-transform:none;
-		text-align: left;
-		}
-		#usermenu li a i {
-		margin-right: 10px;
-		}
-		.f-dropdown:before,
-		.f-dropdown:after{
-		display:none;
-		}
-	      </style>
-
-	      <!-- <a href="/browse/"> -->
-	      <!-- 	<i class="fa fa-compass"></i></a>			     -->
-	      
-	      <!-- Home -->
-	      <!-- <a href="/user/{{user.username}}"> -->
-	      <!-- 	<i class="fa fa-home"></i></a> -->
-
-
-	      	      
-	    </a>
-
-	    <style>
-	      #mainMenu {
-	      margin-top: 16px;
-	      }
-	      #mainMenu a {
-	      font-size: 20px;
-	      margin-left: 4px;
-	      }
-	      .new-notifications {
-	      color:#f66303;
-	      font-weight:bold;
-	      }
-	    </style>
-	    <!-- Dropdown -->
-	    <ul id="drop1" class="f-dropdown" data-dropdown-content
-		aria-hidden="true" tabindex="-1">
-	      <li><a href="/user/{{user.username}}">
-		  <b>{{user.username}}</b> ({{user.karma}})
-	      </a></li>
-	      {# {% if user.approved %} #}
-	      <li><a href="/story/add"> Create Story
-		  <!-- <i class="fa fa-pencil-square-o"></i> --> </a></li> <!-- Submit --> 
-	      <!-- <li><a href="/hub/add"> Create Hub </a></li> -->
-	      {# {% endif %} #}
-	      <li><a href="/notifications/"> Notifications (2)
-		  <!-- <i class="fa fa-envelope-o"></i> --></a></li>	      
-	      <li><a href="/preferences/"> Preferences
-		  <!-- <i class="fa fa-cog"></i> --></a></li>
-	      <!-- <li><a href="/preferences/"> Dark Mode </a></li>	       -->
-	      <li>
-		<a href="/logout/?next={{request.path}}">
-		  <!-- <img class="logout" src="{% static "/static/img/logout.png" %}"/> -->
-		  logout
-		  <!-- <i class="fa fa-power-off"></i> -->
-		</a>
-	      </li>
-	    </ul>
+	    <a href="/">
+	      <i class="fa fa-home"></i> Home </a>
+	    <a href="/browse/">
+	      <i class="fa fa-compass"></i> Browse </a>
+	    <a href="/notifications/">
+	      <i class="fa fa-envelope-o"></i> Notifications </a>
+	    <!-- 
+	    <a href="/logout/?next=/browse/">
+	      <i class="fa fa-power-off"></i>Logout</a>
+	     -->
 	  </ul>
+
 	  {% else %}
 	  <ul style="margin-right:0;">
-	    <a href="/browse/"> Browse </a>
-	    <a href="/login/?next={{request.path}}"
-	       data-reveal-id="login-popup"> Login </a>
-	    {% if request.META.HTTP_HOST == "localhost:8000" or request.META.HTTP_HOST == "fictionhub.io"  %}
-	    <!-- 
-	    <a href="/login/?next=/story/add"
-	       data-reveal-id="login-popup"> Submit Story </a>
-	     -->
-	    {% endif %}	       
-
-	    
-	    {% if not user.is_authenticated and not request.path = "/" %}
-	    <a href="/login/?next={{request.path}}"
-	       data-reveal-id="sub-popup"
-	       class="small button subscribe-button"
-	       style="padding: 10px 20px;
-		      color: white;
-		      border-radius: 0;">
-	      Subscribe </a>
-	    {% endif %}
-
+	    <a href="/">
+	      <i class="fa fa-home"></i> Home </a>
+	    <a href="/browse/">
+	      <i class="fa fa-compass"></i> Browse </a>
 	  </ul>
 	  
 	  {% endif %}

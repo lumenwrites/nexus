@@ -1,0 +1,49 @@
+{% include "profiles/profile-card.html" %}  
+
+
+<div class="hubs">
+  <span style="margin-left:10px; font-weight:bold;">
+      <i class="fa fa-line-chart" aria-hidden="true"></i>
+      Popular Hubs</span>
+  <div class="top-lvl-hub">
+    {% for hub in hubs %}
+    <div  class="hub-tag top-lvl container">
+      <a href="/hub/{{hub.slug}}/" class="hub-filter" id="{{hub.slug}}">
+	# {{hub}}
+      </a>
+    </div>
+    {% endfor %}
+  </div> <!-- close  columns -->
+</div>  <!-- Close row -->
+
+<style>
+  .hubs {
+  margin-top:0px;
+  }
+.hub-tag {
+margin-left: 0;
+}
+<!-- lighter background
+  rgba(0, 0, 0, 0.02)-->
+
+.second-lvl .hub-tag {
+display:block;
+float:left;
+}
+
+.hubs .hub-tag {
+  line-height: 40px;
+padding: 5px;
+margin: 4px;
+}
+
+.hubs .hub-tag a {
+color: #3d454b;
+}
+
+</style>
+
+
+  
+
+

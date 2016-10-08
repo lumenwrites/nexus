@@ -61,19 +61,7 @@ class FilterMixin(object):
     def get_queryset(self):
         qs = super(FilterMixin, self).get_queryset()
 
-        # Filter Stories
-        qs = qs.filter(post_type="story")
 
-        # Filter by site
-        if check_if_rational(self.request):
-            qs = qs.filter(rational=True)            
-
-        if check_if_daily(self.request):
-            qs = qs.filter(daily=True)            
-
-        if not check_if_rational(self.request) and not  check_if_daily(self.request):
-            qs = qs.filter(daily=False)
-            
         # Filter by hubs
         try:
             selectedhubs = self.request.GET['hubs'].split(",")
@@ -159,26 +147,25 @@ class BrowseView(FilterMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         # Redirect to wst homepage
-        if request.META['HTTP_HOST'] == "writingstreak.io" and request.path == "/":
-            if request.user.is_authenticated():
-                return HttpResponseRedirect('/write/')        
-            return render(request, 'home-daily.html', {})
+        if not request.user.is_authenticated() and request.path == "/":
+            return render(request, 'home.html', {})
         else:
             return super(BrowseView, self).dispatch(request, *args, **kwargs)
        
         
     def get_queryset(self):
         qs = super(BrowseView, self).get_queryset()        
-        qs = [p for p in qs if (p.published == True and
-                                p.author.approved ==True)]
+        # qs = [p for p in qs if (p.published == True and
+        #                         p.author.approved ==True)]
 
         return qs
 
-
-#     def get_context_data(self, **kwargs):
-#         context = super(PostsView, self).get_context_data(**kwargs)
-#         context['rankby'] =  self.kwargs['rankby']
-#         return context    
+    def get_context_data(self, **kwargs):
+        context = super(BrowseView, self).get_context_data(**kwargs)
+        context['form'] = PostForm()
+        if self.request.user.is_authenticated():
+            context['userprofile'] = self.request.user
+        return context    
     
 
 class UserprofileView(FilterMixin, ListView):
@@ -194,8 +181,8 @@ class UserprofileView(FilterMixin, ListView):
         qs = [p for p in qs if (p.author==userprofile)]
 
         # Show only published to everyone else
-        if self.request.user != userprofile:
-            qs = [p for p in qs if (p.published==True)]            
+        # if self.request.user != userprofile:
+        #     qs = [p for p in qs if (p.published==True)]            
         
         return qs
 
@@ -227,14 +214,6 @@ class UserprofileView(FilterMixin, ListView):
         context['score'] = score
 
 
-        # Stats for writingstreak
-        statsposts = Post.objects.filter(author=userprofile, daily=True)
-        statsposts = statsposts.order_by('pub_date')
-        days, longeststreak, currentstreak, totalwordcount = stats(statsposts)
-        context['days'] = days
-        context['longeststreak'] = longeststreak
-        context['currentstreak'] = currentstreak
-        context['wordcount'] = totalwordcount
         
         return context    
     
@@ -285,7 +264,6 @@ class HubView(FilterMixin, ListView):
         context = super(HubView, self).get_context_data(**kwargs)
         hub = Hub.objects.get(slug=self.kwargs['hubslug'])
         context['hubtitle'] = hub.title
-        context['solohub'] = True
         return context    
     
 
@@ -340,51 +318,32 @@ def unupvote(request):
 
 
 
-def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
+def post(request, slug, comment_id="", rankby="new", filterby=""):
     if request.path[-1] == '/':
         return redirect(request.path[:-1])
 
-    story = get_object_or_404(Post, slug=story)
+    post = get_object_or_404(Post, slug=slug)
         
-    # Get first chapter if it exists
-    first_chapter = Post.objects.filter(parent=story, number=1).first()
+    # comments = get_comments(post=post)
 
-    if chapter:
-        chapter = Post.objects.get(parent=story,slug=chapter)
-        prev_chapter = get_or_none(Post, parent=story, number=chapter.number-1)
-        next_chapter = get_or_none(Post, parent=story, number=chapter.number+1)
-        post = chapter
-        comments = get_comments(post=chapter)        
-    else:
-        chapter = []
-        prev_chapter = []
-        next_chapter = []
-        post = story        
-        comments = get_comments(post=story)
+    # # Permalink to one comment
+    # if comment_id:
+    #     comments = get_comments(post=post, comment_id=comment_id)
 
-    # Permalink to one comment
-    if comment_id:
-        comments = get_comments(post=story, comment_id=comment_id)
-
-    # Submit comments
-    if request.method == 'POST':
-        if chapter:
-            submit_comment(request, chapter)
-        else:
-            submit_comment(request, story)            
-    form = CommentForm()
+    # # Submit comments
+    # if request.method == 'POST':
+    #         submit_comment(request, post)            
+    # form = CommentForm()
 
     # Footer info
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
         subscribed_to = request.user.subscribed_to.all()
-        comments_upvoted = request.user.comments_upvoted.all()
     else:
         upvoted = []
         subscribed_to = []
-        comments_upvoted = []
 
-    hubs = story.hubs.all()        
+    hubs = post.hubs.all()        
 
     # Increment views counter. Do clever memcache laters.
     if not request.user.is_staff and request.user != post.author:
@@ -396,15 +355,8 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
     return render(request, 'posts/post.html',{
         'post': post,
-        'first_chapter':first_chapter,
-        'chapter': chapter,
-        'prev_chapter': prev_chapter,
-        'next_chapter': next_chapter,       
         'upvoted': upvoted,
-        'comments': comments,
-        'comments_upvoted': comments_upvoted,
         'rankby': rankby,        
-        'form': form,
         'hubs':hubs,
         'subscribed_to':subscribed_to,
         'userprofile':userprofile,        
@@ -412,59 +364,35 @@ def post(request, story, comment_id="", chapter="", rankby="new", filterby=""):
 
 def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
     if request.method == 'POST':
-        form = PostForm(request.POST, storyslug=story)
+        form = PostForm(request.POST)
         if form.is_valid():
             # Create new story
             post = form.save(commit=False)
             post.author = request.user
             post.score += 1 # self upvote
-            post.post_type = "story"
-            post.rational = check_if_rational(request)
-            post.daily = check_if_daily(request)
-            post.fictionhub = check_if_fictionhub(request)
-            if story:
-                # Create new chapter
-                post.parent = Post.objects.get(slug=story)
-                post.post_type = "chapter"
-                number_of_chapters = post.parent.children.count()
-                post.number = number_of_chapters + 1
-
-            if request.user.username == "lumenwrites":
-                post.published = True            
 
             post.save()
             request.user.upvoted.add(post)
-            
+
+            hubs_string = request.POST.get('hubs')
+            hubs_list = hubs_string.split("#")
+            for hubslug in hubs_list:
+                if hubslug:
+                    hubslug = hubslug.strip()
+                    hub, created = Hub.objects.get_or_create(title=hubslug,slug=hubslug)
+                    post.hubs.add(hub)
+
             # Add hubs
-            post.hubs.add(*form.cleaned_data['hubs'])
+            post.hubs.add()
             hubs = post.hubs.all()
 
-            if story:
-                return HttpResponseRedirect('/story/'+post.parent.slug+'/'+post.slug+'/edit')
-            else:
-                return HttpResponseRedirect('/story/'+post.slug+'/edit')
+            return HttpResponseRedirect('/') # story/'+post.slug+'/edit'
     else:
         form = PostForm()
-        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
 
-    if story:
-        story = Post.objects.get(slug=story)
-        return render(request, 'posts/edit.html', {
-            'story':story,        
-            'form':form,
-            'action':'chapter_create',
-            'challenge':challenge,
-            'posttype':posttype,
-            'hubslug':hubslug,                        
-            'prompt':prompt            
-        })
-    else:
-        return render(request, 'posts/create.html', {
+    return render(request, 'posts/create.html', {
             'form':form,
             'hubs':Hub.objects.all(),
-            'challenge':challenge,
-            'prompt':prompt,
-            'posttype':posttype,
             'hubslug':hubslug,                                    
             'test': ""
         })

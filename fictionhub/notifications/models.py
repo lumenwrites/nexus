@@ -11,7 +11,7 @@ class Message(models.Model):
     to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="in_messages", default="") 
     subject = models.ForeignKey('Subject', related_name="messages",
                                 default=None, null=True, blank=True)
-    story = models.ForeignKey('posts.Post', default=None, null=True, blank=True)
+    post = models.ForeignKey('posts.Post', default=None, null=True, blank=True)
     comment = models.ForeignKey('comments.Comment', default=None, null=True, blank=True)    
 
     body = models.TextField(default="", null=True, blank=True)

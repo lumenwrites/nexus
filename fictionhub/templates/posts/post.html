@@ -19,25 +19,11 @@
   
   margin-top: 5px;
   background: white;
-  padding: 40px;
+  padding: 20px;
 
   background: rgba(255,255,255,0.8);
-//  box-shadow: 0 1px 4px rgba(0,0,0,.04);
-//  border: 1px solid rgba(0,0,0,.09);
-//  border-radius: 3px;  
 }  
 </style>
-
-
-{% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" %}
-{% include "elements/subheader.html" %}
-<style>
-  article {
-  
-  margin-top: 20px;
-  }
-</style>
-{% endif %}
 
 
 
@@ -46,174 +32,27 @@
 
 <div id="page"  class="postPage">
   <div class="row" id="posts">
-    <div class="large-12 columns post-columns">
+
+  <div class="large-4 small-4 columns sidebar"> <!-- style="display:none;" -->
+  {% include "elements/sidebar.html" %}  
+  </div>
+    
+    <div class="large-8 small-8 columns post-columns">
 
       {% if orangemind %}      
       {% include "posts/orangemind-header.html" %}
       {% endif %}      
 
-	  <!-- {% if post.parent.post_type == "story" %} -->
-	  <!-- <h1> <a class="black" href="{{post.parent.get_absolute_url}}"> -->
-	  <!--     {{post.parent.title}}</a> </h1> -->
-	  <!-- {% endif %}       -->
       <article>
-	{% if post.post_type != "wiki"  %}
-	{# {% include "posts/vote.html" %} #}
-	{% endif %}
-	<!-- Post Header -->
-	<header class="post-header">
-	<!-- chapters				     				
-	{% if post.post_type == "chapter" %}						     
-	<select style="width:auto; padding-right: 20px; margin-top: 5px; float:right;
-		       line-height: 22px;
-">
-	  <option value="{{post.parent.get_absolute_url}}">{{post.parent.title}}</option>
-	  {% for child in post.parent.children.all %}
-	  <option value="{{child.get_absolute_url}}">{{child.title}}</option>
-	  {% endfor %}	  
-	</select>
-	{% endif %} -->
-
-	  {% if user == post.author or user.is_staff or post.post_type == "wiki"  %}
-	<a class="edit-post" style="margin:14px;" href="{{post.get_absolute_url}}/edit">
-	  <i class="fa fa-pencil"></i><!-- Edit --></a>
-	  {% endif %}
-	  <h1> {{post.title}} </h1>	    
-	    
-	  {% if post.post_type != "wiki" and post.post_type != "chapter" %}
-	  <!-- submitted 14 days ago -->
-	  <!--  
-	  <span class="post-tagline">
-	    by <a {% if post.author.website and post.author.external_url %}	  
-		  href="{{post.author.website}}"
-		  {% else %}	
-		  href="/user/{{post.author.username}}"
-		  {% endif %}>
-	      {{post.author}}</a>
-	  </span>
-	  -->
-	  {% endif %}		  
-
-	    <hr />
-	</header>
 	<!-- Post Body -->
 	{{post | markdownify | safe }}
-
-	<div class="clearfix"></div>
-
-	{% if post.post_type == "story" and post.children.all %}	
-	<div class="panel" id="toc">
-	  {% for chapter in post.children.all %}	  
-	  <ul>
-	    <li><a href="{{chapter.get_absolute_url}}">{{chapter.title}}</a></li>
-	  </ul>
-	  {% endfor %}
-	</div>
-	{% endif %}	
-
-	{% if post.post_type == "challenge" %}
-	    {% if post.state == "open" %}
-	        {% if user.is_authenticated %}
-	        <a class="button small"
-	           href="{{post.get_absolute_url}}/submit-story">Submit a story</a>
-	        {% else %}
-	        <a class="button small"
-	           href="/login/?next={{request.path}}">Login to submit a story</a>
-	        {% endif %}
-	    {% elif post.state == "voting" %}
-	    <a class="button small"
-	       href="{{post.get_absolute_url}}/submissions">View submissions </a>
-	    {% elif post.state == "completed" %}
-	    <a class="button small"
-	       href="{{post.get_absolute_url}}/submissions">View results</a>
-	    {% endif %}				    
-	{% endif %}			
-						
-	<!-- Button read prev -->
-	{% if prev_chapter %}
-	<a class="button small previous-chapter left" style="z-index: 2;"
-	   href="{{prev_chapter.get_absolute_url}}">< Previous</a>
-	{% elif chapter %} <!-- If this is a chapter - go back to story -->
-	<a class="button small previous-chapter left" style="z-index: 2;"
-	   href="{{post.parent.get_absolute_url}}">< Story</a>
-	{% endif %}
-	
-	<!-- chapters				     				
-        <div style="text-align: center;
-		    width: 100%;
-		    position: absolute;">
-	{% if post.post_type == "chapter" %}						     
-	<select style="width:auto; padding-right: 20px; margin-top: 5px; line-height: 22px;
-">
-	  <option value="{{post.parent.get_absolute_url}}">{{post.parent.title}}</option>
-	  {% for child in post.parent.children.all %}
-	  <option value="{{child.get_absolute_url}}">{{child.title}}</option>
-	  {% endfor %}	  
-	</select>
-	{% endif %}
-	</div> -->
-	<!-- Button read next -->
-	{% if next_chapter %}
-	<a class="button small next-chapter"
-	   href="{{next_chapter.get_absolute_url}}">Next ></a> 
-	{% elif first_chapter and not chapter %}
-	<a class="button small next-chapter"
-	   href="{{first_chapter.get_absolute_url}}">Read ></a>
-	{% endif %}
 	<div class="clearfix"></div>	
-	<div style="width:100%; height: 20px"></div>	
       </article>
-      
+      <div style="margin:-5px 20px 40px 20px;">
+      {% include "elements/post-footer.html" %}      
+      </div>
 
-<!-- Personal footer -->
-{% if userprofile.username == "alex_aka_jj" or  userprofile.username == "lumenwrites" or userprofile.username == "rayalez" and not user.is_authenticated %}
-<div class="panel" style="padding:10px;
-			  padding: 13px;
-			  background: rgba(240, 249, 255, 0.32);
-			  background: #F2F2F2;">
-  <div class="left" style="padding: 6px 0;">
-  Liked this story? Subscribe to the updates!
-  </div>
 
-  <!-- RSS icon -->
-        <a class="button small rss-icon right"
-	   href="/user/{{post.author.username}}/feed/atom/"
-	   style="height: 40px;
-		  width: 40px;
-		  border-radius: 0;
-		  padding: 0;
-		  margin-left: 5px;">
-	  <i class="fi-rss large" style="padding: 0;
-					 color:white;"></i>
-	</a>
-
-	<!-- Email Subscribe -->
-  <div class="right">
-    	<form method="post"
-	      action="/user/{{post.author}}/email_subscribe?next={{request.path}}"
-	      >{% csrf_token %}
-    	  <input id="email" maxlength="254" name="email" type="text"
-    		 placeholder="Enter your email"
-		 style="float: left;
-			width: 200px;
-			height: 40px;
-			margin:0;
-			/*border: 1px solid white;
-			box-shadow: none;*/">
-    	  <input type="submit" class="button small" value="Subscribe"
-		 style="padding: 10px 20px;
-			height: 40px;			
-			float:left;">
-    	</form>
-  </div>
-
-	<div class="clearfix"></div>
-</div>
-{% else %}
-<!-- Follow -->
-{% include "posts/post-footer.html" %}
-
-{% endif %}
 
 <!-- Comments -->
 {% include "comments/comments.html" %}
