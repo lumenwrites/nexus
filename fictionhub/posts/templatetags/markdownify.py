@@ -7,8 +7,8 @@ import bleach
 register = template.Library()
  
 @register.filter
-def markdownify(post, short = "False"):
-    text = post.body
+def markdownify(text, short = "False"):
+    text = text
     if short == "True":
         try:
             text = text.split("<!-- more -->")[0].strip()
@@ -28,8 +28,8 @@ def markdownify(post, short = "False"):
         
     
 
-    if short == "True":    
-        html += "<div class='clearfix'></div><a href='"+post.get_absolute_url()+"' class='readmore'> read more >>>> </a>"
+    # if short == "True":    
+    #     html += "<div class='clearfix'></div><a href='"+post.get_absolute_url()+"' class='readmore'> read more >>>> </a>"
 
     # linkify_html = bleach.linkify(html)
     # tags = ['img', 'p', 'em', 'strong', 'a', 'span', 'b', 'i', 'blockquote', 'hr'] # bleach.ALLOWED_TAGS

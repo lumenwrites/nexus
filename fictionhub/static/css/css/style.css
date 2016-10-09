@@ -1232,12 +1232,16 @@ article header {
 .profile-card .about {
   padding: 10px;
 }
-/* line 1123, ../sass/style.scss */
+/* line 1121, ../sass/style.scss */
+.profile-card .about p {
+  font-size: 18px;
+}
+/* line 1126, ../sass/style.scss */
 .profile-card .button {
   width: calc(100% - 20px);
   margin: 10px;
 }
-/* line 1126, ../sass/style.scss */
+/* line 1129, ../sass/style.scss */
 .profile-card .button i {
   color: white;
 }

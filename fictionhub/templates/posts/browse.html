@@ -102,9 +102,16 @@ padding: 0px;
 		    border: 1px solid rgba(0,0,0,.09);
 		    border-radius: 3px;
 		    padding-bottom:0;">
-      
+
+      {% if post.parent %}
+      <a href="{{post.parent.get_absolute_url}}">
+	<div class="panel">
+	  {{post.parent.body|markdownify:"True"|safe}}
+	</div>
+      </a>
+      {% endif %}      
       <!-- Post Body -->
-      {{post | markdownify:"True" | safe  }} <!-- firstparagraph -->
+      {{post.body | markdownify:"True" | safe  }} <!-- firstparagraph -->
       <div class="clearfix"></div>
       <!-- Post Footer -->
       <br/>

@@ -1,6 +1,8 @@
 {% load staticfiles %}
 {% load markdownify %}
 
+
+
 {% if userprofile %}
 <div class="profile-card">
   <div class="user-background"></div>
@@ -16,7 +18,7 @@
       {{userprofile.karma}}
     </div>
 
-    <div class="about">Startup founder, web developer, and blogger. I also like scifi and comedy.</div>
+    <div class="about">{{userprofile.about|markdownify|safe}}</div>
 
     {% if not userprofile = user %}
     <a class="small button"> Follow </a>
