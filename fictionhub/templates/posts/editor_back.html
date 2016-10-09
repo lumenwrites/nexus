@@ -8,9 +8,6 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-<!-- Select2 -->
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
 <!-- Markdownify -->
 <!-- <link rel="stylesheet" href="{% static "/static/codemirror/lib/codemirror.css" %}" /> -->
@@ -23,18 +20,6 @@
 
 <script>
 $(document).ready(function(){
-    var isMobile = false;
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {isMobile = true;}
-    
-    //Editor
-    // if(!isMobile){
-    // 	// Desktop editor
-    // 	var editor = new Editor();
-    // 	editor.render();
-    // } else {
-    // 	// Mobie editor
-    // 	//$('.markdown').markdownify();  
-    // }
     var simplemde = new SimpleMDE();
     simplemde.render();    
 
@@ -58,28 +43,6 @@ $(document).ready(function(){
     margin-right: 420px;    
 }
 
-<!-- Container -->
-.select2-container--default
-.select2-selection--multiple, {
-    border-color: #cccccc;
-}
-
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: #cccccc;
-}
-
-
-.select2-container--default .select2-selection--multiple {
-    height: 50px;
-}
-
-.set-hubs input {
-    margin-top: -7px!important;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__clear {
-    margin-top: 10px;
-}
 
 #id_hubs {
     list-style-type: none;
@@ -96,22 +59,6 @@ $(document).ready(function(){
 }
 
 
-
-<!-- Tags -->
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #e4e4e4;
-    border: none!important;
-    border-radius: 0px;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    border-radius: 0px;
-    border: none;
-}
-
-.select2-container--default .select2-search--inline .select2-search__field {
-  box-shadow: none;
-}
 
 .CodeMirror {
   background: none;

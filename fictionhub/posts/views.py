@@ -374,17 +374,22 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             post.save()
             request.user.upvoted.add(post)
 
-            hubs_string = request.POST.get('hubs')
-            hubs_list = hubs_string.split("#")
-            for hubslug in hubs_list:
-                if hubslug:
-                    hubslug = hubslug.strip()
-                    hub, created = Hub.objects.get_or_create(title=hubslug,slug=hubslug)
-                    post.hubs.add(hub)
-
             # Add hubs
-            post.hubs.add()
+            post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
+            
+
+            # hubs_string = request.POST.get('hubs')
+            # hubs_list = hubs_string.split("#")
+            # for hubslug in hubs_list:
+            #     if hubslug:
+            #         hubslug = hubslug.strip()
+            #         hub, created = Hub.objects.get_or_create(title=hubslug,slug=hubslug)
+            #         post.hubs.add(hub)
+
+            # # Add hubs
+            # post.hubs.add()
+            # hubs = post.hubs.all()
 
             return HttpResponseRedirect('/') # story/'+post.slug+'/edit'
     else:

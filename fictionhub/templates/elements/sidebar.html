@@ -9,7 +9,7 @@
     {% for hub in hubs %}
     <div  class="hub-tag top-lvl container">
       <a href="/hub/{{hub.slug}}/" class="hub-filter" id="{{hub.slug}}">
-	# {{hub}}
+	{{hub.title}}
       </a>
     </div>
     {% endfor %}

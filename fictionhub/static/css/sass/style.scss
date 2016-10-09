@@ -596,6 +596,16 @@ article header {
 .hub-tag {
   color: $black;
 }
+.hub-tag {
+  background: rgba(119, 119, 119, 0.2);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-left: 6px!important;
+  margin-right: 0px!important;  
+  color: $black;
+}
+
+
 
 
 .button.small {

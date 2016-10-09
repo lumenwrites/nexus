@@ -43,7 +43,11 @@
       {% include "posts/orangemind-header.html" %}
       {% endif %}      
 
-      <article>
+    <article style="padding:20px;    background: rgba(255,255,255,0.5);//#fff;
+		    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		    border: 1px solid rgba(0,0,0,.09);
+		    border-radius: 3px;
+		    padding-bottom:0;">
 	<!-- Post Body -->
 	{{post | markdownify | safe }}
 	<div class="clearfix"></div>	

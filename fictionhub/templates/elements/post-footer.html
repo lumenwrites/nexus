@@ -10,7 +10,7 @@
 
     {% for hub in post.hubs.all %} <!-- Different between post and posts -->
     <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">
-      #{{hub.title}}</a>
+      {{hub.title}}</a>
     {% endfor %}
 
 
