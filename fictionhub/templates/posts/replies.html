@@ -1,0 +1,39 @@
+{% load staticfiles %}
+{% load markdownify %}
+<style>
+    .comments .parent-panel {
+  display:none;
+  }
+</style>
+
+<br/>
+<!-- Comments -->
+<div class="row comment-section">
+  <div class="large-12 columns">
+
+
+<div class="comments">   
+  {% for post in replies %}
+  {% if post == "in" %}
+  <div>	<!-- Open Div -->
+  {% elif post != "in" and post != "out" %}        
+  <div class="comment-box"> <!-- Open Comment Box  -->    
+  <!-- Comment -->
+     {% include "posts/article.html" %}
+  <!-- End Comment -->
+  {% if post.leaf %}        
+  </div> <!-- Close Comment Box -->
+  {% endif %}   
+  {% elif post == "out" %}        
+  </div> <!-- Close Div -->
+  </div> <!-- Close Comment Box -->
+  <br/>
+  {% endif %}    
+  {% endfor %}  
+</div> <!-- End .comments -->
+
+<div class="clearfix"></div>	
+<div style="width:100%; height: 20px"></div>	
+</div>
+</div>  
+

@@ -38,6 +38,7 @@ from django.conf import settings
 from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily, check_if_fictionhub
 from .utils import get_prompts, age, stats
+from .utils import get_replies, get_reply_list
 from .utils import count_words
 from .shortcuts import get_or_none
 # Forms
@@ -324,7 +325,7 @@ def post(request, slug, comment_id="", rankby="new", filterby=""):
 
     post = get_object_or_404(Post, slug=slug)
         
-    # comments = get_comments(post=post)
+    replies = get_replies(post=post)
 
     # # Permalink to one comment
     # if comment_id:
@@ -343,9 +344,7 @@ def post(request, slug, comment_id="", rankby="new", filterby=""):
         upvoted = []
         subscribed_to = []
 
-    hubs = post.hubs.all()        
-
-    # Increment views counter. Do clever memcache laters.
+    # increment views counter. Do clever memcache laters.
     if not request.user.is_staff and request.user != post.author:
         post.views +=1
         post.save()
@@ -353,16 +352,19 @@ def post(request, slug, comment_id="", rankby="new", filterby=""):
     # Just for private website subheader
     userprofile = post.author
 
+    form = PostForm()
+    hubs = Hub.objects.all()
     return render(request, 'posts/post.html',{
         'post': post,
         'upvoted': upvoted,
-        'rankby': rankby,        
+        'replies': replies,                
         'hubs':hubs,
+        'form':form,
         'subscribed_to':subscribed_to,
         'userprofile':userprofile,        
     })
 
-def post_create(request, story="", challenge="", prompt="", posttype="", hubslug=""):
+def post_create(request, parentslug=""):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -371,6 +373,9 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             post.author = request.user
             post.score += 1 # self upvote
 
+            if parentslug:
+                post.parent = Post.objects.get(slug=parentslug)
+
             post.save()
             request.user.upvoted.add(post)
 
@@ -378,7 +383,6 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
             
-
             # hubs_string = request.POST.get('hubs')
             # hubs_list = hubs_string.split("#")
             # for hubslug in hubs_list:
@@ -391,14 +395,16 @@ def post_create(request, story="", challenge="", prompt="", posttype="", hubslug
             # post.hubs.add()
             # hubs = post.hubs.all()
 
-            return HttpResponseRedirect('/') # story/'+post.slug+'/edit'
+            if parentslug:
+                return HttpResponseRedirect('/post/'+parentslug+"#"+post.slug)
+            else:
+                return HttpResponseRedirect('/') # story/'+post.slug+'/edit'
     else:
         form = PostForm()
 
     return render(request, 'posts/create.html', {
             'form':form,
             'hubs':Hub.objects.all(),
-            'hubslug':hubslug,                                    
             'test': ""
         })
 

@@ -299,21 +299,6 @@ margin-left: 5px;
   <footer class="main-footer">
   </footer>
 
-  <style>
-::-webkit-scrollbar {
-      width: 8px;
-} /* this targets the default scrollbar (compulsory) */
-
-::-webkit-scrollbar-track {
-      background-color: #F2F2F2;
-} /* the new scrollbar will have a flat appearance with the set background color */
- 
-::-webkit-scrollbar-thumb {
-      background-color: rgba(119, 119, 119, 0.2); 
-} /* this will style the thumb, ignoring the track */
- 
-    
-  </style>
   
   <!-- Scripts -->
   <script src="  {% static "/static/js/foundation/foundation.js" %}"></script>
@@ -327,72 +312,74 @@ margin-left: 5px;
 
   <script src="  {% static "/static/js/foundation/foundation.alert.js" %}"></script>    
 
-  <!-- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-  <script src="  {% static "/static/js/foundation/foundation.tooltip.js" %}"></script>  
-  -->
+
+  <!-- Simplemde -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+  <!-- Select2 -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+  
+    
+  
 <script>
   $(document).foundation();
 </script>
 
 
-<!-- dropdown fix -->
-<script type="text/javascript">
-  $(function() {
-      var isIPad = (navigator.userAgent.match(/iPad/i) != null) ? true : false;
-      if (isIPad) {
-        $('body').on('click.fndtn.dropdown touchstart.fndtn.dropdown', '.dropdown a', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            window.location.href = this;
-            return false;
-        });
-      }
-  });
+
+
+<script>
+// Editor
+$(document).ready(function(){
+
+    $(".reply-editor").each(function(){
+	var postid = 	$(this).parent().find("article").attr('id');
+	console.log(postid);
+	$(this).find("form").attr('action', "/reply/"+postid);
+	
+    });
+
+
+      $('textarea').each(function() {
+      simplemde = new SimpleMDE({
+      element: this,
+      toolbar: [],
+      });
+      simplemde.render();
+      });      
+
+    //Open reply editor
+    $('.reply').click(function () {
+	console.log("reply!");
+	$('.reply-editor').hide()
+	$(this).parent().parent().parent().parent().parent().find('.reply-editor').toggle();
+	// $(this).parent().parent().parent().find('.comment-reply').toggle();a
+    });
+
+    // Multiselect
+    $(".hub-selector").each(function(){
+	$(this).find("#id_hubs").select2({
+	    placeholder: "select hubs",
+	    allowClear: true,
+	    maximumSelectionLength: 3
+	})
+    });
+
+});
 </script>
 
+
+
 <style>
-{% if user.enable_dark_interface %}  
-  .CodeMirror {
-  background: #121212!important;
+.CodeMirror {
+  background: none;
 }
-.editor-statusbar {
-    background: #1A1B1B;
-}
-.prompt article {
-background:#222222!important;
-}
-.prompttitle a {
-    color: #CCCCCC;
-}
-
-
-#deleteStory {
-    background: #0D0D0D;
-    border: none;
-}
-
-.subheader-bg {
-    background: #141414!important;
-}
-
-article {
-    background:   #1F1F1F!important;
-}
-
-hr {
-    border-bottom: solid 1px rgba(104, 111, 115, 0.4)!important;
-}
-
-.subheader h1 {
-    color: #A2A8A6!important;
-}
-
-.prompt .panel {
-    width: calc(100% + 22px)!important;
-}
-{% endif %}
+  
 </style>
+
+
 
 </body>
 </html>

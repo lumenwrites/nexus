@@ -275,68 +275,58 @@ def stats(posts):
     return days, longeststreak, currentstreak, wordcount
 
 
+def get_reply_list(replies=None, rankby="hot"):
+    """Recursively build a list of comments."""
+    yield 'in'
 
-# def filter_posts(request, filterby,rational,hubslug):
-#     hub = []
-#     if filterby == "subscriptions":
-#         subscribed_to = request.user.subscribed_to.all()
-#         posts = Post.objects.filter(author=subscribed_to, published=True, rational = rational)
-#         filterurl="/subscriptions" # to add to href  in subnav
-#     elif filterby == "hub":
-#         hub = Hub.objects.get(slug=hubslug)
-#         # Show posts from all the children hubs? Don't know how to sort.
-#         # children = Hub.objects.filter(parent=hub)
-#         # hubs = []
-#         if hubslug == "wiki":
-#             posts = Post.objects.filter(hubs=hub, published=True,
-#                                         post_type = "wiki")
-#             post_type = "wiki"
-#         else:
-#             posts = Post.objects.filter(hubs=hub, published=True, post_type = "story") #  rational = rational, 
-#         filterurl="/hub/"+hubslug # to add to href  in subnav
-#     elif filterby == "user":
-#         userprofile = get_object_or_404(User, username=username)
-#         if request.user == userprofile:
-#             # If it's my profile - display all the posts, even unpublished.
-#             # fictionhub includes rational        
-#             if rational:
-#                 posts = Post.objects.filter(author=userprofile,
-#                                             rational=rational).exclude(post_type="chapter")
-#             else:
-#                 posts = Post.objects.filter(author=userprofile).exclude(post_type="chapter")
-#             # , post_type="story")
-#         else:
-#             # fictionhub includes rational        
-#             if rational:
-#                 posts = Post.objects.filter(author=userprofile,
-#                                             rational=rational,
-#                                             published=True).exclude(post_type="chapter")
-#             else:
-#                 posts = Post.objects.filter(author=userprofile,
-#                                             published=True)
-#         filterurl="/user/"+userprofile.username # to add to href  in subnav
-#     elif filterby == "challenges":
-#         posts = Post.objects.filter(post_type = "challenge", published=True, rational = rational)
-#         rankby = "new"
-#     elif filterby == "challenge":
-#         challenge = Post.objects.get(slug=challenge)
-#         if challenge.state == "voting":
-#             rankby = "new" # later do random
-#         elif challenge.state == "completed":            
-#             rankby = "top"
-#         posts = Post.objects.filter(parent=challenge, published=True, rational = rational)
-#     elif filterby == "prompt":
-#         prompt = Post.objects.get(slug=prompt)
-#         posts = Post.objects.filter(parent=prompt)#, published=True, rational = rational)
-#         rankby = "hot"
-#     else:
-#         # fictionhub includes rational        
-#         if rational:
-#             posts = Post.objects.filter(published=True, rational = rational, post_type="story")
-#         else:
-#             posts = Post.objects.filter(published=True, post_type="story")
-#         # fictionhub doesn't include rational
-#         # posts = Post.objects.filter(published=True, rational = rational, post_type="story")
-#         filterurl="/stories"
-    
-#     return posts, filterurl, hub
+    # Loop through all the comments I've passed
+    for reply in replies:
+        # Add comment to the list
+        yield reply
+        # get comment's children
+        children = reply.children.all()
+        if rankby == "hot":
+            ranked_children = rank_hot(children, top=32)
+        elif rankby == "top":
+            ranked_children = rank_top(children, timespan = "all-time")
+        elif rankby == "new":
+            ranked_children = children.order_by('-pub_date')
+        else:
+            ranked_children = []
+        
+        # If there's any children
+        if len(ranked_children):
+            reply.leaf=False
+            # loop through children, and apply this function
+            for x in get_reply_list(ranked_children, rankby=rankby):
+                yield x
+        else:
+            reply.leaf=True
+    yield 'out'
+
+
+
+def get_replies(post, rankby="new",comment_id=None):
+    top_lvl_replies = Post.objects.filter(parent = post)
+
+    # Rank comments
+    if rankby == "hot":
+        ranked_comments = rank_hot(top_lvl_replies, top=32)
+    elif rankby == "top":
+        ranked_comments = rank_top(top_lvl_replies, timespan = "all-time")
+    elif rankby == "new":
+        ranked_comments = top_lvl_replies.order_by('-pub_date')
+    else:
+        ranked_comments = []
+
+    # Permalink to one comment
+    # if comment_id:
+    #     comment = []
+    #     comment.append(Comment.objects.get(id = comment_id))
+    #     ranked_comments = comment
+
+
+    # Nested comments
+    replies = list(get_reply_list(ranked_comments, rankby=rankby))
+        
+    return replies

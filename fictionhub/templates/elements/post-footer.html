@@ -34,9 +34,9 @@
 
       <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
 	<span class="fi-comment"></span>
-	<span style="float:left;margin-right:5px;"> {{post.comments.count}} </span>
+	<span style="float:left;margin-right:5px;"> {{post.children.count}} </span>
       </a>
-      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+      <a class="reply" style="margin-right:8px;">
 	<i class="fa fa-reply"></i>      
       </a>      
     </div> <!-- end stats -->

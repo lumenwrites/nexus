@@ -52,6 +52,8 @@ urlpatterns = [
     url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),
     url(r'^story/(?P<story>[^\.]+)/unpublish$', views.post_unpublish),          
 
+    # Replies
+    url(r'^reply/(?P<parentslug>[^\.]+)', views.post_create),
 
     # View story/chapter
     url(r'^post/(?P<slug>[^\.]+)/?$', views.post, name='view_post'),

@@ -24,7 +24,9 @@ visibility:hidden;
 				margin:0;
 				margin-top: -2px;
 				height: 41px;">
-	{{form.hubs}}
+	<div class="hub-selector">
+	  {{form.hubs}}
+	</div>
 	<!-- 
 	<input type="text"
 	       name="hubs"
@@ -51,123 +53,5 @@ visibility:hidden;
     <div class="clearfix"></div>
     </div>    
     <!-- Editor -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-    <script>
-      $('textarea').each(function() {
-      simplemde = new SimpleMDE({
-      element: this,
-      autosave: {
-      enabled: true,
-      uniqueId: "{{user.username}}createdailyautosave",
-      delay: 1000,
-      },
-      toolbar: [],
-      });
-      simplemde.render();
-      });      
-    </script>
 
 
-
-
-<!-- Select2 -->
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-    
-<script>
-$(document).ready(function(){
-    // Multiselect
-    $("#id_hubs").select2({
-	placeholder: "select hubs",
-	allowClear: true,
-	maximumSelectionLength: 3
-    })
-})
-</script>
-
-<style>
-.select2-container--default
-.select2-selection--multiple,
-.select2-container{
-border-color: #cccccc;
-float:left;
-width: 100%;
-}
-
-
-.select2-container--default .select2-selection--multiple {
-border-radius:0;
-}
-
-.select2-container--default .select2-selection--multiple {
-height:35px
-}
-
-
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: #cccccc;
-}
-
-
-
-
-.set-hubs input {
-    margin-top: -7px!important;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__clear {
-margin-top: 2px;
-margin-right: 5px;
-}
-
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #e4e4e4;
-    border: none!important;
-    border-radius: 0px;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    border-radius: 0px;
-    border: none;
-}
-
-.select2-container--default .select2-search--inline .select2-search__field {
-  box-shadow: none;
-}
-
-.select2-container .select2-search--inline {
-margin: 0!important;
-height: 35px;
-}
-
-height: 30px;
-
-
-.select2-container--default .select2-search--inline .select2-search__field {
-    margin: 0;
-    padding: 0;
-    height: 35px;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-margin: 2px!important;
-line-height: 28px;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__rendered {
-    padding: 0 2px;
-}
-
-.select2-container--default .select2-search--inline .select2-search__field {
-    margin: 0;
-height: 30px;
-    padding-left: 2px;
-}
-
-.select2-container--open .select2-dropdown--below {
-border-radius:0;
-}
-</style>
