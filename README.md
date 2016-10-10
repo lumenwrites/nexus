@@ -1,6 +1,6 @@
 # Hacker Tribe
 
-## Decentralized social network for hackers and founders
+### Decentralized social network for hackers and founders
 
 (Currently in active development, launching soon!)
 
@@ -8,21 +8,21 @@
 
 # Features
 
-## Decentralized and GNU Social compatible
+### Decentralized and GNU Social compatible
 
 You can easily spin up your own instance by following instructions [here]. Dockerized, few easy commands.
 
-## Open Source
+### Open Source
 
 Contribute to the project here.
 
 Want to improve something or need a feature? Open a github issue, or code it yourself. No need to wait for a corporation to decide to implement it. Want a custom design or disagree about how it should work? For the platofrm and modify it however you want. The code is simple and understandable python, html, scss, and jQuery.
 
-## Optimized for high quality discussion.
+### Optimized for high quality discussion.
 
 The goal of this community is to share insightful ideas that gratify intellectual curiosity, to exchange advice and experience. Clever and motivated entrepreneurs and creators here. No low quality inane memes allowed.
 
-## You're the customer, not the product.
+### You're the customer, not the product.
 
 My goal is to make a platform where you are the customer, not the product. To make it sustainable, I am going to charge a reasonable membership price($10/year).
 
@@ -32,7 +32,7 @@ As a side benefit, this will keep community to only engaged users who derive val
 
 Remember, if you don't like the moderation or don't want to pay - you can always easily run your own instance!
 
-## No Bullshit
+### No Bullshit
 
 - **No ads**  
 You give me money, I pay for servers and work on improving the platform. That's it.
