@@ -18,6 +18,7 @@ $(document).ready(function(){
 	simplemde = new SimpleMDE({
 	    element: this,
 	    toolbar: [],
+	    placeholder: "Write something insightful here... \n(can use markdown)",
 	});
 	simplemde.render();
     });      

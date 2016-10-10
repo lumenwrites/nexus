@@ -24,12 +24,25 @@
     <div  class="big-logo">
       <img src="/static/img/logo_200x200.png"/>
     </div>
-    <h1>Fiction Hub</h1>
-    <h2>The best place for readers to discover awesome fiction,</h2>
-    <h2>and for writers to find their audience.</h2>
-    <a data-reveal-id="sub-popup" class="small button"> Subscribe </a>
-    <a href="/submit/"class="small button"> Submit Story </a>
-    <a data-reveal-id="login-popup" class="small button"> Join our community </a>        
+    <h1>Hacker Tribe</h1>
+    <h2>decentralized social network for hackers and founders</h2>
+    <!-- <a data-reveal-id="login-popup" class="small button"> Join </a> -->
+    <style>.main-header {display:none;}</style>
+    <form method="post" action="/early-access/?next={{request.path}}"
+	  style="margin:auto;width: 590px;margin-top:20px;">{% csrf_token %}
+    	  <input id="email" maxlength="254" name="email" type="text"
+    		 placeholder="Enter your email..."
+		 style="float: left;
+			width: 400px;
+			height: 50px;">
+    	  <input type="submit" class="button small" value="Get early access!"
+		 style="padding: 16px 32px;
+			height: 50px;
+			float:left;
+			margin: 0;
+			width:190px;">
+    	</form>
+    
   </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
 </div>	 <!-- End header-background -->
@@ -37,145 +50,105 @@
 
 <!-- Subnav -->
 <div class="subnav-background">
-<div class="row">
+  <div class="row">
   <div class="large-12 small-12 subnav">
-    <ul class="left">
+    <ul class="left" style="margin-left:0;">
       <li>
-	<a href="/hub/short-stories/">Short Stories</a>
+	<a href="/#features">Features</a>
       </li>
       <li>
-	<a href="/hub/science-fiction/">Science Fiction</a>	
-      </li>      
-      <li>
-	<a href="/hub/fantasy/">Fantasy</a>	
-      </li>      
-      <li>
-	<a href="/hub/comedy/">Comedy</a>	
+	<a href="/#screenshots">Screenshot</a>	
       </li>
-      <!-- 
       <li>
-	<a href="/hub/fanfiction/">Fanfiction</a>	
+	<a href="/#pricing">Pricing</a>	
       </li>
-       -->
       <li>
-	<a href="/hub/articles">On Writing</a>	
-      </li>
-
+	<a href="/#upcoming">Upcoming</a>	
+      </li>            
     </ul>
-    <ul class="right">
-      <li>
-	<a href="https://www.facebook.com/fictionhub/">
-	  <i class="fa fa-facebook-square" aria-hidden="true"></i>
-	</a>
-      </li>
-      <li>
-	<a href="https://twitter.com/fictionhub">
-	  <i class="fa fa-twitter-square" aria-hidden="true"></i>
-	</a>
-      </li>
-      <li>
-	<a href="https://medium.com/fictionhub/">
-	  <i class="fa fa-medium" aria-hidden="true"></i>
-	</a>
-      </li>
-      
-    </ul>
-  </div> <!-- End 12 columns -->
+  </div>
 </div>	 <!-- End row -->
 </div>	 <!-- End header background -->
 
 <!-- Stories -->
 <div class="stories">
-<div class="row">
+<div class="row posts-page">
   <div class="large-12 small-12">
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="http://fictionhub.io/story/the-metropolitan-man">
-	  <div style="background-image:url('/media/story_thumbnails/metropolitan-man.jpeg');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="http://fictionhub.io/story/boxed-in"><h3>The Metropolitan Man</h3></a>
-	<p>Superman has arrived in Metropolis. Features Lex Luthor as the villain protagonist as he comes to grips with the arrival of an alien god.</p>
-      </article>
-    </div>
-    <!-- Endstory -->
+      <article style="padding:40px;
+		      background: rgba(255,255,255,0.5);//#fff;
+		      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		      border: 1px solid rgba(0,0,0,.09);
+		      border-radius: 3px;
+		      padding-bottom:0;">
+	<span id="features"></span>
+	<h1> Features </h1>
+	<hr/>
+	<h2>Decentralized and GNU Social compatible</h2>
+	<p>You can easily spin up your own instance by following instructions [here].
+	  Dockerized, few easy commands.</p>
 
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="http://fictionhub.io/story/boxed-in">
-	  <div style="background-image:url('/media/story_thumbnails/boxed-in.png');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="http://fictionhub.io/story/boxed-in"><h3>Boxed In</h3></a>
-	<p>Man had created god, and put her in a box.</p>
-      </article>
-    </div>
-    <!-- Endstory -->
+	<h2>Open Source</h2>
+	<p>Contribute to the project here.</p>
 
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="http://fictionhub.io/story/the-randi-prize">
-	  <div style="background-image:url('/media/story_thumbnails/randi-prize.jpeg');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="http://fictionhub.io/story/the-randi-prize"><h3>The Randi Prize</h3></a>
-	<p>Peter could make coins disappear by snapping his fingers.</p>
-      </article>
-    </div>
-    <!-- Endstory -->
 
-    <div class="clearfix"></div>
+	<h2>Optimized for high quality discussion.</h2>
+	<p>The goal of this community is to share insightful ideas that gratify intellectual curiosity, to exchange advice and experience. Clever and motivated entrepreneurs and creators here. No low quality inane memes allowed.</p>
+	
+	<h2>You're the customer, not the product.</h2>
+	<p>My goal is to make a platform where you are the customer, not the product. To make it sustainable, I am going to charge a reasonable membership price.</p>
+	<p>That will allow me to pay for the servers and focus on improving the user experience and the quality of the platform, instead of compromising it with ads or creepily trying to manipulate your attention.</p>
+        <p>As a side benefit, this will keep community to only engaged users who derive value out of it, and prevent spam and fake accounts.</p>
 
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="http://fictionhub.io/story/siri">
-	  <div style="background-image:url('/media/story_thumbnails/siri.jpeg');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="http://fictionhub.io/story/siri"><h3>Siri</h3></a>
-	<p>Prompt: A company is releasing an update that adds true AI companions to its mobile devices.</p>
-      </article>
-    </div>
-    <!-- Endstory -->
+	<p>Remember, if you don't like the moderation or don't want to pay - you can always easily run your own instance!</p>
+	
 
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="http://fictionhub.io/story/unaware">
-	  <div style="background-image:url('/media/story_thumbnails/unaware.jpeg');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="http://fictionhub.io/story/unaware"><h3>Unaware</h3></a>
-	<p>Prompt: The apocalypse has continued for years now, but you’ve never noticed.</p>
-      </article>
-    </div>
-    <!-- Endstory -->
+	<span id="screenshots"></span>
+	<!-- <h1> Screenshots </h1> -->
+	<!-- <hr/> -->
+	<img src="/media/images/browsepage-1.png" style="margin: 20px -40px;
+							 width:(100% + 80px);
+							 max-width:calc(100% + 80px);">
+	<!-- 
+	<br/>
+	<img src="/media/images/comments.png" style="margin: 20px -40px;
+							 width:calc(100% + 80px);
+							 max-width:calc(100% + 80px);">
+	 -->
 
-    <!-- Story -->
-    <div class="large-4 small-4 story">
-      <article>
-	<a  href="/story/shaman">
-	  <div style="background-image:url('/media/story_thumbnails/shaman.png');"
-	       class="thumbnail">
-	  </div>
-	</a>
-	<a href="/story/shaman"><h3>Shaman</h3></a>
-	<p>Stories about a shaman.</p>
+	<span id="pricing"></span>
+	<h1>Pricing</h1>
+	<ul>
+	  <li>
+	    <b>Free</b> lifetime accounts to the first 5000 users.
+	  </li>
+	  <li>
+	    <b>Free</b> for people who actively contribute to the community.</br>
+	    (you gain a free year for every 500 karma points).
+	  </li>
+	  <li>
+	    <b>Free</b> trial for the first year.
+	  </li>
+	  <li>
+	    Otherwise <b>$10 per year</b> or <b>$1 per month</b>.
+	  </li>
+	</ul>
+
+
+	<span id="upcoming"></span>
+	<h1>Upcoming features</h1>
+	<h2>Developer API</h2>
+	<p>
+	  If you want to contribute to development, go here.
+	</p>
+	<h2>ActivePub</h2>
+	<h2>Moderation Tools</h2>
+	<h2>Private Messages</h2>
+	<h2>Export Data</h2>	
+	<h2>General Social Network</h2>
+	<p>If this takes off and works out, there will be a more general version of this.</p>
+	<p>But hacker tribe will stay hacker tribe, so the quality of this community will stay high.</p>
+	<p></p>
       </article>
-    </div>
-    <!-- Endstory -->
-    <div class="clearfix"></div>
-    <a href="/browse/" class="small button right" style="border-radius:0;"> Browse more great stories >> </a>
-    
   </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
 </div>	 <!-- End header background -->

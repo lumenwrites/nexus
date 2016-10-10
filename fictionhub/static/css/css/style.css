@@ -1156,7 +1156,7 @@ article header {
 }
 
 /* line 1051, ../sass/style.scss */
-.homepage h1, .homepage h2 {
+.homepage-header h1, .homepage-header h2, .homepage-header p {
   text-align: center;
   color: white;
 }
