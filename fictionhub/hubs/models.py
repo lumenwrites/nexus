@@ -6,7 +6,7 @@ from django.db.models import permalink
 class Hub(models.Model):
     title = models.CharField(max_length=64)    
     slug = models.SlugField(max_length=64, default="")
-    # description = models.TextField(max_length=512, blank=True)
+    description = models.TextField(max_length=512, blank=True)
     
     def __str__(self):
         # try:

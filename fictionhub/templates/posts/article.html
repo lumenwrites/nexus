@@ -10,7 +10,7 @@
 
   {% if post.parent %}
   <a href="{{post.parent.get_absolute_url}}">
-    <div class="panel parent-panel">
+    <div class="panel parent-panel" style="padding:10px;">
       {{post.parent.body|markdownify:"True"|safe}}
     </div>
   </a>

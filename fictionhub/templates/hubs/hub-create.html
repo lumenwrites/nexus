@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+  .CodeMirror {
+  background:white!important;
+  }
 
+</style>
 <div id="page"  class="postPage">
   <div class="row">
-    <div class="large-4 large-centered columns center-vertically">
+    <div class="large-6 large-centered columns">
       <h2> Create Hub </h2>
       <form method="post" action="/hub/add/?next={{nextpage}}"> {% csrf_token %}
 	{{form}}

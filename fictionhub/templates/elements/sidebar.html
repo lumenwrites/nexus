@@ -14,8 +14,14 @@
       </a>
     </div>
     {% endfor %}
+
+
     <a class="button small fullwidth"
-       href="/user/{{userprofile.username}}/subscribe"
+       {% if user.is_authenticated %}    
+       href="/hub/add"
+       {% else %}
+       data-reveal-id="login-popup"
+       {% endif %}
        style="margin: 2px;
 	      background-color: #3d454b;">
       <i class="fa fa-plus white"></i>      	  
