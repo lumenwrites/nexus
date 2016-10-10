@@ -1,10 +1,28 @@
 # Hacker Tribe
-
 ### Decentralized social network for hackers and founders
 
 (Currently in active development, launching soon!)
 
 <!-- [![Join the chat at https://gitter.im/raymestalez/fictionhub](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raymestalez/fictionhub?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) -->
+
+
+Hey, Hacker News! I'm looking for beta users and feedback on this project. My goal is to build the perfect social network, the way it's supposed to be built - open source, decentralized, with high quality community and without any nonsense.
+ 
+<!-- 
+The following post outlines my plan, intended features, whatever. Please share your ideas and criticism.
+ 
+ Specific auestions:
+ 1. What other features does the social network need to have.
+ 2. What is your criticism of this idea? Find the flaws, pick it apart.
+ 3. What are the best strategies for kick starting and maintaining high quality community.
+ 2. Other ideas and siggestions.
+ 2. so,ething something.
+ 
+ You can find code is [here], still is very much work in progress.
+ Contact me at raymestalez@gmail.com
+ Integration with twitter. Whatever I bloody want to imagine.
+ -->
+
 
 # Features
 
@@ -17,6 +35,9 @@ You can easily spin up your own instance by following instructions [here]. Docke
 Contribute to the project here.
 
 Want to improve something or need a feature? Open a github issue, or code it yourself. No need to wait for a corporation to decide to implement it. Want a custom design or disagree about how it should work? For the platofrm and modify it however you want. The code is simple and understandable python, html, scss, and jQuery.
+
+### Your Data is yours
+Export data.
 
 ### Optimized for high quality discussion.
 
@@ -34,13 +55,13 @@ Remember, if you don't like the moderation or don't want to pay - you can always
 
 ### No Bullshit
 
-- **No ads**  
-You give me money, I pay for servers and work on improving the platform. That's it.
-- **No manipulation**  
-No sneaky attempts to monetize your attention or to sell you anything.
+- **No ads or manipulation**  
+You give me money, I pay for servers and work on improving the platform. That's it. No sneaky attempts to monetize your attention or to sell you anything.
 - **No obscure algorithms**  
   Simple, transparent, elegant, reddit-like discovery system, based on upvotes.  
   Read the code to the algorithm and understand exactly what's going on.
+- **No lock in**  
+If I make the decisions you don't like, take this project in the wrong direction, or just generally turn evil - you can always just download your data, fork the project, run it on your server, even launch a competing service!
 - **No-procrastination mode**  
   I'm not trying to waste your time by keeping you on the site as long as possible. Getting addicted to spending time here? Enable the no-procrastination mode that allows you to access the website for only 20 minutes every 3 hours.
 - **Moderation**  
@@ -65,18 +86,13 @@ No sneaky attempts to monetize your attention or to sell you anything.
 
 - Developer API
 
-If you want to contribute to development, go here.
-
-- ActivePub
+- ActivePub integration
 
 - Moderation Tools
 
 - Private Messages
 
-- Export Data
+- Social Network for the General Audience 
 
-- General Social Network
+If this project works successfully - I am going to launch a social network for more general audience. It will be launched on a separate domain, so that this community would stay laser-focused on hacking, startups, and other topics relevant to HN audience. This will prevent all the issues that arise when community grows too large, keeping the quality of the community high.
 
-If this takes off and works out, there will be a more general version of this.
-
-But hacker tribe will stay hacker tribe, so the quality of this community will stay high.
