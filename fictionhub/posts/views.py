@@ -128,6 +128,9 @@ class FilterMixin(object):
         hubs = Hub.objects.annotate(num_posts=Count('posts')).order_by('-num_posts')   
         context['hubs'] = hubs
 
+        if self.request.GET.get('hubfilter') == "following":
+            context['hubfilter'] = "following"
+
         # Solo Hub
         context['hub'] = self.request.GET.get('hub')
 

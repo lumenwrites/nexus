@@ -29,7 +29,7 @@
 
 <style>
   #rankdropdown {
-  width: 100px;
+  width: 120px;
   }
   #rankdropdown li {
   padding:0;
@@ -61,16 +61,24 @@
 	   style="background: rgba(188, 187, 189, 0.32);
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
-		  width:100px;">
+		  width:120px;">
+	  {% if sorting = "hot" %}
 	  <i class="fa fa-fire"></i>
 	  Hot
+	  {% elif sorting = "new" %}
+	  <i class="fa fa-clock-o"></i>
+	  New</span>
+	  {% elif sorting = "top" %}
+          <i class="fa fa-arrow-up"></i>
+	  Top</span>
+	  {% endif %}	  
 	</a>
 
 	<ul id="rankdropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
 	<!-- Hot -->
 	<li>	
 	  <a href="{{request.path}}?sorting=hot{{urlstring}}">
-	    <span {% if sorting = "hot" %}class="bold"{% endif %}>
+	    <span>
 	      <i class="fa fa-fire"></i>
 	      Hot</span>
 	  </a>
@@ -104,8 +112,13 @@
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
 		  width:140px;">
+	  {% if hubfilter = "following" %}
+	  <i class="fa fa-hashtag" style="width:14px;"></i> 
+	  Following
+	  {% else %}
 	  <i class="fa fa-compass"></i>
 	  All Hubs
+	  {% endif %}
 	</a>
 	{% endif %}
 	
