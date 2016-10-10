@@ -130,6 +130,10 @@ li p {
 .black {
     color: $black;
 }
+.white {
+    color: white;
+}
+
 .gray {
     background: gray!important;
 }
@@ -157,7 +161,9 @@ li p {
 .grey {
     color: #bbbbbb;
 }
-
+.fullwidth {
+    width:100%;
+}
 .center-text {
     text-align:center;
 }
