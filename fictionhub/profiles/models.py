@@ -16,6 +16,7 @@ class User(AbstractUser):
     subscribed_to_hubs = models.ManyToManyField('hubs.Hub', related_name="subscribers", blank=True)
 
     upvoted = models.ManyToManyField('posts.Post', related_name="upvoters", blank=True)
+    reposted = models.ManyToManyField('posts.Post', related_name="reposters", blank=True) 
     
     # shadowban = models.BooleanField(default=False)
     # approved = models.BooleanField(default=False)

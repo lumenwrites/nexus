@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^join/$', views.home),                
     
     # Front page
-    # url(r'^$', views.home),
+    url(r'^$', posts_views.HomeView.as_view()),
     url(r'^$', posts_views.BrowseView.as_view()),
 
     url(r'^404/', views.page_404),    

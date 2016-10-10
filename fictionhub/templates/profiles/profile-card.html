@@ -9,7 +9,7 @@
   <div class="user-info">
     <img src="{% static "/static/img/signature.png" %}"
 	 class="avatar"/>
-    <a class="username">@{{userprofile.username}}</a>
+    <a href="/@{{userprofile.username}}"class="username">@{{userprofile.username}}</a>
     
     <div class="stats">    
       <i class="fi-torsos-all stats-icon"></i>
@@ -21,8 +21,27 @@
     <div class="about">{{userprofile.about|markdownify|safe}}</div>
 
     {% if not userprofile = user %}
-    <a class="small button"> Follow </a>
+    <!-- If I'm browsing someone's profile.  -->
+
+    {% if user.is_authenticated %}    
+        {% if user not in userprofile.subscribers.all %}	
+        <a class="button small"
+           href="/user/{{userprofile.username}}/subscribe">
+          Follow</a>
+        {% else %}
+        <a class="button small"
+           href="/user/{{userprofile.username}}/unsubscribe">
+          Following</a>
+        {% endif %}	<!-- end if follow/following -->
     {% else %}
+    <!-- If not authenticated -->
+    <a class="button small"
+       data-reveal-id="login-popup">
+      Follow</a>
+    {% endif %}
+
+    {% else %}
+   <!-- If it's my profile -->
     <a href="/preferences/" class="small button">
       <i class="fa fa-cog"></i>
       Preferences </a>

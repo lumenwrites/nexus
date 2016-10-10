@@ -36,9 +36,17 @@
 	<span class="fi-comment"></span>
 	<span style="float:left;margin-right:5px;"> {{post.children.count}} </span>
       </a>
+
+      {% if user.is_authenticated %}    
       <a class="reply" style="margin-right:8px;">
 	<i class="fa fa-reply"></i>      
-      </a>      
+      </a>
+      {% else %}
+      <a data-reveal-id="login-popup" style="margin-right:8px;">
+	<i class="fa fa-reply"></i>      
+      </a>
+      {% endif %}
+
     </div> <!-- end stats -->
   </div>
   <div class="clearfix"></div>

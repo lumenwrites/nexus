@@ -146,14 +146,6 @@ class BrowseView(FilterMixin, ListView):
     context_object_name = 'posts'    
     template_name = "posts/browse.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        # Redirect to wst homepage
-        if not request.user.is_authenticated() and request.path == "/":
-            return render(request, 'home.html', {})
-        else:
-            return super(BrowseView, self).dispatch(request, *args, **kwargs)
-       
-        
     def get_queryset(self):
         qs = super(BrowseView, self).get_queryset()        
         # qs = [p for p in qs if (p.published == True and
@@ -167,7 +159,42 @@ class BrowseView(FilterMixin, ListView):
         if self.request.user.is_authenticated():
             context['userprofile'] = self.request.user
         return context    
+
+
+class HomeView(FilterMixin, ListView):
+    model = Post
+    context_object_name = 'posts'    
+    template_name = "posts/browse.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        # Redirect to wst homepage
+        if not request.user.is_authenticated() and request.path == "/":
+            return render(request, 'home.html', {})
+        else:
+            return super(HomeView, self).dispatch(request, *args, **kwargs)
+       
+
+    def get_queryset(self):
+        qs = super(HomeView, self).get_queryset()
+        
+        # Filter by subscriptions
+        user = self.request.user
+        subscribed_to = []
+        if user.is_authenticated():
+            subscribed_to = self.request.user.subscribed_to.all()
+        
+        qs = [p for p in qs if (p.author in subscribed_to) or (p.reposters in subscribed_to)]
+        
+        return qs
     
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['form'] = PostForm()
+        if self.request.user.is_authenticated():
+            context['userprofile'] = self.request.user
+        return context    
+
+
 
 class UserprofileView(FilterMixin, ListView):
     model = Post
@@ -179,7 +206,7 @@ class UserprofileView(FilterMixin, ListView):
 
         # Filter by user
         userprofile = User.objects.get(username=self.kwargs['username'])        
-        qs = [p for p in qs if (p.author==userprofile)]
+        qs = [p for p in qs if (p.author==userprofile) or (userprofile in p.reposters)]
 
         # Show only published to everyone else
         # if self.request.user != userprofile:
@@ -219,23 +246,6 @@ class UserprofileView(FilterMixin, ListView):
         return context    
     
 
-class SubscriptionsView(FilterMixin, ListView):
-    model = Post
-    context_object_name = 'posts'    
-    template_name = "posts/browse.html"
-
-    def get_queryset(self):
-        qs = super(SubscriptionsView, self).get_queryset()
-        
-        # Filter by subscriptions
-        user = self.request.user
-        subscribed_to = []
-        if user.is_authenticated():
-            subscribed_to = self.request.user.subscribed_to.all()
-        
-        qs = [p for p in qs if (p.author in subscribed_to)]
-        
-        return qs
         
 
 

@@ -22,8 +22,6 @@ urlpatterns = [
     # Class Based Views
     # Browse
     url(r'^browse/$', views.BrowseView.as_view()),        
-    # Subscriptions
-    url(r'^subscriptions/$', views.SubscriptionsView.as_view()),    
     # User
     url(r'^user/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),
     url(r'^u/(?P<username>[^\.]+)/$', views.UserprofileView.as_view()),

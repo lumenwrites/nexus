@@ -136,10 +136,8 @@ margin-left: 5px;
 	      <i class="fa fa-compass"></i> Browse </a>
 	    <a href="/notifications/">
 	      <i class="fa fa-envelope-o"></i> Notifications </a>
-	    <!-- 
 	    <a href="/logout/?next=/browse/">
 	      <i class="fa fa-power-off"></i>Logout</a>
-	     -->
 	  </ul>
 
 	  {% else %}
@@ -148,6 +146,9 @@ margin-left: 5px;
 	      <i class="fa fa-home"></i> Home </a>
 	    <a href="/browse/">
 	      <i class="fa fa-compass"></i> Browse </a>
+	    <a  data-reveal-id="login-popup">
+	      <i class="fa fa-sign-in"></i>
+	      Login </a>
 	  </ul>
 	  
 	  {% endif %}
@@ -322,54 +323,7 @@ margin-left: 5px;
   <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
   
     
-  
-<script>
-  $(document).foundation();
-</script>
-
-
-
-
-<script>
-// Editor
-$(document).ready(function(){
-
-    $(".reply-editor").each(function(){
-	var postid = 	$(this).parent().find("article").attr('id');
-	console.log(postid);
-	$(this).find("form").attr('action', "/reply/"+postid);
-	
-    });
-
-
-      $('textarea').each(function() {
-      simplemde = new SimpleMDE({
-      element: this,
-      toolbar: [],
-      });
-      simplemde.render();
-      });      
-
-    //Open reply editor
-    $('.reply').click(function () {
-	console.log("reply!");
-	$('.reply-editor').hide()
-	$(this).parent().parent().parent().parent().parent().find('.reply-editor').toggle();
-	// $(this).parent().parent().parent().find('.comment-reply').toggle();a
-    });
-
-    // Multiselect
-    $(".hub-selector").each(function(){
-	$(this).find("#id_hubs").select2({
-	    placeholder: "select hubs",
-	    allowClear: true,
-	    maximumSelectionLength: 3
-	})
-    });
-
-});
-</script>
-
+  <script src="  {% static "/static/js/main.js" %}"></script>      
 
 
 <style>
