@@ -275,6 +275,7 @@ class HubView(FilterMixin, ListView):
         context = super(HubView, self).get_context_data(**kwargs)
         hub = Hub.objects.get(slug=self.kwargs['hubslug'])
         context['hubtitle'] = hub.title
+        context['hub'] = hub
         return context    
     
 

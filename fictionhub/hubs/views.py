@@ -54,3 +54,23 @@ def hubs(request):
     return render(request, 'hubs/hubs.html', {
         'hubs':hubs
     })
+
+
+
+def subscribe(request, slug):
+    hub = Hub.objects.get(slug=slug)
+    if not request.user.is_anonymous():
+        user = request.user
+        user.subscribed_to_hubs.add(hub)
+        user.save()
+        
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+    else:
+        return HttpResponseRedirect('/login/')    
+
+def unsubscribe(request, slug):
+    hub = Hub.objects.get(slug=slug)
+    user = request.user
+    user.subscribed_to_hubs.remove(hub)
+    user.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 

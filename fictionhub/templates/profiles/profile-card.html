@@ -57,10 +57,27 @@
   <div class="user-info">
     <div class="about">
       <span class="bold">#{{hubtitle}}</span><br/>
-      Join a community of hackers, developers, startup founders.
+      {{hub.description}}
     </div>
-  </div>    
-    <a class="small button"> Subscribe </a>
+  </div>
+
+  {% if user.is_authenticated %}    
+        {% if user not in hub.subscribers.all %}	
+        <a class="button small"
+           href="/hub/{{hub.slug}}/subscribe">
+          Subscribe</a>
+        {% else %}
+        <a class="button small"
+           href="/hub/{{hub.slug}}/unsubscribe">
+          Subscribed</a>
+        {% endif %}	<!-- end if follow/following -->
+    {% else %}
+    <!-- If not authenticated -->
+    <a class="button small"
+       data-reveal-id="login-popup">
+      Subscribe</a>
+    {% endif %}
+
   <div class="clearfix"></div>
 </div>
 <br/>
