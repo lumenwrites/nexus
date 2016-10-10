@@ -19,7 +19,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -124,7 +124,10 @@ class FilterMixin(object):
                 filterhubs.append(Hub.objects.get(slug=hubslug))
         context['filterhubs'] = filterhubs
         # All Hubs
-        context['hubs'] = Hub.objects.all()
+        hubs = Hub.objects.all()
+        hubs = Hub.objects.annotate(num_posts=Count('posts')).order_by('-num_posts')   
+        context['hubs'] = hubs
+
         # Solo Hub
         context['hub'] = self.request.GET.get('hub')
 
