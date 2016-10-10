@@ -75,6 +75,11 @@ class FilterMixin(object):
         for hub in filterhubs:
             qs = qs.filter(hubs=hub)            
 
+        # Filter by hubs I'm subscribed to
+        
+        if self.request.GET.get('hubfilter') == "following":
+            subscribed_to_hubs = self.request.user.subscribed_to_hubs
+            qs = qs.filter(hubs__in=subscribed_to_hubs.all())   
 
         # Filter by query
         query = self.request.GET.get('query')

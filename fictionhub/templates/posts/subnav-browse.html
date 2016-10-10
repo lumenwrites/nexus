@@ -105,25 +105,25 @@
 		  padding:4px 10px;
 		  width:140px;">
 	  <i class="fa fa-compass"></i>
-	  All Tags
+	  All Hubs
 	</a>
 	{% endif %}
 	
 	<ul id="typedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
-	  {% if not userprofile %}
 	  <li>
-	    <a href="{{request.path}}?sorting=top{{urlstring}}">
-	      <span {% if sorting = "top" %}class="bold"{% endif %}>
+	    <a href="/browse/">
+	      <span>
 		<i class="fa fa-compass" style="width:14px;"></i> 
-		All Tags</span>
+		All Hubs
+	      </span>
 	    </a>
 	  </li>
-	  {% endif %}
 	  <li>
-	    <a href="{{request.path}}?sorting=top{{urlstring}}">
-	      <span {% if sorting = "top" %}class="bold"{% endif %}>
+	    <a href="/browse/?hubfilter=following">
+	      <span>
 		<i class="fa fa-hashtag" style="width:14px;"></i> 
-		Following</span>
+		Following
+	      </span>
 	    </a>
 	  </li>
 
