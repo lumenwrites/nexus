@@ -1,14 +1,12 @@
 # Hacker Tribe
 
-> Decentralized social network for hackers and founders
+## Decentralized social network for hackers and founders
 
-*Currently in active development, launching soon!*
+(Currently in active development, launching soon!)
 
 <!-- [![Join the chat at https://gitter.im/raymestalez/fictionhub](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raymestalez/fictionhub?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) -->
 
 # Features
-
-* * *
 
 ## Decentralized and GNU Social compatible
 
