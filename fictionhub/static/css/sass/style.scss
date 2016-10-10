@@ -665,6 +665,20 @@ article header {
 }
 
 
+/* Voting */
+.upvote,
+.upvote:visited,
+.upvote:active,
+.upvote:focus {
+    color:$black;
+    float:left;
+}
+
+.upvoted {
+    color:$orange!important;
+}
+
+
 /* ================ Story Comments ================ */
 
 /* Review rating */

@@ -44,7 +44,9 @@ urlpatterns = [
     # CRUD Stories
     url(r'^write/$', views.post_create_daily),
     url(r'^story/add$', views.post_create),
-    url(r'^post/create$', views.post_create),    
+    url(r'^post/create$', views.post_create),
+    url(r'^post/(?P<slug>[^\.]+)/repost$', views.repost),
+
     url(r'^story/(?P<story>[^\.]+)/edit$', views.post_edit),
     url(r'^story/(?P<story>[^\.]+)/delete$', views.post_delete),
     url(r'^story/(?P<story>[^\.]+)/publish$', views.post_publish),

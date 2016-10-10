@@ -27,12 +27,16 @@ class Post(models.Model):
     wordcount = models.IntegerField(default=0)    
 
     parent = models.ForeignKey('Post', related_name="children",default=None, null=True, blank=True)
+    repost = models.ForeignKey('Post', related_name="reposts",default=None, null=True, blank=True)    
 
 
     # approved = models.BooleanField(default=False)            
 
     def __str__(self):
-        return self.body[:140]
+        if self.repost:
+            return "repost: " + self.repost.body[:140]
+        else:
+            return self.body[:140]
 
     def save(self, slug="", *args, **kwargs):
         if not self.id:

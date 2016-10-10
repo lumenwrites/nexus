@@ -25,7 +25,7 @@ $(document).ready(function(){
     // Set reply form action to it's parent's id.
     $(".reply-editor").each(function(){
 	var postid = 	$(this).parent().find("article").attr('id');
-	console.log(postid);
+	// console.log(postid);
 	$(this).find("form").attr('action', "/reply/"+postid);
 	
     });
@@ -52,6 +52,10 @@ $(document).ready(function(){
     if ($('#search-input').val().length > 0){
 	$('#search-input').addClass("white-bg");
     }
-    
+        
+
+
+
+
 
 });

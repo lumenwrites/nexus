@@ -89,7 +89,7 @@ padding: 0px;
   </div>
 
   <div class="large-8 small-8 columns posts">
-    {% if request.path = "/" and userprofile%}    
+    {% if request.path = "/" %}    
     {% include "posts/editor.html" %}
     {% else %}        
     {% include "posts/subnav-browse.html" %}

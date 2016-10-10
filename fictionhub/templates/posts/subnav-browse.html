@@ -9,7 +9,7 @@
   }
 
   #typedropdown {
-  width: 140px;
+  width: 150px;
   }
   #typedropdown li {
   padding:0;
@@ -103,15 +103,16 @@
 
 
 
-	<!-- Browse -->
+	<!-- Browse hub type dropdown  -->
 	{% if request.path = "/browse/" and user.is_authenticated %}
+	<!-- Type dropdown button  -->
 	<a href="/browse/" data-dropdown="typedropdown"
 	   data-options="is_hover:true; align:bottom;"
 	   class=""
 	   style="background: rgba(188, 187, 189, 0.32);
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
-		  width:140px;">
+		  width:150px;">
 	  {% if hubfilter = "following" %}
 	  <i class="fa fa-hashtag" style="width:14px;"></i> 
 	  Following
@@ -120,8 +121,8 @@
 	  All Hubs
 	  {% endif %}
 	</a>
-	{% endif %}
-	
+
+	<!-- Type dropdown options -->
 	<ul id="typedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
 	  <li>
 	    <a href="/browse/">
@@ -139,9 +140,64 @@
 	      </span>
 	    </a>
 	  </li>
-
 	</ul>
+	{% endif %}
+	
 
+	<!-- User post type dropdown  -->
+	{% if userprofile %}
+	<!-- Type dropdown button  -->
+	<a href="/browse/" data-dropdown="typedropdown"
+	   data-options="is_hover:true; align:bottom;"
+	   class=""
+	   style="background: rgba(188, 187, 189, 0.32);
+		  margin: -5px 5px 0 0;
+		  padding:4px 10px;
+		  width:150px;">
+	  {% if posttype = "post" %}
+	  <i class="fa fa-pencil-square-o" style="width:14px;"></i>
+	  Posts
+	  {% elif posttype = "reply" %}
+	  <i class="fa fa-reply" style="width:14px;"></i> 
+	  Replies
+	  {% elif posttype = "repost" %}	  
+	  <i class="fi-loop" style="width:14px;"></i> 
+	  Reposts
+	  {% else %}
+	  <i class="fa fa-compass" style="width:14px;"></i> 
+	  Everything
+	  {% endif %}
+	</a>
+
+	<!-- User post type options -->
+	<ul id="typedropdown" class="f-dropdown dropdownmenu" data-dropdown-content>
+	  <li>
+	    <a href="/@{{userprofile.username}}">
+		<i class="fa fa-compass" style="width:14px;"></i> 
+		Everything
+	    </a>
+	  </li>
+	  <li>
+	    <a href="/@{{userprofile.username}}?posttype=post">	    
+	      <i class="fa fa-pencil-square-o" style="width:14px;"></i>
+		Posts
+	    </a>
+	  </li>
+	  <li>
+	    <a href="/@{{userprofile.username}}?posttype=reply">	    	    
+	      <i class="fa fa-reply" style="width:14px;"></i> 
+	      Replies
+	    </a>
+	  </li>
+	  <li>
+	    <a href="/@{{userprofile.username}}?posttype=repost">	    	    	    
+	      <i class="fi-loop" style="width:14px;"></i> 
+	      Reposts
+	    </a>
+	  </li>
+	</ul>
+	{% endif %}
+	
       </div> <!-- Close rank types -->
     </div> <!-- Close 9 columns -->
   

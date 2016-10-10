@@ -14,9 +14,15 @@
       {{post.parent.body|markdownify:"True"|safe}}
     </div>
   </a>
-  {% endif %}      
+  {% endif %}
+
+  {% if post.repost %}
+  <!-- Repost -->
+  {{post.repost.body | markdownify:"True" | safe  }} <!-- firstparagraph -->  
+  {% else %}  
   <!-- Post Body -->
   {{post.body | markdownify:"True" | safe  }} <!-- firstparagraph -->
+  {% endif %}  
   <div class="clearfix"></div>
   <!-- Post Footer -->
   <br/>

@@ -81,12 +81,22 @@ class FilterMixin(object):
             subscribed_to_hubs = self.request.user.subscribed_to_hubs
             qs = qs.filter(hubs__in=subscribed_to_hubs.all())   
 
+        # Filter by posttype
+        posttype = self.request.GET.get('posttype')
+        if posttype == "post":
+            qs = qs.filter(parent=None)   
+        if posttype == "reply":
+            qs = qs.filter(parent__isnull=False)   
+
         # Filter by query
         query = self.request.GET.get('query')
         if query:
             qs = qs.filter(Q(title__icontains=query) |
                            Q(body__icontains=query) |
                            Q(author__username__icontains=query))                    
+
+
+
 
         # Sort
         # (Turns queryset into the list, can't just .filter() later
@@ -167,8 +177,6 @@ class BrowseView(FilterMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(BrowseView, self).get_context_data(**kwargs)
         context['form'] = PostForm()
-        if self.request.user.is_authenticated():
-            context['userprofile'] = self.request.user
         return context    
 
 
@@ -194,15 +202,18 @@ class HomeView(FilterMixin, ListView):
         if user.is_authenticated():
             subscribed_to = self.request.user.subscribed_to.all()
         
-        qs = [p for p in qs if (p.author in subscribed_to) or (p.reposters in subscribed_to)]
+        qs = [p for p in qs if (p.author in subscribed_to) or (p.author == user)]
+
+        sorting = self.request.GET.get('sorting')
+        if not sorting:
+            qs = sorted(qs, key=lambda x: x.pub_date, reverse=True)
+        
         
         return qs
     
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['form'] = PostForm()
-        if self.request.user.is_authenticated():
-            context['userprofile'] = self.request.user
         return context    
 
 
@@ -217,12 +228,16 @@ class UserprofileView(FilterMixin, ListView):
 
         # Filter by user
         userprofile = User.objects.get(username=self.kwargs['username'])        
-        qs = [p for p in qs if (p.author==userprofile) or (userprofile in p.reposters.all())]
+        qs = [p for p in qs if (p.author==userprofile)]
 
+        sorting = self.request.GET.get('sorting')
+        if not sorting:
+            qs = sorted(qs, key=lambda x: x.pub_date, reverse=True)
+        
         # Show only published to everyone else
         # if self.request.user != userprofile:
         #     qs = [p for p in qs if (p.published==True)]            
-        
+                
         return qs
 
     def get_context_data(self, **kwargs):
@@ -236,6 +251,10 @@ class UserprofileView(FilterMixin, ListView):
         else:
             sorting = "new"
         context['sorting'] = sorting
+
+        # Posttype
+        posttype = self.request.GET.get('posttype')
+        context['posttype'] = posttype
         
 
         view_count = 0
@@ -321,7 +340,7 @@ def upvote(request):
     # Notification
     message = Message(from_user=request.user,
                       to_user=post.author,
-                      story=post,
+                      post=post,
                       message_type="upvote")
     message.save()
     post.author.new_notifications = True
@@ -429,6 +448,16 @@ def post_create(request, parentslug=""):
             'hubs':Hub.objects.all(),
             'test': ""
         })
+
+
+
+def repost(request, slug=""):
+    original_post = Post.objects.get(slug=slug)
+    post = Post()
+    post.author = request.user
+    post.repost= original_post
+    post.save()
+    return HttpResponseRedirect('/@'+post.author.username)
 
 
 def post_edit(request, story, chapter=""):

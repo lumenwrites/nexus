@@ -2,7 +2,7 @@
 {% load markdownify %}
 
 
-
+<!-- Userprofile card -->
 {% if userprofile %}
 <div class="profile-card">
   <div class="user-background"></div>
@@ -20,9 +20,6 @@
 
     <div class="about">{{userprofile.about|markdownify|safe}}</div>
 
-    {% if not userprofile = user %}
-    <!-- If I'm browsing someone's profile.  -->
-
     {% if user.is_authenticated %}    
         {% if user not in userprofile.subscribers.all %}	
         <a class="button small"
@@ -39,18 +36,13 @@
        data-reveal-id="login-popup">
       Follow</a>
     {% endif %}
-
-    {% else %}
-   <!-- If it's my profile -->
-    <a href="/preferences/" class="small button">
-      <i class="fa fa-cog"></i>
-      Preferences </a>
-    {% endif %}
   </div>
   <div class="clearfix"></div>
 </div>
 <br/>
 
+
+<!-- Hub Card -->
 {% elif hubtitle %}
 <div class="profile-card">
   <div class="user-background"></div>
@@ -82,7 +74,33 @@
 </div>
 <br/>
 
+<!-- Personal card -->
+{% elif user.is_authenticated %}
+<div class="profile-card">
+  <div class="user-background"></div>
+  <div class="user-info">
+    <img src="{% static "/static/img/signature.png" %}"
+	 class="avatar"/>
+    <a href="/@{{user.username}}"class="username">@{{user.username}}</a>
+    
+    <div class="stats">    
+      <i class="fi-torsos-all stats-icon"></i>
+      {{user.subscribers.count}}
+      <i class="fi-arrow-up stats-icon"></i>
+      {{user.karma}}
+    </div>
 
+    <div class="about">{{user.about|markdownify|safe}}</div>
+
+    <a href="/preferences/" class="small button">
+      <i class="fa fa-cog"></i>
+      Preferences </a>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<br/>
+
+<!-- Join card -->
 {% else %}
 <div class="profile-card">
   <div class="user-background"></div>

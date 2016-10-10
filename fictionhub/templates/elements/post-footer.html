@@ -1,14 +1,20 @@
-<!-- Post Footer -->
+<!-- Repost Footer -->
+{% if post.repost %}
 <div class="panel post-footer" style="padding:8px;margin-top: 4px; margin-bottom: 0;
 				      margin-bottom: -21px;
 				      margin-left: -21px;
 				      width: calc(100% + 42px);">
   <div class="stats">
     <div class="left" style="margin-right:10px;">
-      <a href="{{post.author.get_absolute_url}}">@{{post.author}}</a>
+
+      <i class="fi-loop" style="
+				position: relative;
+				top: 1px;"></i> 
+      <a href="{{post.repost.author.get_absolute_url}}">@{{post.repost.author}}</a>
+
     </div>
 
-    {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+    {% for hub in post.repost.hubs.all %} <!-- Different between post and posts -->
     <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">
       {{hub.title}}</a>
     {% endfor %}
@@ -20,21 +26,21 @@
       
       <a href="/login/?next={{request.path}}"
     	 class="fi-arrow-up upvote arrow
-    		{% if post in upvoted %}upvoted{% endif %}
-                {% if post in downvoted %}downvoted{% endif %}"
-    	 id="post-upvote-{{post.id}}"></a>
-      <span class="score" style="margin-right:5px;"> {{post.score}} </span>
+    		{% if post.repost in upvoted %}upvoted{% endif %}
+                {% if post.repost in downvoted %}downvoted{% endif %}"
+    	 id="post-upvote-{{post.repost.id}}"></a>
+      <span class="score" style="margin-right:5px;"> {{post.repost.score}} </span>
       
 
       <span class="fi-loop left"
 	    style="font-size: 20px;
 		   margin-right:10px;">
-	{{post.views}}
+	0 {# {{post.repost.reposts}} #}
       </span>
 
-      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+      <a href="{{post.repost.get_absolute_url}}#comments" style="margin-right:8px;">
 	<span class="fi-comment"></span>
-	<span style="float:left;margin-right:5px;"> {{post.children.count}} </span>
+	<span style="float:left;margin-right:5px;"> {{post.repost.children.count}} </span>
       </a>
 
       {% if user.is_authenticated %}    
@@ -51,3 +57,89 @@
   </div>
   <div class="clearfix"></div>
 </div>
+
+{% else %}            
+<!-- Post Footer -->
+<div class="panel post-footer" style="padding:8px;margin-top: 4px; margin-bottom: 0;
+				      margin-bottom: -21px;
+				      margin-left: -21px;
+				      width: calc(100% + 42px);">
+  <div class="stats">
+    <div class="left" style="margin-right:10px;">
+      {% if post.repost %}
+      <i class="fi-loop" style="
+				position: relative;
+				top: 1px;"></i> 
+      <a href="{{post.author.get_absolute_url}}">@{{post.repost.author}}</a>
+      {% else %}            
+      <a href="{{post.author.get_absolute_url}}">@{{post.author}}</a>
+      {% endif %}      
+    </div>
+
+    {% for hub in post.hubs.all %} <!-- Different between post and posts -->
+    <a href="/hub/{{hub.slug}}" class="hub-tag" id="{{hub.slug}}">
+      {{hub.title}}</a>
+    {% endfor %}
+
+
+
+    <!-- Stats -->
+    <div class="right">
+
+      <!-- Upvote -->
+      {% if not user == post.author %}
+          {% if user.is_authenticated %}
+          <!-- Working upvote button -->
+          <a href="/login/?next={{request.path}}"
+             class="fi-arrow-up upvote
+        	    {% if post in user.upvoted.all %}upvoted{% endif %}"
+             id="post-upvote-{{post.id}}"></a>
+          <span class="score" style="margin-right:5px;float:left;"> {{post.score}} </span>
+          </a>
+            {% else %}
+	    <!-- Login popup if not authenticated. -->
+	    <a data-reveal-id="login-popup" 
+    	       class="fi-arrow-up upvote arrow"></a>
+	    <span class="score" style="margin-right:5px;"> {{post.score}} </span>
+            {% endif %}	
+       {% else %}    
+    	<!-- Disabled if I'm the author -->
+	<a class="fi-arrow-up upvote arrow disabled"></a>
+	<span class="score" style="margin-right:5px;"> {{post.score}} </span>
+       {% endif %}    
+          
+
+      
+      <!-- Repost -->
+      <a href="/post/{{post.slug}}/repost">
+	<i class="fi-loop left"
+	   style="font-size: 20px;
+		  margin-right:10px;">
+	</i>
+	<span style="float:left;margin-right:5px;"> {{post.reposts.count}} </span>
+      </a>
+
+
+      <!-- Comments -->
+      </a>
+      <a href="{{post.get_absolute_url}}#comments" style="margin-right:8px;">
+	<span class="fi-comment"></span>
+	<span style="float:left;margin-right:5px;"> {{post.children.count}} </span>
+      </a>
+
+      <!-- Reply -->
+      {% if user.is_authenticated %}    
+      <a class="reply" style="margin-right:8px;">
+	<i class="fa fa-reply"></i>      
+      </a>
+      {% else %}
+      <a data-reveal-id="login-popup" style="margin-right:8px;">
+	<i class="fa fa-reply"></i>      
+      </a>
+      {% endif %}
+
+    </div> <!-- end stats -->
+  </div>
+  <div class="clearfix"></div>
+</div>
+{% endif %} <!-- endif post vs repost. -->
