@@ -82,17 +82,18 @@ If I make the decisions you don't like, take this project in the wrong direction
 
 <span id="upcoming"></span>
 
-# Upcoming features
+# Future plans
 
 - Developer API
 
-- ActivePub integration
+- ActivityPub integration
 
 - Moderation Tools
-
-- Private Messages
 
 - Social Network for the General Audience 
 
 If this project works successfully - I am going to launch a social network for more general audience. It will be launched on a separate domain, so that this community would stay laser-focused on hacking, startups, and other topics relevant to HN audience. This will prevent all the issues that arise when community grows too large, keeping the quality of the community high.
 
+- Experiment with Revenue Sharing
+
+Perhaps I will implement some sort of revenue sharing system where best authors are rewarded with the part of the revenue based on how much upvotes they reveice. How much that will be will probably depend on how viable this whole model is.
