@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 
-from . import views, feeds, repost, editorial
+from . import views, feeds, repost
 # from .feeds import MainFeed
 
 urlpatterns = [
@@ -75,9 +75,6 @@ urlpatterns = [
 
     # Prompts
     url(r'^writing-prompts/$', views.writing_prompts),
-    # Editorial
-    url(r'^prompt/$', editorial.prompt),
-    url(r'^promptsrepost/$', editorial.prompts_repost),
 
     # Browse old
     # url(r'^browse/$', views.browse),
