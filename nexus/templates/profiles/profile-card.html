@@ -4,11 +4,13 @@
 
 <!-- Userprofile card -->
 {% if userprofile %}
+{% if userprofile.background %}
 <style>
 .profile-card .user-background {
 background:url(/media/{{userprofile.background}});
 }
 </style>
+{% endif %}
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">
@@ -49,11 +51,14 @@ background:url(/media/{{userprofile.background}});
 
 <!-- Hub Card -->
 {% elif hubtitle %}
+{% if hub.background %}
 <style>
 .profile-card .user-background {
 background:url(/media/{{hub.background}});
+height:140px;
 }
 </style>
+{% endif %}
 
 <div class="profile-card">
   <div class="user-background"></div>
@@ -87,11 +92,14 @@ background:url(/media/{{hub.background}});
 
 <!-- Personal card -->
 {% elif user.is_authenticated %}
+{% if user.background %}
 <style>
 .profile-card .user-background {
 background:url(/media/{{user.background}});
+height:140px;
 }
 </style>
+{% endif %}
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">

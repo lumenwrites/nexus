@@ -769,8 +769,7 @@ article header {
     margin-top: 20px;
     background: rgba(0, 0, 0, 0.02);
     padding-left:-2px;
-    /* box-shadow: -0px -0px 3px 0px rgb(114, 114, 114); */
-    /* padding: 10px 10px 0px 10px; */
+    padding-bottom: 5px;
 }
 
 .comment-body {
@@ -1136,7 +1135,7 @@ article header {
     background: rgba(255,255,255,0.5);
     .user-background {
 	background:url(/static/img/bg.jpg);
-	height:120px;
+	height:140px;
 	background-position-y:-320px;
 	margin-bottom: 10px;
 	background-size:cover!important;
