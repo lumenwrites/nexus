@@ -62,13 +62,13 @@
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
 		  width:120px;">
-	  {% if sorting = "hot" %}
+	  {% if sorting == "hot" %}
 	  <i class="fa fa-fire"></i>
 	  Hot
-	  {% elif sorting = "new" %}
+	  {% elif sorting == "new" %}
 	  <i class="fa fa-clock-o"></i>
 	  New</span>
-	  {% elif sorting = "top" %}
+	  {% elif sorting == "top" %}
           <i class="fa fa-arrow-up"></i>
 	  Top</span>
 	  {% endif %}	  
@@ -86,7 +86,7 @@
 	<!-- New -->
 	<li>
 	  <a href="{{request.path}}?sorting=new{{urlstring}}">
-	    <span {% if sorting = "new" %}class="bold"{% endif %}>
+	    <span {% if sorting == "new" %}class="bold"{% endif %}>
 	      <i class="fa fa-clock-o"></i>
 	      New</span>
 	</a>
@@ -94,7 +94,7 @@
 	<!-- Top -->
 	<li>
 	  <a href="{{request.path}}?sorting=top{{urlstring}}">
-	    <span {% if sorting = "top" %}class="bold"{% endif %}>
+	    <span {% if sorting == "top" %}class="bold"{% endif %}>
 	      <i class="fa fa-arrow-up"></i>
 	      Top</span>
 	</a>
@@ -104,7 +104,7 @@
 
 
 	<!-- Browse hub type dropdown  -->
-	{% if request.path = "/browse/" and user.is_authenticated %}
+	{% if request.path == "/browse/" and user.is_authenticated %}
 	<!-- Type dropdown button  -->
 	<a href="/browse/" data-dropdown="typedropdown"
 	   data-options="is_hover:true; align:bottom;"
@@ -113,7 +113,7 @@
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
 		  width:150px;">
-	  {% if hubfilter = "following" %}
+	  {% if hubfilter == "following" %}
 	  <i class="fa fa-hashtag" style="width:14px;"></i> 
 	  Following
 	  {% else %}
@@ -154,13 +154,13 @@
 		  margin: -5px 5px 0 0;
 		  padding:4px 10px;
 		  width:150px;">
-	  {% if posttype = "post" %}
+	  {% if posttype == "post" %}
 	  <i class="fa fa-pencil-square-o" style="width:14px;"></i>
 	  Posts
-	  {% elif posttype = "reply" %}
+	  {% elif posttype == "reply" %}
 	  <i class="fa fa-reply" style="width:14px;"></i> 
 	  Replies
-	  {% elif posttype = "repost" %}	  
+	  {% elif posttype == "repost" %}	  
 	  <i class="fi-loop" style="width:14px;"></i> 
 	  Reposts
 	  {% else %}

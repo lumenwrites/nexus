@@ -14,7 +14,7 @@ class Hub(models.Model):
         # except:
         #     parent_title = ""
         # return parent_title  + self.title
-        return self.slug
+        return self.title
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

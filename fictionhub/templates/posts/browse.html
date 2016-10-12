@@ -89,14 +89,14 @@ padding: 0px;
   </div>
 
   <div class="large-8 small-8 columns posts">
-    {% if request.path = "/" %}    
+    {% if request.path == "/" %}    
     {% include "posts/editor.html" %}
     {% else %}        
     {% include "posts/subnav-browse.html" %}
     {% endif %}        
 
     {% for post in posts %}
-    {% if not post.author.shadowban or post.author = user %}    
+    {% if not post.author.shadowban or post.author == user %}    
     {% include "posts/article.html" %}
     {% endif %}	<!-- endif shadowban -->
     {% endfor %}

@@ -1135,6 +1135,9 @@ article header {
 	height:120px;
 	background-position-y:-320px;
 	margin-bottom: 10px;
+	background-size:cover!important;
+	background-repeat:no-repeat!important;
+	background-position: center center!important;
     }
     .avatar {
 	float:left;
@@ -1250,4 +1253,19 @@ line-height: 28px!important;
 
 .select2-container--open .select2-dropdown--below {
 border-radius:0!important;
+}
+
+
+
+
+
+/* Preferences */
+#image-filechoice-container {
+    display:none;
+}
+
+#upload, #upload_background {
+    width: 160px;
+    padding: 15px;
+    margin-top:5px;
 }

@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 # from chaoslegion import urls as chaoslegion_urls
 from profiles import urls as profiles_urls
 from hubs import urls as hubs_urls
-from challenges import urls as challenges_urls
 from posts import urls as posts_urls
 from comments import urls as comments_urls
 from notifications import urls as notifications_urls
@@ -39,7 +38,6 @@ urlpatterns = [
 
     url(r'', include(profiles_urls)),
     url(r'', include(hubs_urls)),
-    url(r'', include(challenges_urls)),    
     url(r'', include(comments_urls)),
     url(r'', include(posts_urls)),
     url(r'', include(notifications_urls)),        

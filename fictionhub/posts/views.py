@@ -52,7 +52,7 @@ from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
 from notifications.models import Message
-from challenges.models import Prompt
+
 
 
 

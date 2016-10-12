@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'hubs',
     'posts',
     'notifications',
-    'challenges',            
 )
 
 MIDDLEWARE_CLASSES = (

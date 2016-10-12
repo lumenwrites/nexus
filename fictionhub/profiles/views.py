@@ -70,7 +70,7 @@ def preferences(request):
         return HttpResponseRedirect('/login/')
 
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=request.user)
+        form = UserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             # user = request.user
@@ -90,21 +90,30 @@ def preferences(request):
 @login_required
 def update_password(request):
     form = PasswordChangeForm(user=request.user)
+    message = ""
+
+    if request.method == 'GET':
+        if request.GET.get('error')=="1":
+            message = "Error, please try again."
 
     if request.method == 'POST':
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            return HttpResponseRedirect('/preferences/')                        
+            return HttpResponseRedirect('/preferences/')
+        else:
+
+            return HttpResponseRedirect('/update-password/?error=1')            
     else:
         form = PasswordChangeForm(user=request.user)
 
-    return render(request, "profiles/prefs.html", {
+    return render(request, "profiles/update-password.html", {
         'form': form,
-        # 'message': "Error, try again.",
-        'title': "Change Password"                        
+        'message':message
     })
+
+
 
 
 def login_or_signup(request):

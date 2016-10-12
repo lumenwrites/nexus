@@ -1253,8 +1253,11 @@ article header {
   height: 120px;
   background-position-y: -320px;
   margin-bottom: 10px;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }
-/* line 1139, ../sass/style.scss */
+/* line 1142, ../sass/style.scss */
 .profile-card .avatar {
   float: left;
   width: 80px;
@@ -1263,32 +1266,32 @@ article header {
   border: 2px solid white;
   margin-top: -30px;
 }
-/* line 1148, ../sass/style.scss */
+/* line 1151, ../sass/style.scss */
 .profile-card .username {
   font-weight: bold;
   color: #3d454b;
   font-size: 18px;
 }
-/* line 1154, ../sass/style.scss */
+/* line 1157, ../sass/style.scss */
 .profile-card .about {
   padding: 10px;
 }
-/* line 1156, ../sass/style.scss */
+/* line 1159, ../sass/style.scss */
 .profile-card .about p {
   font-size: 18px;
 }
-/* line 1161, ../sass/style.scss */
+/* line 1164, ../sass/style.scss */
 .profile-card .button {
   width: calc(100% - 20px);
   margin: 10px;
 }
-/* line 1164, ../sass/style.scss */
+/* line 1167, ../sass/style.scss */
 .profile-card .button i {
   color: white;
 }
 
 /* Select */
-/* line 1174, ../sass/style.scss */
+/* line 1177, ../sass/style.scss */
 .select2-container--default
 .select2-selection--multiple,
 .select2-container {
@@ -1297,82 +1300,95 @@ article header {
   width: 100%;
 }
 
-/* line 1183, ../sass/style.scss */
+/* line 1186, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple {
   border-radius: 0 !important;
 }
 
-/* line 1187, ../sass/style.scss */
+/* line 1190, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple {
   height: 35px !important;
 }
 
-/* line 1192, ../sass/style.scss */
+/* line 1195, ../sass/style.scss */
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border-color: #cccccc !important;
 }
 
-/* line 1199, ../sass/style.scss */
+/* line 1202, ../sass/style.scss */
 .set-hubs input {
   margin-top: -7px !important;
 }
 
-/* line 1203, ../sass/style.scss */
+/* line 1206, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: 2px !important;
   margin-right: 5px !important;
 }
 
-/* line 1209, ../sass/style.scss */
+/* line 1212, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: #e4e4e4 !important;
   border: none !important !important;
   border-radius: 0px !important;
 }
 
-/* line 1215, ../sass/style.scss */
+/* line 1218, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   border-radius: 0px !important;
   border: none !important;
 }
 
-/* line 1220, ../sass/style.scss */
+/* line 1223, ../sass/style.scss */
 .select2-container--default .select2-search--inline .select2-search__field {
   box-shadow: none !important;
 }
 
-/* line 1224, ../sass/style.scss */
+/* line 1227, ../sass/style.scss */
 .select2-container .select2-search--inline {
   margin: 0 !important;
   height: 35px !important;
 }
 
-/* line 1230, ../sass/style.scss */
+/* line 1233, ../sass/style.scss */
 .select2-container--default .select2-search--inline .select2-search__field {
   margin: 0 !important;
   padding: 0 !important;
   height: 35px !important;
 }
 
-/* line 1236, ../sass/style.scss */
+/* line 1239, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   margin: 2px !important;
   line-height: 28px !important;
 }
 
-/* line 1241, ../sass/style.scss */
+/* line 1244, ../sass/style.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   padding: 0 2px !important;
 }
 
-/* line 1245, ../sass/style.scss */
+/* line 1248, ../sass/style.scss */
 .select2-container--default .select2-search--inline .select2-search__field {
   margin: 0 !important;
   height: 30px !important;
   padding-left: 2px !important;
 }
 
-/* line 1251, ../sass/style.scss */
+/* line 1254, ../sass/style.scss */
 .select2-container--open .select2-dropdown--below {
   border-radius: 0 !important;
+}
+
+/* Preferences */
+/* line 1263, ../sass/style.scss */
+#image-filechoice-container {
+  display: none;
+}
+
+/* line 1267, ../sass/style.scss */
+#upload, #upload_background {
+  width: 160px;
+  padding: 15px;
+  margin-top: 5px;
 }

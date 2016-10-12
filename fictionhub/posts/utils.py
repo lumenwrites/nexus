@@ -13,7 +13,7 @@ from posts.models import Post
 from posts.forms import PostForm
 from hubs.models import Hub
 from profiles.models import User
-from challenges.models import Prompt
+
 
 
 

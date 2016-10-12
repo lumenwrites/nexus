@@ -1,59 +1,100 @@
 {% extends "base.html" %}
-{% load markdownify %}
+
 {% block content %}
-    
+
 <div id="page"  class="postPage profile">
-  <div class="row">
-    <div class="large-12 columns">
-      {% if message %}
-      <br/>
-      <div class="panel">{{message}}</div>
-      {% endif %}      
-      <h2> {{title}} </h2>
-      <form method="post"
-	    {% if title == "Preferences" %}
-	    action="/preferences/"
-	    {% else %}
-	    action="/update-password/"	    
-	    {% endif %}      	    
-	    > {% csrf_token %}
-	{{form}}
-	<!-- {{form.username}} -->
-	<!-- {{form.email}} -->
-	<!-- {{form.website}} -->
-	<!-- {{form.about}}				 -->
-	<br/>
-	{% if title != "Change Password" %}
-	<a href="/update-password">Change Password</a>
-	<!-- |<a href="/grant-reddit-access">Grant Reddit Access</a> -->
-	{% endif %}      	
-	<button class="button small right" type="submit">Save</button>	
-      </form>
+<div class="row">
+  <div class="large-8 large-centered columns"
+       style="background:white; padding: 40px;">
+    <h1> Preferences </h1>
+    {% if message %}
+    <br/>
+    <div class="panel">{{message}}</div>
+    {% endif %}
+    <form method="post"
+	  enctype="multipart/form-data" action="/preferences/">{% csrf_token %}
+      Username:
+      {{form.username}}
+      {{form.email}}
 
-
+      <!-- Avatar -->
+      <span>Avatar:</span><br/>      
+      {% if not user.avatar %}      
+      <div id="image-filechoice-container">
+	<input id="id_avatar" name="avatar" type="file">      
+      </div>
+      <a id="upload" class="small button">
+	<i class="fa fa-upload white"></i>
+	&nbsp; Upload</a>
+      {% else %}
+      <!-- Avatar Thumbnail -->
+      <div style="width:160px;
+		  height:160px;
+		  float:left;
+		  margin-right:10px;">
+	    <img src="/media/{{user.avatar}}"/>
+      </div>
       <div class="clearfix"></div>
-      <div style="width:100%; height: 20px"></div>
-      <!-- 
-      <h3> Change Password </h3>
-      <form method="post" action="/update-password/">	{% csrf_token %}
-	{{password_change_form}}
-	<button class="button small" type="submit">Submit</button>
-	<div class="clearfix"></div>
-	<div style="width:100%; height: 20px"></div>
-      </form>      
-      -->
-    </div> <!-- End 12 columns -->
-    </div>	 <!-- End row -->
+      <!-- Repace Avatar -->
+      <div id="image-filechoice-container"
+	   style="width:calc(100% - 80px);">
+	<input id="id_avatar" name="avatar" type="file">      
+      </div>
+      <a id="upload" class="small button">
+	<i class="fa fa-upload white"></i>
+	Upload</a>
+      {% endif %}
+      <div class="clearfix"></div>
+      
+      <!-- Background -->
+      <span>Background:</span><br/>
+      {% if not user.background %}      
+      <div id="image-filechoice-container">
+	<input id="id_background" name="background" type="file">      
+      </div>
+      <a id="upload_background" class="small button">
+	<i class="fa fa-upload white"></i>
+	Upload</a      
+      {% else %}
+      <!-- Background Thumbnail -->
+      <img src="/media/{{user.background}}"/><br/>
+      <!-- Repace Background -->
+      <div id="image-filechoice-container">
+	<input id="id_background" name="background" type="file">      
+      </div>
+      <a id="upload_background" class="small button">
+	<i class="fa fa-upload white"></i>
+	Upload</a>
+      {% endif %}
+      <br/>
+      <div class="clearfix"></div>
+      <br/>
+      <!-- About -->
+      {{form.about}}
+      <div class="clearfix"></div>        
 
-  <style>
-    label {
-    width:100%;
-    margin-left:0!important;
-    }
-    input {
-    width: auto;
-    }
-  </style>
+      <button class="button small right" type="submit">Save</button>	
+    </form>
+    <a href="/update-password/">Change Password</a>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+</div> <!-- End .postPage -->
+<script>
+    $(document).ready(function(){    
+	$('#upload').click(function(){
+	    $('#id_avatar').click();
+    });
+
+	$('#upload_background').click(function(){
+	    $('#id_background').click();
+	});
+    
+    })
+</script>
+
+
 {% endblock content %}
 
 

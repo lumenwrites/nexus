@@ -4,10 +4,15 @@
 
 <!-- Userprofile card -->
 {% if userprofile %}
+<style>
+.profile-card .user-background {
+background:url(/media/{{userprofile.background}});
+}
+</style>
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">
-    <img src="{% static "/static/img/signature.png" %}"
+    <img src="/media/{{userprofile.avatar}}"
 	 class="avatar"/>
     <a href="/@{{userprofile.username}}"class="username">@{{userprofile.username}}</a>
     
@@ -76,10 +81,15 @@
 
 <!-- Personal card -->
 {% elif user.is_authenticated %}
+<style>
+.profile-card .user-background {
+background:url(/media/{{user.background}});
+}
+</style>
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">
-    <img src="{% static "/static/img/signature.png" %}"
+    <img src="/media/{{user.avatar}}"
 	 class="avatar"/>
     <a href="/@{{user.username}}"class="username">@{{user.username}}</a>
     
