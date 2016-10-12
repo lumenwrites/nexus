@@ -21,7 +21,7 @@ def hub_create(request):
     nextpage = request.GET.get('next', '/')
     
     if request.method == 'POST':
-        form = HubForm(request.POST)
+        form = HubForm(request.POST, request.FILES)
         if form.is_valid():
             hub = form.save(commit=False) # return story but don't save it to db just yet
             hub.save()

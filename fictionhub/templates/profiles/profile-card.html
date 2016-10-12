@@ -49,6 +49,12 @@ background:url(/media/{{userprofile.background}});
 
 <!-- Hub Card -->
 {% elif hubtitle %}
+<style>
+.profile-card .user-background {
+background:url(/media/{{hub.background}});
+}
+</style>
+
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">

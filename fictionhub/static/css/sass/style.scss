@@ -286,6 +286,14 @@ header {
     color: black;
 }
 
+.avatar {
+    width: 32px;
+    border-radius: 4px;
+    background:url(/static/img/default_avatar.jpg);
+    height: 32px;
+    background-size: cover;
+    
+}
 .selected a {
 	color: $orange;
 }
@@ -1146,6 +1154,9 @@ article header {
 	margin:10px;
 	border: 2px solid white;
 	margin-top: -30px;
+	background:url(/static/img/default_avatar.jpg);
+	height: 80px;
+	background-size: cover;
     }
 
     .username {

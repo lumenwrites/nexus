@@ -10,7 +10,7 @@ class HubForm(ModelForm):
     # parent.empty_label = None
     class Meta:
         model = Hub
-        fields = ['title','description'] 
+        fields = ['title','description', 'background'] 
         # widgets = {
         #     'parent' : forms.ChoiceField() #choicesrequired=True, 
         # }

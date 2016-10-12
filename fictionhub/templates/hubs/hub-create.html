@@ -4,14 +4,40 @@
   .CodeMirror {
   background:white!important;
   }
-
+textarea::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #fff!important;
+}
 </style>
 <div id="page"  class="postPage">
   <div class="row">
     <div class="large-6 large-centered columns">
       <h2> Create Hub </h2>
-      <form method="post" action="/hub/add/?next={{nextpage}}"> {% csrf_token %}
-	{{form}}
+      <form method="post"
+	    enctype="multipart/form-data"
+	    action="/hub/add/?next={{nextpage}}"> {% csrf_token %}
+	{{form.title}}
+	{{form.description}}
+	<!-- Background -->
+	<span>Background:</span><br/>
+	{% if not hub.background %}      
+	<div id="image-filechoice-container">
+	  <input id="id_background" name="background" type="file">      
+	</div>
+	<a id="upload_background" class="small button">
+	  <i class="fa fa-upload white"></i>
+	  Upload</a>
+	{% else %}
+	<!-- Background Thumbnail -->
+	<img src="/media/{{hub.background}}"/><br/>
+	<!-- Repace Background -->
+	<div id="image-filechoice-container">
+	  <input id="id_background" name="background" type="file">      
+	</div>
+	<a id="upload_background" class="small button">
+	  <i class="fa fa-upload white"></i>
+	  Upload</a>
+	{% endif %}
+	
 	<input type="submit" class="button small right" value="Create" />
       </form>
     </div>
@@ -20,5 +46,15 @@
 
   </div>	 <!-- End row -->
 </div>
+
+<script>
+    $(document).ready(function(){    
+	$('#upload_background').click(function(){
+	    $('#id_background').click();
+	});
+    })
+</script>
+
+
 {% endblock content %}
 
