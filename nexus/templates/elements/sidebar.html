@@ -20,6 +20,7 @@
        {% if user.is_authenticated %}    
        href="/hub/add"
        {% else %}
+       href="/login/?next={{request.path}}"
        data-reveal-id="login-popup"
        {% endif %}
        style="margin: 2px;

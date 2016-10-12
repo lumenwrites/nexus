@@ -40,6 +40,7 @@ background:url(/media/{{userprofile.background}});
     {% else %}
     <!-- If not authenticated -->
     <a class="button small"
+       href="/login/?next={{request.path}}"
        data-reveal-id="login-popup">
       Follow</a>
     {% endif %}
@@ -82,6 +83,7 @@ height:140px;
     {% else %}
     <!-- If not authenticated -->
     <a class="button small"
+       href="/login/?next={{request.path}}"
        data-reveal-id="login-popup">
       Subscribe</a>
     {% endif %}
@@ -134,7 +136,8 @@ height:140px;
       Join a community of hackers, developers, startup founders.
     </div>
   </div>    
-    <a data-reveal-id="login-popup" class="small button"> Join </a>
+  <a  href="/login/?next={{request.path}}"
+      data-reveal-id="login-popup" class="small button"> Join </a>
   <div class="clearfix"></div>
 </div>
 <br/>

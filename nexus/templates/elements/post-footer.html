@@ -35,6 +35,7 @@
 	{% if user.is_authenticated %}
 	href="/post/{{post.repost.slug}}/repost"
 	{% else %}
+	href="/login/?next={{request.path}}" 
 	data-reveal-id="login-popup"
 	{% endif %}          
 	>
@@ -55,7 +56,8 @@
 	<i class="fa fa-reply"></i>      
       </a>
       {% else %}
-      <a data-reveal-id="login-popup" style="margin-right:8px;">
+      <a href="/login/?next={{request.path}}"
+	 data-reveal-id="login-popup" style="margin-right:8px;">
 	<i class="fa fa-reply"></i>      
       </a>
       {% endif %}
@@ -104,7 +106,8 @@
           </a>
             {% else %}
 	    <!-- Login popup if not authenticated. -->
-	    <a data-reveal-id="login-popup" 
+	    <a href="/login/?next={{request.path}}"
+	       data-reveal-id="login-popup" 
     	       class="fi-arrow-up upvote arrow"></a>
 	    <span class="score" style="margin-right:5px;"> {{post.score}} </span>
             {% endif %}	
@@ -122,6 +125,7 @@
 	{% if user.is_authenticated %}
 	href="/post/{{post.slug}}/repost"
 	{% else %}
+	href="/login/?next={{request.path}}" 
 	data-reveal-id="login-popup"
 	{% endif %}          
 	>
@@ -147,7 +151,8 @@
 	<i class="fa fa-reply"></i>      
       </a>
       {% else %}
-      <a data-reveal-id="login-popup" style="margin-right:8px;">
+      <a href="/login/?next={{request.path}}"
+	 data-reveal-id="login-popup" style="margin-right:8px;">
 	<i class="fa fa-reply"></i>      
       </a>
       {% endif %}
