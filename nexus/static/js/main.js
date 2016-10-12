@@ -40,22 +40,6 @@ $(document).ready(function(){
 	// $(this).parent().parent().parent().find('.comment-reply').toggle();a
     });
 
-    //Search
-    $("#search-input").keyup(function(event){
-	if(event.keyCode == 13){
-	    if ($("#search-input").attr("value").length === 0) {
-		$("#search-form").get(0).submit();
-	    }
-	    
-	}
-    });
-    // If there's search input, search field is white
-    if ($('#search-input').val().length > 0){
-	$('#search-input').addClass("white-bg");
-    }
-        
-
-
 
 
 

@@ -2,7 +2,7 @@ from posts.utils import rank_hot, rank_top
 from django.core.mail import send_mail # for email
 from django.http import HttpResponseRedirect
 
-from notifications.models import Message
+# from notifications.models import Message
 
 from .models import Comment
 from .forms import CommentForm
@@ -31,11 +31,11 @@ def submit_comment(request, post):
             #     except:
             #         pass
             # Notification
-            message = Message(from_user=request.user,
-                              to_user=comment.post.author,
-                              story=comment.post,
-                              comment=comment,
-                              message_type="comment")
+            # message = Message(from_user=request.user,
+            #                   to_user=comment.post.author,
+            #                   story=comment.post,
+            #                   comment=comment,
+            #                   message_type="comment")
             message.save()
             comment.post.author.new_notifications = True
             comment.post.author.save()

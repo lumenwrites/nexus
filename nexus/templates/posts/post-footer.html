@@ -79,8 +79,7 @@
     {% if not user == post.author %}
         {% if user.is_authenticated %}
         <a class="small button upvote {% if post in user.upvoted.all %}upvoted{% endif %}"
-           id="post-upvote-{{post.id}}"    
-           href="/login/?next={{request.path}}">
+           id="post-upvote-{{post.id}}">
           {% if post in user.upvoted.all %}
               Upvoted
           {% else %}      
@@ -88,6 +87,7 @@
           {% endif %}
         </a>
         {% else %}
+	<!-- If not authenticated -->
 	<a class="small button upvote" data-open="login-popup" data-reveal-id="login-popup">
 	  <i class="fi-arrow-up"></i>Upvote</a>
         {% endif %}	

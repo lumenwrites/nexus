@@ -51,7 +51,7 @@ from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
 from comments.models import Comment
-from notifications.models import Message
+from notifications.models import Notification
 
 
 
@@ -338,11 +338,11 @@ def upvote(request):
     user.save()
 
     # Notification
-    message = Message(from_user=request.user,
-                      to_user=post.author,
-                      post=post,
-                      message_type="upvote")
-    message.save()
+    notification = Notification(from_user=request.user,
+                                to_user=post.author,
+                                post=post,
+                                notification_type="upvote")
+    notification.save()
     post.author.new_notifications = True
     post.author.save()
     return HttpResponse()
@@ -418,6 +418,18 @@ def post_create(request, parentslug=""):
                 post.parent = Post.objects.get(slug=parentslug)
 
             post.save()
+
+            # Notification
+            if parentslug:
+                notification = Notification(from_user=request.user,
+                                            to_user=post.parent.author,
+                                            post=post,
+                                            notification_type="reply")
+            notification.save()
+            post.parent.author.new_notifications = True
+            post.parent.author.save()
+                
+            
             request.user.upvoted.add(post)
 
             # Add hubs
@@ -457,6 +469,16 @@ def repost(request, slug=""):
     post.author = request.user
     post.repost= original_post
     post.save()
+
+    # Notification
+    notification = Notification(from_user=request.user,
+                                to_user=original_post.author,
+                                post=original_post,
+                                notification_type="repost")
+    notification.save()
+    original_post.author.new_notifications = True
+    original_post.author.save()
+    
     return HttpResponseRedirect('/@'+post.author.username)
 
 
@@ -575,16 +597,6 @@ def post_publish(request, story):
     # send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
 
     # Notification
-    if not check_if_daily(request):
-        subscribers = post.author.subscribers.all()
-        for subscriber in subscribers:
-            message = Message(from_user=post.author,
-                              to_user=subscriber,
-                              story=post,
-                              message_type="newstory")
-            message.save()
-            subscriber.new_notifications = True
-            subscriber.save()
 
     return HttpResponseRedirect('/story/'+post.slug+'/edit')
 

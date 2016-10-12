@@ -14,7 +14,7 @@ from .models import User, Subscriber
 from .forms import RegistrationForm, UserForm
 
 from posts.models import Post
-from notifications.models import Message
+from notifications.models import Notification
 
 # import praw
 # import webbrowser
@@ -34,10 +34,10 @@ def subscribe(request, username):
         user.subscribed_to.add(userprofile)
         user.save()
         # Notification
-        message = Message(from_user=user,
-                          to_user=userprofile,
-                          message_type="subscriber")
-        message.save()
+        notification = Notification(from_user=user,
+                                    to_user=userprofile,
+                                    notification_type="subscriber")
+        notification.save()
         userprofile.new_notifications = True
         userprofile.save()
         

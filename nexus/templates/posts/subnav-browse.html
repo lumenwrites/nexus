@@ -216,6 +216,23 @@
 	       id="search-input">
       </form>
 
+      <script>
+$(document).ready(function(){
+    //Search
+    $("#search-input").keyup(function(event){
+	if(event.keyCode == 13){
+	    if ($("#search-input").attr("value").length === 0) {
+		$("#search-form").get(0).submit();
+	    }
+	    
+	}
+    });
+    // If there's search input, search field is white
+    if ($('#search-input').val().length > 0){
+	$('#search-input').addClass("white-bg");
+    }
+})        
+      </script>
     </div> <!-- Close 4 columns -->
       
     <div class="clearfix"></div>

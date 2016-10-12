@@ -1,5 +1,5 @@
 from django.core.mail import send_mail # for email
-from notifications.models import Message
+from notifications.models import Notification
 
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context

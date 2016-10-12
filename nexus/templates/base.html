@@ -143,7 +143,11 @@ margin-left: 5px;
 	      </span>
 	    </a>
 	    <a href="/notifications/">
-	      <i class="fa fa-envelope-o"></i> <!-- Notifications -->
+	      <!-- Notifications -->	      
+	      <i class="fa fa-envelope-o
+			{% if user.new_notifications %}
+			orange
+			{% endif %}"></i>
 	      <span class="show-for-large-up">
 		Inbox
 	      </span>
@@ -366,6 +370,7 @@ margin-left: 5px;
 <!-- Upvotes -->
 <script>
 $(document).ready(function(){
+
     // getting csrf token.
     function getCookie(name) {
 	var cookieValue = null;
@@ -442,7 +447,6 @@ $(document).ready(function(){
 	return false;
     }
 
-    
     {% if user.is_authenticated %}
     //Connect functions
     $("a.upvote").unbind('click').click(function(){

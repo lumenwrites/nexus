@@ -21,7 +21,7 @@ from profiles.models import User
 from hubs.models import Hub
 from posts.models import Post
 from comments.models import Comment
-from notifications.models import Message
+# from notifications.models import Message
 #utils
 from .utils import send_comment_email_notification
 
@@ -52,14 +52,14 @@ def comment_submit(request, comment_id):
             #     except:
             #         pass
             # Notification
-            message = Message(from_user=request.user,
-                              to_user=comment.parent.author,
-                              story=comment.post,
-                              comment=comment,
-                              message_type="reply")
-            message.save()
-            comment.parent.author.new_notifications = True
-            comment.parent.author.save()
+            # message = Message(from_user=request.user,
+            #                   to_user=comment.parent.author,
+            #                   story=comment.post,
+            #                   comment=comment,
+            #                   message_type="reply")
+            # message.save()
+            # comment.parent.author.new_notifications = True
+            # comment.parent.author.save()
 
 
             comment_url = request.GET.get('next', '/')+"#id-"+str(comment.id)

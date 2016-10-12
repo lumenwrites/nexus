@@ -7,124 +7,52 @@
 
 {% block content %}
 <div id="page"  class="postPage">
-{# {% include "notifications/subnav.html" %} #}
+
 <div class="row">
   <div class="large-12 columns">
 
-    {% for message in messages %}
+    {% for notification in notifications %}
       <div class="comment-box"> <!-- Open Comment Box  -->    
-	  {% if message.message_type == "upvote" %}
+	  {% if notification.notification_type == "upvote" %}
 	  <!-- Upvote -->
 	  <div class="comment-header">
 	    <i class="fi-arrow-up"></i>
-	    <a href="/user/{{message.from_user.username}}"
-	       class="black bold">{{message.from_user.username}}</a>
-	    upvoted your story
-	    "<a href="{{message.story.get_absolute_url}}" class="black bold"
-		>{{message.story.title}}</a>"
+	    <a href="/@{{notification.from_user.username}}"
+	       class="black bold">{{notification.from_user.username}}</a>
+	    upvoted your
+	    <a href="{{notification.post.get_absolute_url}}" class="black bold">post</a>
 	  </div>
-	  {% elif message.message_type == "subscriber" %}
+	  {% elif notification.notification_type == "subscriber" %}
 	  <!-- New Subscriber -->
 	  <div class="comment-header">
 	    <i class="fi-torsos-all stats-icon"></i>
-	    <a href="/user/{{message.from_user.username}}"
-	       class="black bold">{{message.from_user.username}}</a>	  
-	    subscribed to your stories!
+	    <a href="/@{{notification.from_user.username}}"
+	       class="black bold">{{notification.from_user.username}}</a>	  
+	    is now following you!
 	  </div>
-	  {% elif message.message_type == "comment" or message.message_type == "reply" %}
-	  <!-- Comment -->
+	  {% elif notification.notification_type == "reply" %}
+	  <!-- Reply -->
 	  <div class="comment-header">
 	    <i class="fi-comment" style="font-size:22px;"></i>
-	    <a class="bold black" href="{{message.comment.get_absolute_url}}"> comment </a>
-	    under a story
-	    "<a href="{{message.story.get_absolute_url}}" class="black bold"
-		>{{message.story.title}}</a>"
-	    from
-	    <a href="/user/{{message.from_user.username}}"
-	       class="black bold">{{message.from_user.username}}</span>
+	    <a href="/@{{notification.from_user.username}}"
+	       class="black bold">{{notification.from_user.username}}</a>
+	    has
+	    <a class="bold black" href="{{notification.post.get_absolute_url}}"> replied </a>
+	    to your post
 	  </div>
-	  <div class="comment-body">      
-	    {{message.comment | markdownify | safe }}
-	  </div>
-	  <div class="comment-footer">
-	    <!-- <a href="/" class="black bold">Comment thread</a> -->
-	    <!-- <a href="/" class="black bold">Reply</a>		 -->
-	  </div>
-	  {% elif message.message_type == "message" %}
-      	  <div class="comment-header">
-      	    <i class="fa fa-envelope"></i>
-      	    <a href="/subject/{{message.subject.pk}}/" class="black bold">{{message.subject.title}}</a>
-      	    message from <a href="/user/{{message.from_user.username}}" class="black bold">{{message.from_user.username}}</a>
-	  </div>
-	  <div class="comment-body">
-	    {{message.body}}
-	  </div>
-	  <div class="comment-footer">
-      	    <!-- <a href="/" class="black bold">All messages</a> -->
-      	    <!-- <a href="/" class="black bold">Reply</a> -->
-	  </div>
-	  {% elif message.message_type == "newstory" %}
-	  <!-- New Subscriber -->
+	  {% elif notification.notification_type == "repost" %}
+	  <!-- Repost -->
 	  <div class="comment-header">
-	    <i class="fi-torsos-all stats-icon"></i>
-	    <a href="/user/{{message.from_user.username}}"
-	       class="black bold">{{message.from_user.username}}</a>	  
-	    has published a new story
-	    <a href="{{message.story.get_absolute_url}}"
-	       class="black bold">{{message.story.title}}</a>	  
+	    <i class="fi-comment" style="font-size:22px;"></i>
+	    <a href="/@{{notification.from_user.username}}"
+	       class="black bold">{{notification.from_user.username}}</a>
+	    has reposted your
+	    <a class="bold black" href="{{notification.post.get_absolute_url}}"> post </a>
+
 	  </div>
-	  
 	  {% endif %}
-	  <!-- <i class="fi-x right"></i> -->
       </div>
     {% endfor %}
-
-
-
-    <!-- In message -->
-
-      <!-- Out message
-      <div class="comment-box">
-	<div class="comment-header">
-	  <i class="fa fa-envelope"></i>
-	  <a href="/" class="black bold">About your suggestion</a>
-	  message to <a href="/" class="black bold">lumenwrites</a>
-      </div>
-      <div class="comment-body">      
-	<p>Nice story! Welcome to fictionhub =)</p>
-      </div>
-      </div>
-     -->
-
-
-      <!-- 
-      <div class="comment-box">
-	<div class="comment-header">
-	  <i class="fi-comment" style="font-size:22px;"></i>
-	  <a href="/" class="black bold">reply</a>
-	  to your comment under a story
-	  "<a href="/" class="black bold">Metropolitan Man</a>"
-	  from
-	  <a href="/" class="black bold">alexanderwales</a>
-      </div>
-      <div class="comment-body">      
-	<p>Nice story! Welcome to fictionhub =)</p>
-      </div>
-      </div>
-      -->
-
-      <!-- Reply form 
-      <div class="comment-reply" style="display:none;">
-	<form action="/comment-submit/35?next=/user/rayalez/comments" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="0jNuzQA6mUFpU4ep5En58xLhKDZ2Pi6a">
-	  <div class="editor">
-	    <textarea cols="40" id="id_body" name="body" rows="10"></textarea>
-	  </div>
-	  <button class="button small" type="submit">Submit</button>
-	  <a class="button small cancel gray">Cancel</a>	  
-	  <div class="clearfix"></div>		    
-	</form>
-      </div>
-    </div>-->      
 
 </div> <!-- End 12 columns -->
 </div>	 <!-- End row -->
