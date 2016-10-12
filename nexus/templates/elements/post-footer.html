@@ -30,11 +30,20 @@
     	 id="post-upvote-{{post.repost.id}}"></a>
       <span class="score" style="margin-right:5px;"> {{post.repost.score}} </span>
 
-      <span class="fi-loop left"
-	    style="font-size: 20px;
-		   margin-right:10px;">
-	0 {# {{post.repost.reposts}} #}
-      </span>
+      <!-- Repost -->
+      <a
+	{% if user.is_authenticated %}
+	href="/post/{{post.repost.slug}}/repost"
+	{% else %}
+	data-reveal-id="login-popup"
+	{% endif %}          
+	>
+	<i class="fi-loop left"
+	   style="font-size: 20px;
+		  margin-right:10px;">
+	</i>
+	<span style="float:left;margin-right:5px;"> {{post.repost.reposts.count}} </span>
+      </a>
 
       <a href="{{post.repost.get_absolute_url}}#comments" style="margin-right:8px;">
 	<span class="fi-comment"></span>
@@ -106,15 +115,23 @@
        {% endif %}    
           
 
-      
+
+	
       <!-- Repost -->
-      <a href="/post/{{post.slug}}/repost">
+      <a
+	{% if user.is_authenticated %}
+	href="/post/{{post.slug}}/repost"
+	{% else %}
+	data-reveal-id="login-popup"
+	{% endif %}          
+	>
 	<i class="fi-loop left"
 	   style="font-size: 20px;
 		  margin-right:10px;">
 	</i>
 	<span style="float:left;margin-right:5px;"> {{post.reposts.count}} </span>
       </a>
+
 
 
       <!-- Comments -->
