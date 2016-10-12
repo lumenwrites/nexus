@@ -1,4 +1,4 @@
-from fictionhub.settings import *
+from nexus.settings import *
 
 DEBUG = True
 
