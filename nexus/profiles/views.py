@@ -41,7 +41,7 @@ def subscribe(request, username):
         userprofile.new_notifications = True
         userprofile.save()
         
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+        return HttpResponseRedirect("/@"+userprofile.username) # request.META.get('HTTP_REFERER')
     else:
         return HttpResponseRedirect('/login/')    
 
