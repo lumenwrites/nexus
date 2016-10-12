@@ -9,4 +9,4 @@ html2text
 
 pycurl
 
-
+pillow
