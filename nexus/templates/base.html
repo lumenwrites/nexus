@@ -131,11 +131,23 @@ margin-left: 5px;
 	  {% if user.is_authenticated %}
 	  <ul style="margin-right:0;">
 	    <a href="/">
-	      <i class="fa fa-home"></i> Home </a>
+	      <i class="fa fa-home"></i>
+	      <span class="show-for-large-up">
+		Home
+	      </span>
+	    </a>
 	    <a href="/browse/">
-	      <i class="fa fa-compass"></i> Browse </a>
+	      <i class="fa fa-compass"></i>
+	      <span class="show-for-large-up">
+		Browse
+	      </span>
+	    </a>
 	    <a href="/notifications/">
-	      <i class="fa fa-envelope-o"></i> <!-- Notifications -->Inbox </a>
+	      <i class="fa fa-envelope-o"></i> <!-- Notifications -->
+	      <span class="show-for-large-up">
+		Inbox
+	      </span>
+	    </a>
 	    <a href="/@{{user.username}}">
 	      <img src="/media/{{user.avatar}}"
 		   class="avatar"/>
@@ -148,12 +160,23 @@ margin-left: 5px;
 	  {% else %}
 	  <ul style="margin-right:0;">
 	    <a href="/">
-	      <i class="fa fa-home"></i> Home </a>
+	      <i class="fa fa-home"></i>
+	      <span class="show-for-large-up">
+		Home
+	    	<span class="show-for-large-up">
+	    </a>
 	    <a href="/browse/">
-	      <i class="fa fa-compass"></i> Browse </a>
+	      <i class="fa fa-compass"></i>
+	      <span class="show-for-large-up">
+		Browse
+	      </span>
+	    </a>
 	    <a  data-reveal-id="login-popup">
 	      <i class="fa fa-sign-in"></i>
-	      Login </a>
+	      <span class="show-for-large-up">
+		Login
+	      </span>
+	    </a>
 	  </ul>
 	  
 	  {% endif %}

@@ -84,11 +84,11 @@ padding: 0px;
   
 <div class="row">
 
-  <div class="large-4 small-4 columns sidebar"> <!-- style="display:none;" -->
+  <div class="large-4 small-12 columns sidebar"> <!-- style="display:none;" -->
   {% include "elements/sidebar.html" %}  
   </div>
 
-  <div class="large-8 small-8 columns posts">
+  <div class="large-8 small-12 columns posts">
     {% if request.path == "/" %}    
     {% include "posts/editor.html" %}
     {% else %}        
