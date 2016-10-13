@@ -68,4 +68,4 @@ class Subscriber(models.Model):
         if not self.ref:
             return self.email
         else:
-            return self.email + " | " + self.ref
+            return self.ref + " | " + self.email
