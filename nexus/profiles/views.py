@@ -246,4 +246,4 @@ def email_subscribe(request):
         
         email_subscriber.save()
         
-        return HttpResponseRedirect("/?notification=early-access") 
+        return HttpResponseRedirect("/?notification=early-access")
