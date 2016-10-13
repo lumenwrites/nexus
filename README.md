@@ -25,7 +25,7 @@ Nexus is open source, and written in Django. You can easily fork it and add your
 
 <span id="screenshots"></span>
 
-![](http://hackertribe.io/media/images/browsepage-1.png)
+![](http://hackertribe.io/media/images/homepage-2.png)
 
 <span id="future"></span>
 
