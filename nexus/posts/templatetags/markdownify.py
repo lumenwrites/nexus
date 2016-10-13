@@ -9,16 +9,19 @@ register = template.Library()
 @register.filter
 def markdownify(text, short = "False"):
     text = text
+    customcut = False
     if short == "True":
         try:
             text = text.split("<!-- more -->")[0].strip()
+            customcut = True
+            text += "<div class='clearfix'></div><a class='readmore'> Read more... </a>"              
         except:
             pass
         text = text[:1024]
 
     html = markdown.markdown(text)
 
-    if short == "True":
+    if short == "True" and not customcut:
         try:
             # Cut after 2nd paragraph
             htmlbefore = html
