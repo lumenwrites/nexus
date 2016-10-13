@@ -11,7 +11,7 @@
   {% if post.parent %}
   <a href="{{post.parent.get_absolute_url}}">
     <div class="panel parent-panel" style="padding:10px;">
-      {{post.parent.body|markdownify:"True"|safe}}
+      {{post.parent.body|markdownify:"True" | truncatechars:140 |safe}}
     </div>
   </a>
   {% endif %}
