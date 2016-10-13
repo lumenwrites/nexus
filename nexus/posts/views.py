@@ -482,84 +482,41 @@ def repost(request, slug=""):
     return HttpResponseRedirect('/@'+post.author.username)
 
 
-def post_edit(request, story, chapter=""):
-    story = Post.objects.get(slug=story)
-    action = "story_edit"
-    if chapter:
-        chapter = Post.objects.get(parent=story,slug=chapter)
-        action="chapter_edit"
-
-    rational = check_if_rational(request)
-    daily = check_if_daily(request)    
-
+def post_edit(request, slug):
+    post = Post.objects.get(slug=slug)
     # throw him out if he's not an author
-    if request.user != story.author and not request.user.is_staff and story.post_type != "wiki":
+    if request.user != post.author and not request.user.is_staff:
         return HttpResponseRedirect('/')        
 
     if request.method == 'POST':
-        if chapter:
-            form = PostForm(request.POST,instance=chapter, storyslug=story.slug)            
-        else:
-            form = PostForm(request.POST,instance=story, storyslug=story.slug)
+        form = PostForm(request.POST,instance=post)
         if form.is_valid():
-            post = form.save(commit=False) # return post but don't save it to db just yet
-            # post.post_type = "story"
-            post.rational = rational
-            post.daily = daily            
-
-            if chapter:
-                post.post_type = "chapter"
-                post.parent = story
-
-            if chapter:
-                post.save(slug=chapter.slug)
-            else:
-                post.save(slug=story.slug)                
+            post = form.save(commit=False)
+            post.save(slug=post.slug)                
 
             post.hubs = []
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
-            for hub in hubs:
-                if hub.parent and hub.parent.hub_type != "folder":
-                    post.hubs.add(hub.parent)
-                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
-                        post.hubs.add(hub.parent.parent)
-            if chapter:
-                return HttpResponseRedirect('/story/'+story.slug+'/'+post.slug+'/edit')
-            else:
-                return HttpResponseRedirect('/story/'+post.slug+'/edit')
+            return HttpResponseRedirect('/post/'+post.slug)
     else:
-        if chapter:
-            form = PostForm(instance=chapter, storyslug=story.slug)    
-        else:
-            form = PostForm(instance=story, storyslug=story.slug)
-        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
-        # filter(children=None).order_by('id')
+        form = PostForm(instance=post)
+        form.fields["hubs"].queryset = Hub.objects.all()
 
     return render(request, 'posts/edit.html', {
-        'story':story,
-        'chapter':chapter,            
+        'post':post,
         'form':form,
-        'action':action
     })
 
 
-def post_delete(request, story, chapter=""):
-    story = Post.objects.get(slug=story)
-    if chapter:
-        post = Post.objects.get(parent=story,slug=chapter)
-    else:
-        post = story
+def post_delete(request, slug):
+    post = Post.objects.get(slug=slug)
 
     # throw him out if he's not an author
     if request.user != post.author:
         return HttpResponseRedirect('/')        
 
     post.delete()
-    if chapter:
-        return HttpResponseRedirect('/story/'+story.slug + '/edit') # to post list
-    else:
-        return HttpResponseRedirect('/') # to post list
+    return HttpResponseRedirect('/')
 
 
 def post_publish(request, story):

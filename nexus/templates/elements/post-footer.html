@@ -7,8 +7,7 @@
   <div class="stats">
     <div class="left" style="margin-right:10px;">
 
-      <i class="fi-loop" style="
-				position: relative;
+      <i class="fi-loop" style="position: relative;
 				top: 1px;"></i> 
       <a href="{{post.repost.author.get_absolute_url}}">@{{post.repost.author}}</a>
 
@@ -23,12 +22,35 @@
 
     <!-- Stats -->
     <div class="right">
-      
-      <a class="fi-arrow-up upvote arrow
-    		{% if post.repost in upvoted %}upvoted{% endif %}
-                {% if post.repost in downvoted %}downvoted{% endif %}"
-    	 id="post-upvote-{{post.repost.id}}"></a>
-      <span class="score" style="margin-right:5px;"> {{post.repost.score}} </span>
+
+      <!-- Upvote -->
+      {% if not user == post.author %}
+          {% if user.is_authenticated %}
+          <!-- Working upvote button -->
+          <a class="fi-arrow-up upvote
+        	    {% if post.repost in user.upvoted.all %}upvoted{% endif %}"
+             id="post-upvote-{{post.repost.id}}"></a>
+          <span class="score" style="margin-right:5px;float:left;"> {{post.repost.score}} </span>
+          </a>
+            {% else %}
+	    <!-- Login popup if not authenticated. -->
+	    <a href="/login/?next={{request.path}}"
+	       data-reveal-id="login-popup" 
+    	       class="fi-arrow-up upvote arrow"></a>
+	    <span class="score" style="margin-right:5px;"> {{post.repost.score}} </span>
+            {% endif %}	
+       {% else %}    
+        <!-- Edit if I'm the author -->
+	<a class="edit-post left" style="margin-right: 5px;"
+	   href="{{post.get_absolute_url}}/delete">
+	  <i class="fa fa-trash-o"></i>
+	</a>
+
+    	<!-- Disabled if I'm the author -->
+	<a class="fi-arrow-up upvote arrow disabled"></a>
+	<span class="score" style="margin-right:5px;"> {{post.repost.score}} </span>
+       {% endif %}    
+          
 
       <!-- Repost -->
       <a
@@ -75,14 +97,7 @@
 				      width: calc(100% + 42px);">
   <div class="stats">
     <div class="left" style="margin-right:10px;">
-      {% if post.repost %}
-      <i class="fi-loop" style="
-				position: relative;
-				top: 1px;"></i> 
-      <a href="{{post.author.get_absolute_url}}">@{{post.repost.author}}</a>
-      {% else %}            
       <a href="{{post.author.get_absolute_url}}">@{{post.author}}</a>
-      {% endif %}      
     </div>
 
     {% for hub in post.hubs.all %} <!-- Different between post and posts -->
@@ -112,6 +127,12 @@
 	    <span class="score" style="margin-right:5px;"> {{post.score}} </span>
             {% endif %}	
        {% else %}    
+        <!-- Edit if I'm the author -->
+	<a class="edit-post left" style="margin-right: 5px;"
+	   href="{{post.get_absolute_url}}/edit">
+	  <i class="fa fa-pencil"></i>
+	</a>
+
     	<!-- Disabled if I'm the author -->
 	<a class="fi-arrow-up upvote arrow disabled"></a>
 	<span class="score" style="margin-right:5px;"> {{post.score}} </span>
@@ -145,6 +166,7 @@
 	<span style="float:left;margin-right:5px;"> {{post.children.count}} </span>
       </a>
 
+      
       <!-- Reply -->
       {% if user.is_authenticated %}    
       <a class="reply" style="margin-right:8px;">

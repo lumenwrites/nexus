@@ -49,220 +49,34 @@
 
     
     <div class="large-12 small-12 columns">
-      <br/>
-      <!-- Panel looks pretty, keep it just in case
-      <div class="panel">
-      <a>Harry Potter and The Methods of Rationality</a> >
-      <span>Comparing Reality To Its Alternatives</span>
-      </div>
-      -->
-
-      <!-- Story Edit Form -->
-      <!-- {{form.errors}} -->
       {{form.non_field_errors}}
-      {% if action = "story_edit" %}
-      <form action="/story/{{story.slug}}/edit" method="post">
-      {% elif action = "chapter_create" %}
-      <form action="/story/{{story.slug}}/add" method="post">	
-      {% elif action = "chapter_edit" %}
-      <form action="/story/{{story.slug}}/{{chapter.slug}}/edit" method="post">
-      {% endif %}	
+      <form action="/post/{{post.slug}}/edit" method="post">
       {% csrf_token %}
-
-
-      <!-- Title -->
-      <div style="{% if action != "chapter_create" %}
-                       {% if not story.children.all %}
-			   width:calc(100% - 200px);
-		       {% else %}
-  		           width:calc(100% - 320px);				   
-		       {% endif %}
-		  {% else %}
-  		      width: 100%;				   		  
-		  {% endif %}            				   		       
-		  float:left;margin:0;">
-	{{form.title}}
-      </div>
-
-      <!-- Chapters -->
-      {% if not story.children.all %}
-          {% if action != "chapter_create" and action != "chapter_edit"  %}
-          <!-- Add Chapter -->
-          <a class="button small"
-          	 href="/story/{{story.slug}}/add"
-          	 style="background:#3D455B;
-          		height: 50px;
-          		width:180px;
-          		border-radius: 0px;
-          		float:right;
-			background: rgb(132, 140, 150);">
-          	Add Chapter</a>
-          {% endif %}                  
-      {% else %}            
-
-
-          {% if action != "chapter_create" %}      
-	  <!-- Add Chapter -->
-	  <a class="button small"
-	     href="/story/{{story.slug}}/add"
-	     style="background:#3D455B;
-		    height: 50px;
-		    border-radius: 0px;
-		    float:right;
-		    width:50px;
-		    padding: 17px;">
-	    <i class="fa fa-plus" style="color:white;"></i></a>
-
-          <!-- Chapter select -->
-          <select onChange="window.location.href=this.value"
-          	      style="width:260px;float:right;height: 50px;">
-          	<option value="/story/{{story.slug}}/edit">{{story.title}}</option>
-          	{% for ch in story.children.all %}
-          	<option value="{{ch.get_absolute_url}}/edit"
-          		{% if chapter.title == ch.title %}
-          		 selected="selected"
-          		{% endif %}		
-          		>
-          	  {{ch.number}} : {{ch.title}}</option>
-          	{% endfor %}
-          </select>      
-          {% endif %}
-      
-      {% endif %}      
-
-
-      <div class="clearfix"></div>
-
-
-      
       <!-- Editor -->
       <div class="editor">
 	{{form.body}}
       </div>
 
-
-      <!-- Hub multiselect -->
-      {% if action != "chapter_create" and action != "chapter_edit" %}
-      <br/>
-      <div class="set-hubs">
-	<!--
-	  style="{% if not story.children.all %}
-				   width:calc(100% - 200px);
-				   {% else %}
-				   width:calc(100% - 320px);				   
-				   {% endif %}            				   
-				   float:left;margin:0;"
-	  -->
-	{{form.hubs}}
-      </div>
-      {% endif %}
-
-
-      
-
-
-
       <div class="clearfix"></div>      
 
-
-      <!-- <br/> -->
-
       <!-- Buttons -->
-      <!-- Delete Story/Chapter Buttons -->
-      {% if action = "story_edit" %}
-      <a href="#" data-reveal-id="deleteStory"
-	 class="button small delete-chapter">Delete Story</a>
-      {% elif action = "chapter_edit" %}
-      <a href="#" data-reveal-id="deleteChapter"
-	 class="button small delete-chapter">Delete Chapter</a>
-      {% endif %}	
-      <!-- Delete story popup. -->
-      <div id="deleteStory" class="reveal-modal"
+      <a href="#" data-reveal-id="deletePost"
+	 class="button small delete-chapter">Delete Post</a>
+      <!-- Delete post popup. -->
+      <div id="deletePost" class="reveal-modal"
 	   data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 	<h2 id="modalTitle"> Confirm </h2>
-	<p class="lead">Are you sure you want to delete this story?</p>
+	<p class="lead">Are you sure you want to delete this post?</p>
 	<!-- Button -->
-	<a href="/story/{{story.slug}}/delete"
+	<a href="/post/{{post.slug}}/delete"
 	   class="button small confirm-delete">Delete</a>      	
 	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
       </div>
-      <!-- Delete chapter popup. -->
-      <div id="deleteChapter" class="reveal-modal"
-	   data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-	<h2 id="modalTitle"> Confirm </h2>
-	<p class="lead">Are you sure you want to delete this chapter?</p>
-	<!-- Button -->
-	<a href="/story/{{story.slug}}/{{chapter.slug}}/delete"
-	   class="button small confirm-delete">Delete</a>  
-	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-      </div>	
 	
       <div class="edit-buttons">
 	<br/>
 
-
 	<!-- View/Publish/Save buttons -->
-	{% if action = "story_edit" %}	  
-	<!-- View -->
-	<a href="/story/{{story.slug}}" class="button small view">View</a>
-
-
-	<!-- Post to reddit -->
-	{% if story.reddit_url and user.username == "lumenwrites" %}	 
-	<a href="/story/{{story.slug}}/redditpost" class="button small" target="_blank">Post to reddit</a>
-	<style>
-      .main-header, #orange-line {
-      display:none;
-      }
-	</style>
-	{% endif %}	  
-
-
-	<!-- 
-	<a href="/story/{{story.slug}}/publish"
-	   data-reveal-id="submit-to-fictionhub-popup"
-	   class="button small">Submit to Fiction Hub</a>	
-	-->
-
-	  {% if user.approved %}	  	  
-	    {% if not story.published %}	  
-	    <a href="/story/{{story.slug}}/publish" class="button small">Publish</a>
-	    {% else %}
-	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
-	    {% endif %}
-	  {% else %} <!-- If not approved -->
-	    <!-- 
-	    {% if not story.published %}	  
-	    <a href="/story/{{story.slug}}/publish" class="button small">Submit to Limbo</a>
-	    {% else %}
-	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Ubsubmit</a>
-	    {% endif %}
-	    -->
-	    
-	    {% if not user.username == "lumenwrites" %}	  	    
-	    {% if not story.published %}	  
-	    <a href="/story/{{story.slug}}/publish" class="button small">Publish to my blog</a>
-	    <i class="fa fa-question-circle"
-	       style="font-size:22px;margin-right:10px;"
-	       data-dropdown="drop2" aria-controls="drop1" aria-expanded="false"
-	       data-options="align:top; is_hover:true; hover_timeout:5000"></i>
-	    <div id="drop2" data-dropdown-content class="f-dropdown large"
-		 aria-hidden="true" tabindex="-1">
-	      <p>Your story will be published to your
-		<a href="/user/{{user.username}}">blog</a>.<br/>
-		Once you gain 50+ karma, or receive an invite,<br/>
-		your posts will be displayed on the front page.<br/>
-		Every day invites are granted to authors of the best stories.</p>
-	    </div>
-	    {% else %}
-	    <a href="/story/{{story.slug}}/unpublish" class="button small view">Unpublish</a>
-	    {% endif %}	    
-	    {% endif %}	<!-- remove lumen buttons -->
-	  {% endif %}	    	    
-	{% elif action = "chapter_edit" %}
-	<a href="/story/{{story.slug}}/{{chapter.slug}}"
-	   class="button small view" type="submit">View</a>	  
-	{% endif %}		  
 	<button class="button small" type="submit">Save</button>
 	</div>
 	<div class="clearfix"></div>
@@ -272,23 +86,5 @@
     </div> <!-- End 9 columns -->
 </div>	 <!-- End row -->
 
-
-  <!-- Submit to fiction hub popup. -->
-  <div id="submit-to-fictionhub-popup" class="reveal-modal"
-       data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-    <h2 id="modalTitle"> Submit to Fiction Hub </h2>
-    <p class="lead">Are you really proud of the story you have created?</p>
-    <p class="lead"> Submit it to<a href="http://fictionhub.io">Fiction Hub</a>! Fiction Hub is the place for high quality stories, ...</p>
-    <!-- Button -->
-    <a href="/story/{{story.slug}}/delete"
-       class="button small right">Submit</a>      	
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-  </div>
-
-{% include "posts/editor.html" %}
-
-  <style>
-
-  </style>
 {% endblock content %}
 
