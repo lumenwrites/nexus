@@ -20,9 +20,13 @@ def markdownify(text, short = "False"):
 
     if short == "True":
         try:
+            # Cut after 2nd paragraph
+            htmlbefore = html
             sep = '</p>'
             firstparagraphs = html.split(sep, 2)[:2]
             html = ''.join(firstparagraphs)
+            if len(html) < len(htmlbefore) - 10:
+                html += "<div class='clearfix'></div><a class='readmore'> Read more... </a>"  
         except:
             pass
         

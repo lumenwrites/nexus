@@ -105,13 +105,58 @@ display:none;">
 	<p>Imagine Reddit meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. </p>
 
 	<span id="screenshots"></span>
-	<!-- <h1> Screenshots </h1> -->
-	<!-- <hr/> -->
+
+	<div class="slick-container"
+	     style="margin: 20px -40px;
+		    width:(100% + 80px);
+		    max-width:calc(100% + 80px);
+		    position:relative;">
+	  <div class="screenshots">
+	    <img class="screenshot" src="/media/images/homepage-2.png" alt="Space">
+	    <img class="screenshot" src="/media/images/browsepage-1.png" alt="Space">
+	    <img class="screenshot" src="/media/images/homepage-2.png" alt="Space">
+	  </div>
+	  <a class="prev">
+	    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+	  </a>
+	  <a class="next">
+	    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+	  </a>
+	</div> <!-- End .slick-container -->
+
+	<style>
+	  .screenshot {
+	  margin:0px;
+	  }
+	  .prev {
+	  position: absolute;
+	  top: 50%;
+	  left: 10px;	  
+	  }
+	  .next {
+	  position: absolute;
+	  top: 50%;
+	  right: 10px;	  
+	  }
+	</style>
+
+	<script>
+	  $(document).ready(function(){
+	  $('.screenshots').slick({
+	  centerMode: true,
+	  dots: true,
+	  initialSlide: 0,
+	  prevArrow: $('.prev'),
+	  nextArrow: $('.next'),	  
+	  });
+	  });	  
+	</script>
+<!-- 
 	<img src="/media/images/homepage-2.png" style="margin: 20px -40px;
 							 width:(100% + 80px);
 							 max-width:calc(100% + 80px);">
 
-
+ -->
 	<span id="features"></span>
 	<h1 id="features">Features</h1>
 

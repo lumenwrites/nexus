@@ -382,7 +382,8 @@ def post(request, slug, comment_id="", rankby="new", filterby=""):
         'hubs':hubs,
         'form':form,
         'subscribed_to':subscribed_to,
-        'userprofile':userprofile,        
+        'userprofile':userprofile,
+        'postpage':True,
     })
 
 def post_create(request, parentslug=""):

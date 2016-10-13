@@ -11,7 +11,9 @@ class Hub(models.Model):
     description = models.TextField(max_length=512, blank=True)
 
     background = models.ImageField(upload_to='hubs/backgrounds', default=None,blank=True, null=True)            
-    
+
+    moderators = models.ManyToManyField('profiles.User', related_name="hubs", blank=True, null=True, default=None)
+
     def __str__(self):
         return self.title
 

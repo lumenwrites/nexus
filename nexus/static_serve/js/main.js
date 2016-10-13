@@ -40,6 +40,16 @@ $(document).ready(function(){
 	// $(this).parent().parent().parent().find('.comment-reply').toggle();a
     });
 
+    // Readmore links
+    $(".readmore").each(function(){
+	var postid = $(this).parent().attr('id');
+	console.log(postid);
+	$(this).attr('href',"/post/"+postid);
+	// $(this).find("form").attr('action', "/reply/"+postid);
+	
+    });
+
+
 
 
 

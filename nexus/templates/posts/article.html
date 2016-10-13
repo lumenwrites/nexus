@@ -18,10 +18,18 @@
 
   {% if post.repost %}
   <!-- Repost -->
-  {{post.repost.body | markdownify:"True" | safe  }} <!-- firstparagraph -->  
+    {% if postpage %}
+      {{post.repost.body | markdownify:"False" | safe  }} <!-- firstparagraph -->
+    {% else %}  
+      {{post.repost.body | markdownify:"True" | safe  }} <!-- firstparagraph -->
+    {% endif %}  
   {% else %}  
   <!-- Post Body -->
-  {{post.body | markdownify:"True" | safe  }} <!-- firstparagraph -->
+    {% if postpage %}
+      {{post.body | markdownify:"False" | safe  }} <!-- firstparagraph -->
+    {% else %}  
+      {{post.body | markdownify:"True" | safe  }} <!-- firstparagraph -->
+    {% endif %}  
   {% endif %}  
   <div class="clearfix"></div>
   <!-- Post Footer -->
