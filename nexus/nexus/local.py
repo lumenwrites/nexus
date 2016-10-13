@@ -1,6 +1,6 @@
 from nexus.settings import *
 
-DEBUG = True
+# DEBUG = True
 
 # INSTALLED_APPS += (
 #     'debug_toolbar', # and other apps for local development
