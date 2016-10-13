@@ -24,7 +24,7 @@ urlpatterns = [
     # url(r'^user/(?P<username>[^\.]+)/top', views.user_top, name='user_top'),
     # url(r'^user/(?P<username>[^\.]+)/comments', views.user_comments, name='user_comments'),
 
-    url(r'^user/(?P<username>[^\.]+)/email_subscribe', views.email_subscribe),
+    url(r'^early-access/', views.email_subscribe),
     
     url(r'^grant-reddit-access', views.grant_reddit_access),
 

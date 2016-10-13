@@ -237,23 +237,13 @@ def stats(request):
 
 
 # Email subscribe
-def email_subscribe(request, username):
-    userprofile = User.objects.get(username=username)
-    
+def email_subscribe(request):
     if request.method == 'POST':    
         email = request.POST.get('email')
-        email_subscriber, created = Subscriber.objects.get_or_create(email=email)
+        ref = request.GET.get('ref')
+        email_subscriber, created = Subscriber.objects.get_or_create(email=email,
+                                                                     ref=ref)
         
-        email_subscriber.subscribed_to.add(userprofile)
         email_subscriber.save()
-        # Notification
-        # message = Message(from_user=user,
-        #                   to_user=userprofile,
-        #                   message_type="subscriber")
-        # message.save()
-        # userprofile.new_notifications = True
-        # userprofile.save()
         
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
-    else:
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))         
+        return HttpResponseRedirect("/?notification=early-access") 

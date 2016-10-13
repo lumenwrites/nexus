@@ -60,8 +60,12 @@ class User(AbstractUser):
 
 # Email subscriber
 class Subscriber(models.Model):
-    email = models.CharField(max_length=64, blank=True)    
-    subscribed_to = models.ManyToManyField('User', related_name="email_subscribers", blank=True)
+    email = models.CharField(max_length=64, blank=True)
+    ref = models.CharField(max_length=64, blank=True, default="", null=True)        
+    # subscribed_to = models.ManyToManyField('User', related_name="email_subscribers", blank=True, default=None)
 
     def __str__(self):
-        return self.email
+        if not self.ref:
+            return self.email
+        else:
+            return self.email + " | " + self.ref
