@@ -10,7 +10,7 @@ Imagine Reddit meets Twitter but for decentralized web, where anyone can easily 
 # Features
 
 
-### Decentralized and GNU Social compatible
+### Decentralized and ActivityPub compatible
 
 
 It is dockerized, so you can easily spin up your own instance [with a few easy commands], and it will be plugged into the decentralized network.
@@ -32,6 +32,7 @@ Nexus is open source, and written in Django. You can easily fork it and add your
 # Future plans
 
 - Developer API
-- ActivityPub integration
 - Moderation Tools
 - Export data
+
+<!-- nexy -->
