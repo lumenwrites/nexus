@@ -13,7 +13,7 @@ Imagine Hacker News meets Twitter but for decentralized web, where anyone can ea
 
 ### Decentralized and GNU Social compatible
 
-Hacker Tribe is running on Nexus - a federated, reddit-like social networking platform.
+Hacker Tribe is running on [Nexus](https://github.com/raymestalez/nexus) - a federated, reddit-like social networking platform.
 
 It is dockerized, so you can easily spin up your own instance [with a few easy commands], and it will be plugged into the decentralized network.
 
