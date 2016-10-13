@@ -17,7 +17,7 @@ def resize_image(image, width):
         # Multiply original height by that percentage to figure out proportional height
         hsize = int((float(image_obj.size[1])*float(wpercent)))
         # Resize image
-        image_resized = image_obj.resize((width, hsize), Image.ANTIALIAS)
+        image_resized = image_obj.convert('RGB').resize((width, hsize), Image.ANTIALIAS)
 
         # BytesIO magic to save it properly
         image_io  = BytesIO()
