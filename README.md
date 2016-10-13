@@ -5,11 +5,9 @@
 
 (Currently in active development, launching soon!)
 
-<!-- [![Join the chat at https://gitter.im/raymestalez/fictionhub](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/raymestalez/fictionhub?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) -->
-
-
 Hey, Hacker News! I'm looking for beta users and feedback on this project. My goal is to build the perfect social network, the way it's supposed to be built - open source, decentralized, with high quality community and without any nonsense.
- 
+
+Imagine Reddit meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. 
 
 # Features
 
