@@ -12,9 +12,10 @@ def markdownify(text, short = "False"):
     customcut = False
     if short == "True":
         try:
-            text = text.split("<!-- more -->")[0].strip()
-            customcut = True
-            text += "<div class='clearfix'></div><a class='readmore'> Read more... </a>"              
+            if "<!-- more -->" in text:
+                text = text.split("<!-- more -->")[0].strip()
+                customcut = True
+                text += "<div class='clearfix'></div><a class='readmore'> Read more... </a>" 
         except:
             pass
         text = text[:1024]
