@@ -7,7 +7,7 @@
 
 Hey, Hacker News! I'm looking for beta users and feedback on this project. My goal is to build the perfect social network, the way it's supposed to be built - open source, decentralized, with high quality community and without any nonsense.
 
-Imagine Reddit meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. 
+Imagine Hacker News meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. 
 
 # Features
 
