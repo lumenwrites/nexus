@@ -29,6 +29,3 @@ class Notification(models.Model):
         return self.message_type + " from " + str(self.from_user) + " to " + str(self.to_user)
     
 
-# class Subject(models.Model):    
-#     title = models.CharField(max_length=256)
-#     slug = models.SlugField(max_length=256, default="")

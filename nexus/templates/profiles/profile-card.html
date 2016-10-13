@@ -14,7 +14,9 @@ background:url(/media/{{userprofile.background}});
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">
-    <img src="/media/{{userprofile.avatar}}"
+    <img {% if user.avatar %}
+	 src="/media/{{userprofile.avatar}}"
+	 {% endif %}
 	 class="avatar"/>
     <a href="/@{{userprofile.username}}"class="username">@{{userprofile.username}}</a>
     
@@ -62,7 +64,9 @@ height:140px;
 {% endif %}
 
 <div class="profile-card">
+  {% if hub.background %}
   <div class="user-background"></div>
+  {% endif %}
   <div class="user-info">
     <div class="about">
       <span class="bold">#{{hubtitle}}</span><br/>
@@ -105,8 +109,13 @@ height:140px;
 <div class="profile-card">
   <div class="user-background"></div>
   <div class="user-info">
-    <img src="/media/{{user.avatar}}"
+
+
+    <img {% if user.avatar %}
+	 src="/media/{{user.avatar}}"
+	 {% endif %}    
 	 class="avatar"/>
+
     <a href="/@{{user.username}}"class="username">@{{user.username}}</a>
     
     <div class="stats">    

@@ -12,7 +12,7 @@ from django.conf import settings
 from django.db.models import permalink
 
 from hubs.models import Hub
-from comments.models import Comment
+
 
 class Post(models.Model):
     title = models.SlugField(max_length=256, default="", blank=True)    

@@ -35,22 +35,17 @@ from django.conf import settings
 
 # My own stuff
 # utility functions
-from comments.utils import get_comment_list, get_comments, submit_comment
 from .utils import rank_hot, rank_top, check_if_rational, check_if_daily, check_if_fictionhub
-from .utils import get_prompts, age, stats
+from .utils import age, count_words
 from .utils import get_replies, get_reply_list
-from .utils import count_words
 from .shortcuts import get_or_none
 # Forms
 from .forms import PostForm, PromptForm
-from comments.forms import CommentForm
 from hubs.forms import HubForm
 # Models
 from .models import Post
-from core.models import Util
 from profiles.models import User
 from hubs.models import Hub
-from comments.models import Comment
 from notifications.models import Notification
 
 
@@ -315,12 +310,6 @@ class HubList(ListView):
     template_name = "hubs/hubs.html"
 
 
-class SeriesList(ListView):
-    model = Post
-    template_name = "series/series.html"
-    paginate_by=15
-    
-
 
 
     
@@ -368,15 +357,6 @@ def post(request, slug, comment_id="", rankby="new", filterby=""):
         
     replies = get_replies(post=post)
 
-    # # Permalink to one comment
-    # if comment_id:
-    #     comments = get_comments(post=post, comment_id=comment_id)
-
-    # # Submit comments
-    # if request.method == 'POST':
-    #         submit_comment(request, post)            
-    # form = CommentForm()
-
     # Footer info
     if request.user.is_authenticated():
         upvoted = request.user.upvoted.all()
@@ -409,7 +389,6 @@ def post_create(request, parentslug=""):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            # Create new story
             post = form.save(commit=False)
             post.author = request.user
             post.score += 1 # self upvote
@@ -425,9 +404,9 @@ def post_create(request, parentslug=""):
                                             to_user=post.parent.author,
                                             post=post,
                                             notification_type="reply")
-            notification.save()
-            post.parent.author.new_notifications = True
-            post.parent.author.save()
+                notification.save()
+                post.parent.author.new_notifications = True
+                post.parent.author.save()
                 
             
             request.user.upvoted.add(post)
@@ -436,18 +415,6 @@ def post_create(request, parentslug=""):
             post.hubs.add(*form.cleaned_data['hubs'])
             hubs = post.hubs.all()
             
-            # hubs_string = request.POST.get('hubs')
-            # hubs_list = hubs_string.split("#")
-            # for hubslug in hubs_list:
-            #     if hubslug:
-            #         hubslug = hubslug.strip()
-            #         hub, created = Hub.objects.get_or_create(title=hubslug,slug=hubslug)
-            #         post.hubs.add(hub)
-
-            # # Add hubs
-            # post.hubs.add()
-            # hubs = post.hubs.all()
-
             if parentslug:
                 return HttpResponseRedirect('/post/'+parentslug+"#"+post.slug)
             else:
@@ -519,57 +486,6 @@ def post_delete(request, slug):
     return HttpResponseRedirect('/')
 
 
-def post_publish(request, story):
-    post = Post.objects.get(slug=story)
-
-    # throw him out if he's not an author
-
-    if request.user != post.author:
-        return HttpResponseRedirect('/')        
-
-    post.published = True
-    post.save()
-
-    # if request.user.username == "rayalez":
-    #     return HttpResponseRedirect(post.get_absolute_url()+"/wprepost")                
-
-    # Send Email
-    # author = post.author
-    # subscribers = author.subscribers.all()
-    # emails = []
-    # for subscriber in subscribers:
-    #     if subscribers.email_subscriptions:
-    #         try:
-    #             email = subscriber.email
-    #             emails.append(email)
-    #         except:
-    #             pass
-    # topic = author.username + " has published a new story to fictionhub"
-    # body = "Hi! You are receiving this email because you have subscribed to updates about new stories written by " + author.username + " at fictionhub.io \n\n"
-    # body += author.username + " has published a new story:\n'" + post.title + \
-    #         "'\nYou can read it here:\n" + "http://fictionhub.io" + post.get_absolute_url()
-    # body += "\n\nYou can manage your email notifications in preferences:\n" +\
-    #         "http://fictionhub.io/preferences/"
-    # body += "\n\n P.S. \n fictionhub, including email notifications, is still in beta. If you have any questions or suggestions - feel free to reply to this message, I welcome any feedback."
-    # send_mail(topic, body, 'raymestalez@gmail.com', emails, fail_silently=False)
-
-    # Notification
-
-    return HttpResponseRedirect('/story/'+post.slug+'/edit')
-
-
-def post_unpublish(request, story):
-    post = Post.objects.get(slug=story)
-
-    # throw him out if he's not an author
-    if request.user != post.author:
-        return HttpResponseRedirect('/')        
-
-    post.published = False
-    post.save()
-    return HttpResponseRedirect('/story/'+post.slug+'/edit')
-
-    
     
 def email(request):
     send_mail('My awesome email', 'Oh hell yeah..', 'raymestalez@gmail.com', ['raymestalez@gmail.com'], fail_silently=False)
@@ -598,152 +514,4 @@ def sandbox(request):
 
 
     
-
-
-# TODO: dry it in one function
-# def vote(request):
-#     post = Post.objects.get(id=request.POST.get('post-id'))
-#     vote =  request.POST.get('vote')
-#     user = request.user
-
-#     if post in user.upvoted:    # unupvote
-#         post.score -= 1
-#         post.author.karma -= 1
-#         user.upvoted.remove(post)
-#     elif vote == "up":          # upvote
-#         post.score += 1
-#         post.author.karma += 1
-#         user.upvoted.add(post)
-
-#     post.save()
-#     post.author.save()
-#     user.save()
-
-#     return HttpResponse()
-
-
-
-    # Daily
-def post_create_daily(request):
-    rational = False
-    test = ""
-    prompt =""
-    prompts = ""
-    days = []
-    longeststreak = 0
-    currentstreak = 0
-    wordcount = 0
-
-
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
-
-    concepts = list(Prompt.objects.filter(Q(prompt_type="concept") | Q(prompt_type="prompt")  | Q(prompt_type="wpsub")))
-    concepts= [p.prompt for p in concepts]
-    random.shuffle(concepts)
-    concepts = concepts[:16]
-            
-    settings = list(Prompt.objects.filter(prompt_type="setting"))
-    settings= [p.prompt for p in settings]
-    random.shuffle(settings)
-    settings = settings[:16]
-
-    characters = list(Prompt.objects.filter(prompt_type="character"))
-    characters= [p.prompt for p in characters]
-    random.shuffle(characters)
-    characters = characters[:16]
-
-    problems = list(Prompt.objects.filter(prompt_type="problem"))
-    problems= [p.prompt for p in problems]
-    random.shuffle(problems)
-    problems = problems[:16]
-        
-    element = ["Opinion/Setup", "Phys", "Adj","Will","Because","Process",]
-    element =  random.choice(element)    
-
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            # self upvote
-            post.score += 1
-            post.post_type = "story"
-            post.rational = False
-            post.daily = True
-
-            if request.user.username == "lumenwrites":
-                post.published = True
-                post.daily = False                            
-            
-            post.reddit_url = request.POST.get("reddit_url", "")
-            post.save()
-            request.user.upvoted.add(post)            
-            post.hubs.add(*form.cleaned_data['hubs'])
-            hubs = post.hubs.all()
-            for hub in hubs:
-                if hub.parent and hub.parent.hub_type != "folder":
-                    post.hubs.add(hub.parent)
-                    if hub.parent.parent and hub.parent.parent.hub_type != "folder":
-                        post.hubs.add(hub.parent.parent)
-
-            return HttpResponseRedirect('/story/'+post.slug+'/edit')
-    else:
-        form = PostForm()
-        form.fields["hubs"].queryset = Hub.objects.filter(hub_type="hub")
-        
-
-        # Stats
-        statsposts = Post.objects.filter(author=request.user, daily=check_if_daily(request))
-        statsposts = statsposts.order_by('pub_date')
-        days, longeststreak, currentstreak, wordcount = stats(statsposts)
-
-        # Prompts
-        prompts = list(Prompt.objects.all())
-        random.shuffle(prompts)
-        prompts = prompts[:16]
-        prompt = prompts[0].prompt
-
-        # Fetch writingprompts for me
-        if request.user.username == "rayalez" or request.user.username == "lumenwrites":
-            prompts = get_prompts()        
-
-
-        if wordcount > 1000:
-            wordcount = str(int(wordcount/1000)) + "K"
-        
-    return render(request, 'posts/create-daily.html', {
-        'form':form,
-        'hubs':Hub.objects.all(),
-        'prompt':prompt,
-        'prompts':prompts,
-        'days':days,
-        'wordcount':wordcount,        
-        'longeststreak':longeststreak,
-        'currentstreak':currentstreak,
-        'concepts':concepts,        
-        'settings':settings,
-        'characters':characters,
-        'problems':problems,
-        'element':element,        
-        'test': ""
-    })    
-
-
-
-
-    # prompts
-def writing_prompts(request):
-    prompts = get_prompts()
-    prompts = prompts[:16]
-
-    # random.shuffle(prompts)
-    # prompts = prompts[:1]
-    
-    return render(request, 'posts/writing-prompts.html', {
-        'prompts': prompts,
-        'max_age': max_age,        
-    })
-
-
 

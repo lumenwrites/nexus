@@ -153,7 +153,9 @@ margin-left: 5px;
 	      </span>
 	    </a>
 	    <a href="/@{{user.username}}">
-	      <img src="/media/{{user.avatar}}"
+	      <img {% if user.avatar %}
+		   src="/media/{{user.avatar}}"
+		   {% endif %}    
 		   class="avatar"/>
 	    </a>
 	    <a href="/logout/?next=/browse/">

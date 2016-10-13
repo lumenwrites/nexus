@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import permalink
 
 from posts.models import Post
-from comments.models import Comment
 from hubs.models import Hub
 
 from core.utils import resize_image
@@ -21,7 +20,7 @@ class User(AbstractUser):
     subscribed_to_hubs = models.ManyToManyField('hubs.Hub', related_name="subscribers", blank=True)
 
     upvoted = models.ManyToManyField('posts.Post', related_name="upvoters", blank=True)
-    reposted = models.ManyToManyField('posts.Post', related_name="reposters", blank=True) 
+    reposted = models.ManyToManyField('posts.Post', related_name="reposters", blank=True)
     
     # shadowban = models.BooleanField(default=False)
     # approved = models.BooleanField(default=False)

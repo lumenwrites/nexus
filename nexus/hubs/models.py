@@ -13,11 +13,6 @@ class Hub(models.Model):
     background = models.ImageField(upload_to='hubs/backgrounds', default=None,blank=True, null=True)            
     
     def __str__(self):
-        # try:
-        #     parent_title = self.parent.title + " | "
-        # except:
-        #     parent_title = ""
-        # return parent_title  + self.title
         return self.title
 
     def save(self, *args, **kwargs):
