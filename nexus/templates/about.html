@@ -3,7 +3,7 @@
 {% block content %}
 <style>
   .tab-title {
-  width: 25%;
+  width: 33.33%;
   text-align:center;
   }
 
@@ -19,67 +19,138 @@
     <div class="large-12 small-12 columns">
 
 
-<ul class="tabs" data-tab>
-  <li class="tab-title active"><a href="#about">About</a></li>
-  <li class="tab-title"><a href="#guidelines">Guidelines</a></li>
-  <li class="tab-title"><a href="#resources">Writer's resources</a></li>
-  <li class="tab-title"><a href="#contact">Contact</a></li>
-</ul>
-<div class="tabs-content">
-  <!-- About -->
-  <div class="content active" id="about">
-    <article>
-      <h1>About</h1>
-      <p> Hi! Welcome to our community! Our goal is to inspire people to write, and to help each other to get better at it.</p>
-
-      
-
-      <p>I want this website to become the perfect place for people to practice, share their stories, and receive useful and friendly feedback.</p>
-      
+      <ul class="tabs" data-tab>
+	<li class="tab-title active"><a href="#about">About</a></li>
+	<li class="tab-title"><a href="#guidelines">Guidelines</a></li>
+	<li class="tab-title"><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="tabs-content">
+	<!-- About -->
+	<div class="content active" id="about">
+	  <!-- Stories -->
+		<article style="padding:40px;
+				padding-bottom:0;">
 
 
-      </article>
-  </div>
+		  <p>(Currently in active development, launching soon!)</p>
 
-  <!-- Guidelines -->
-  <div class="content" id="guidelines">
-    <article>
-      <p> Try to be nice, helpful, and encouraging when you comment on stories. Constructive critique is welcome, just make sure that it's useful to the writer. </p>
+		  <p>Hey, Hacker News! I'm looking for beta users and feedback on this project. My goal is to build the perfect social network, the way it's supposed to be built - open source, decentralized, with high quality community and without any nonsense.</p>
 
-      <p></p>
-      <!-- <p> Feel free to submit your stories -->
-      <!-- 
-	<p>, and try to make this place better for others, add value.</p>
+		  <p>Imagine Reddit meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. </p>
 
-      <p>There's no pressure to be a great writer, so don't be shy to post your strories even if you are completely new. But <i>do</i> try your best to be good. </p>
-       -->
-    </article>
-  </div>
-  <div class="content" id="resources">
-    <article>
+		  <span id="screenshots"></span>
 
-      <p> New to writing?  I recommend to start by reading <a href="https://www.reddit.com/r/WritingPrompts/comments/33oar9/ot_ask_lexi_1_how_to_start_writing/">this post</a>, and then watching  <a href="https://www.youtube.com/playlist?list=PLTT-Xb7kSZWWdgWGER_CroAif3-BxYRJH">  an awesome writing course</a>  by Brandon Sanderson.</p>
+		  <div class="slick-container"
+		       style="margin: 20px -40px;
+			      width:(100% + 80px);
+			      max-width:calc(100% + 80px);
+			      position:relative;">
+		    <div class="screenshots">
+		      <img class="screenshot" src="/media/images/home-page.png" alt="Space">
+		      <img class="screenshot" src="/media/images/browse-startups.png" alt="Space">
+		      <img class="screenshot" src="/media/images/discussion-thread.png" alt="Space">
+		    </div>
+		    <a class="prev">
+		      <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+		    </a>
+		    <a class="next">
+		      <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+		    </a>
+		  </div> <!-- End .slick-container -->
 
-      <p><a href="/story/story/">Here</a> you can read a series of articles on story structure(you can also learn about it from 
-<a href="http://www.audible.com/pd/Self-Development/Screenwriting-for-Hollywood-Audiobook/B002UZMN8A/">
-  this
-</a> amazing lecture.).</p>
+		  <style>
+		    .screenshot {
+		    margin:0px;
+		    }
+		    .prev {
+		    position: absolute;
+		    top: 50%;
+		    left: 10px;	  
+		    }
+		    .next {
+		    position: absolute;
+		    top: 50%;
+		    right: 10px;	  
+		    }
+		  </style>
 
-      <p>And <a href="http://yudkowsky.tumblr.com/writing">this</a> is a great guide on writing intelligent characters.</p>
+		  <script>
+		    $(document).ready(function(){
+		    $('.screenshots').slick({
+		    centerMode: true,
+		    dots: true,
+		    initialSlide: 0,
+		    prevArrow: $('.prev'),
+		    nextArrow: $('.next'),	  
+		    });
+		    });	  
+		  </script>
+		  <!-- 
+		       <img src="/media/images/homepage-2.png" style="margin: 20px -40px;
+			    width:(100% + 80px);
+			    max-width:calc(100% + 80px);">
 
-    </article>
-  </div>
-  <!-- Contact -->
-  <div class="content" id="contact">
-    <article>
-      <p>Send me a message to raymestalez@gmail.com to discuss anything related to writingstreak.</p>
-      <p>The website is in active development, and I really appreciate any questions, suggestions, feedback and bug reports.</p>
-    </article>
+		       -->
+		  <span id="features"></span>
+		  <h1 id="features">Features</h1>
+
+		  <h3 id="decentralizedandgnusocialcompatible">Decentralized and GNU Social compatible</h3>
+
+		  <p>Hacker Tribe is running on <a href="https://github.com/raymestalez/nexus">Nexus</a> - a federated, reddit-like social networking platform.</p>
+
+		  <p>It is dockerized, so you can easily spin up your own instance <a href="">with a few easy commands</a>, and it will be plugged into the decentralized network.</p>
+
+		  <h3 id="opensource">Open Source</h3>
+
+		  <p>Nexus is open source, and written in Django. You can easily fork it and add your own features or modify it's design as you wish. You can also contribute to the project <a href="https://github.com/raymestalez/nexus">here</a>!</p>
+
+		  <h3>Optimized for high quality discussion.</h3>
+
+		  <p>The goal of this community is to share insightful ideas that gratify intellectual curiosity, to exchange advice and experience. Clever and motivated entrepreneurs and creators here.</p>
+
+
+		  <p><span id="future"></span></p>
+
+		  <h1>Future plans</h1>
+
+		  <ul>
+		    <li>Developer API</li>
+
+		    <li>ActivityPub integration</li>
+
+		    <li>Moderation Tools</li>
+
+		    <li>Export data</li>
+		  </ul>
+
+		</article>
+	</div> <!-- End .about -->
+
+	<!-- Guidelines -->
+	<div class="content" id="guidelines">
+	  <article>
+	    <p> Try to be nice, helpful, and encouraging when you comment on stories. Constructive critique is welcome, just make sure that it's useful to the writer. </p>
+
+	    <p></p>
+	    <!-- <p> Feel free to submit your stories -->
+	    <!-- 
+		 <p>, and try to make this place better for others, add value.</p>
+
+	    <p>There's no pressure to be a great writer, so don't be shy to post your strories even if you are completely new. But <i>do</i> try your best to be good. </p>
+	    -->
+	  </article>
+	</div> <!-- End #guidelines -->
+      <!-- Contact -->
+      <div class="content" id="contact">
+	<article>
+	  <p>Send me a message to raymestalez@gmail.com to discuss anything related to writingstreak.</p>
+	  <p>The website is in active development, and I really appreciate any questions, suggestions, feedback and bug reports.</p>
+	</article>
+      </div>
+    </div>
+
   </div>
 </div>
-
-    </div>
-  </div>
 </div>
 
 {% endblock %}
