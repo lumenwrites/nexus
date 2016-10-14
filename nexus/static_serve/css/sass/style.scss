@@ -29,6 +29,7 @@ html {
 
 p {
     font-size: 1.11rem; //21px
+    margin-bottom: 1.11rem;
 }
 
 
@@ -251,7 +252,8 @@ li p {
 header {
 	height: 130;
 	padding: 40px;
-	padding-bottom: 20px;	
+	padding-bottom: 20px;
+	padding: 20px;	
 }
 
 /* Logo */
@@ -274,11 +276,14 @@ header {
     color: $black;
 }
 
-
+.beta {
+    font-size:10px;
+    font-weight:100;
+}
 
 /* Main menu */
 #mainMenu {
-	margin-top: 10px;
+	margin-top: 15px;
 	/* font-family: "Titillium Web"; */
 	font-size: 16px;
 	text-transform: uppercase;

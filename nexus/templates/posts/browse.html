@@ -8,10 +8,6 @@
 
 
 <style>
-  p {
-  margin-bottom:0;
-  }
-
   hr {
     margin-bottom: 10px;
   }
@@ -88,6 +84,9 @@ padding: 0px;
   <div class="large-8 small-12 columns posts">
     {% if request.path == "/" %}    
     {% include "posts/editor.html" %}
+    {% elif hub %}
+    {% include "posts/subnav-browse.html" %}    
+    {% include "posts/editor.html" %}    
     {% else %}        
     {% include "posts/subnav-browse.html" %}
     {% endif %}        
@@ -95,9 +94,12 @@ padding: 0px;
     {% for post in posts %}
     {% if not post.author.shadowban or post.author == user %}    
     {% include "posts/article.html" %}
-    {% endif %}	<!-- endif shadowban -->
+    {% endif %}
     {% endfor %}
 
+    {% if not posts %}
+    {% include "posts/welcome-post.html" %}  
+    {% endif %}
     <!-- Pagination -->
     {% include "elements/pagination.html" %}
 </div> <!-- End 8 columns -->

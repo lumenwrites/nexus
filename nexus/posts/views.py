@@ -44,6 +44,7 @@ from .forms import PostForm, PromptForm
 from hubs.forms import HubForm
 # Models
 from .models import Post
+from core.models import Settings
 from profiles.models import User
 from hubs.models import Hub
 from notifications.models import Notification
@@ -209,6 +210,7 @@ class HomeView(FilterMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['form'] = PostForm()
+        context['settings'] = Settings.objects.get(id=1)
         return context    
 
 
@@ -299,6 +301,7 @@ class HubView(FilterMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(HubView, self).get_context_data(**kwargs)
         hub = Hub.objects.get(slug=self.kwargs['hubslug'])
+        context['form'] = PostForm()        
         context['hubtitle'] = hub.title
         context['hub'] = hub
         return context    

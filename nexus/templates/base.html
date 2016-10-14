@@ -471,6 +471,12 @@ $(document).ready(function(){
     })
     
     {% endif %}
+
+    {% if hub %}
+    var hubId = $('#id_hubs option').filter(function () { return $(this).html() == "{{hub.title}}"; }).val();    
+    $("#id_hubs").val(hubId).trigger("change");
+    {% endif %}
+
 })
 </script>
 

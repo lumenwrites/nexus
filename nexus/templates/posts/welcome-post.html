@@ -1,0 +1,16 @@
+{% load staticfiles %}
+{% load markdownify %}
+
+<div>
+<article style="padding:20px;    background: rgba(255,255,255,0.5);//#fff;
+		box-shadow: 0 1px 4px rgba(0,0,0,.04);
+		border: 1px solid rgba(0,0,0,.09);
+		border-radius: 3px;
+		padding-bottom:0;" id="{{post.slug}}">
+  {{settings.welcomepost | markdownify | safe  }}
+  <div class="clearfix"></div>
+  <!-- Post Footer -->
+  <br/>
+  <div class="clearfix"></div>
+</article>
+</div>

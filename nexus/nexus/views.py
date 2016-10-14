@@ -12,6 +12,7 @@ from posts.models import Post
 from profiles.models import User
 from posts.utils import rank_hot, rank_top, check_if_rational, check_if_daily
 from hubs.models import Hub
+from core.models import Settings
 
 def home(request):
     rational = False
@@ -105,7 +106,9 @@ def test(request):
 
 
 def about(request):
+    settings = Settings.objects.get(id=1)
     return render(request, 'about.html', {
+        "settings":settings,
 })
 
 def submit(request):
