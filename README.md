@@ -6,7 +6,9 @@
 
 > (Currently in active development, launching soon!)
 
-My goal is to build the perfect social network, the way it's supposed to be built - open source, elegant, simple, <!-- decentralized, --> with high quality community and without any nonsense.
+My goal is to build the perfect social network, the way it's supposed to be built - open source, elegant, simple, with high quality community and without any nonsense.
+
+<!-- decentralized, -->
 
 This project is my attempt to take the best elements from all the social networks and combine them into one awesome community platform for hackers.
 
@@ -44,6 +46,6 @@ Nexus is open source, and written in Django. You can easily fork it and add your
 - Developer API
 - Moderation Tools
 - Export data
-- Decentralization with ActivityPub
-Create a website with a few easy commands that is plugged into a decentralized network communities.
+- Decentralization with ActivityPub  
+  Create a website with a few easy commands that is plugged into a decentralized network communities.
 <!-- nexy -->
