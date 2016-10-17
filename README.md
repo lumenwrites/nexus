@@ -1,9 +1,12 @@
 # Hacker Tribe
-#### Community of hackers and founders
+### Community of hackers and founders
 
 <!--
 # Nexus
 ### Federated social network, Reddit for decentralized web
+
+Description: Federated social network, Hacker News for decentralized web
+
 -->
 
 > (Currently in active development, launching soon!)
@@ -13,6 +16,8 @@ My goal is to build the perfect social network, the way it's supposed to be buil
 <!-- decentralized, -->
 
 This project is my attempt to take the best elements from all the social networks and combine them into one awesome community platform for hackers.
+
+
 
 <!-- 
 Imagine Reddit meets Twitter but for decentralized web, where anyone can easily create their own website that will be plugged into the network. 
@@ -50,4 +55,5 @@ Nexus is open source, and written in Django. You can easily fork it and add your
 - Export data
 - Decentralization with ActivityPub  
   Create a website with a few easy commands that is plugged into a decentralized network communities.
+
 <!-- nexy -->
