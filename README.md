@@ -1,6 +1,8 @@
-# Nexus
+# Hacker Tribe
+#### Community of hackers and founders
 
-<!-- 
+<!--
+# Nexus
 ### Federated social network, Reddit for decentralized web
 -->
 
