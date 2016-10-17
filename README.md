@@ -1,9 +1,12 @@
 # Nexus
+
+<!-- 
 ### Federated social network, Reddit for decentralized web
+-->
 
 > (Currently in active development, launching soon!)
 
-My goal is to build the perfect social network, the way it's supposed to be built - open source, elegant, simple, <!-- decentralized,  -->with high quality community and without any nonsense.
+My goal is to build the perfect social network, the way it's supposed to be built - open source, elegant, simple, <!-- decentralized, --> with high quality community and without any nonsense.
 
 This project is my attempt to take the best elements from all the social networks and combine them into one awesome community platform for hackers.
 
