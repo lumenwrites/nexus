@@ -1,0 +1,33 @@
+Steps:
+
+Place your nexus files in a directory named nexus.
+
+Now put all three files in the same directory as nexus directory.
+
+
+
+Command to create docker image without docker-compose:
+
+--> docker build -t himanshuverma09/nexus .
+
+(You can use any name for image)
+
+Command to run docker container without docker-compose:
+
+--> docker run --name=nexus --detach=true --restart=always --publish=8001:8000 himanshuverma09/nexus:latest
+
+
+Command to create docker image with docker-compose:
+
+--> docker-compose up
+
+
+
+Run this commands in same directory as these files.
+
+Now I am able to answer your questions and resolve bugs in Dockerfile.
+
+
+
+Regards
+Himanshu Verma

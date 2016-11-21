@@ -1,0 +1,15 @@
+ version: '2'
+ services:
+   db:
+     image: postgres
+     environment:
+       - POSTGRES_DB=nexus
+       - POSTGRES_USER=nexus
+       - POSTGRES_PASSWORD=nexus
+
+   web:
+     build: .
+     ports:
+       - "8000:8000"
+     depends_on:
+       - db
