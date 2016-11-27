@@ -8,6 +8,8 @@
 
 > (Currently in active development, launching soon!)
 
+Current instances: http://hackertribe.io, http://metamind.pro
+
 My goal is to take the best ideas and experience from all the social networks that have been developed up to this point, and build the perfect social networking platform, that will work the way social networks were supposed to work, if they were designed now — it will be open source, decentralized, elegant, simple, optimized for high quality discussion.
 
 
