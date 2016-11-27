@@ -163,6 +163,10 @@ def register(request):
     if request.META['HTTP_HOST'] == "metamind.pro":
         rational = True
 
+    daily = False
+    if request.META['HTTP_HOST'] == "writingstreak.io" or \
+       request.META['HTTP_HOST'] == "localhost:8000":
+        daily = True
         
     if request.method == 'POST':
         # form = UserCreationForm(request.POST)
