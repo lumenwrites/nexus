@@ -182,8 +182,8 @@ class HomeView(FilterMixin, ListView):
     template_name = "posts/browse.html"
 
     def dispatch(self, request, *args, **kwargs):
-        # Redirect to wst homepage
-        if not request.user.is_authenticated() and request.path == "/":
+        # Redirect to homepage
+        if not request.user.is_authenticated() and request.path == "/" and False:
             return render(request, 'home.html', {})
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)

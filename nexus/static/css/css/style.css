@@ -314,7 +314,7 @@ header {
   margin-top: 15px;
   /* font-family: "Titillium Web"; */
   font-size: 16px;
-  text-transform: uppercase;
+  text-transform: none;
   color: black;
   text-align: right;
 }

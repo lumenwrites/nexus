@@ -80,52 +80,23 @@
   <header class="main-header">
     <div class="row" >
       <!-- Logo -->      
-        <div class="large-6 small-6 columns" >
+      <div class="large-6 small-6 columns" >
+	{% if request.META.HTTP_HOST == "hackertribe.io"  %}
           <a href="/" class="logo">
 	    <img src="{% static "/img/logo_128x128.png" %}"/>
 	    <span style="font-weight:100;margin-right:2px">hacker</span><span>tribe</span>
 	    <span class="beta">[beta]</span>
 
 	  </a>
-	  <a data-dropdown="websites-dropdown" aria-controls="drop1" aria-expanded="false" data-options="align:left" >
-	    <!-- Hide arrow -->
-	  <!--   <img class="down-arrow" src="{% static "img/downArrow.png" %}" style="margin-top: -8px;"/> -->
-	  <!-- </a> -->
-	  <div id="websites-dropdown" class="f-dropdown bottom left">
-	    <a href="http://webcomics.io" class="logo" id="webcomics" style="z-index:1000;">
-	      web<span class="bold">comics</span>
-	    </a>
-	  </div>
+	  {% else  %}
+          <a href="/" class="logo">
+	    <img src="{% static "/img/logo_128x128.png" %}"/>
+	    <span style="font-weight:100;margin-right:2px">meta</span><span>mind</span>
+	    <span class="beta">[beta]</span>
 
-<style>
-#websites-dropdown {
-position: absolute;
-left: 10.15625px!important;
-top: 54px!important;
-}
-.f-dropdown.drop-left:before,
-.f-dropdown.drop-left:after{
-display:none;
-}
-
-#mainMenu a {
-text-transform:none;
-margin-left: 5px;	      
-}
-
-
-#mainMenu a {
-text-transform:none;
-margin-left: 5px;	      
-}
-
-#mainMenu a:hover {
-    color: #f76300;
-}
-
-
-</style>
-        </div>
+	  </a>
+	  {% endif  %}	  	  
+      </div>
 
 	<!-- Main Menu -->
         <div class="large-6 small-6 columns" id="mainMenu">

@@ -82,7 +82,7 @@ padding: 0px;
   </div>
 
   <div class="large-8 small-12 columns posts">
-    {% if request.path == "/" %}    
+    {% if request.path == "/" and user.is_authenticated %}    
     {% include "posts/editor.html" %}
     {% elif hub %}
     {% include "posts/subnav-browse.html" %}    
