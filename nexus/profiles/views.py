@@ -160,13 +160,9 @@ def authenticate_user(request):
 # Only sign up
 def register(request):
     rational = False
-    if request.META['HTTP_HOST'] == "rationalfiction.io":
+    if request.META['HTTP_HOST'] == "metamind.pro":
         rational = True
 
-    daily = False
-    if request.META['HTTP_HOST'] == "writingstreak.io" or \
-       request.META['HTTP_HOST'] == "localhost:8000":
-        daily = True
         
     if request.method == 'POST':
         # form = UserCreationForm(request.POST)
