@@ -198,12 +198,13 @@ class HomeView(FilterMixin, ListView):
         if user.is_authenticated():
             subscribed_to = self.request.user.subscribed_to.all()
         
-        qs = [p for p in qs if (p.author in subscribed_to) or (p.author == user)]
+            qs = [p for p in qs if (p.author in subscribed_to) or (p.author == user)]
+            
+            sorting = self.request.GET.get('sorting')
+            if not sorting:
+                qs = sorted(qs, key=lambda x: x.pub_date, reverse=True)
 
-        sorting = self.request.GET.get('sorting')
-        if not sorting:
-            qs = sorted(qs, key=lambda x: x.pub_date, reverse=True)
-        
+        # If not authenticated, just returning browse qs
         
         return qs
     

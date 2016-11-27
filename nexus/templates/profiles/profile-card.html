@@ -142,8 +142,13 @@ height:140px;
   <div class="user-info">
     <div class="about">
       <span class="bold">Join our community!</span><br/>
+      {% if request.META.HTTP_HOST == "hackertribe.io"  %}      
       Join this great community of hackers and founders.
       <a href="/about"> Learn more</a>.
+      {% else  %}
+      This is a community for people interested in rationality, cognitive biases, and related subjects.
+      {% endif  %}
+
     </div>
   </div>    
   <a  href="/login/?next={{request.path}}"
