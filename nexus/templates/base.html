@@ -7,8 +7,12 @@
   <meta charset="utf-8" />
 
   <title>
-    {% block title %} 
+    {% block title %}
+    {% if request.META.HTTP_HOST == "hackertribe.io"  %}
     Hacker Tribe
+    {% else %}
+    Meta Mind
+    {% endif %}    
     {% endblock title %}
   </title>
 
