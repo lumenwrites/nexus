@@ -26,6 +26,6 @@ class Notification(models.Model):
     email_sent = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.message_type + " from " + str(self.from_user) + " to " + str(self.to_user)
+        return " from " + str(self.from_user) + " to " + str(self.to_user)
     
 
