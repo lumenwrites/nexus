@@ -25,7 +25,9 @@ class User(AbstractUser):
     # shadowban = models.BooleanField(default=False)
     # approved = models.BooleanField(default=False)
 
-    new_notifications = models.BooleanField(default=False)    
+    new_notifications = models.BooleanField(default=False)
+
+    metamind = models.BooleanField(default=False)
 
     # Email notifications
     # email_subscriptions = models.BooleanField(default=True,

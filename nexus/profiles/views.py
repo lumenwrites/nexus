@@ -159,9 +159,9 @@ def authenticate_user(request):
 
 # Only sign up
 def register(request):
-    rational = False
+    metamind = False
     if request.META['HTTP_HOST'] == "metamind.pro":
-        rational = True
+        metamind = True
 
     daily = False
     if request.META['HTTP_HOST'] == "writingstreak.io" or \
@@ -175,9 +175,9 @@ def register(request):
             # new_user = form.save()
             user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['password1'])
             user.email = form.cleaned_data['email']
-            user.rational = rational
+            user.metamind = metamind
             user.daily = daily            
-            if rational or daily:
+            if metamind or daily:
                 user.approved = True
             # All users approved by default
             user.approved = True                
