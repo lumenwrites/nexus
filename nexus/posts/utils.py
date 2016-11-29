@@ -29,12 +29,12 @@ def rank_hot(stories, top=180, consider=1000):
         # temporary hack to not let score be below zero
         try:
             if float(rating) > 1:
-                scr = rating/(age+timebase)**gravity
+                scr = float(float(rating)/(age+timebase)**gravity)
             else:
                 scr = 0
         except:
             scr = 0
-        return float(scr)
+        return scr
 
     latest_stories = stories.order_by('-pub_date')#[:consider]
     #comprehension, stories with rating, sorted
