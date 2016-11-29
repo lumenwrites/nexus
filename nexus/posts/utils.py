@@ -40,7 +40,8 @@ def rank_hot(stories, top=180, consider=1000):
     #comprehension, stories with rating, sorted
     stories_with_rating = [(score(story), story) for story in latest_stories]
     #ranked_stories = sorted(stories_with_rating, reverse = True) - old but worked
-    ranked_stories = sorted(latest_stories, key=float(score), reverse = True)
+    score = float(score)
+    ranked_stories = sorted(latest_stories, key=score, reverse = True)
     #strip away the rating and return only stories
     # return [story for _, story in ranked_stories][:top] - old but worked
     return ranked_stories
